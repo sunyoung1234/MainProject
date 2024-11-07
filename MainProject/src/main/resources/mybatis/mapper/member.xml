@@ -1,3 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="mybatis.mapper.member1"></mapper>
+<mapper namespace="com.proj.main.member.dao.IMemberDAO">
+
+
+
+	<!-- 회원가입 -->
+	<insert id="registMember"
+		parameterType="com.proj.main.member.dto.MemberDTO">
+INSERT INTO members(
+    mem_id,
+    mem_pw,
+    mem_email,
+    mem_phone,
+    mem_name,
+    mem_profile,
+    mem_address,
+    mem_level
+) VALUES (
+    #{memId},
+    #{memPw},
+    #{memEmail},
+    #{memPhone},
+    #{memName},
+    #{memProfile},
+    #{memAddress},
+    0
+)
+	</insert>
+
+   <!-- 로그인 -->
+    <select id="loginMember" parameterType="com.proj.main.member.dto.MemberDTO" resultType="com.proj.main.member.dto.MemberDTO">
+        SELECT
+            mem_id,
+            mem_pw,
+            mem_email,
+            mem_phone,
+            mem_name,
+            mem_profile,
+            mem_address,
+            mem_level
+        FROM members
+        WHERE 1=1
+          AND MEM_ID = #{memId}
+          AND MEM_PW = #{memPw}			
+    </select>
+    
+
+    <!-- 회원정보 수정 -->
+    <update id="updateMember" parameterType="com.proj.main.member.dto.MemberDTO">
+        UPDATE members
+        SET
+            mem_pw = #{memPw},
+            mem_email = #{memEmail},
+            mem_phone = #{memPhone},
+            mem_name = #{memName},
+            mem_address = #{memAddress},
+            mem_profile = #{memProfile}
+        WHERE 1=1
+          AND mem_id = #{memId}
+    </update>    
+    
+    <delete id="deleteMember" parameterType="String">
+    	DELETE FROM MEMBERS
+    	WHERE mem_id = #{memId}
+    </delete>
+    
+    <select id="checkId" parameterType="String" resultType="int">
+   		SELECT COUNT(*)
+		FROM MEMBERS
+		WHERE MEM_ID =#{id}
+    </select>
+
+</mapper>
