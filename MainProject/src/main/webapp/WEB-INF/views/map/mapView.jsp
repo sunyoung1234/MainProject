@@ -275,7 +275,7 @@
 	
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e0184ed647e553cf5795a108feda8a4a&libraries=clusterer,services"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e0184ed647e553cf5795a108feda8a4a"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/sidodo.json"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/sidodo.js"></script>
 	
 	
 	
@@ -422,7 +422,6 @@
 		function hideMarkers() {
 		    setMarkers(null);    
 		}
-		
 		var jsonData = JSON.parse(JSON.stringify(SidoFile));
 		let centerList = [];
 		
