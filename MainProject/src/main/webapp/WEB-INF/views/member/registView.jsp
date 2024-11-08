@@ -30,7 +30,7 @@
 body {
 	font-family: 'Plus Jakarta Sans', sans-serif;
 	background-color: #f8f9fa;
-	margin-top: 70px;
+	margin-top: 40px;
 }
 
 .register-card {
@@ -39,7 +39,9 @@ body {
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	padding: 40px;
 	max-width: 500px;
-	margin: auto;
+	margin: -50px auto; /* 기존 70px에서 20px 줄임 */
+
+	
 }
 
 .form-floating {
@@ -199,59 +201,153 @@ body {
 
 
 	<script type="text/javascript">
-// 아이디 중복 체크 및 유효성 검사
-    let idLength = false;
-    let idValid = false;
-    let checkPw = false;
+	
+	// 뒤로가기 버튼
+	$("#backBtn").click(function(){
+        window.history.back();
+    });
     
-    $('#registId').on('input', () => {    
-        idValid = false;
-        $('#idOkay').hide();
-        if($('#registId').val().length < 4){
-            $('#checkIdLength').show();
-            idLength = false;
-        } else {
-            $('#checkIdLength').hide();
-            idLength = true;
-        }
-    });
+	
+// 아이디 중복 체크 및 유효성 검사
+        let v_registForm = document.querySelector('#registForm');
+		let v_submitBtn = document.querySelector('#submitButton');
+		let v_idCheck = document.querySelector('#idCheck');
+		
+		let v_id = document.querySelector('#registId');
+		let v_pw = document.querySelector('#registPw');
+		let v_email = document.querySelector('#registEmail');
+		let v_phone = document.querySelector('#registPhone');
+		let v_name = document.querySelector('#registName');
+		
+		
+		let v_postcode = document.querySelector('#sample4_postcode');	// 우편번호
+		let v_roadAddress = document.querySelector('#sample4_roadAddress'); // 도로명 주소
+		let v_jibunAddress = document.querySelector('#sample4_jibunAddress'); // 상세 주소
+		let v_extraAddress = document.querySelector('#sample4_extraAddress'); // 참고 항목
+		
+		
+		
+		
+		let v_confirmPw = document.querySelector('#confirmPw');
+		
+		
+		
+		v_id.addEventListener('input',()=>{
+			
+			idValid = false;
+			document.querySelector('#idOkay').style.display = "none";
+			if(v_id.value.length < 4){
+				document.querySelector('#checkIdLength').style.display = "block";
+				idLength = false;
+			}else{
+				document.querySelector('#checkIdLength').style.display = "none";
+				idLength = true;
+			}
+		})
+		
+		v_confirmPw.addEventListener('input',()=>{
+			
+			if(v_confirmPw.value != v_pw.value){
+				document.querySelector('#checkPwTrue').style.display = "none";
+				document.querySelector('#checkPwFalse').style.display = "block";
+				checkPw = false;
+			}else{
+				document.querySelector('#checkPwTrue').style.display = "block";
+				document.querySelector('#checkPwFalse').style.display = "none";
+				checkPw = true;
+			}
+		})
+		
+		v_idCheck.addEventListener('click',()=>{
+			if(!idLength){
+				alert('ID 4자리 이상 입력해주세요');
+			}else{
+				$.ajax({
+					url: '${pageContext.request.contextPath}/idCheck',
+					type: 'POST',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						id : v_id.value.trim()
+					}), 
+					success: function(response){
+						
+						if(response == 1){
+							alert('중복된 아이디가 존재합니다!');
+							idValid = false;
+							document.querySelector('#idOkay').style.display = "none";
+						}else{
+							alert('사용가능한 아이디 입니다.')
+							idValid = true;
+							document.querySelector('#idOkay').style.display = "block";
+						}
+					}
+				})
+			}
+		})
+		
+		v_submitBtn.addEventListener('click',()=>{
+			if(!idValid){
+				alert('ID 중복체크를 해주세요');
+				event.preventDefault();
+				return;
+			}
+			
+			if(!checkPw){
+				alert('비밀번호 확인이 일치하지 않습니다');
+				event.preventDefault();
+				return;
+			}
+			
+			if(!v_pw.value){
+				alert('비밀번호를 입력해주세요');
+				event.preventDefault();
+				return;
+			}
+			
+			if(!v_email.value){
+				alert('이메일을 입력해주세요');
+				event.preventDefault();
+				return;
+			}
+			
+			if(!v_phone.value){
+				alert('전화번호를 입력해주세요');
+				event.preventDefault();
+				return;
+			}
+			
+			if(!v_name.value){
+				alert('닉네임을 입력해주세요');
+				event.preventDefault();
+				return;
+			}
+			
+			if(!v_postcode.value){
+				alert('주소를 입력해주세요')
+				event.preventDefault();
+				return;
+			}
+			if(!v_roadAddress.value){
+				alert('주소를 입력해주세요')
+				event.preventDefault();
+				return;
+			}
+			if(!v_jibunAddress.value){
+				alert('상세주소를 입력해주세요')
+				event.preventDefault();
+				return;
+			}
+			if(!v_extraAddress.value){
+				alert('상세주소를 입력해주세요')
+				event.preventDefault();
+				return;
+			}
 
-    $('#idCheck').on('click', () => {
-        if(!idLength){
-            alert('ID 4자리 이상 입력해주세요');
-        } else {
-            $.ajax({
-                url: '${pageContext.request.contextPath}/idCheck',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({ memId: $('#registId').val().trim() }),
-                success: function(response){
-                    if(response === "1"){
-                        alert('중복된 아이디가 존재합니다!');
-                        idValid = false;
-                        $('#idOkay').hide();
-                    } else {
-                        alert('사용 가능한 아이디 입니다.');
-                        idValid = true;
-                        $('#idOkay').show();
-                    }
-                }
-            })
-        }
-    });
-
-    $('#confirmPw').on('input', () => {
-        if ($('#confirmPw').val() !== $('#registPw').val()) {
-            $('#checkPwTrue').hide();
-            $('#checkPwFalse').show();
-            checkPw = false;
-        } else {
-            $('#checkPwTrue').show();
-            $('#checkPwFalse').hide();
-            checkPw = true;
-        }
-    });
-
+				
+			
+			alert('회원가입을 축하드립니다.')
+		})
+    
     function sample4_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
@@ -270,16 +366,6 @@ body {
             }
         }).open();
     }
-
-    // 회원가입 완료 메시지
-    $('#registForm').on('submit', (event) => {
-        if(!idValid || !checkPw){
-            alert('ID 중복 확인 및 비밀번호 확인을 완료해주세요.');
-            event.preventDefault();
-        } else {
-            alert('회원가입이 완료되었습니다!');
-        }
-    });
 </script>
 
 </body>
