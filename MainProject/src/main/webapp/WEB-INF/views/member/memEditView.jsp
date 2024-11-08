@@ -7,7 +7,8 @@
 <title>회원정보 수정</title>
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-
+<!-- 주소 -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script> 
 <!-- Google Font 및 스타일 -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -60,6 +61,8 @@
         margin-bottom: 30px;
     }
 </style>
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
 </head>
 <body class="d-flex flex-column">
 <main class="flex-shrink-0">
@@ -109,6 +112,18 @@
                     <input name="memName" class="form-control" id="inputName" type="text" value="${member.memName}" readonly />
                     <label for="inputName">닉네임 (변경 불가)</label>
                 </div>
+                <!-- 주소 input -->
+				<div class="form-floating mb-3">
+					<input type="button" class="btn btn-custom mt-2" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
+				    <input type="text" id="sample4_postcode" name="postcode" class="form-control" placeholder="우편번호" />
+				    <input type="text" id="sample4_roadAddress" name="roadAddress" class="form-control mt-2" placeholder="도로명주소" />
+				    <input type="text" id="sample4_jibunAddress" name="jibunAddress" class="form-control mt-2" placeholder="지번주소" />
+				    <input type="text" id="sample4_detailAddress" name="detailAddress" class="form-control mt-2" placeholder="상세주소" />
+				    <input type="text" id="sample4_extraAddress" name="extraAddress" class="form-control mt-2" placeholder="참고항목" />
+				</div>
+				
+				<!-- Hidden input to store full address -->
+				<input type="hidden" id="address" name="memAddress" />
 
                 <!-- Submit Button -->
                 <div class="d-grid">
@@ -134,7 +149,8 @@
 <%@ include file="/WEB-INF/inc/footer.jsp"%>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    <!-- Kakao Maps Library -->
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e0184ed647e553cf5795a108feda8a4a&libraries=clusterer,services"></script>
 <script type="text/javascript">
 /*     // 프로필 이미지 선택 기능
     document.querySelector('#imgBox').addEventListener('click', () => {
@@ -153,6 +169,68 @@
     document.querySelector('#backBtn').addEventListener('click', () => {
         window.history.back();
     });
+    
+ // Kakao 주소 API 호출 함수
+    function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                var roadAddr = data.roadAddress;
+                var extraRoadAddr = '';
+
+                if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                    extraRoadAddr += data.bname;
+                }
+                if (data.buildingName !== '' && data.apartment === 'Y') {
+                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                if (extraRoadAddr !== '') {
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                // 각 주소 필드에 값 할당
+                document.getElementById('sample4_postcode').value = data.zonecode;
+                document.getElementById("sample4_roadAddress").value = roadAddr;
+                document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+                document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+
+                // 전체 주소 조합하여 address에 저장
+                updateFullAddress();
+            }
+        }).open();
+    }
+
+    // 상세 주소 입력 시 전체 주소 업데이트
+    document.getElementById("sample4_detailAddress").addEventListener("input", updateFullAddress);
+
+    // 전체 주소 업데이트 함수
+    function updateFullAddress() {
+        const roadAddr = document.getElementById("sample4_roadAddress").value;
+        const extraAddr = document.getElementById("sample4_extraAddress").value;
+        const detailAddr = document.getElementById("sample4_detailAddress").value;
+
+        const fullAddress = roadAddr + ' ' + extraAddr + ' ' + detailAddr;
+        document.getElementById("address").value = fullAddress;
+    }
+
+
+
+            var geocoder = new kakao.maps.services.Geocoder();
+            let v_latitude = 0;
+            let v_longitude = 0;
+
+            document.querySelector('#registJuso').addEventListener('click', () => {
+                let juso = document.querySelector('#sample4_roadAddress').value;
+
+                geocoder.addressSearch(juso, function(result, status) {
+                    if (status === kakao.maps.services.Status.OK) {
+                        v_latitude = result[0].y;
+                        v_longitude = result[0].x;
+                        console.log(v_latitude);
+                        console.log(v_longitude);
+                    }
+                });
+            });
+    
 </script>
 
 </body>
