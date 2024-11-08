@@ -337,26 +337,24 @@ function sample4_execDaumPostcode() {
             document.getElementById("sample4_extraAddress").value = extraRoadAddr;
 
             // 전체 주소 조합하여 address에 저장
-            var fullAddress = roadAddr + ' ' + extraRoadAddr + ' ' + document.getElementById("sample4_detailAddress").value;
-            document.getElementById("address").value = fullAddress;
-
-            // 가이드 메시지 업데이트
-            var guideTextBox = document.getElementById("guide");
-            if (data.autoRoadAddress) {
-                var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-                guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-                guideTextBox.style.display = 'block';
-            } else if (data.autoJibunAddress) {
-                var expJibunAddr = data.autoJibunAddress;
-                guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-                guideTextBox.style.display = 'block';
-            } else {
-                guideTextBox.innerHTML = '';
-                guideTextBox.style.display = 'none';
-            }
+            updateFullAddress();
         }
     }).open();
 }
+
+// 상세 주소 입력 시 전체 주소 업데이트
+document.getElementById("sample4_detailAddress").addEventListener("input", updateFullAddress);
+
+// 전체 주소 업데이트 함수
+function updateFullAddress() {
+    const roadAddr = document.getElementById("sample4_roadAddress").value;
+    const extraAddr = document.getElementById("sample4_extraAddress").value;
+    const detailAddr = document.getElementById("sample4_detailAddress").value;
+
+    const fullAddress = roadAddr + ' ' + extraAddr + ' ' + detailAddr;
+    document.getElementById("address").value = fullAddress;
+}
+
 
 
         var geocoder = new kakao.maps.services.Geocoder();
