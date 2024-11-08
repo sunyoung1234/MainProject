@@ -48,6 +48,13 @@ public class MemberController {
         return "member/registView";
     }
 
+    // 개인정보 수집 및 제공 동의서 페이지로 이동
+    @RequestMapping("/agreementView")
+    public String agreementView() {
+    	return "member/agreementView"; 
+    }
+    
+    
     // 회원가입 처리
     @RequestMapping("/registDo")
     public String registDo(HttpServletRequest req, MultipartFile img, HttpSession session) {
@@ -207,4 +214,7 @@ public class MemberController {
             return "redirect:/loginView"; // 로그인하지 않은 경우 로그인 페이지로 리다이렉트
         }
     }
+    
+
+
 }
