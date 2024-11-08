@@ -11,9 +11,23 @@
         <title>Scrolling Nav - Start Bootstrap Template</title>
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="css/styles.css" rel="stylesheet" />	
+    	<style type="text/css">
+    		.my-box{
+    			width:100px;
+    			height:290px;
+    			border: 1px solid black;
+    		}
+    	
+    	</style>
+    
     </head>
-    <body id="page-top">
+    <body>
+    
+    
+    	
+        
+        
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
             <div class="container px-4">
@@ -29,7 +43,11 @@
             </div>
         </nav>
         
-        
+        <div class="my-box">
+        	<div>
+		        <a href="${pageContext.request.contextPath }/map">지도</a>
+        	</div>
+        </div>
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container px-4"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
@@ -38,5 +56,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+        
+        
     </body>
 </html>
