@@ -1,34 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.proj.main.member.dao.IMemberDAO">
-
-
-
-	<!-- 회원가입 -->
-	<insert id="registMember"
-		parameterType="com.proj.main.member.dto.MemberDTO">
-INSERT INTO members(
-    mem_id,
-    mem_pw,
-    mem_email,
-    mem_phone,
-    mem_name,
-    mem_profile,
-    mem_address,
-    mem_level
-) VALUES (
-    #{memId},
-    #{memPw},
-    #{memEmail},
-    #{memPhone},
-    #{memName},
-    #{memProfile},
-    #{memAddress},
-    0
-)
-	</insert>
-
-   <!-- 로그인 -->
+    
+    <!-- 회원가입 -->
+    <insert id="registMember" parameterType="com.proj.main.member.dto.MemberDTO">
+    INSERT INTO members (
+        mem_id,
+        mem_pw,
+        mem_email,
+        mem_phone,
+        mem_name,
+        mem_profile,
+        mem_address,
+        mem_detailAddress,
+        postcode,
+        extraAddress,
+        mem_level
+    ) VALUES (
+        #{memId, jdbcType=VARCHAR},
+        #{memPw, jdbcType=VARCHAR},
+        #{memEmail, jdbcType=VARCHAR},
+        #{memPhone, jdbcType=VARCHAR},
+        #{memName, jdbcType=VARCHAR},
+        #{memProfile, jdbcType=VARCHAR},
+        #{memAddress, jdbcType=VARCHAR},
+        #{memDetailAddress, jdbcType=VARCHAR},
+        #{postcode, jdbcType=VARCHAR},
+        #{extraAddress, jdbcType=VARCHAR},
+        0
+    )
+    </insert>
+    
+    <!-- 회원정보 수정 -->
+    <update id="updateMember" parameterType="com.proj.main.member.dto.MemberDTO">
+        UPDATE members
+        SET
+            mem_pw = #{memPw, jdbcType=VARCHAR},
+            mem_email = #{memEmail, jdbcType=VARCHAR},
+            mem_phone = #{memPhone, jdbcType=VARCHAR},
+            mem_name = #{memName, jdbcType=VARCHAR},
+            mem_profile = #{memProfile, jdbcType=VARCHAR},
+            mem_address = #{memAddress, jdbcType=VARCHAR},
+            mem_detailAddress = #{memDetailAddress, jdbcType=VARCHAR},
+            postcode = #{postcode, jdbcType=VARCHAR},
+            extraAddress = #{extraAddress, jdbcType=VARCHAR}
+        WHERE mem_id = #{memId, jdbcType=VARCHAR}
+    </update>
+    
+    <!-- 로그인 -->
     <select id="loginMember" parameterType="com.proj.main.member.dto.MemberDTO" resultType="com.proj.main.member.dto.MemberDTO">
         SELECT
             mem_id,
@@ -38,37 +57,26 @@ INSERT INTO members(
             mem_name,
             mem_profile,
             mem_address,
+            mem_detailAddress,
+            postcode,
+            extraAddress,
             mem_level
         FROM members
-        WHERE 1=1
-          AND MEM_ID = #{memId}
-          AND MEM_PW = #{memPw}			
+        WHERE mem_id = #{memId, jdbcType=VARCHAR}
+          AND mem_pw = #{memPw, jdbcType=VARCHAR}
     </select>
-    
 
-    <!-- 회원정보 수정 -->
-    <update id="updateMember" parameterType="com.proj.main.member.dto.MemberDTO">
-        UPDATE members
-        SET
-            mem_pw = #{memPw},
-            mem_email = #{memEmail},
-            mem_phone = #{memPhone},
-            mem_name = #{memName},
-            mem_address = #{memAddress},
-            mem_profile = #{memProfile}
-        WHERE 1=1
-          AND mem_id = #{memId}
-    </update>    
-    
+    <!-- 회원 삭제 -->
     <delete id="deleteMember" parameterType="String">
-    	DELETE FROM MEMBERS
-    	WHERE mem_id = #{memId}
+        DELETE FROM members
+        WHERE mem_id = #{memId, jdbcType=VARCHAR}
     </delete>
-    
+
+    <!-- 아이디 중복 체크 -->
     <select id="checkId" parameterType="String" resultType="int">
-   		SELECT COUNT(*)
-		FROM MEMBERS
-		WHERE MEM_ID =#{id}
+        SELECT COUNT(*)
+        FROM members
+        WHERE mem_id = #{id, jdbcType=VARCHAR}
     </select>
 
 </mapper>
