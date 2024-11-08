@@ -54,6 +54,11 @@ public class MemberController {
     	return "member/agreementView"; 
     }
     
+    // 테스트 페이지 이동
+    @RequestMapping("/testView")
+    public String testView() {
+    	return "member/testView";
+    }
     
     // 회원가입 처리
     @RequestMapping("/registDo")
