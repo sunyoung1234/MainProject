@@ -199,6 +199,10 @@ th, td {
 									<a class="v-edit-btn bg-color"
 										href="${pageContext.request.contextPath}/memEditView">수정하기</a>
 								</div>
+								<div>
+									<img src="http://localhost:5000/post">
+								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -218,92 +222,7 @@ th, td {
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 	<script type="text/javascript">
-        console.log(document.querySelector('#imgBox').src)
-        
-        let v_result = 0;
-        let v_boardResult = 0;
-        
-        console.log(v_result)
-        console.log(v_boardResult)
-        
-        // 피드백 탄소 배출량
-       	console.log(typeof v_result)
-       	console.log(typeof v_boardResult)
-       	 
-       	if(${getReplyResult} == null){
-       		v_result = 0
-       	}else{
-       	 	v_result = '${getReplyResult}'
-       	}
-        
-        if(${getBoardCalc} == null){
-       		v_result = 0
-       	}else{
-       		v_boardResult = '${getBoardCalc}'
-       	}
-        
-        let ctx = document.getElementById("myChart")
-        
-        let v_reduceTree = document.getElementById("reduceTree")
-        
-        let v_treeResult =  Math.round((v_boardResult - v_result)/6.6)
-        let v_CO2Result = Math.round(v_boardResult - v_result)
-        
-        let v_tree = "절감한 탄소 배출량 " + v_CO2Result + " CO₂/kg 는 연간 소나무 " + v_treeResult + " 그루 가 흡수한 양과 같습니다";
-
-        
-        if(v_treeResult > 100000){
-        	v_reduceTree.innerHTML += '<img class="tree-img-size" src="${pageContext.request.contextPath}/resources/image/나무4.png">'
-        	v_reduceTree.innerHTML += '<div class="reduce-text-box"><div><div class="pb-2">절감한 탄소 배출량<b class="co2-text"> '+ v_CO2Result +' CO2/kg</b></div><div class="">연간 소나무 <b class="co2-reduce-text">'+ v_treeResult +' 그루</b> 흡수한 양</div></div></div>'
-        }else if(v_treeResult > 50000){
-        	v_reduceTree.innerHTML += '<img class="tree-img-size" src="${pageContext.request.contextPath}/resources/image/나무3.png">'
-            	v_reduceTree.innerHTML += '<div class="reduce-text-box"><div><div class="pb-2">절감한 탄소 배출량<b class="co2-text"> '+ v_CO2Result +' CO2/kg</b></div><div class="">연간 소나무 <b class="co2-reduce-text">'+ v_treeResult +' 그루</b> 흡수한 양</div></div></div>'
-        }else if(v_treeResult > 30000){
-        	v_reduceTree.innerHTML += '<img class="tree-img-size" src="${pageContext.request.contextPath}/resources/image/나무2.png">'
-            	v_reduceTree.innerHTML += '<div class="reduce-text-box"><div><div class="pb-2">절감한 탄소 배출량<b class="co2-text"> '+ v_CO2Result +' CO2/kg</b></div><div class="">연간 소나무 <b class="co2-reduce-text">'+ v_treeResult +' 그루</b> 흡수한 양</div></div></div>'
-        }else if(v_treeResult < 10000){
-        	v_reduceTree.innerHTML += '<img class="tree-img-size" src="${pageContext.request.contextPath}/resources/image/나무1.png">'
-            	v_reduceTree.innerHTML += '<div class="reduce-text-box"><div><div class="pb-2">절감한 탄소 배출량<b class="co2-text"> '+ v_CO2Result +' CO2/kg</b></div><div class="">연간 소나무 <b class="co2-reduce-text">'+ v_treeResult +' 그루</b> 흡수한 양</div></div></div>'
-        }
-        
-	    
-        
-        console.log("나무 : " + (v_boardResult*100000 - v_result)/20 + "그루")
-        
-        new Chart(ctx,{
-        		type:'bar',
-        		data:{
-        			labels: ['솔루션'],
-        			datasets:[{
-        				label:'Before',
-        				data: [v_boardResult]
-        			},{
-        				label:'After',
-        				data: [v_result]
-        			}]
-        		},
-        		 options: {
-		      		    plugins: {
-		      	            title: {
-		      	                display: true,
-		      	                text: '탄소 배출량'
-		      	            }
-		      	        },
-                     scales: {
-                         x: {
-                             ticks: {
-                                 autoSkip: false
-                             }
-                         },
-                         y: {
-                             beginAtZero: true
-                             }
-                         
-                     }
-                 }
-             });
-        
-        
+       
         
     </script>
     

@@ -25,4 +25,7 @@ public interface IMemberDAO {
 	
 	// 아이디 체크
 	int checkId(String id);
+	
+	// 건물 정보 삽입
+	int insertBuilding(String memId);
 }

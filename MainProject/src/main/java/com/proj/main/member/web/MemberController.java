@@ -1,6 +1,13 @@
 package com.proj.main.member.web;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.List;
 import java.util.Map;
 
@@ -62,7 +69,7 @@ public class MemberController {
     
     // 회원가입 처리
     @RequestMapping("/registDo")
-    public String registDo(HttpServletRequest req, MultipartFile img, HttpSession session) {
+    public String registDo(HttpServletRequest req, MultipartFile img, HttpSession session) throws Exception {
         // 입력값 받기
         String memId = req.getParameter("memId"); // 여기 수정
         String memPw = req.getParameter("memPw");
@@ -92,6 +99,39 @@ public class MemberController {
             e.printStackTrace();
             return "redirect:/registView";
         }
+        
+        
+        memberService.insertBuilding(memId);
+       
+        
+        
+        StringBuilder urlBuilder = new StringBuilder("http://localhost:5000/regist"); /*URL*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
+        conn.setRequestProperty("Content-type", "application/json");
+       
+        BufferedReader rd;
+        String result = "{\"id\":\"" + memId + "\"}";
+       
+        try(OutputStream os = conn.getOutputStream()){
+            byte[] input = result.getBytes("utf-8");
+            os.write(input,0,input.length);
+        }
+        
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+        }
+        
+        
+        rd.close();
+        conn.disconnect();
+        
+        
         return "redirect:/loginView"; 
     }
 
@@ -145,6 +185,10 @@ public class MemberController {
             e.printStackTrace();
             return "redirect:/memEditView"; // 에러 발생 시 회원 수정 페이지로 돌아가기
         }
+        
+        
+        
+        
 
         return "redirect:/memEditView"; // 수정 완료 후 회원정보 수정 페이지로 리다이렉트
     }
@@ -155,10 +199,10 @@ public class MemberController {
             HttpServletResponse response) {
 
         MemberDTO login = memberService.loginMember(member);
-
+        
         if (login != null) {
             session.setAttribute("login", login); // 세션에 로그인 정보 저장
-
+            String memId = login.getMemId();
             // 쿠키 처리
             if (rememberId) {
                 // 쿠키 생성
@@ -171,8 +215,57 @@ public class MemberController {
                 cookie.setMaxAge(0);
                 response.addCookie(cookie);
             }
+            
+            StringBuilder urlBuilder = new StringBuilder("http://localhost:5000/login"); /*URL*/
+            HttpURLConnection conn = null;
+            BufferedReader rd = null;
+            try {
+                // URL 연결 및 설정
+                URL url = new URL(urlBuilder.toString());
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-type", "application/json");
 
-            return "redirect:/"; // 홈으로 리다이렉트
+                // JSON 데이터 생성
+                String result = "{\"id\":\"" + memId + "\"}";
+                System.out.println(memId);
+
+                // 요청 본문에 데이터 전송
+                try (OutputStream os = conn.getOutputStream()) {
+                    byte[] input = result.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+
+                // 응답 처리
+                if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+                    rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                } else {
+                    rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+                }
+
+
+            } catch (IOException e) {
+                // HTTP 요청 관련 예외 처리
+                e.printStackTrace();  // 로그에 예외 출력 (필요시 로깅 활용)
+                model.addAttribute("msg", "서버와의 연결에 문제가 발생했습니다.");
+                return "member/loginView"; // 로그인 실패 시 로그인 페이지로 돌아감
+            } finally {
+                // BufferedReader, HttpURLConnection 객체 정리
+                if (rd != null) {
+                    try {
+                        rd.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (conn != null) {
+                    conn.disconnect();
+                }
+            }
+
+            // 홈으로 리다이렉트
+            return "redirect:/";
         } else {
             model.addAttribute("msg", "아이디 혹은 비밀번호가 올바르지 않습니다.");
             return "member/loginView"; // 로그인 실패 시 로그인 페이지로
@@ -198,14 +291,60 @@ public class MemberController {
     
     // 마이 페이지로 이동
     @RequestMapping("/mypage")
-    public String mypage(HttpSession session, Model model) {
+    public String mypage(HttpSession session, Model model){
         
         MemberDTO login = (MemberDTO) session.getAttribute("login");
         String memId = login.getMemId();
 
-         model.addAttribute("member",login);
+        model.addAttribute("member",login);
         
-        return "member/mypage";
+        BufferedReader rd = null;
+        HttpURLConnection conn = null;
+        StringBuilder sb = new StringBuilder();
+        
+        try {
+            // URL 생성 및 HttpURLConnection 열기
+            StringBuilder urlBuilder = new StringBuilder("http://localhost:5000/post");
+            URL url = new URL(urlBuilder.toString());
+            conn = (HttpURLConnection) url.openConnection();
+            
+            // 요청 설정
+            conn.setRequestMethod("GET");  // GET 방식으로 요청
+            conn.setRequestProperty("Content-type", "application/json");
+            
+            // 응답 코드에 따른 스트림 처리
+            if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+                rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            } else {
+                rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            }
+            
+            // 응답 내용 읽기
+            String line;
+            while ((line = rd.readLine()) != null) {
+                sb.append(line);
+            }
+            
+            System.out.println(sb.toString());  // 서버 응답 출력
+
+        } catch (Exception e) {
+            // 예외 발생 시 처리
+            e.printStackTrace();  // 예외 출력
+        } finally {
+            try {
+                if (rd != null) {
+                    rd.close();  // BufferedReader 닫기
+                }
+                if (conn != null) {
+                    conn.disconnect();  // 연결 종료
+                }
+            } catch (Exception e) {
+                e.printStackTrace();  // 예외 발생 시 처리
+            }
+        }
+
+        return "member/mypage";  // 페이지 리턴
+		
     }
 
     // 회원 정보 수정 페이지로 이동
@@ -219,6 +358,7 @@ public class MemberController {
             return "redirect:/loginView"; // 로그인하지 않은 경우 로그인 페이지로 리다이렉트
         }
     }
+    
     
 
 
