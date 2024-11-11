@@ -26,6 +26,11 @@
 <link href="css/styles.css" rel="stylesheet" />
 
 <style type="text/css">
+
+.main-height{
+	height:800px;
+}
+
 .bg-color {
 	background-color: #10bd66;
 }
@@ -70,11 +75,6 @@ th, td {
 	
 }
 
-.mypage-profile-text:hover{
-
-}
-
-
 .mypage-profile-text-small{
 	font-size: 14px;
 	text-decoration: none;
@@ -118,38 +118,16 @@ th, td {
 	border-color: #198754; /* 테두리 색상 */
 }
 
-.chart-text-box{
-	display: flex;
-	justify-content: start;
-	font-size: 10px;
+.img-box{
+	width:400px;
+	height:200px;
+	overflow: hidden;
 }
 
-.chart-height{
-	height: 400px;
+.img-box > img{
+	width:100%;
+	
 }
-
-.chart-height2{
-	height: 400px;
-}
-
-.reduce-text-box{
-	display: flex;
-	align-items: center;
-	padding-left: 40px;
-}
-
-.tree-img-size{
-	width: 170px;
-}
-
-.co2-text{
-	color: blue;
-}
-
-.co2-reduce-text{
-	color:green;
-}
-
 
 
 </style>
@@ -159,7 +137,7 @@ th, td {
 
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
 
-	<main class="flex-shrink-0">
+	<main class="main-height flex-shrink-0">
 		<section class="py-5">
 			<div class="text-center mb-5">
 				<h1 class="fw-bolder mb-4">마이페이지</h1>
@@ -199,10 +177,12 @@ th, td {
 									<a class="v-edit-btn bg-color"
 										href="${pageContext.request.contextPath}/memEditView">수정하기</a>
 								</div>
+
 								<div>
 									<img src="http://localhost:5000/post">
 								</div>
 								
+
 							</div>
 						</div>
 					</div>
@@ -222,7 +202,8 @@ th, td {
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 	<script type="text/javascript">
-       
+
+
         
     </script>
     
