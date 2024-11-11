@@ -135,13 +135,13 @@
 	    	margin: 20px;
 	    }
 	    
-	    #deleteReviewImg{
+	    .deleteReviewImg{
 	    	color: red;
 	    	font-weight: bold;
 	    	text-align: end;   
 	    }
 	    
-	    #deleteReviewImg:hover{ 
+	    .deleteReviewImg:hover{ 
 	    	cursor: pointer;   
 	    }
     </style>
@@ -210,22 +210,36 @@
     			
         		reader.onload = function(e){
 	    			fileHTML += '<div><span style="display: none;">'+ (i+1) + '. ' + fileList[i]['name'] +'</span>';
-	    			fileHTML += '<p id="deleteReviewImg"> X </p>'
+	    			fileHTML += '<p class="deleteReviewImg"> X </p>'
         			fileHTML += '<img class="reviewImages" src="' + e.target.result + '"></div>'
 		   			v_filesDiv.innerHTML = fileHTML;  
+        			
+        			if(i == fileList.length-1){
+				    	let v_delBtns = document.querySelectorAll('.deleteReviewImg');
+				    	console.log(v_delBtns);
+				    	v_delBtns.forEach((del,j) =>{
+				    		del.addEventListener('click',()=>{
+				    			del.parentElement.remove();
+				    			document.getElementById('inputFile').files.remove(j);
+				    			console.log(document.getElementById('inputFile').files);
+				    		})
+				    	})
+        			}
         		}
         		reader.readAsDataURL(fileList[i])
         		
     		}
     		
     		
-    	})
+    	}) 
+    	
     	
     	
     	
     	document.getElementById('inputFileBtn').addEventListener('click',()=>{
     		document.getElementById('inputFile').click();
     	})
+    	
     	
     
     </script>
