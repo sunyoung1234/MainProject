@@ -108,8 +108,7 @@
 									<!-- 요청서 작성 버튼 -->
 							<div style="bottom: 20px; right: 20px;">
 								<a class="btn btn-success"
-									href="${pageContext.request.contextPath}/boardWriteView">요청서
-									작성</a>
+									href="${pageContext.request.contextPath}/reviewWriteView">리뷰 작성</a>
 							</div>
 									<!-- Paging Bar -->
 									<div class="d-flex justify-content-center mt-4">

@@ -214,19 +214,23 @@
         			fileHTML += '<img class="reviewImages" src="' + e.target.result + '"></div>'
 		   			v_filesDiv.innerHTML = fileHTML;  
         			
-        			if(i == fileList.length-1){
-				    	let v_delBtns = document.querySelectorAll('.deleteReviewImg');
-				    	console.log(v_delBtns);
-				    	v_delBtns.forEach((del,j) =>{
-				    		del.addEventListener('click',()=>{
-				    			del.parentElement.remove();
-				    			document.getElementById('inputFile').files.remove(j);
-				    			console.log(document.getElementById('inputFile').files);
-				    		})
-				    	})
-        			}
+			    	let v_delBtns = document.querySelectorAll('.deleteReviewImg');
+			    	console.log(v_delBtns);
+			    	v_delBtns.forEach((del,j) =>{
+			    		del.addEventListener('click',()=>{
+			    			const dataTransfer = new DataTransfer();
+			    			del.parentElement.remove(); 
+			    			let fileArray = Array.from(document.getElementById('inputFile').files);
+			    			
+			    			fileArray.splice( j, 1);
+			    			fileArray.forEach(file => { 
+			    				dataTransfer.items.add(file); 
+			    			});
+			    			document.getElementById('inputFile').files = dataTransfer.files;
+			    		}) 
+			    	})
         		}
-        		reader.readAsDataURL(fileList[i])
+        		reader.readAsDataURL(fileList[i]) 
         		
     		}
     		
