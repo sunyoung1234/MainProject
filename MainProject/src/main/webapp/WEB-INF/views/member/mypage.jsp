@@ -28,7 +28,7 @@
 <style type="text/css">
 
 .main-height{
-	height:800px;
+	height:1200px;
 }
 
 .bg-color {
@@ -179,7 +179,7 @@ th, td {
 								</div>
 
 								<div>
-									<img src="http://localhost:5000/post">
+									<img src="http://192.168.0.51:5000/post">
 								</div>
 								
 

@@ -216,7 +216,55 @@ public class MemberController {
                 response.addCookie(cookie);
             }
             
-            
+            StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/login"); /*URL*/
+            HttpURLConnection conn = null;
+            BufferedReader rd = null;
+            try {
+                // URL 연결 및 설정
+                URL url = new URL(urlBuilder.toString());
+                conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setRequestProperty("Content-type", "application/json");
+                
+
+                // JSON 데이터 생성
+                String result = "{\"id\":\"" + memId + "\"}";
+                System.out.println(memId);
+
+                // 요청 본문에 데이터 전송
+                try (OutputStream os = conn.getOutputStream()) {
+                    byte[] input = result.getBytes("utf-8");
+                    os.write(input, 0, input.length);
+                }
+
+                // 응답 처리
+                if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+                    rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                } else {
+                    rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+                }
+
+
+            } catch (IOException e) {
+                // HTTP 요청 관련 예외 처리
+                e.printStackTrace();  // 로그에 예외 출력 (필요시 로깅 활용)
+                model.addAttribute("msg", "서버와의 연결에 문제가 발생했습니다.");
+                return "member/loginView"; // 로그인 실패 시 로그인 페이지로 돌아감
+            } finally {
+                // BufferedReader, HttpURLConnection 객체 정리
+                if (rd != null) {
+                    try {
+                        rd.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (conn != null) {
+                    conn.disconnect();
+                }
+            }
+
             // 홈으로 리다이렉트
             return "redirect:/";
         } else {
@@ -264,6 +312,9 @@ public class MemberController {
             // 요청 설정
             conn.setRequestMethod("GET");  // GET 방식으로 요청
             conn.setRequestProperty("Content-type", "application/json");
+            
+         
+
             
             // 응답 코드에 따른 스트림 처리
             if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
