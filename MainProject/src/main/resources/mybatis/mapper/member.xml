@@ -78,5 +78,23 @@
         FROM members
         WHERE mem_id = #{id, jdbcType=VARCHAR}
     </select>
+    
+    <!-- 건물 정보 삽입  -->
+    <insert id="insertBuilding" parameterType="String">
+		INSERT INTO BUILDING_MEM(
+		    BUILDING_ADDRESS,
+		    electricity_use,
+		    use_date,
+		    mem_id
+		)
+		    SELECT
+		        a.BUILDING_ADDRESS,
+		        a.electricity_use,
+		        a.use_date,
+		        b.mem_id
+		    FROM BEU a, MEMBERS b
+		    WHERE b.mem_address like '%' || a.building_address || '%'
+		    AND b.mem_id = #{memId}
+    </insert>
 
 </mapper>
