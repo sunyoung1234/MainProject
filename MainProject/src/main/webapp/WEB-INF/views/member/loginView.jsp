@@ -131,7 +131,7 @@
         const regist_btn = document.querySelector("#registBtn");
         regist_btn.addEventListener('click', (event) => {
             event.preventDefault();
-            location.href = "${pageContext.request.contextPath}/registView"; 
+            location.href = "${pageContext.request.contextPath}/agreementView"; 
         });
     </script>
 </body>

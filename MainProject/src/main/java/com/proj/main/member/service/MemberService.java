@@ -41,4 +41,9 @@ public class MemberService {
 		int result = dao.checkId(id);
 		return result;
 	}
+	
+	public int insertBuilding(String memId) {
+		int result = dao.insertBuilding(memId);
+		return result;
+	}
 }

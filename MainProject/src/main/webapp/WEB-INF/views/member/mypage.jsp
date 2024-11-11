@@ -177,10 +177,12 @@ th, td {
 									<a class="v-edit-btn bg-color"
 										href="${pageContext.request.contextPath}/memEditView">수정하기</a>
 								</div>
+
+								<div>
+									<img src="http://localhost:5000/post">
+								</div>
 								
-								<div class="img-box">
-				<img src="http://localhost:5000/pltimg2">
-			</div>
+
 							</div>
 						</div>
 					</div>
@@ -200,9 +202,8 @@ th, td {
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 	<script type="text/javascript">
- 
-        
-        
+
+
         
     </script>
     
