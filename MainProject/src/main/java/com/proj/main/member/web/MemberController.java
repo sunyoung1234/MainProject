@@ -25,6 +25,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.proj.main.member.service.MemberService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.proj.main.FileUpload;
 import com.proj.main.attach.service.AttachService;
 import com.proj.main.attach.dto.AttachDTO;
@@ -385,7 +388,7 @@ public class MemberController {
     
     @ResponseBody
     @RequestMapping("/uploadImage")
-    public String uploadImage(@RequestBody String image) throws Exception {
+    public String uploadImage(@RequestBody String image, Model model) throws Exception {
     	
     	String uploadImage = image;
     	
@@ -414,10 +417,27 @@ public class MemberController {
 			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
 		}
 		
+		StringBuilder sb = new StringBuilder();
+		// 응답 내용 읽기
+        String line;
+        while ((line = rd.readLine()) != null) {
+            sb.append(line);
+        }
+        
+        System.out.println(sb.toString());  // 서버 응답 출력
+        model.addAttribute("monthUse",sb);
+        
+    
 		rd.close();
 		conn.disconnect();
     	
     	return "member/ocrTest";
+    }
+    
+    @RequestMapping("/productView")
+    public String productView() {
+    	
+    	return "member/productView";
     }
     
     

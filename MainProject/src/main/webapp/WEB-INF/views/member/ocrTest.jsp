@@ -86,7 +86,9 @@
 				<img id="croppedImg" src="" alt="자른 이미지 미리보기">
 			</div>
 		</div>
+		<div>${monthUse }</div>
 	</div>
+	
 
 	<%@ include file="/WEB-INF/inc/footer.jsp" %>
 
