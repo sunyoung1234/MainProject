@@ -25,51 +25,41 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 
 <link href="css/styles.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" integrity="sha512-UtLOu9C7NuThQhuXXrGwx9Jb/z9zPQJctuAgNUBK3Z6kkSYT9wJ+2+dh6klS+TDBCV9kNPBbAxbVD+vCcfGPaA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f4f4f4;
-        margin: 0;
+<style type="text/css">
+    .main-height{
+        height: 900px;
+        width: 1300px;
+        border: 1px solid black;
+        margin: auto;
+        margin-top: 50px;
+        margin-bottom: 50px;
     }
 
-    #container {
-        position: relative;
-        max-width: 100%;
-        max-height: 80vh;
+    .img-container {
+        text-align: center;
+        margin-top: 20px;
+        overflow: hidden;
+        width:300px;
+        height:200px;
     }
 
-    #image-preview {
+    #showImg {
+        width:100%;
+        height:100%;
+    }
+
+    #croppedImg {
         max-width: 100%;
-        max-height: 100%;
+        margin-top: 20px;
+        border: 1px solid #ccc;
         display: block;
     }
 
-    /* 자르기 상자 스타일 */
-    #crop-box {
-        position: absolute;
-        border: 2px dashed rgba(0, 123, 255, 0.7);
-        background: rgba(0, 123, 255, 0.3);
-        cursor: move;
+    .btn {
+        margin-top: 20px;
     }
-
-    /* 자르기 상자 크기 조절 핸들 */
-    .resize-handle {
-        position: absolute;
-        background-color: rgba(0, 123, 255, 0.7);
-        width: 10px;
-        height: 10px;
-        cursor: pointer;
-    }
-
-    .resize-handle.top-left { top: -5px; left: -5px; cursor: nwse-resize; }
-    .resize-handle.top-right { top: -5px; right: -5px; cursor: nesw-resize; }
-    .resize-handle.bottom-left { bottom: -5px; left: -5px; cursor: nesw-resize; }
-    .resize-handle.bottom-right { bottom: -5px; right: -5px; cursor: nwse-resize; }
 </style>
 
 </head>
@@ -77,143 +67,102 @@
 
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
 
-	<div id="container">
-        <input type="file" id="image-upload" accept="image/*">
-        <br>
-        <img id="image-preview" src="" alt="미리보기">
-        <div id="crop-box">
-            <div class="resize-handle top-left"></div>
-            <div class="resize-handle top-right"></div>
-            <div class="resize-handle bottom-left"></div>
-            <div class="resize-handle bottom-right"></div>
-        </div>
-    </div>
+	<div class="main-height">
+		<div>
+			<div>계량기사진</div>
+			<div>
+				<div>
+					<input id="inputImg" type="file" accept="image/*">
+				</div>
+				<div class="img-container">
+					<img id="showImg" src="" alt="이미지 삽입">
+				</div>
+			</div>
+			<div class="btn">
+				<button id="save-cropped-image" class="btn btn-primary">자른 이미지 저장</button>
+			</div>
+			<!-- 자른 이미지를 보여줄 부분 -->
+			<div class="img-container">
+				<img id="croppedImg" src="" alt="자른 이미지 미리보기">
+			</div>
+		</div>
+	</div>
 
 	<%@ include file="/WEB-INF/inc/footer.jsp" %>
-	
-<script>
-    let imagePreview = document.getElementById('image-preview');
-    let cropBox = document.getElementById('crop-box');
-    let imageUpload = document.getElementById('image-upload');
-    let isDragging = false;
-    let startX, startY;
-    let cropBoxX = 50, cropBoxY = 50, cropBoxWidth = 150, cropBoxHeight = 150;
-    let imageWidth, imageHeight;
 
-    // 이미지 미리보기와 자르기 상자 설정
-    imageUpload.addEventListener('change', function (event) {
-        let file = event.target.files[0];
-        if (file) {
-            let reader = new FileReader();
-            reader.onload = function (e) {
-                imagePreview.src = e.target.result;
-                imagePreview.onload = function () {
-                    imageWidth = imagePreview.width;
-                    imageHeight = imagePreview.height;
-                    
-                    // 자르기 상자 크기 비율 설정
-                    cropBox.style.width = `${cropBoxWidth}px`;
-                    cropBox.style.height = `${cropBoxHeight}px`;
-                    cropBox.style.top = `${cropBoxY}px`;
-                    cropBox.style.left = `${cropBoxX}px`;
-                };
-            };
-            reader.readAsDataURL(file);
-        }
-    });
+	<!-- Bootstrap core JS -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="js/scripts.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js" integrity="sha512-JyCZjCOZoyeQZSd5+YEAcFgz2fowJ1F1hyJOXgtKu4llIa0KneLcidn5bwfutiehUTiOuK87A986BZJMko0eWQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    // 자르기 상자 이동
-    cropBox.addEventListener('mousedown', function (e) {
-        isDragging = true;
-        startX = e.clientX - cropBox.offsetLeft;
-        startY = e.clientY - cropBox.offsetTop;
+	<script type="text/javascript">
+        let cropper; // Cropper 객체 선언
 
-        function onMouseMove(e) {
-            if (isDragging) {
-                let moveX = e.clientX - startX;
-                let moveY = e.clientY - startY;
+        // 이미지 파일을 선택하고 미리보기 이미지를 설정
+        document.getElementById("inputImg").addEventListener('change', function () {
+            let inputImg = document.getElementById("inputImg").files[0];
+            let fileURL = URL.createObjectURL(inputImg);
+            let imageElement = document.getElementById("showImg");
 
-                // 이미지 영역 내에서만 이동 가능하도록 제한
-                moveX = Math.max(0, Math.min(moveX, imageWidth - cropBox.offsetWidth));
-                moveY = Math.max(0, Math.min(moveY, imageHeight - cropBox.offsetHeight));
+            // 이미지 소스 설정
+            imageElement.src = fileURL;
 
-                cropBox.style.left = `${moveX}px`;
-                cropBox.style.top = `${moveY}px`;
-
-                cropBoxX = moveX;
-                cropBoxY = moveY;
-            }
-        }
-
-        function onMouseUp() {
-            isDragging = false;
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
-        }
-
-        document.addEventListener('mousemove', onMouseMove);
-        document.addEventListener('mouseup', onMouseUp);
-    });
-
-    // 자르기 상자 크기 조정
-    const resizeHandles = document.querySelectorAll('.resize-handle');
-    resizeHandles.forEach(handle => {
-        handle.addEventListener('mousedown', function (e) {
-            e.preventDefault();
-            let handleClass = e.target.className.split(' ')[1];
-
-            let startWidth = cropBox.offsetWidth;
-            let startHeight = cropBox.offsetHeight;
-            let startX = e.clientX;
-            let startY = e.clientY;
-
-            function onMouseMove(e) {
-                let deltaX = e.clientX - startX;
-                let deltaY = e.clientY - startY;
-
-                if (handleClass === 'top-left') {
-                    cropBox.style.width = `${startWidth - deltaX}px`;
-                    cropBox.style.height = `${startHeight - deltaY}px`;
-                    cropBox.style.left = `${cropBoxX + deltaX}px`;
-                    cropBox.style.top = `${cropBoxY + deltaY}px`;
-                } else if (handleClass === 'top-right') {
-                    cropBox.style.width = `${startWidth + deltaX}px`;
-                    cropBox.style.height = `${startHeight - deltaY}px`;
-                    cropBox.style.top = `${cropBoxY + deltaY}px`;
-                } else if (handleClass === 'bottom-left') {
-                    cropBox.style.width = `${startWidth - deltaX}px`;
-                    cropBox.style.height = `${startHeight + deltaY}px`;
-                    cropBox.style.left = `${cropBoxX + deltaX}px`;
-                } else if (handleClass === 'bottom-right') {
-                    cropBox.style.width = `${startWidth + deltaX}px`;
-                    cropBox.style.height = `${startHeight + deltaY}px`;
+            // 이미지 로드 후 cropper.js 초기화
+            imageElement.onload = function () {
+                if (cropper) {
+                    cropper.destroy(); // 이전 cropper를 파괴하고 새로 초기화
                 }
 
-                cropBoxWidth = cropBox.offsetWidth;
-                cropBoxHeight = cropBox.offsetHeight;
-            }
-
-            function onMouseUp() {
-                document.removeEventListener('mousemove', onMouseMove);
-                document.removeEventListener('mouseup', onMouseUp);
-            }
-
-            document.addEventListener('mousemove', onMouseMove);
-            document.addEventListener('mouseup', onMouseUp);
+                // 새로운 cropper 인스턴스 생성
+                cropper = new Cropper(imageElement, {
+                    aspectRatio: 'free', // 비율 설정 (원하는 비율로 변경 가능)
+                    viewMode: 1,         // 이미지 크기 조정 모드 (1은 자르기 영역 제한)
+                    autoCropArea: 0.5,   // 초기 크기 비율 설정 (50%)
+                    responsive: true,    // 화면 크기에 맞춰 조정
+                    zoomable: true,      // 이미지 확대/축소 가능
+                    movable: true,       // 이미지 이동 가능
+                });
+            };
         });
-    });
 
-    // 자른 이미지 보내기 (서버에 전달)
-    function getCropBoxCoordinates() {
-        return {
-            x: cropBoxX,
-            y: cropBoxY,
-            width: cropBoxWidth,
-            height: cropBoxHeight
-        };
-    }
+        // 자른 이미지를 저장하는 버튼 클릭 이벤트
+        document.getElementById("save-cropped-image").addEventListener('click', ()=> {
+            if (cropper) {
+                // 자른 이미지 데이터 얻기 (base64)
+                let canvas = cropper.getCroppedCanvas();
+                let croppedImage = canvas.toDataURL("image/png"); // PNG 포맷으로 변환
+                
+                // 자른 이미지를 미리보기로 보여주기
+                document.getElementById("croppedImg").src = croppedImage;
 
-</script>
+                // 서버 URL
+                // POST 요청 데이터 구성
+                let v_ajax = new XMLHttpRequest();
+                v_ajax.open("POST", "${pageContext.request.contextPath}/uploadImage");
+                v_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+                // 전송할 데이터
+                let v_data = "image=" + encodeURIComponent(croppedImage);
+                console.log(v_data)
+
+                // 요청이 완료되었을 때 처리할 코드
+                v_ajax.onload = function () {
+                    if (v_ajax.status === 200) {
+                        console.log("서버 응답:", v_ajax.responseText);
+                        alert("이미지 업로드 성공!");
+                    } else {
+                        console.error("이미지 전송 실패:", v_ajax.status, v_ajax.statusText);
+                        alert("이미지 업로드 실패.");
+                    }
+                };
+
+                // 서버로 데이터 전송
+                v_ajax.send(v_data);
+            }
+        });
+	</script>
 
 </body>
 </html>

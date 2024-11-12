@@ -24,7 +24,7 @@
 	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/styles.css" rel="stylesheet" />
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" integrity="sha512-UtLOu9C7NuThQhuXXrGwx9Jb/z9zPQJctuAgNUBK3Z6kkSYT9wJ+2+dh6klS+TDBCV9kNPBbAxbVD+vCcfGPaA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style type="text/css">
 
 .main-height{
@@ -49,7 +49,12 @@
 		<div>
 			<div>계량기사진</div>
 			<div>
-				<input type="file" accept="image/*">
+				<div>
+					<input id="inputImg" type="file" accept="image/*">
+				</div>
+				<div>
+					<img id="showImg" src="">
+				</div>
 			</div>
 			<div>11월 전기 사용량 : </div>
 			<div>
@@ -70,9 +75,16 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js" integrity="sha512-JyCZjCOZoyeQZSd5+YEAcFgz2fowJ1F1hyJOXgtKu4llIa0KneLcidn5bwfutiehUTiOuK87A986BZJMko0eWQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	
 	<script type="text/javascript">
-
+			
+		document.getElementById("inputImg").addEventListener('change', ()=>{
+			let inputImg = document.getElementById("inputImg").files[0]
+			let file = URL.createObjectURL(inputImg)
+			document.getElementById("showImg").src = file 
+		})
+		
 
         
     </script>
