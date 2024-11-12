@@ -19,6 +19,11 @@
 	<resources mapping="/js/**" location="/resources/js/" />
 	<resources mapping="/image/**" location="/resources/" />
 
+	<!-- pdf라는 뷰 이름이 왔을 때 출력할 뷰를 설정 -->
+	<beans:bean id="pdfView" class="com.proj.main.PdfView"/>
+
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
@@ -28,7 +33,6 @@
 	<context:component-scan base-package="com.proj.main" /> 
 	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.support.StandardServletMultipartResolver"></beans:bean>
-	
 	
 	
 </beans:beans>
