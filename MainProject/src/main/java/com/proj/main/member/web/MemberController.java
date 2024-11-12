@@ -8,6 +8,10 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 
@@ -17,11 +21,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -376,6 +383,45 @@ public class MemberController {
     	return "member/ocrTest";
     }
     
+    @ResponseBody
+    @RequestMapping("/uploadImage")
+    public String uploadImage(@RequestBody String image) throws Exception {
+    	
+    	String uploadImage = image;
+    	
+    	StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/ocr");
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("POST");
+		conn.setDoOutput(true);
+		conn.setRequestProperty("Content-type", "application/json");
+		
+		System.out.println(uploadImage.substring(6));
+		
+		
+		String result = "{\"uploadImage\":\"" + uploadImage.substring(6) + "\"}";
+		
+		try(OutputStream os = conn.getOutputStream()){
+			byte[] input = result.getBytes("utf-8");
+			os.write(input,0,input.length);
+		}
+		
+		BufferedReader rd;
+
+		if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+			rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+		} else {
+			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+		}
+		
+		rd.close();
+		conn.disconnect();
+    	
+    	return "member/ocrTest";
+    }
+    
+    
+   
 
 
 }
