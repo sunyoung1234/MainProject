@@ -57,9 +57,9 @@
 			<div class="container px-5">
 				<div class="write-box rounded-4 py-5 px-4 px-md-5">
 					<div class="text-center mb-5">
-						<h1 class="fw-bolder">견 적 내 역</h1>
+						<h1 class="fw-bolder">리뷰 게시판</h1>
 					</div>
-
+					<a href="${pageContext.request.contextPath }/pdf" target="_blank">pdf</a>
 					<div class="row gx-5 justify-content-center">
 						<div class="col-lg-12 col-xl-10">
 							<table class="table table-bordered">
@@ -79,8 +79,8 @@
 								<thead class="thead-light">
 									<tr>
 										<th scope="col" class="text-center">번호</th>
-										<th scope="col" class="text-center">제목</th>
-										<th scope="col" class="text-center">날짜</th>
+										<th scope="col" class="text-center">사진</th>
+										<th scope="col" class="text-center">제품명</th>
 										<th scope="col" class="text-center">업체명</th>
 										<th scope="col" class="text-center">피드백 여부</th>
 									</tr>
@@ -171,14 +171,14 @@
 									</div>
 						</div>
 					</div>
-
+				
 					
 
 				</div>
 			</div>
 		</section>
 	</main>
-
+	
 	<%@ include file="/WEB-INF/inc/footer.jsp" %>
 
 	<!-- Bootstrap core JS -->

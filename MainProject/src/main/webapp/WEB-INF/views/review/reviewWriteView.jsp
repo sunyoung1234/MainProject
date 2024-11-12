@@ -22,12 +22,13 @@
             justify-content: center;
             padding: 20px;
             background-color: #f4f4f9;
-            min-height: 100vh;
+            min-height: 150vh;
+            overflow: auto;
         }
 
         .review-container {
             width: 1000px;
-            padding: 20px;
+            padding: 20px; 
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
@@ -178,7 +179,7 @@
                     </select>
 
                     <label for="revContent">리뷰 내용</label>
-                    <textarea id="revContent" name="revContent" rows="4" placeholder="리뷰를 입력하세요" required></textarea>
+                    <textarea id="revContent" name="revContent" rows="7" placeholder="리뷰를 입력하세요" required></textarea>
                     
                     <label for="inputFileBtn">리뷰 사진</label>
                     <img id="inputFileBtn" src="https://cdn-icons-png.flaticon.com/512/5735/5735394.png">
@@ -215,11 +216,10 @@
 		   			v_filesDiv.innerHTML = fileHTML;  
         			
 			    	let v_delBtns = document.querySelectorAll('.deleteReviewImg');
-			    	console.log(v_delBtns);
 			    	v_delBtns.forEach((del,j) =>{
 			    		del.addEventListener('click',()=>{
 			    			const dataTransfer = new DataTransfer();
-			    			del.parentElement.remove(); 
+			    			del.parentElement.remove();  
 			    			let fileArray = Array.from(document.getElementById('inputFile').files);
 			    			
 			    			fileArray.splice( j, 1);
