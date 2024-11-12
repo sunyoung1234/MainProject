@@ -1,158 +1,285 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>Green Solution</title>
-    
-    <!-- CSS 및 폰트 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <style type="text/css">
-        /* 기본 설정 */
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            padding-top: 50px; /* Navbar 높이에 맞춰 여백 설정 */
-        }
+<meta charset="UTF-8">
+<title>Green Solution</title>
+<!-- CSS 및 폰트 -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!-- Google Fonts 추가 -->
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@100..900&family=Orbit&display=swap"
+	rel="stylesheet">
+<!-- Bootstrap CSS 수정 링크 -->
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
 
-        /* 브랜드 스타일 (Green Solution) */
-        .navbar-brand {
-            color: black !important; /* 항상 검정색 글씨 */
-            text-decoration: none;
-        }
-        .navbar-brand:hover {
-            color: black; /* hover 시에도 검정색 유지 */
-            background-color: transparent; /* 배경색 없음 */
-        }
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="css/styles.css" rel="stylesheet" />
+<style>
+/* 기본 설정 */
+body {
+	margin: 0;
+	font-family: Arial, sans-serif;
+	padding-top: 50px;
+}
 
-        /* 네비게이션바 스타일 */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-            padding: 14px 20px;
-            background-color: white; /* 기본 배경색 */
-            transition: background-color 0.3s, color 0.3s;
-            border-bottom: 1px solid grey;
-        }
-        .navbar.scrolled {
-            background-color: rgba(255, 255, 255, 1); /* 스크롤 시 배경색 */
-            color: black; /* 스크롤 시 글자색 */
-        }
+/* 네비게이션바 스타일 */
+.navi-navbar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color: white;
+	border-bottom: 1px solid grey;
+	padding: 14px 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	z-index: 1000;
+	flex-wrap: wrap;
+}
 
-        /* 네비게이션 링크 스타일 */
-        .navbar a {
-            color: black; /* 기본 글자 색상 */
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .navbar.scrolled a {
-            color: black !important; /* 스크롤 시 링크 글자색 유지 */
-        }
+.navi-navbar-brand {
+	color: black;
+	font-size: 24px;
+	font-weight: bold;
+	text-decoration: none;
+	margin-right: 30px;
+}
 
-        /* 링크 hover 스타일 */
-        .navbar-nav .nav-item .nav-link:hover {
-            background-color: black; /* 배경 검정색 */
-            color: white; /* 글씨 흰색 */
-            border-radius: 5px;
-        }
+.navi-navbar-brand:hover {
+	color: black;
+}
+/* 네비게이션 메뉴를 중앙에 고정 */
+.nav-wrapper {
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+/* 네비게이션 메뉴 */
+.navi-navbar-nav {
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	gap: 150px;
+	flex: 1;
+}
 
-        /* 네비게이션바 전체 hover */
-        .navbar:hover {
-            background-color: rgba(255, 255, 255, 1); /* 배경 유지 */
-            color: black; /* 글자색 유지 */
-        }
+.navi-nav-item {
+	position: relative;
+	text-align: center;
+}
 
-        /* active 상태 링크 */
-        .active {
-            background-color: black; /* 강조 색상 */
-            border-radius: 5px;
-        }
+.navi-nav-link {
+	color: black;
+	text-decoration: none;
+	padding: 8px 12px;
+	display: block;
+	font-size: 18px;
+	transition: color 0.3s;
+	font-family: "Noto Sans KR", sans-serif;
+}
 
-        /* 네비게이션 메뉴 스타일 */
-        .navbar-nav {
-            display: flex; /* 수평 나열 */
-            padding: 0;
-            margin: 0;
-            list-style: none;
-        }
-        .navbar-nav .nav-item {
-            margin-left: 15px; /* 항목 간격 */
-        }
+.navi-nav-link:hover, .navi-active {
+	color: red;
+	box-shadow: inset 0 -1px 0 red; /* 내부에 밑줄 효과 */
+}
 
-        /* 프로필 이미지 */
-        .prof-img-small {
-            height: 30px;
-            width: 30px;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
+/* 드롭다운 전체 영역 */
+.navi-dropdown-field {
+	display: none;
+	width: 100%;
+	background-color: white;
+	padding: 0px 0;
+	border-top: 1px solid grey;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	z-index: 500;
+	position: absolute;
+	top: 100%;
+	left: 0;
+}
 
-        /* 네비게이션 항목 정렬 */
-        .nav-item {
-            display: flex;
-            align-items: center;
-            margin-left: 15px;
-            line-height: 1.5;
-        }
-    </style>
+.center-text {
+	text-align: center;
+}
+/* navbar에 hover 시 dropdown-field 표시 */
+.navi-navbar:hover .navi-dropdown-field {
+	display: flex;
+	justify-content: start;
+}
 
-    <script>
-        // 스크롤에 따른 네비게이션 배경색 변화
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
 
-        // 현재 페이지 탭 강조 표시
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-            const currentURL = window.location.pathname;
+.navi-dropdown-content-1:hover, .navi-dropdown-content-2:hover,
+	.navi-dropdown-content-3:hover, .navi-dropdown-content-4:hover {
+	background-color: #f1f1f1;
+}
 
-            navLinks.forEach(link => {
-                if (link.getAttribute('href') === currentURL) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
+/* 각 dropdown-content 위치 조정 */
+.navi-dropdown-content-1 {
+	margin-left: 30.5%; /* 첫 번째 nav-item에 맞추기 */
+	padding-top: 10px;
+	text-align
+}
+
+.navi-dropdown-content-2 {
+	margin-left: 5.5%; /* 두 번째 nav-item에 맞추기 (필요에 따라 조정) */
+	padding-top: 10px;
+}
+
+.navi-dropdown-content-3 {
+	margin-left: 5.5%; /* 세 번째 nav-item에 맞추기 (필요에 따라 조정) */
+	margin-right: 4.5%;
+	padding-top: 10px;
+}
+
+.navi-dropdown-content-4 {
+	margin-right: 30%; /* 네 번째 nav-item에 맞추기 (필요에 따라 조정) */
+	margin-right: 5%;
+	padding-top: 10px;
+}
+
+/* 드롭다운 메뉴 스타일 */
+.navi-dropdown-content {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 150px;
+}
+
+.navi-dropdown-item {
+	color: black;
+	padding: 10px 15px;
+	text-decoration: none;
+	font-size: 16px;
+	display: block;
+	width: 100%;
+	font-family: "Noto Sans KR", sans-serif;
+	transition: background-color 0.3s;
+}
+
+/* dropdown-item에 마우스 올렸을 때 회색 강조 */
+.navi-dropdown-item:hover {
+	color: red;
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* 오른쪽 정렬 */
+.navi-navbar-right {
+	display: flex;
+	align-items: center;
+	gap: 15px;
+}
+
+/* 오버레이 기본 스타일 */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2); /* 아주 옅은 검정색 */
+    display: none; /* 기본적으로 숨겨둠 */
+    z-index: 500; /* 네비게이션보다 아래에 배치 */
+}
+
+/* 네비게이션에 hover할 때 오버레이 표시 */
+.navi-navbar:hover ~ .overlay {
+    display: block;
+}
+
+/* 드롭다운 영역과 오버레이가 겹치지 않도록 드롭다운에 z-index 설정 */
+.navi-dropdown-field {
+    z-index: 600;
+}
+
+</style>
+
+
+
+
 </head>
 <body>
-    <!-- 네비게이션바 -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="${pageContext.request.contextPath}/">
-                <i class="fas fa-leaf"></i> Green Solution
-            </a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav ms-auto mb-3 mb-lg-0 ml-2">
-                    <c:if test="${not empty sessionScope.login && sessionScope.login.getMemId() != 'admin'}">
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/mypage">마이페이지</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/memEditView">${sessionScope.login.getMemName()} 님</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/boardView">견적 요청</a></li>
-                    </c:if>
-                    <c:if test="${not empty sessionScope.login && sessionScope.login.getMemId() == 'admin'}">
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/adminpage">관리자페이지</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/memEditView">${sessionScope.login.getMemName()} 님</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/boardViewAdmin">견적내역관리</a></li>
-                    </c:if>
-                    <c:if test="${empty sessionScope.login}">
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/loginView">로그인</a></li>
-                        <li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/agreementView">회원가입</a></li>
-                    </c:if>
-                </ul>
-            </div>
+	<!-- 네비게이션바 -->
+	<nav class="navi-navbar">
+		<!-- 브랜드 로고 -->
+		<a class="navi-navbar-brand"
+			href="${pageContext.request.contextPath}/"> <i
+			class="fas fa-leaf"></i> Green Solution
+		</a>
+		<!-- 네비게이션 메뉴 -->
+		<!-- 중앙 고정 네비게이션 메뉴 -->
+		<div class="nav-wrapper">
+		    <ul class="navi-navbar-nav">
+			    <li class="navi-nav-item"><a href="#" class="navi-nav-link">마이</a></li>
+			    <li class="navi-nav-item"><a href="#" class="navi-nav-link">게시판</a></li>
+			    <li class="navi-nav-item"><a href="#" class="navi-nav-link">지도</a></li>
+			    <li class="navi-nav-item"><a href="#" class="navi-nav-link">고객지원</a></li>
+		    </ul>
         </div>
-    </nav>
+		<!-- 오른쪽 끝 메뉴 -->
+		<div class="navi-navbar-right">
+			<c:choose>
+				<c:when test="${not empty sessionScope.login}">
+					<a href="${pageContext.request.contextPath}/memEditView" 
+						class="navi-nav-link">${sessionScope.login.getMemName()} 님</a>
+					<a href="${pageContext.request.contextPath}/logout"
+						class="navi-nav-link">로그아웃</a>
+				</c:when>
+				<c:otherwise>
+					<a href="${pageContext.request.contextPath}/loginView"
+						class="navi-nav-link">로그인</a>
+					<a href="${pageContext.request.contextPath}/agreementView"
+						class="navi-nav-link">회원가입</a>
+				</c:otherwise>
+			</c:choose>
+		</div>
+
+		<!-- 드롭다운 전체 영역 -->
+		<div class="navi-dropdown-field">
+			<!-- 마이 메뉴 dropdown-content -->
+			<div class="navi-dropdown-content-1 center-text">
+				<a href="${pageContext.request.contextPath}/mypage"
+					class="navi-dropdown-item">마이페이지</a> <a
+					href="${pageContext.request.contextPath}/memEditView"
+					class="navi-dropdown-item">회원정보수정</a> <a href="#"
+					class="navi-dropdown-item">전기사용량</a> <a href="#"
+					class="navi-dropdown-item">가스사용량</a>
+			</div>
+			<!-- 게시판 메뉴 dropdown-content -->
+			<div class="navi-dropdown-content-2 center-text">
+				<a href="#" class="navi-dropdown-item">공지사항</a> <a href="#"
+					class="navi-dropdown-item">리뷰게시판</a> <a href="#"
+					class="navi-dropdown-item">자유게시판</a> <a href="#"
+					class="navi-dropdown-item">건의사항</a>
+			</div>
+			<!-- 지도 메뉴 dropdown-content -->
+			<div class="navi-dropdown-content-3 center-text">
+				<a href="#" class="navi-dropdown-item">에너지효율등급</a> <a href="#"
+					class="navi-dropdown-item">지도 상세보기</a>
+			</div>
+			<!-- 고객지원 메뉴 dropdown-content -->
+			<div class="navi-dropdown-content-4 center-text">
+				<a href="#" class="navi-dropdown-item">챗봇상담</a> <a href="#"
+					class="navi-dropdown-item">자주 묻는 질문</a> <a href="#"
+					class="navi-dropdown-item">이용 가이드</a>
+			</div>
+		</div>
+	</nav>
+<div class="overlay"></div>
 </body>
 </html>
