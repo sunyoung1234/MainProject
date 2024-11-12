@@ -47,7 +47,18 @@
 
 	<div class="main-height">
 		<div>
-			ocr
+			<div>계량기사진</div>
+			<div>
+				<input type="file" accept="image/*">
+			</div>
+			<div>11월 전기 사용량 : </div>
+			<div>
+				<div>맞다면 버튼 클릭</div>
+				<button></button>
+			</div>
+		</div>
+		<div>
+		
 		</div>
 	</div>
 	
