@@ -105,7 +105,7 @@ public class MemberController {
        
         
         
-        StringBuilder urlBuilder = new StringBuilder("http://localhost:5000/regist"); /*URL*/
+        StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/regist"); /*URL*/
         URL url = new URL(urlBuilder.toString());
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         
@@ -363,6 +363,18 @@ public class MemberController {
         }
     }
     
+    @RequestMapping("/ocrView")
+    public String ocrView() {
+    	
+    	
+    	return "member/ocrView";
+    }
+    
+    @RequestMapping("/ocrTest")
+    public String ocrTest() {
+    	
+    	return "member/ocrTest";
+    }
     
 
 
