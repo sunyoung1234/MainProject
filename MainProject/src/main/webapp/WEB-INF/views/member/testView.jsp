@@ -74,7 +74,6 @@ body {
 	justify-content: center;
 }
 
-
 /* 사이드 네비게이션 */
 .side-nav {
 	position: fixed;
