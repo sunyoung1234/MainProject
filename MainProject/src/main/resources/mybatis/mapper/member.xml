@@ -12,7 +12,7 @@
         mem_name,
         mem_profile,
         mem_address,
-        mem_detailAddress,
+        jibun_address,
         postcode,
         extraAddress,
         mem_level
@@ -24,7 +24,7 @@
         #{memName, jdbcType=VARCHAR},
         #{memProfile, jdbcType=VARCHAR},
         #{memAddress, jdbcType=VARCHAR},
-        #{memDetailAddress, jdbcType=VARCHAR},
+        #{jibunAddress, jdbcType=VARCHAR},
         #{postcode, jdbcType=VARCHAR},
         #{extraAddress, jdbcType=VARCHAR},
         0
@@ -41,7 +41,7 @@
             mem_name = #{memName, jdbcType=VARCHAR},
             mem_profile = #{memProfile, jdbcType=VARCHAR},
             mem_address = #{memAddress, jdbcType=VARCHAR},
-            mem_detailAddress = #{memDetailAddress, jdbcType=VARCHAR},
+            jibun_address = #{jibunAddress, jdbcType=VARCHAR},
             postcode = #{postcode, jdbcType=VARCHAR},
             extraAddress = #{extraAddress, jdbcType=VARCHAR}
         WHERE mem_id = #{memId, jdbcType=VARCHAR}
@@ -57,7 +57,7 @@
             mem_name,
             mem_profile,
             mem_address,
-            mem_detailAddress,
+            jibun_address,
             postcode,
             extraAddress,
             mem_level

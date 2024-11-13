@@ -167,13 +167,13 @@ body {
 				</div>
 				
 				<div class="form-floating mb-3">
-				    <input type="text" id="sample4_jibunAddress" name="memDetailAddress" class="form-control" placeholder="상세 주소" />
-				    <label for="sample4_jibunAddress" class="label-small">상세 주소</label>
+				    <input type="text" id="sample4_jibunAddress" name="jibunAddress" class="form-control" placeholder="상세 주소" />
+				    <label for="sample4_jibunAddress" class="label-small">지번 주소</label>
 				</div>
 				
 				<div class="form-floating mb-3">
 				    <input type="text" id="sample4_extraAddress" name="extraAddress" class="form-control" placeholder="참고 항목" />
-				    <label for="sample4_extraAddress" class="label-small">참고 항목</label>
+				    <label for="sample4_extraAddress" class="label-small">상세 주소</label>
 				</div>
 
 				<!-- 회원가입 버튼 -->
@@ -333,7 +333,7 @@ body {
 				return;
 			}
 			if(!v_jibunAddress.value){
-				alert('상세주소를 입력해주세요')
+				alert('지번주소를 입력해주세요')
 				event.preventDefault();
 				return;
 			}
@@ -351,8 +351,16 @@ body {
     function sample4_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
+            	
                 var roadAddr = data.roadAddress;
                 var extraRoadAddr = '';
+                var jibunAddr = '';
+                
+                if(data.autoJibunAddress != ''){
+                	jibunAddr = data.autoJibunAddress;
+                }else{
+                	jibunAddr = data.jibunAddress;
+                }
 
                 if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
                     extraRoadAddr += data.bname;
@@ -362,6 +370,7 @@ body {
                 }
                 $('#sample4_postcode').val(data.zonecode);
                 $('#sample4_roadAddress').val(roadAddr);
+                $('#sample4_jibunAddress').val(jibunAddr);
                 $('#sample4_extraAddress').val(extraRoadAddr);
             }
         }).open();

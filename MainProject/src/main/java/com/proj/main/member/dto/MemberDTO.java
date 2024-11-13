@@ -8,7 +8,7 @@ public class MemberDTO {
     private String memName;
     private String memProfile;
     private String memAddress;
-    private String memDetailAddress;
+    private String jibunAddress;
     private String postcode;
     private String extraAddress;
     private int memLevel;
@@ -17,10 +17,10 @@ public class MemberDTO {
     public MemberDTO() {
     }
 
-    
 
 	public MemberDTO(String memId, String memPw, String memEmail, String memPhone, String memName, String memProfile,
-			String memAddress, String memDetailAddress, String postcode, String extraAddress, int memLevel) {
+			String memAddress, String jibunAddress, String postcode, String extraAddress, int memLevel) {
+		super();
 		this.memId = memId;
 		this.memPw = memPw;
 		this.memEmail = memEmail;
@@ -28,22 +28,20 @@ public class MemberDTO {
 		this.memName = memName;
 		this.memProfile = memProfile;
 		this.memAddress = memAddress;
-		this.memDetailAddress = memDetailAddress;
+		this.jibunAddress = jibunAddress;
 		this.postcode = postcode;
 		this.extraAddress = extraAddress;
 		this.memLevel = memLevel;
 	}
 
 
-
 	@Override
 	public String toString() {
 		return "MemberDTO [memId=" + memId + ", memPw=" + memPw + ", memEmail=" + memEmail + ", memPhone=" + memPhone
 				+ ", memName=" + memName + ", memProfile=" + memProfile + ", memAddress=" + memAddress
-				+ ", memDetailAddress=" + memDetailAddress + ", postcode=" + postcode + ", extraAddress=" + extraAddress
+				+ ", jibunAddress=" + jibunAddress + ", postcode=" + postcode + ", extraAddress=" + extraAddress
 				+ ", memLevel=" + memLevel + "]";
 	}
-
 
 
 	public String getMemId() {
@@ -51,11 +49,9 @@ public class MemberDTO {
 	}
 
 
-
 	public void setMemId(String memId) {
 		this.memId = memId;
 	}
-
 
 
 	public String getMemPw() {
@@ -63,11 +59,9 @@ public class MemberDTO {
 	}
 
 
-
 	public void setMemPw(String memPw) {
 		this.memPw = memPw;
 	}
-
 
 
 	public String getMemEmail() {
@@ -75,11 +69,9 @@ public class MemberDTO {
 	}
 
 
-
 	public void setMemEmail(String memEmail) {
 		this.memEmail = memEmail;
 	}
-
 
 
 	public String getMemPhone() {
@@ -87,11 +79,9 @@ public class MemberDTO {
 	}
 
 
-
 	public void setMemPhone(String memPhone) {
 		this.memPhone = memPhone;
 	}
-
 
 
 	public String getMemName() {
@@ -99,11 +89,9 @@ public class MemberDTO {
 	}
 
 
-
 	public void setMemName(String memName) {
 		this.memName = memName;
 	}
-
 
 
 	public String getMemProfile() {
@@ -111,11 +99,9 @@ public class MemberDTO {
 	}
 
 
-
 	public void setMemProfile(String memProfile) {
 		this.memProfile = memProfile;
 	}
-
 
 
 	public String getMemAddress() {
@@ -123,23 +109,19 @@ public class MemberDTO {
 	}
 
 
-
 	public void setMemAddress(String memAddress) {
 		this.memAddress = memAddress;
 	}
 
 
-
-	public String getMemDetailAddress() {
-		return memDetailAddress;
+	public String getJibunAddress() {
+		return jibunAddress;
 	}
 
 
-
-	public void setMemDetailAddress(String memDetailAddress) {
-		this.memDetailAddress = memDetailAddress;
+	public void setJibunAddress(String jibunAddress) {
+		this.jibunAddress = jibunAddress;
 	}
-
 
 
 	public String getPostcode() {
@@ -147,11 +129,9 @@ public class MemberDTO {
 	}
 
 
-
 	public void setPostcode(String postcode) {
 		this.postcode = postcode;
 	}
-
 
 
 	public String getExtraAddress() {
@@ -159,11 +139,9 @@ public class MemberDTO {
 	}
 
 
-
 	public void setExtraAddress(String extraAddress) {
 		this.extraAddress = extraAddress;
 	}
-
 
 
 	public int getMemLevel() {
@@ -171,11 +149,12 @@ public class MemberDTO {
 	}
 
 
-
 	public void setMemLevel(int memLevel) {
 		this.memLevel = memLevel;
 	}
+    
 
-    
-    
+
+	
+
 }
