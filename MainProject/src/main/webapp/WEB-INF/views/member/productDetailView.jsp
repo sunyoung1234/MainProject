@@ -119,56 +119,18 @@
 		<div class="product-list">
 			<div class="product-box">
 				<div class="product-img">
-					<img src="https://eep.energy.or.kr/images/item/i_1.png">
-				</div>
-				<div class="product-name">
-					전기냉장고
-				</div>
-			</div>
-			<div class="product-box">
-				<div class="product-img">
-					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=김치냉장고">
-						<img src="https://eep.energy.or.kr/images/item/i_2.png">
-					</a>
+					<img src="https://eep.energy.or.kr/images/item/i_2.png">
 				</div>
 				<div class="product-name">
 					김치냉장고
 				</div>
-			</div>
-			<div class="product-box">
-				<div class="product-img">
-					<img src="https://eep.energy.or.kr/images/item/i_4.png">
-				</div>
-				<div class="product-name">
-					전기세탁기(일반)
+				<div>
 				</div>
 			</div>
-			<div class="product-box">
-				<div class="product-img">
-					<img src="https://eep.energy.or.kr/images/item/i_5.png">
-				</div>
-				<div class="product-name">
-					전기세탁기(드럼)
-				</div>
-			</div>
-			<div class="product-box">
-				<div class="product-img">
-					<img src="https://eep.energy.or.kr/images/item/i_28.png">
-				</div>
-				<div class="product-name">
-					제습기
-				</div>
-			</div>
-			<div class="product-box">
-				<div class="product-img">
-					<img src="https://eep.energy.or.kr/images/item/i_31.png">
-				</div>	
-				<div class="product-name">
-					의류건조기
-				</div>
-			</div>
+			<div></div>
 		</div>
 	</div>
+	
 
 	<%@ include file="/WEB-INF/inc/footer.jsp" %>
 
