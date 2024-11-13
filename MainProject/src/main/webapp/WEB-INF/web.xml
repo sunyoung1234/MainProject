@@ -23,7 +23,8 @@
 			<param-value>/WEB-INF/classes/spring/servlet-context.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
-		
+		<!-- sockis를 이용한 소켓통신을 위해 servlet 내부와 filter 태그 내부에 async-supported = true 추가 -->
+		<async-supported>true</async-supported>
 		<multipart-config>
 			<max-file-size>31457280</max-file-size>
 			<max-request-size>1004857600</max-request-size>
@@ -39,6 +40,7 @@
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter
 		</filter-class>
+		<async-supported>true</async-supported>
 		<init-param>
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>

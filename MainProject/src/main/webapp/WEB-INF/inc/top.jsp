@@ -264,8 +264,7 @@ body {
 			<div class="navi-dropdown-content-2 center-text">
 				<a href="#" class="navi-dropdown-item">공지사항</a> <a href="#"
 					class="navi-dropdown-item">리뷰게시판</a> <a href="#"
-					class="navi-dropdown-item">자유게시판</a> <a href="#"
-					class="navi-dropdown-item">건의사항</a>
+					class="navi-dropdown-item">자유게시판</a> 
 			</div>
 			<!-- 지도 메뉴 dropdown-content -->
 			<div class="navi-dropdown-content-3 center-text">
@@ -276,7 +275,8 @@ body {
 			<div class="navi-dropdown-content-4 center-text">
 				<a href="#" class="navi-dropdown-item">챗봇상담</a> <a href="#"
 					class="navi-dropdown-item">자주 묻는 질문</a> <a href="#"
-					class="navi-dropdown-item">이용 가이드</a>
+					class="navi-dropdown-item">이용 가이드</a><a href="#"
+					class="navi-dropdown-item">건의사항</a>
 			</div>
 		</div>
 	</nav>
