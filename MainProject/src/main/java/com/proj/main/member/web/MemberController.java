@@ -87,7 +87,7 @@ public class MemberController {
         String memPhone = req.getParameter("memPhone");
         String memName = req.getParameter("memName");
         String memAddress = req.getParameter("memAddress");
-        String memDetailAddress = req.getParameter("memDetailAddress");
+        String jibun_address = req.getParameter("jibunAddress");
         String postcode = req.getParameter("postcode");
         String extraAddress = req.getParameter("extraAddress");
 
@@ -103,7 +103,7 @@ public class MemberController {
             }
 
             int defaultMemLevel = 0;
-            MemberDTO member = new MemberDTO(memId, memPw, memEmail, memPhone, memName, imgPath, memAddress, memDetailAddress, postcode, extraAddress, defaultMemLevel);
+            MemberDTO member = new MemberDTO(memId, memPw, memEmail, memPhone, memName, imgPath, memAddress, jibun_address, postcode, extraAddress, defaultMemLevel);
             memberService.registMember(member);
         } catch (IOException e) {
             e.printStackTrace();
@@ -159,21 +159,10 @@ public class MemberController {
         String phone = req.getParameter("memPhone");
         String name = req.getParameter("memName");
         String address = req.getParameter("memAddress");
-        String detailAddress = req.getParameter("memDetailAddress");
+        String jibunAddress = req.getParameter("jibunAddress");
         String postcode = req.getParameter("postcode");
         String extraAddress = req.getParameter("extraAddress");
         
-        // 제대로 데이터가 불러와지는지 체크
-        System.out.println("ID: " + id);
-        System.out.println("Password: " + pw);
-        System.out.println("Email: " + email);
-        System.out.println("Phone: " + phone);
-        System.out.println("Name: " + name);
-        System.out.println("Address: " + address);
-        System.out.println("DetailAddress: " + detailAddress);
-        System.out.println("Postcode: " + postcode);
-        System.out.println("ExtraAddress: " + extraAddress);
-
         String imgPath; // 이미지 경로 초기화
         
         try {
@@ -188,7 +177,7 @@ public class MemberController {
             }
             
             int defaultMemLevel = 0; // 기본 회원 레벨 설정
-            MemberDTO updateMem = new MemberDTO(id, pw, name, phone, email, address, detailAddress, postcode, extraAddress, imgPath, defaultMemLevel);
+            MemberDTO updateMem = new MemberDTO(id, pw, name, phone, email, address, jibunAddress, postcode, extraAddress, imgPath, defaultMemLevel);
             memberService.updateMember(updateMem);
             session.setAttribute("login", updateMem);
         } catch (IOException e) {

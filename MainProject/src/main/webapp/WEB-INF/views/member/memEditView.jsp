@@ -110,12 +110,12 @@
                 </div>
                 
                 <div class="form-floating mb-3">
-                    <input type="text" id="sample4_jibunAddress" name="memDetailAddress" class="form-control" placeholder="상세주소" value="${member.memDetailAddress}" />
+                    <input type="text" id="sample4_jibunAddress" name="memDetailAddress" class="form-control" placeholder="지번주소" value="${member.jibunAddress}" />
                     <label for="sample4_jibunAddress">상세 주소</label>
                 </div>
                 
                 <div class="form-floating mb-3">
-                    <input type="text" id="sample4_extraAddress" name="extraAddress" class="form-control" placeholder="참고항목" value="${member.extraAddress}" />
+                    <input type="text" id="sample4_extraAddress" name="extraAddress" class="form-control" placeholder="상세주소" value="${member.extraAddress}" />
                     <label for="sample4_extraAddress">참고 항목</label>
                 </div>
 
@@ -150,8 +150,16 @@
     function sample4_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
+            	
                 var roadAddr = data.roadAddress;
                 var extraRoadAddr = '';
+                var jibunAddr = '';
+                
+                if(data.autoJibunAddress != ''){
+                	jibunAddr = data.autoJibunAddress;
+                }else{
+                	jibunAddr = data.jibunAddress;
+                }
 
                 if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
                     extraRoadAddr += data.bname;
@@ -159,18 +167,10 @@
                 if (data.buildingName !== '' && data.apartment === 'Y') {
                     extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
                 }
-                if (extraRoadAddr !== '') {
-                    extraRoadAddr = ' (' + extraRoadAddr + ')';
-                }
-
-                // 각 주소 필드에 값 할당
-                document.getElementById('sample4_postcode').value = data.zonecode;
-                document.getElementById("sample4_roadAddress").value = roadAddr;
-                document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-
-                // 사용자가 입력하는 필드 초기화
-                document.getElementById("sample4_jibunAddress").value = '';
-
+                $('#sample4_postcode').val(data.zonecode);
+                $('#sample4_roadAddress').val(roadAddr);
+                $('#sample4_jibunAddress').val(jibunAddr);
+                $('#sample4_extraAddress').val(extraRoadAddr);
             }
         }).open();
     }
