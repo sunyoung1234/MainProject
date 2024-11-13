@@ -273,7 +273,7 @@ body {
 			</div>
 			<!-- 고객지원 메뉴 dropdown-content -->
 			<div class="navi-dropdown-content-4 center-text">
-				<a href="#" class="navi-dropdown-item">챗봇상담</a> <a href="#"
+				<a href="${pageContext.request.contextPath}/chatListView" class="navi-dropdown-item">챗봇상담</a> <a href="#"
 					class="navi-dropdown-item">자주 묻는 질문</a> <a href="#"
 					class="navi-dropdown-item">이용 가이드</a><a href="#"
 					class="navi-dropdown-item">건의사항</a>

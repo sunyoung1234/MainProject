@@ -36,4 +36,8 @@
         )
     </insert>
 
+	<delete id="deleteAllByRoomNo" parameterType="int">
+    DELETE FROM chatlog WHERE room_no = #{roomNo}
+</delete>
+
 </mapper>
