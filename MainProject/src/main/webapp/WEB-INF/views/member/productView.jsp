@@ -193,10 +193,10 @@
 			</div>
 			<div class="product-box">
 				<div class="product-img">
-					<img src="https://eep.energy.or.kr/images/item/i_12.png">
-				</div>
+					<img src="https://eep.energy.or.kr/images/item/i_31.png">
+				</div>	
 				<div class="product-name">
-					백열전구
+					의류건조기
 				</div>
 			</div>
 		</div>
