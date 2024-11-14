@@ -1,211 +1,188 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-<meta name="description" content />
-<meta name="author" content />
-<title>마이 페이지</title>
-<!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-<!-- Custom Google font-->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-	href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
-	rel="stylesheet" />
-<!-- Bootstrap icons-->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css"
-	rel="stylesheet" />
-<!-- Core theme CSS (includes Bootstrap)-->
-<link href="css/styles.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>마이 페이지</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
+    <link href="${pageContext.request.contextPath}/css/styles.css" rel="stylesheet" />
 
-<style type="text/css">
+    <style>
+        /* 기본 스타일 */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: #000;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
 
-.main-height{
-	height:1200px;
-}
+        /* 암전 및 깜박임 효과 */
+        .blackout {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 1);
+            z-index: 2;
+            animation: blackout 1s forwards;
+        }
 
-.bg-color {
-	background-color: #10bd66;
-}
+        @keyframes blackout {
+            0% { opacity: 1; }
+            100% { opacity: 0; }
+        }
 
-.table-box {
-	width: 100%;
-	max-width: 1000px;
-}
+        /* 미친듯한 배경 효과 (핵폭발, 번개, 빛 등) */
+        .background-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.7) 0%, rgba(255, 215, 0, 0.4) 80%);
+            animation: explosion 4s ease-out infinite, lightning 1.5s ease-in-out infinite;
+            z-index: 1;
+            filter: brightness(1.5) saturate(2);
+        }
 
-.cur-poi {
-	cursor: pointer;
-}
+        @keyframes explosion {
+            0% { transform: scale(0.1); opacity: 1; }
+            50% { transform: scale(3); opacity: 0.8; }
+            100% { transform: scale(10); opacity: 0; }
+        }
 
-.prof-img {
-	height: 200px;
-	width: 200px;
-	border-radius: 150px;
-	cursor: pointer;
-}
+        @keyframes lightning {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
 
-.login-card {
-	background-color: white;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+        /* 번개 효과 */
+        .lightning {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 300px;
+            background: linear-gradient(180deg, #ffffff 0%, #fffc00 50%, #ffffff 100%);
+            animation: bolt 1s linear infinite;
+            z-index: 3;
+            transform: translate(-50%, -50%);
+        }
 
-.err-msg {
-	color: red;
-}
+        @keyframes bolt {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+        }
 
-.table {
-	font-size: 10px;
-}
+        /* 프로필 카드 */
+        .profile-card {
+            background: rgba(0, 0, 0, 0.9);
+            color: #fff;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+            padding: 50px;
+            text-align: center;
+            width: 500px;  /* 카드 크기 확장 */
+            backdrop-filter: blur(15px);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            animation: cardAppear 3s ease-out forwards;
+            z-index: 4;  /* 카드가 배경 위에 */
+        }
 
-th, td {
-	padding: 5px;
-}
+        @keyframes cardAppear {
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3) rotate(180deg); }
+            50% { transform: translate(-50%, -50%) scale(1.05) rotate(0deg); }
+            100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+        }
 
-.mypage-profile-text {
-	font-size: 16px;
-	text-decoration: none;
-	color: black;
-	
-}
+        /* 텍스트 스타일 */
+        .profile-card h1 {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-shadow: 6px 6px 20px rgba(0, 0, 0, 0.8);
+        }
 
-.mypage-profile-text-small{
-	font-size: 14px;
-	text-decoration: none;
-	color: black;
-}
+        .profile-card p {
+            font-size: 20px;
+            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.9);
+        }
 
-.mypage-profile-text-small{
-	font-size: 14px;
-	text-decoration: none;
-	color: black;
-}
+        /* 버튼 스타일 */
+        .btn-edit {
+            background: linear-gradient(135deg, #FF4500, #FFD700);
+            color: #fff;
+            padding: 18px 40px;
+            border-radius: 40px;
+            font-size: 20px;
+            font-weight: 700;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
+            border: none;
+            transform: scale(1.1);
+        }
 
-.v-edit-btn {
-	background-color: #10bd66; /* 배경색 */
-	color: white; /* 글자 색상 */
-	border: 1px solid grey; /* 테두리 */
-	padding: 7px 14px; /* 패딩 */
-	text-decoration: none; /* 밑줄 제거 */
-	border-radius: 10px; /* 모서리 둥글게 */
-	display: inline-block; /* 버튼처럼 보이도록 */
-	text-align: center; /* 텍스트 중앙 정렬 */
-	transition: background-color 0.3s; /* 호버 효과 */
-	font-weight: bold;
-	margin-top: 5px;
-}
+        /* 버튼 호버 효과 */
+        .btn-edit:hover {
+            transform: scale(1.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
+        }
 
-.v-edit-btn:hover {
-	background-color: #0f9e58; /* 호버 시 배경색 변경 */
-	color: white;
-	text-decoration: none; /* 밑줄 제거 */
-}
+        /* 버튼 반짝임 효과 */
+        .btn-edit::after {
+            content: '';
+            position: absolute;
+            top: -8px; left: -8px;
+            right: -8px; bottom: -8px;
+            border-radius: 40px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.7) 0%, rgba(255, 0, 0, 0.4) 100%);
+            animation: pulse 1s infinite alternate;
+        }
 
-.col-6.bg-white {
-    min-height: 390px;
-    max-height: 800px;
-}
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.6; }
+            100% { transform: scale(1.15); opacity: 1; }
+        }
 
-.page-item.active .page-link {
-	background-color: #198754; /* 강조할 색상 */
-	color: white; /* 텍스트 색상 */
-	border-color: #198754; /* 테두리 색상 */
-}
-
-.img-box{
-	width:400px;
-	height:200px;
-	overflow: hidden;
-}
-
-.img-box > img{
-	width:100%;
-	
-}
-
-
-</style>
-
+    </style>
 </head>
-<body class="d-flex flex-column">
+<body>
 
-	<%@ include file="/WEB-INF/inc/top.jsp"%>
+    <!-- 배경과 암전 처리 -->
+    <div class="blackout"></div>
+    <div class="background-effect"></div>
+    <div class="lightning"></div> <!-- 번개 효과 -->
 
-	<main class="main-height flex-shrink-0">
-		<section class="py-5">
-			<div class="text-center mb-5">
-				<h1 class="fw-bolder mb-4">마이페이지</h1>
-			</div>
-			<div class="container px-5 text-center ">
-				<div class="container text-center mb-5">
-					<div class="row row-cols-2 justify-content-center">
+    <main class="main-height">
+        <div class="profile-card">
+            <h1>${sessionScope.login.getMemName()} 님</h1>
+            <p>연락처: ${sessionScope.login.getMemPhone()}</p>
+            <p>이메일: ${sessionScope.login.getMemEmail()}</p>
+            <div class="divider"></div>
+            <a href="${pageContext.request.contextPath}/memEditView" class="btn btn-edit">수정하기</a>
+        </div>
+    </main>
 
-						<!-- 프로필 이미지 및 프로필 정보 영역 -->
-						<div class="col-6 justify-content-center d-flex">
-							<%-- <div class="form-floating mb-3">
-								<div class="d-flex justify-content-center me-3">
-									<img class="prof-img" id="imgBox"
-										src="${pageContext.request.contextPath}/displayImage?imgName=${member.memProfile}"
-										alt="profile Image" /> 
-									
-								</div>
-							</div> --%>
-							<div class="ms-4 mt-4">
-								<!-- entp_name -->
-								<div class="form-floating mb-3">
-									<a class="mypage-profile-text">${sessionScope.login.getMemName() } 님</a>
-								</div>
-
-								<!-- mem_Phone -->
-								<div class="form-floating mb-3">
-									<a class="mypage-profile-text-small">${sessionScope.login.getMemPhone() }</a>
-								</div>
-
-								<!-- mem_Email -->
-								<div class="form-floating mb-5">
-									<a class="mypage-profile-text-small">${sessionScope.login.getMemEmail() }</a>
-								</div>
-
-								<!-- memEditView로 이동하는 수정하기 Button -->
-								<div class="d-grid mt-5 ms-4">
-									<a class="v-edit-btn bg-color"
-										href="${pageContext.request.contextPath}/memEditView">수정하기</a>
-								</div>
-
-								<div>
-									<img src="http://192.168.0.51:5000/post">
-								</div>
-								
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-	</main>
-	
-	
-
-	<%@ include file="/WEB-INF/inc/footer.jsp" %>
-
-	<!-- Bootstrap core JS -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="js/scripts.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-	<script type="text/javascript">
-
-
-        
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // 페이지 로드 시 카드 등장 애니메이션
+        window.onload = function() {
+            setTimeout(function() {
+                document.querySelector('.profile-card').style.transform = 'scale(1)';
+                document.querySelector('.profile-card').style.transition = 'transform 2s ease-out';
+            }, 500);
+        };
     </script>
-    
 </body>
 </html>

@@ -25,9 +25,9 @@ public class RoomService {
 	};
 	
 	public int createRoom(RoomDTO room) {
-		int result = dao.createRoom(room);
-		return result;
-	};
+	    dao.createRoom(room);
+	    return room.getRoomNo();
+	}
 	
 	
 	public int deleteRoom(int roomNo) {

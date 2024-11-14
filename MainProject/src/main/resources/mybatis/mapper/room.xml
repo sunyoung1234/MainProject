@@ -32,16 +32,20 @@
     </select>
 
     <!-- 채팅방 생성 -->
-    <insert id="createRoom" parameterType="com.proj.main.chat.dto.RoomDTO">
-        INSERT INTO rooms (
-              room_no,
-              room_name,
-              reg_date
-        ) VALUES (
-              #{roomNo},
-              #{roomName},
-              SYSDATE
-        )
-    </insert>
+	<insert id="createRoom" parameterType="com.proj.main.chat.dto.RoomDTO">
+	    INSERT INTO rooms (
+	          room_no,
+	          room_name,
+	          mem_id,
+	          mem_name,
+	          reg_date
+	    ) VALUES (
+	          room_seq.NEXTVAL,  <!-- 시퀀스를 통해 room_no를 자동 생성 -->
+	          #{roomName},
+	          #{memId},
+	          #{memName},
+	          SYSDATE
+	    )
+	</insert>
 
 </mapper>

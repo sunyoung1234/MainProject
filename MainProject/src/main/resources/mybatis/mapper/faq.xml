@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.main.faq.dao.IFaqDAO">
+    
+<!--     모든 FAQ 조회
+    <select id="getAllFaqs" resultType="com.proj.main.faq.dto.FaqDTO">
+        SELECT faq_id AS faqId,
+               question,
+               answer,
+               created_date AS createdDate
+          FROM faq
+         ORDER BY created_date DESC
+    </select> -->
+
+</mapper>
