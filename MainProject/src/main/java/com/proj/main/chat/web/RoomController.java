@@ -1,6 +1,8 @@
 package com.proj.main.chat.web;
 
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import com.proj.main.chat.dto.RoomDTO;
 import com.proj.main.chat.service.ChatLogService;
 import com.proj.main.chat.service.RoomService;
 import com.proj.main.member.dto.MemberDTO;
-import com.proj.main.ActiveUserCounter; // ActiveUserCounter 클래스 임포트
+import com.proj.main.ActiveUserCounter;
 
 @Controller
 public class RoomController {
@@ -27,62 +29,74 @@ public class RoomController {
     public String chatListView(Model model) {
         List<RoomDTO> roomList = roomService.getRoomList();
         model.addAttribute("roomList", roomList);
-
-        // 현재 접속자 수를 추가하여 JSP에 전달
         model.addAttribute("activeUsers", ActiveUserCounter.getActiveSessions());
-
         return "chat/chatListView";
     }
 
-    // 채팅방 생성 화면
-    @RequestMapping("/roomCreateView")
-    public String roomCreateView(Model model, HttpSession session) {
+    // 채팅방 생성 요청 (챗봇에서)
+    @ResponseBody
+    @PostMapping("/roomCreateDo")
+    public Map<String, Object> roomCreateDo(RoomDTO room, HttpSession session) {
         MemberDTO login = (MemberDTO) session.getAttribute("login");
+        Map<String, Object> result = new HashMap<>();
 
         if (login == null) {
-            return "member/loginView";
-        }
-        return "chat/roomCreateView";
-    }
-
-    // 채팅방 생성
-    @RequestMapping("/roomCreateDo")
-    public String roomCreateDo(RoomDTO room, HttpSession session) {
-        System.out.println(room);
-        MemberDTO login = (MemberDTO) session.getAttribute("login");
-
-        if (login == null) {
-            return "redirect:/loginView";
+            result.put("status", "fail");
+            result.put("redirect", "/loginView"); // 비로그인 시 loginView로 리다이렉트
+            return result;
         }
 
         room.setMemId(login.getMemId());
         room.setMemName(login.getMemName());
         roomService.createRoom(room);
 
-        return "redirect:/chatListView";
+        result.put("status", "success");
+        result.put("roomNo", room.getRoomNo());
+        result.put("roomName", room.getRoomName());
+        return result;
     }
 
-    // 채팅방 삭제 로직
-    @RequestMapping("/deleteRoom")
-    public String deleteRoom(int roomNo) {
-        roomService.deleteRoom(roomNo);
-        return "redirect:/chatListView"; // 삭제 후 채팅방 목록으로 리다이렉트
+    // 관리자가 사용자의 채팅방 목록을 가져오기 위한 API
+    @ResponseBody
+    @RequestMapping("/getRoomList")
+    public List<RoomDTO> getRoomList() {
+        return roomService.getRoomList();
     }
-    
+
+    // 채팅방 삭제
+    @ResponseBody
+    @PostMapping("/deleteRoom")
+    public String deleteRoom(int roomNo, HttpSession session) {
+        MemberDTO loginUser = (MemberDTO) session.getAttribute("login");
+        RoomDTO room = roomService.getRoom(roomNo);
+
+        if (loginUser != null && (loginUser.getMemId().equals(room.getMemId()) || loginUser.getMemId().equals("admin"))) {
+            roomService.deleteRoom(roomNo);
+            return "success";
+        }
+        return "fail";
+    }
+
     @Autowired
-    private ChatLogService chatLogService;  // ChatLogService를 통해 대화 삭제
-    
+    private ChatLogService chatLogService;
+
+    // 채팅 로그 삭제
     @ResponseBody
     @PostMapping("/clearChat")
     public String clearChat(int roomNo, HttpSession session) {
         MemberDTO loginUser = (MemberDTO) session.getAttribute("login");
         RoomDTO room = roomService.getRoom(roomNo);
 
-        // 방장 또는 admin만 삭제 가능
         if (loginUser != null && (loginUser.getMemId().equals(room.getMemId()) || loginUser.getMemId().equals("admin"))) {
-            chatLogService.clearChatLogs(roomNo);  // 대화 삭제 로직 호출
+            chatLogService.clearChatLogs(roomNo);
             return "success";
         }
         return "fail";
+    }
+    
+    // 채팅방 생성 페이지로 이동
+    @RequestMapping("/roomCreateView")
+    public String roomCreateView() {
+        return "chat/roomCreateView";
     }
 }

@@ -63,9 +63,9 @@ body {
 }
 /* 네비게이션 메뉴를 중앙에 고정 */
 .nav-wrapper {
-    display: flex;
-    justify-content: center;
-    flex: 1;
+	display: flex;
+	justify-content: center;
+	flex: 1;
 }
 /* 네비게이션 메뉴 */
 .navi-navbar-nav {
@@ -123,7 +123,6 @@ body {
 	justify-content: start;
 }
 
-
 .navi-dropdown-content-1:hover, .navi-dropdown-content-2:hover,
 	.navi-dropdown-content-3:hover, .navi-dropdown-content-4:hover {
 	background-color: #f1f1f1;
@@ -131,7 +130,7 @@ body {
 
 /* 각 dropdown-content 위치 조정 */
 .navi-dropdown-content-1 {
-	margin-left: 30.5%; /* 첫 번째 nav-item에 맞추기 */
+	margin-left: 30.2%; /* 첫 번째 nav-item에 맞추기 */
 	padding-top: 10px;
 	text-align
 }
@@ -142,14 +141,13 @@ body {
 }
 
 .navi-dropdown-content-3 {
-	margin-left: 5.5%; /* 세 번째 nav-item에 맞추기 (필요에 따라 조정) */
-	margin-right: 4.5%;
+	margin-left: 5.25%; /* 세 번째 nav-item에 맞추기 (필요에 따라 조정) */
+	margin-right: 4.75%;
 	padding-top: 10px;
 }
 
 .navi-dropdown-content-4 {
-	margin-right: 30%; /* 네 번째 nav-item에 맞추기 (필요에 따라 조정) */
-	margin-right: 5%;
+	margin-right: 20%; /* 네 번째 nav-item에 맞추기 (필요에 따라 조정) */
 	padding-top: 10px;
 }
 
@@ -187,26 +185,25 @@ body {
 
 /* 오버레이 기본 스타일 */
 .overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.2); /* 아주 옅은 검정색 */
-    display: none; /* 기본적으로 숨겨둠 */
-    z-index: 500; /* 네비게이션보다 아래에 배치 */
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.2); /* 아주 옅은 검정색 */
+	display: none; /* 기본적으로 숨겨둠 */
+	z-index: 500; /* 네비게이션보다 아래에 배치 */
 }
 
 /* 네비게이션에 hover할 때 오버레이 표시 */
 .navi-navbar:hover ~ .overlay {
-    display: block;
+	display: block;
 }
 
 /* 드롭다운 영역과 오버레이가 겹치지 않도록 드롭다운에 z-index 설정 */
 .navi-dropdown-field {
-    z-index: 600;
+	z-index: 600;
 }
-
 </style>
 
 
@@ -224,18 +221,18 @@ body {
 		<!-- 네비게이션 메뉴 -->
 		<!-- 중앙 고정 네비게이션 메뉴 -->
 		<div class="nav-wrapper">
-		    <ul class="navi-navbar-nav">
-			    <li class="navi-nav-item"><a href="#" class="navi-nav-link">마이</a></li>
-			    <li class="navi-nav-item"><a href="#" class="navi-nav-link">게시판</a></li>
-			    <li class="navi-nav-item"><a href="#" class="navi-nav-link">지도</a></li>
-			    <li class="navi-nav-item"><a href="#" class="navi-nav-link">고객지원</a></li>
-		    </ul>
-        </div>
+			<ul class="navi-navbar-nav">
+				<li class="navi-nav-item"><a href="#" class="navi-nav-link">마이</a></li>
+				<li class="navi-nav-item"><a href="#" class="navi-nav-link">게시판</a></li>
+				<li class="navi-nav-item"><a href="#" class="navi-nav-link">지도</a></li>
+				<li class="navi-nav-item"><a href="#" class="navi-nav-link">고객지원</a></li>
+			</ul>
+		</div>
 		<!-- 오른쪽 끝 메뉴 -->
 		<div class="navi-navbar-right">
 			<c:choose>
 				<c:when test="${not empty sessionScope.login}">
-					<a href="${pageContext.request.contextPath}/memEditView" 
+					<a href="${pageContext.request.contextPath}/memEditView"
 						class="navi-nav-link">${sessionScope.login.getMemName()} 님</a>
 					<a href="${pageContext.request.contextPath}/logout"
 						class="navi-nav-link">로그아웃</a>
@@ -264,7 +261,7 @@ body {
 			<div class="navi-dropdown-content-2 center-text">
 				<a href="#" class="navi-dropdown-item">공지사항</a> <a href="#"
 					class="navi-dropdown-item">리뷰게시판</a> <a href="#"
-					class="navi-dropdown-item">자유게시판</a> 
+					class="navi-dropdown-item">자유게시판</a>
 			</div>
 			<!-- 지도 메뉴 dropdown-content -->
 			<div class="navi-dropdown-content-3 center-text">
@@ -273,13 +270,16 @@ body {
 			</div>
 			<!-- 고객지원 메뉴 dropdown-content -->
 			<div class="navi-dropdown-content-4 center-text">
-				<a href="${pageContext.request.contextPath}/chatListView" class="navi-dropdown-item">챗봇상담</a> <a href="#"
+				<a href="${pageContext.request.contextPath}/chatListView"
+					class="navi-dropdown-item">챗봇상담</a> <a href="${pageContext.request.contextPath}/faq/view"
 					class="navi-dropdown-item">자주 묻는 질문</a> <a href="#"
-					class="navi-dropdown-item">이용 가이드</a><a href="#"
+					class="navi-dropdown-item">이용 가이드</a><a
+					href="${pageContext.request.contextPath}/proposal/view"
 					class="navi-dropdown-item">건의사항</a>
+
 			</div>
 		</div>
 	</nav>
-<div class="overlay"></div>
+	<div class="overlay"></div>
 </body>
 </html>
