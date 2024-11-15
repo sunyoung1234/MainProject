@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,7 +27,7 @@
 <style type="text/css">
 	
 	.main-height{
-		height:900px;
+		height:1000px;
 		width:1300px;
 		border: 1px solid black;
 		margin: auto;
@@ -51,11 +52,10 @@
 	
 	.product-division1{
 		background-color: #009861;
-		margin-left: 400px;
-	}
-	
-	.product-division1-color{
 		color:white;
+		margin-left: 400px;
+		
+		
 	}
 	
 	.product-division2{
@@ -74,9 +74,9 @@
 	
 	
 	.product-list{
-		display: flex;
-		justify-content:space-around;
-		margin-top:100px;
+		padding-left:150px;
+		padding-right:50px;
+		width:800px;
 	
 	}
 	
@@ -91,17 +91,34 @@
 		display: flex;
 		justify-content: center;
 		align-items:center;
-		height:70%;
 	}
 	 
-	 
-	 .product-name{
+	
+	.context-box{
 		display: flex;
-		justify-content: center;
-		align-items:center;
-		height:20%;
+		padding-left:50px;
+		margin-top:200px;
 	}
-
+	
+	.product-img{
+		width:400px;
+		height:500px;
+		overflow: hidden;
+		border: 1px solid black;
+	}
+	
+	.product-detail{
+		margin-bottom: 20px;
+	}
+	
+	.product-division1-color{
+		color:white;
+	}
+	
+	.image{
+		width:100%;
+		height:100%;
+	}
 
 </style>
 
@@ -118,71 +135,62 @@
 			<div class="product-division2">설비</div>
 			<div class="product-division3">신재생 에너지</div>
 		</div>
-		<div class="product-list">
-			<div class="product-box">
-				<div class="product-img">
-					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=전기냉장고">
-						<img src="https://eep.energy.or.kr/images/item/i_1.png">
-					</a>
-				</div>
-				<div class="product-name">
-					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=전기냉장고">
-						전기냉장고
-					</a>
-				</div>
+		<div class="context-box">
+			<div class="product-img">
+				<img class="image" src="${getProduct.productImage }">
 			</div>
-			<div class="product-box">
-				<div class="product-img">
-					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=김치냉장고">
-						<img src="https://eep.energy.or.kr/images/item/i_2.png">
-					</a>
-				</div>
-				<div class="product-name">
-					김치냉장고
-				</div>
-			</div>
-			<div class="product-box">
-				<div class="product-img">
-					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=전기세탁기(일반)">
-						<img src="https://eep.energy.or.kr/images/item/i_4.png">
-					</a>
-				</div>
-				<div class="product-name">
-					전기세탁기(일반)
-				</div>
-			</div>
-			<div class="product-box">
-				<div class="product-img">
-					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=전기세탁기(드럼)">
-						<img src="https://eep.energy.or.kr/images/item/i_5.png">
-					</a>
-				</div>
-				<div class="product-name">
-					전기세탁기(드럼)
-				</div>
-			</div>
-			<div class="product-box">
-				<div class="product-img">
-					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=제습기">
-						<img src="https://eep.energy.or.kr/images/item/i_28.png">
-					</a>
-				</div>
-				<div class="product-name">
-					제습기
-				</div>
-			</div>
-			<div class="product-box">
-				<div class="product-img">
-					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=의류건조기">
-						<img src="https://eep.energy.or.kr/images/item/i_31.png">
-					</a>
-				</div>	
-				<div class="product-name">
-					의류건조기
-				</div>
+			
+			<div class="product-list">
+				<div class="product-detail">제품상세정보</div>
+				<table class="table table-hover">
+					<colgroup>
+						<col width="25%">
+						<col width="25%">
+						<col width="30%">
+						<col width="20%">
+					</colgroup>
+					<tbody>
+						<tr>
+							<td>카테고리</td>
+							<th>${getProduct.productCategory }</th>
+							<td>업체명</td>
+							<th>${getProduct.productBrand }</th>
+						</tr>
+						<tr>
+							<td>모델명</td>
+							<th>${getProduct.productName }</th>
+							<td>국산/수입</td>
+							<th>${getProduct.productOrigin }</th>
+						</tr>
+						<tr>
+							<td>용량</td>
+							<th>${getProduct.productVolume }</th>
+							<td>연간소비전력량</td>
+							<th>${getProduct.yearUse }</th>
+						</tr>
+						<tr>
+							<td>월간소비전력량(kWh/월)</td>
+							<th>${getProduct.monthUse }</th>
+							<td>1시간 전력량</td>
+							<th>${getProduct.hourUse }</th>
+						</tr>
+						<tr>
+							<td>1회 소비전력량</td>
+							<th>${getProduct.oneUse }</th>
+							<td>연간에너지비용(원)</td>
+							<th>${getProduct.yearMoney }</th>
+						</tr>
+						<tr>
+							<td>효율등급</td>
+							<th>${getProduct.productGrade }</th>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
+		
 	</div>
+	
 
 	<%@ include file="/WEB-INF/inc/footer.jsp" %>
 

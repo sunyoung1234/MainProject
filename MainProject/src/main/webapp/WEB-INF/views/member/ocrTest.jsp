@@ -108,7 +108,7 @@
             let fileURL = URL.createObjectURL(inputImg);
             let imageElement = document.getElementById("showImg");
 
-            // 이미지 소스 설정
+            // 이미지 설정
             imageElement.src = fileURL;
 
             // 이미지 로드 후 cropper.js 초기화
@@ -139,13 +139,11 @@
                 // 자른 이미지를 미리보기로 보여주기
                 document.getElementById("croppedImg").src = croppedImage;
 
-                // 서버 URL
-                // POST 요청 데이터 구성
+                
                 let v_ajax = new XMLHttpRequest();
                 v_ajax.open("POST", "${pageContext.request.contextPath}/uploadImage");
                 v_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-                // 전송할 데이터
                 let v_data = "image=" + encodeURIComponent(croppedImage);
                 console.log(v_data)
 
@@ -160,7 +158,6 @@
                     }
                 };
 
-                // 서버로 데이터 전송
                 v_ajax.send(v_data);
             }
         });

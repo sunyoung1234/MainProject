@@ -20,4 +20,9 @@ public class ProductService {
 		List<ProductDTO> result = dao.productList(category);
 		return result;
 	}
+	
+	public ProductDTO getProduct(ProductDTO product) {
+		ProductDTO result = dao.getProduct(product);
+		return result;
+	}
 }
