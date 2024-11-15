@@ -207,6 +207,10 @@ $(document).ready(function() {
                 '<button class="menu-btn back-btn">뒤로가기</button>' +
                 '</div>';
             $(".chatbot-content").html(myMenuHtml);
+        
+        } else if (menu === "faq") {
+            // FAQ 페이지로 이동
+            window.location.href = "${pageContext.request.contextPath}/faq/view";
 
         } else if (menu === "board") {
             var boardMenuHtml = '<div class="bot-message">게시판 메뉴입니다.</div>' +

@@ -202,11 +202,13 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    width:100%;
+    
 }
 
 .about-video-section video {
     width: 100%;
-    height: 100%;
+    height: 140%;
     object-fit: cover;
 }
 
@@ -301,16 +303,13 @@ body {
 				<!-- 비디오 위에 텍스트 영역 -->
 				<div class="overlay-text">
 					<h2 class="fade-in"
-						style="font-size: 40px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">지속
-						가능한 건축을 위한 혁신</h2>
+						style="font-size: 40px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">제로에너지빌딩을 위한 스마트 솔루션</h2>
 					<h2 class="fade-in"
 						style="font-size: 60px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">GreenSolution</h2>
 					<p class="fade-in"
-						style="font-size: 20px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">우리는
-						건축 자재의 탄소 배출량을 분석하여 환경에 부담을 덜어주는 솔루션을 제공합니다.</p>
+						style="font-size: 20px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">우리는 건축물의 에너지 사용량을 분석하고 절감하여 지속 가능한 미래를 만듭니다.</p>
 					<p class="fade-in"
-						style="font-size: 20px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">기술과
-						지속 가능성이 결합된 우리의 노력으로, 더 나은 내일을 만듭니다.</p>
+						style="font-size: 20px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">제로에너지빌딩 실현을 위한 기술과 창의성을 기반으로, 에너지 절약과 환경 보호를 실천합니다.</p>
 				</div>
 			</header>
 		</section>
@@ -334,9 +333,45 @@ body {
 				</div>
 			</div>
 		</section>
-
+		
+<section class="section" id="banner">
+    <!-- 소개 섹션의 비디오 배경 -->
+    <header class="about-video-section">
+        <video autoplay loop muted>
+            <source src="${pageContext.request.contextPath}/resources/image/graphic1.mp4" type="video/mp4">
+        </video>
+        <!-- 어둡게 오버레이를 추가하여 텍스트 대비 향상 -->
+        <div class="about-overlay"></div>
+        
+        <!-- 소개 섹션 텍스트와 아이콘 -->
+        <div class="about-overlay-text">
+            <h2 class="about-heading fade-in" style="font-size: 50px; color: white;">제로에너지빌딩을 위한</h2>
+            <h2 class="about-heading fade-in" style="font-size: 50px; color: white;">Green Solution</h2>
+            <p class="about-description fade-in" style="font-size: 24px; color: #d1d1d1; max-width: 800px;">
+                Green Solution은 건축물의 에너지 사용량을 최소화하고 탄소 배출을 줄이기 위한 혁신적인 기술과 솔루션을 제공합니다. 
+                우리는 제로에너지빌딩 실현과 에너지 효율화를 통해 지속 가능한 미래를 만듭니다.
+            </p>
+            
+            <!-- 서비스 아이콘과 설명 -->
+            <div class="about-services fade-in">
+                <div class="service">
+                    <i class="fas fa-solar-panel"></i>
+                    <p>에너지 효율 설계</p>
+                </div>
+                <div class="service">
+                    <i class="fas fa-leaf"></i>
+                    <p>친환경 자재</p>
+                </div>
+                <div class="service">
+                    <i class="fas fa-globe"></i>
+                    <p>제로에너지빌딩 컨설팅</p>
+                </div>
+            </div>
+        </div>
+    </header>
+</section>
 		<!-- 나머지 섹션들 -->
-		<section class="section banner" id="banner">
+		<section class="section banner" id="about">
 			<div class="banner-text">
 				<div>
 					<img
@@ -348,41 +383,7 @@ body {
 			</div>
 		</section>
 
-<section class="section" id="about">
-    <!-- 소개 섹션의 비디오 배경 -->
-    <header class="about-video-section">
-        <video autoplay loop muted>
-            <source src="${pageContext.request.contextPath}/resources/image/graphic1.mp4" type="video/mp4">
-        </video>
-        <!-- 어둡게 오버레이를 추가하여 텍스트 대비 향상 -->
-        <div class="about-overlay"></div>
-        
-        <!-- 소개 섹션 텍스트와 아이콘 -->
-        <div class="about-overlay-text">
-            <h2 class="about-heading fade-in" style="font-size: 50px; color: white;">Green Solution 소개</h2>
-            <p class="about-description fade-in" style="font-size: 24px; color: #d1d1d1; max-width: 800px;">
-                Green Solution은 지속 가능한 건축 자재와 탄소 배출 감소를 위한 다양한 솔루션을 제공합니다. 
-                우리는 환경을 생각하며 지속 가능한 건축과 친환경 솔루션을 통해 더 나은 내일을 만듭니다.
-            </p>
-            
-            <!-- 서비스 아이콘과 설명 -->
-            <div class="about-services fade-in">
-                <div class="service">
-                    <i class="fas fa-leaf"></i>
-                    <p>친환경 자재</p>
-                </div>
-                <div class="service">
-                    <i class="fas fa-chart-line"></i>
-                    <p>탄소 배출 감소</p>
-                </div>
-                <div class="service">
-                    <i class="fas fa-handshake"></i>
-                    <p>지속 가능한 파트너쉽</p>
-                </div>
-            </div>
-        </div>
-    </header>
-</section>
+
 
 		<section class="section" id="services">
 			<div class="card-container d-flex justify-content-center"
@@ -420,13 +421,13 @@ body {
 		</section>
 	</div>
 
+<!-- 
 
-
-	<!-- 푸터 -->
+	푸터
 	<footer>
 		<p>© 2024 Company Name. All Rights Reserved.</p>
 	</footer>
-
+ -->
 
 	<!-- slick 슬라이드와 jQuery -->
 	<script
