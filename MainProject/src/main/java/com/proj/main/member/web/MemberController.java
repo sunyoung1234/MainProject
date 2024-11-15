@@ -1,6 +1,7 @@
 package com.proj.main.member.web;
 
 import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -62,6 +63,8 @@ public class MemberController {
     // 회원가입 페이지로 이동
     @RequestMapping("/registView")
     public String registView() {
+    	
+    	
         return "member/registView";
     }
 
