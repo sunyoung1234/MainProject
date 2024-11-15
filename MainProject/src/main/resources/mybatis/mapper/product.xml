@@ -8,6 +8,13 @@
 		FROM PRODUCTLIST
 		WHERE product_category = #{productCategory}
 	</select>
+	
+	<select id="getProduct" parameterType="com.proj.main.product.dto.ProductDTO" resultType="com.proj.main.product.dto.ProductDTO">
+		SELECT
+		 *
+		FROM PRODUCTLIST
+		WHERE product_name = #{productName}
+	</select>
 
 
 

@@ -29,6 +29,17 @@ public class ProductController {
 		return "member/productDetailView";
 	}
 	
+	@RequestMapping("/productDetailInView")
+	public String productDetailInView(Model model, ProductDTO product) {
+		
+		ProductDTO getProduct = productService.getProduct(product);
+		
+		System.out.println(getProduct);
+		model.addAttribute("getProduct",getProduct);
+		
+		return "member/productDetailInView";
+	}
+	
 	
 
 }
