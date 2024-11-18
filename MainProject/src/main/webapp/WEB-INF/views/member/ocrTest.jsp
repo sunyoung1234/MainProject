@@ -35,7 +35,27 @@
         margin: auto;
         margin-top: 50px;
         margin-bottom: 50px;
+        
+        display: flex;
     }
+    
+    .ocr-box{
+    	margin-top: 100px;
+    	margin-left: 100px;
+    }
+    
+    .ocr-title{
+    	margin-bottom:20px;
+    }
+    
+    .ocr-button-box{
+    	display: flex;
+    	margin-top:50px;
+    	
+    
+    }
+    
+    
 
     .img-container {
         text-align: center;
@@ -43,6 +63,14 @@
         overflow: hidden;
         width:300px;
         height:200px;
+    }
+    
+    .img-container2 {
+        text-align: center;
+        margin-top: 20px;
+        overflow: hidden;
+        width:190px;
+        height:100px;
     }
 
     #showImg {
@@ -56,10 +84,24 @@
         border: 1px solid #ccc;
         display: block;
     }
-
-    .btn {
-        margin-top: 20px;
+    
+    .ocr-result{
+    	margin-top:20px;
     }
+    
+    
+    .ocr-content{
+    	margin-left:250px;
+    	margin-top: 100px;
+    	width:500px;
+    	height:500px;
+    }
+    
+    .ocr-table{
+    	border-collapse: separate;
+   		border-spacing: 30px 70px;
+    }
+    
 </style>
 
 </head>
@@ -68,8 +110,8 @@
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
 
 	<div class="main-height">
-		<div>
-			<div>계량기사진</div>
+		<div class="ocr-box">
+			<div class="ocr-title">계량기 사진 첨부</div>
 			<div>
 				<div>
 					<input id="inputImg" type="file" accept="image/*">
@@ -78,15 +120,58 @@
 					<img id="showImg" src="" alt="이미지 삽입">
 				</div>
 			</div>
-			<div class="btn">
-				<button id="save-cropped-image" class="btn btn-primary">자른 이미지 저장</button>
+			<div>
+				<button id="saveCroppedImage" class="btn btn-primary">자른 이미지 저장</button>
 			</div>
 			<!-- 자른 이미지를 보여줄 부분 -->
-			<div class="img-container">
+			<div class="img-container2">
 				<img id="croppedImg" src="" alt="자른 이미지 미리보기">
 			</div>
+			<button id="uploadImg">이미지 보내기</button>
+			
+			<div class="ocr-result">
+				11월 전기사용량 : ocrContent
+			</div>
+			<div class="ocr-button-box">
+				<div>
+					입력값이 맞다면 버튼 클릭 아니면 다시 전송
+				</div>
+				<div><button>확인</button></div>
+			</div>
 		</div>
-		<div>${monthUse }</div>
+		<div class="ocr-content">
+			<table class="ocr-table">
+				<colgroup>
+					<col width="25%">
+					<col width="35%">
+					<col width="35%">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>분류</th>
+						<th id="lastMonth">10월 전기</th>
+						<th id="thisMonth">11월 전기</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>전기사용량</td>
+						<th>123123</th>
+						<th>123123</th>
+					</tr>
+					<tr>
+						<td>전기사용량</td>
+						<th>123123</th>
+						<th>123123</th>
+					</tr>
+					<tr>
+						<td>전기사용량</td>
+						<th>123123</th>
+						<th>123123</th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 	
 
@@ -108,7 +193,7 @@
             let fileURL = URL.createObjectURL(inputImg);
             let imageElement = document.getElementById("showImg");
 
-            // 이미지 소스 설정
+            // 이미지 설정
             imageElement.src = fileURL;
 
             // 이미지 로드 후 cropper.js 초기화
@@ -130,7 +215,7 @@
         });
 
         // 자른 이미지를 저장하는 버튼 클릭 이벤트
-        document.getElementById("save-cropped-image").addEventListener('click', ()=> {
+        document.getElementById("saveCroppedImage").addEventListener('click', ()=> {
             if (cropper) {
                 // 자른 이미지 데이터 얻기 (base64)
                 let canvas = cropper.getCroppedCanvas();
@@ -139,13 +224,20 @@
                 // 자른 이미지를 미리보기로 보여주기
                 document.getElementById("croppedImg").src = croppedImage;
 
-                // 서버 URL
-                // POST 요청 데이터 구성
+            }
+        });
+        
+        
+        document.getElementById("uploadImg").addEventListener('click', ()=> {
+            if (cropper) {
+                // 자른 이미지 데이터 얻기 (base64)
+                let canvas = cropper.getCroppedCanvas();
+                let croppedImage = canvas.toDataURL("image/png"); // PNG 포맷으로 변환
+                
                 let v_ajax = new XMLHttpRequest();
                 v_ajax.open("POST", "${pageContext.request.contextPath}/uploadImage");
                 v_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
-                // 전송할 데이터
                 let v_data = "image=" + encodeURIComponent(croppedImage);
                 console.log(v_data)
 
@@ -160,10 +252,18 @@
                     }
                 };
 
-                // 서버로 데이터 전송
                 v_ajax.send(v_data);
             }
         });
+        
+        
+        date = new Date();
+        
+        month = date.getMonth() + 1;
+        lastMonth = date.getMonth();
+        document.getElementById("lastMonth").innerHTML = lastMonth + "월";
+        document.getElementById("thisMonth").innerHTML = month + "월";
+        
 	</script>
 
 </body>

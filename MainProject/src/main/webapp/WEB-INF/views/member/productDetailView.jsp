@@ -52,10 +52,11 @@
 	
 	.product-division1{
 		background-color: #009861;
-		color:white;
 		margin-left: 400px;
-		
-		
+	}
+	
+	.product-division1-color{
+		color:white;
 	}
 	
 	.product-division2{
@@ -77,6 +78,8 @@
 		display: flex;
 		justify-content:space-around;
 		margin-top:100px;
+		padding-left:50px;
+		padding-right:50px;
 	
 	}
 	
@@ -112,22 +115,40 @@
 
 	<div class="main-height">
 		<div class="product-division">
-			<div class="product-division1">제품</div>
+			<div class="product-division1">
+				<a class="product-division1-color" href="${pageContext.request.contextPath }/productView">제품</a>
+			</div>
 			<div class="product-division2">설비</div>
 			<div class="product-division3">신재생 에너지</div>
 		</div>
 		<div class="product-list">
-			<div class="product-box">
-				<div class="product-img">
-					<img src="https://eep.energy.or.kr/images/item/i_2.png">
-				</div>
-				<div class="product-name">
-					김치냉장고
-				</div>
-				<div>
-				</div>
-			</div>
-			<div></div>
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th scope="col">에너지효율등급</th>
+						<th scope="col">모델명</th>
+						<th scope="col">업체명</th>
+						<th scope="col">용량</th>
+						<th scope="col">연간에너지비용</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${productCategory }" var="product">
+						<tr>
+							<td>${product.productGrade }</td>
+							<td>
+								<!-- 글제목 클릭시 /boardDatailView?no=글번호 형태로 요청  -->
+								<a href = "${pageContext.request.contextPath}/productDetailInView?productName=${product.productName }">
+									${product.productName }
+								</a>
+							</td>
+							<td>${product.productBrand }</td>
+							<td>${product.productVolume }</td>
+							<td>${product.yearMoney }</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
 		</div>
 	</div>
 	
