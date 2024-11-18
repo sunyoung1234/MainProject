@@ -183,7 +183,6 @@
 	<script src="js/scripts.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js" integrity="sha512-JyCZjCOZoyeQZSd5+YEAcFgz2fowJ1F1hyJOXgtKu4llIa0KneLcidn5bwfutiehUTiOuK87A986BZJMko0eWQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 	<script type="text/javascript">
         let cropper; // Cropper 객체 선언
 
@@ -257,12 +256,10 @@
         });
         
         
-        date = new Date();
+        const formattedDate = moment().format('MM');
         
-        month = date.getMonth() + 1;
-        lastMonth = date.getMonth();
-        document.getElementById("lastMonth").innerHTML = lastMonth + "월";
-        document.getElementById("thisMonth").innerHTML = month + "월";
+        document.getElementById("lastMonth").innerHTML = formattedDate + "월";
+        document.getElementById("thisMonth").innerHTML = formattedDate + "월";
         
 	</script>
 
