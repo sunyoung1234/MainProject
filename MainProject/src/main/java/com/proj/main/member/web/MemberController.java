@@ -364,12 +364,6 @@ public class MemberController {
         }
     }
     
-    @RequestMapping("/ocrView")
-    public String ocrView() {
-    	
-    	
-    	return "member/ocrView";
-    }
     
     @RequestMapping("/productView")
     public String productView() {

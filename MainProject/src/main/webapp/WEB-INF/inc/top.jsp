@@ -253,23 +253,22 @@ body {
 		<div class="navi-dropdown-field">
 			<!-- 마이 메뉴 dropdown-content -->
 			<div class="navi-dropdown-content-1 center-text">
-				<a href="${pageContext.request.contextPath}/mypage"
-					class="navi-dropdown-item">마이페이지</a> <a
-					href="${pageContext.request.contextPath}/memEditView"
-					class="navi-dropdown-item">회원정보수정</a> <a href="#"
-					class="navi-dropdown-item">전기사용량</a> <a href="#"
-					class="navi-dropdown-item">가스사용량</a>
+				<a href="${pageContext.request.contextPath}/mypage" class="navi-dropdown-item">마이페이지</a> 
+				<a href="${pageContext.request.contextPath}/memEditView" class="navi-dropdown-item">회원정보수정</a>
+				<a href="${pageContext.request.contextPath }/electricityUseView"	class="navi-dropdown-item">전기사용량</a> 
+				<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">전기 사용량 기입</a>
 			</div>
 			<!-- 게시판 메뉴 dropdown-content -->
 			<div class="navi-dropdown-content-2 center-text">
 				<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a> 
 				<a href="${pageContext.request.contextPath}/reviewView" class="navi-dropdown-item">리뷰게시판</a> 
 				<a href="${pageContext.request.contextPath}/freeBoardView" class="navi-dropdown-item">자유게시판</a>
+				<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품 게시판</a>
 			</div>
 			<!-- 지도 메뉴 dropdown-content -->
 			<div class="navi-dropdown-content-3 center-text">
-				<a href="#" class="navi-dropdown-item">에너지효율등급</a> <a href="#"
-					class="navi-dropdown-item">지도 상세보기</a>
+				<a href="${pageContext.request.contextPath}/inputView" class="navi-dropdown-item">제로 에너지 건축물 등급 측정</a> 
+				<a href="${pageContext.request.contextPath}/mapView" class="navi-dropdown-item">지도 상세보기</a>
 			</div>
 			<!-- 고객지원 메뉴 dropdown-content -->
 			<div class="navi-dropdown-content-4 center-text">
