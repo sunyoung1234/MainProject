@@ -19,15 +19,15 @@ public class RoomService {
 		return result;
 	};
 	
-	public RoomDTO getRoom(int roomNo) {
+	public RoomDTO getRoom(int roomNo) { 	
 		RoomDTO result = dao.getRoom(roomNo);
 		return result;
 	};
 	
 	public int createRoom(RoomDTO room) {
-	    dao.createRoom(room);
-	    return room.getRoomNo();
-	}
+		int result = dao.createRoom(room);
+		return result;
+	};
 	
 	
 	public int deleteRoom(int roomNo) {

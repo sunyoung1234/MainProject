@@ -292,45 +292,46 @@ public class MemberController {
         return check;
     }
     
-    // 마이 페이지로 이동
     @RequestMapping("/mypage")
     public String mypage(HttpSession session, Model model){
-        
+        // 세션에서 로그인 정보를 가져옴
         MemberDTO login = (MemberDTO) session.getAttribute("login");
-        String memId = login.getMemId();
 
-        model.addAttribute("member",login);
-        
+        // 로그인 정보가 없으면 로그인 페이지로 리디렉션
+        if (login == null) {
+            return "redirect:/loginView";  // 로그인 페이지로 리디렉션
+        }
+
+        String memId = login.getMemId();
+        model.addAttribute("member", login);
+
         BufferedReader rd = null;
         HttpURLConnection conn = null;
         StringBuilder sb = new StringBuilder();
-        
+
         try {
             // URL 생성 및 HttpURLConnection 열기
             StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/post");
             URL url = new URL(urlBuilder.toString());
             conn = (HttpURLConnection) url.openConnection();
-            
+
             // 요청 설정
             conn.setRequestMethod("GET");  // GET 방식으로 요청
             conn.setRequestProperty("Content-type", "application/json");
-            
-         
 
-            
             // 응답 코드에 따른 스트림 처리
             if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
                 rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             } else {
                 rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
             }
-            
+
             // 응답 내용 읽기
             String line;
             while ((line = rd.readLine()) != null) {
                 sb.append(line);
             }
-            
+
             System.out.println(sb.toString());  // 서버 응답 출력
 
         } catch (Exception e) {
@@ -350,9 +351,7 @@ public class MemberController {
         }
 
         return "member/mypage";  // 페이지 리턴
-		
     }
-
     // 회원 정보 수정 페이지로 이동
     @RequestMapping("/memEditView")
     public String memEditView(HttpSession session, Model model) {

@@ -2,50 +2,60 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.proj.main.chat.dao.IRoomDAO">
 
-    <!-- 채팅방 목록 가져오기 쿼리 -->
+    <!-- 채팅방 목록 가져오기 -->
     <select id="getRoomList" resultType="com.proj.main.chat.dto.RoomDTO">
         SELECT
               room_no
             , room_name
-            , reg_date
+            , mem_id
+            , mem_name
+            , TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI') AS reg_date
+            , del_yn
         FROM
             rooms
+        WHERE del_yn = 'N'
         ORDER BY reg_date DESC
     </select>
 
-
-    <!-- 채팅방 삭제 쿼리 -->
-    <delete id="deleteRoom" parameterType="int">
-        DELETE FROM rooms
-        WHERE room_no = #{roomNo}
-    </delete>
-
-    <!-- 특정 채팅방의 정보 가져오기 쿼리 -->
+    <!-- 특정 채팅방 정보 가져오기 -->
     <select id="getRoom" parameterType="int" resultType="com.proj.main.chat.dto.RoomDTO">
         SELECT
-              room_no,
-              room_name,
-              reg_date
+              room_no
+            , room_name
+            , mem_id
+            , mem_name
+            , TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI') AS reg_date
+            , del_yn
         FROM
             rooms
         WHERE room_no = #{roomNo}
+          AND del_yn = 'N'
     </select>
 
     <!-- 채팅방 생성 -->
-	<insert id="createRoom" parameterType="com.proj.main.chat.dto.RoomDTO">
-	    INSERT INTO rooms (
-	          room_no,
-	          room_name,
-	          mem_id,
-	          mem_name,
-	          reg_date
-	    ) VALUES (
-	          room_seq.NEXTVAL,  <!-- 시퀀스를 통해 room_no를 자동 생성 -->
-	          #{roomName},
-	          #{memId},
-	          #{memName},
-	          SYSDATE
-	    )
-	</insert>
+    <insert id="createRoom" parameterType="com.proj.main.chat.dto.RoomDTO">
+        INSERT INTO rooms (
+              room_no,
+              room_name,
+              mem_id,
+              mem_name,
+              reg_date,
+              del_yn
+        ) VALUES (
+              room_seq.NEXTVAL,  <!-- 시퀀스를 통해 room_no 자동 생성 -->
+              #{roomName},
+              #{memId},
+              #{memName},
+              SYSDATE,
+              'N'
+        )
+    </insert>
+
+    <!-- 채팅방 삭제 (del_yn 플래그 업데이트) -->
+    <update id="deleteRoom" parameterType="int">
+        UPDATE rooms
+        SET del_yn = 'Y'
+        WHERE room_no = #{roomNo}
+    </update>
 
 </mapper>

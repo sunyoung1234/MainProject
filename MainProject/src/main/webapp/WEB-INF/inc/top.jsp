@@ -262,9 +262,9 @@ body {
 			</div>
 			<!-- 게시판 메뉴 dropdown-content -->
 			<div class="navi-dropdown-content-2 center-text">
-				<a href="#" class="navi-dropdown-item">공지사항</a> <a href="#"
-					class="navi-dropdown-item">리뷰게시판</a> <a href="#"
-					class="navi-dropdown-item">자유게시판</a>
+				<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a> 
+				<a href="${pageContext.request.contextPath}/reviewView" class="navi-dropdown-item">리뷰게시판</a> 
+				<a href="${pageContext.request.contextPath}/freeBoardView" class="navi-dropdown-item">자유게시판</a>
 			</div>
 			<!-- 지도 메뉴 dropdown-content -->
 			<div class="navi-dropdown-content-3 center-text">

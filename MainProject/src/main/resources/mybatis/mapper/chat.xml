@@ -2,42 +2,43 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.proj.main.chat.dao.IChatLogDAO">
 
-    <!-- 기존의 채팅 목록 가져오기 쿼리 -->
+    <!-- 채팅 목록 가져오기 -->
     <select id="getChatList" resultType="com.proj.main.chat.dto.ChatLogDTO">
         SELECT
               a.chat_no
             , a.mem_id
-            , b.mem_name
+            , a.mem_name
             , a.room_no
             , a.chat_msg
-            , TO_CHAR(a.send_date, 'RR/MM/DD HH:MI') AS send_date
+            , TO_CHAR(a.send_date, 'YYYY/MM/DD HH24:MI') AS send_date
         FROM
-            chatlog a, members b
-        WHERE 1=1
-            AND a.mem_id = b.mem_id
-            AND room_no = #{roomNo}
-        ORDER BY 1
+            chatlog a
+        WHERE a.room_no = #{roomNo}
+        ORDER BY a.chat_no ASC
     </select>
 
-    <!-- 새로운 채팅 메시지 삽입 쿼리 -->
+    <!-- 채팅 메시지 삽입 -->
     <insert id="insertChat" parameterType="com.proj.main.chat.dto.ChatLogDTO">
-        INSERT INTO chatlog(
-              chat_no
-            , mem_id
-            , room_no
-            , chat_msg
-            , send_date
+        INSERT INTO chatlog (
+              chat_no,
+              mem_id,
+              mem_name,
+              room_no,
+              chat_msg,
+              send_date
         ) VALUES (
-              #{chatNo}
-            , #{memId}
-            , #{roomNo}
-            , #{chatMsg}
-            , SYSDATE
+              chatlog_seq.NEXTVAL,  <!-- 자동 증가 시퀀스 -->
+              #{memId},
+              #{memName},  <!-- 닉네임 -->
+              #{roomNo},
+              #{chatMsg},
+              SYSDATE
         )
     </insert>
 
-	<delete id="deleteAllByRoomNo" parameterType="int">
-    DELETE FROM chatlog WHERE room_no = #{roomNo}
-</delete>
+    <!-- 특정 채팅방의 모든 채팅 삭제 -->
+    <delete id="deleteAllByRoomNo" parameterType="int">
+        DELETE FROM chatlog WHERE room_no = #{roomNo}
+    </delete>
 
 </mapper>
