@@ -46,14 +46,14 @@
 											</c:if>
 										</div>
 
-										<!-- 답변 내용 표시 -->
+<%-- 										<!-- 답변 내용 표시 -->
 										<c:if test="${not empty proposal.answerContent}">
 											<hr />
 											<div class="answer-section">
 												<p><strong>관리자 답변:</strong></p>
 												<p>${proposal.answerContent}</p>
 											</div>
-										</c:if>
+										</c:if> --%>
 									</div>
 								</div>
 							</div>

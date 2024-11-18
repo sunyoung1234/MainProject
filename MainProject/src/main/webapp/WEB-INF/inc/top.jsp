@@ -56,6 +56,7 @@ body {
 	font-weight: bold;
 	text-decoration: none;
 	margin-right: 30px;
+	margin-left: 270px;
 }
 
 .navi-navbar-brand:hover {
@@ -112,6 +113,7 @@ body {
 	position: absolute;
 	top: 100%;
 	left: 0;
+
 }
 
 .center-text {
@@ -181,6 +183,7 @@ body {
 	display: flex;
 	align-items: center;
 	gap: 15px;
+	margin-right: 270px;
 }
 
 /* 오버레이 기본 스타일 */
