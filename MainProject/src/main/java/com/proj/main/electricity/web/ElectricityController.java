@@ -27,7 +27,7 @@ public class ElectricityController {
 	@Autowired
 	ElectricityService electricityService;
 	
-	@RequestMapping("/ocrTest")
+	@RequestMapping("/ocrView")
     public String ocrTest(HttpSession session, Model model, ElectricityDTO electricity) {
 		
 		MemberDTO member = (MemberDTO)session.getAttribute("login");
@@ -42,7 +42,7 @@ public class ElectricityController {
 		
 		System.out.println(electricity);
     	
-    	return "member/ocrTest";
+    	return "member/ocrView";
     }
 	
 	@RequestMapping("ocrInsert")
