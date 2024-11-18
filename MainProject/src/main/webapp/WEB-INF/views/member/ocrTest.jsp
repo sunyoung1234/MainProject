@@ -70,7 +70,7 @@
         margin-top: 20px;
         overflow: hidden;
         width:190px;
-        height:100px;
+        height:150px;
     }
 
     #showImg {
@@ -130,13 +130,13 @@
 			<button id="uploadImg">이미지 보내기</button>
 			
 			<div class="ocr-result">
-				11월 전기사용량 : ocrContent
+				전기사용량 : 
 			</div>
 			<div class="ocr-button-box">
 				<div>
 					입력값이 맞다면 버튼 클릭 아니면 다시 전송
 				</div>
-				<div><button>확인</button></div>
+				<div><button id="checkBtn">확인</button></div>
 			</div>
 		</div>
 		<div class="ocr-content">
@@ -149,29 +149,28 @@
 				<thead>
 					<tr>
 						<th>분류</th>
-						<th id="lastMonth">10월 전기</th>
-						<th id="thisMonth">11월 전기</th>
+						<th id="lastMonth"></th>
+						<th id="thisMonth"></th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td>전기사용량</td>
-						<th>123123</th>
-						<th>123123</th>
+						<th>${electricityUse.getElectricityUse() }</th>
+						<th id="elecUse"></th>
 					</tr>
 					<tr>
-						<td>전기사용량</td>
-						<th>123123</th>
-						<th>123123</th>
-					</tr>
-					<tr>
-						<td>전기사용량</td>
-						<th>123123</th>
-						<th>123123</th>
+						<td>탄소 배출량</td>
+						<th id="gasResult1"></th>
+						<th id="gasResult2"></th>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+		<form action="${pageContext.request.contextPath }/ocrInsert" method="POST">
+			<button type="submit">최종 확인</button>
+			<input hidden value="${electricityUse.getElectricityUse() }" name="electricityUse">
+		</form>
 	</div>
 	
 
@@ -227,7 +226,9 @@
             }
         });
         
+        let v_use = '${monthUse}'
         
+        let v_elecUse;
         document.getElementById("uploadImg").addEventListener('click', ()=> {
             if (cropper) {
                 // 자른 이미지 데이터 얻기 (base64)
@@ -246,6 +247,8 @@
                     if (v_ajax.status === 200) {
                         console.log("서버 응답:", v_ajax.responseText);
                         alert("이미지 업로드 성공!");
+                        document.querySelector('.ocr-result').innerHTML = '전기 사용량 : ' + v_ajax.responseText
+                        v_elecUse = v_ajax.responseText
                     } else {
                         console.error("이미지 전송 실패:", v_ajax.status, v_ajax.statusText);
                         alert("이미지 업로드 실패.");
@@ -260,9 +263,31 @@
         date = new Date();
         
         month = date.getMonth() + 1;
-        lastMonth = date.getMonth();
+        lastMonth = month - 1
+        if(month>12){
+        	month = 1
+        	lastMonth = 12  
+        }
+        
+        if(lastMonth<1){
+        	lastMonth = 12
+        }
+           
         document.getElementById("lastMonth").innerHTML = lastMonth + "월";
         document.getElementById("thisMonth").innerHTML = month + "월";
+        
+        let gasResult = '${electricityUse.getElectricityUse() }'*0.424
+        console.log(Math.round(gasResult*100) / 100)
+        document.getElementById("gasResult1").innerHTML = Math.round(gasResult*100) / 100
+        
+        document.getElementById("checkBtn").addEventListener("click", ()=>{
+        	console.log("click")
+        	document.getElementById("elecUse").innerHTML = v_elecUse
+        	let v_result2 = v_elecUse * 0.424
+        	document.getElementById("gasResult2").innerHTML = Math.round(v_result2*100) / 100
+        	
+        })
+        
         
 	</script>
 

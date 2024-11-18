@@ -371,60 +371,6 @@ public class MemberController {
     	return "member/ocrView";
     }
     
-    @RequestMapping("/ocrTest")
-    public String ocrTest() {
-    	
-    	return "member/ocrTest";
-    }
-    
-    @ResponseBody
-    @RequestMapping("/uploadImage")
-    public String uploadImage(@RequestBody String image, Model model) throws Exception {
-    	
-    	String uploadImage = image;
-    	
-    	StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/ocr");
-        URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("POST");
-		conn.setDoOutput(true);
-		conn.setRequestProperty("Content-type", "application/json");
-		
-		System.out.println(uploadImage.substring(6));
-		
-		
-		String result = "{\"uploadImage\":\"" + uploadImage.substring(6) + "\"}";
-		
-		try(OutputStream os = conn.getOutputStream()){
-			byte[] input = result.getBytes("utf-8");
-			os.write(input,0,input.length);
-		}
-		
-		BufferedReader rd;
-
-		if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-			rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-		} else {
-			rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-		}
-		
-		StringBuilder sb = new StringBuilder();
-		// 응답 내용 읽기
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        
-        System.out.println(sb.toString());  // 서버 응답 출력
-        model.addAttribute("monthUse",sb);
-        
-    
-		rd.close();
-		conn.disconnect();
-    	
-    	return "member/ocrTest";
-    }
-    
     @RequestMapping("/productView")
     public String productView() {
     	
