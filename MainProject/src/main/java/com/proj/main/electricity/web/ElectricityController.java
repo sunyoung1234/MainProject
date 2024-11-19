@@ -67,7 +67,7 @@ public class ElectricityController {
 		
 		
 		
-		return "member/ocrTest";
+		return "member/ocrView";
 	}
 	
 	@RequestMapping("/electricityUseView")
