@@ -1,31 +1,37 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>홈페이지</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/assets/favicon.ico" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>홈페이지</title>
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon"
+	href="${pageContext.request.contextPath}/resources/assets/favicon.ico" />
 
-    <!-- Bootstrap CSS 수정 링크 -->
+<!-- Bootstrap CSS 수정 링크 -->
 <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-    crossorigin="anonymous">
-    
-        <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
-    
-    <!-- Script links -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
-    
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+	crossorigin="anonymous">
+
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="css/styles.css" rel="stylesheet" />
+
+<!-- Script links -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+
 <style>
 /* 메인 스타일 */
 body {
@@ -33,7 +39,7 @@ body {
 	margin: 0;
 	padding: 0;
 	overflow: hidden;
-	background-color:white;
+	background-color: white;
 }
 
 /* 섹션 스타일 */
@@ -44,19 +50,19 @@ body {
 }
 
 /* 가로 슬라이더 */
-.horizontal-slider {
+.introduce {
 	width: 100%;
 	height: 100vh;
 }
 
-.horizontal-slider .slick-slide {
+.introduce .slick-slide {
 	height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
-.horizontal-slider img {
+.introduce img {
 	width: 100%;
 	height: auto;
 }
@@ -77,67 +83,58 @@ body {
 /* 사이드 네비게이션 */
 .side-nav {
 	position: fixed;
-	right: 10px;
+	right: 20px;
 	top: 50%;
 	transform: translateY(-50%);
-	background-color: rgba(0, 0, 0, 0.5);
-	padding: 10px;
-	border-radius: 8px;
-	color: white;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	background-color: rgba(0, 0, 0, 0.7);
+	padding: 10px 15px;
+	border-radius: 10px;
 	z-index: 10;
 }
 
-   /* 사이드 네비게이션 링크 스타일 */
-    .side-nav a {
-        display: block;
-        color: white;
-        text-decoration: none;
-        padding: 5px;
-        margin: 5px 0;
-        font-weight: bold;
-        transition: color 0.3s;
-        width: 120px; /* 너비를 고정 */
-        text-align: center; /* 텍스트 가운데 정렬 */
-    }
+.side-nav .nav-item {
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 14px;
+	padding: 8px 10px;
+	border-radius: 5px;
+	text-align: center;
+	transition: all 0.3s;
+}
 
-    /* 강조된 스타일 */
-    .side-nav a.active {
-        background-color: white;
-        color: black;
-        border-radius: 5px;
-        padding: 5px 10px;
-        box-sizing: border-box; /* 패딩 포함하여 크기 유지 */
-    }
+.side-nav .nav-item:hover, .side-nav .nav-item.active {
+	background-color: white;
+	color: black;
+}
 </style>
 
-<style> /* 비디오 위 글씨 */
 
-/* 비디오와 텍스트 레이아웃 */
-.main-video {
-	position: relative; /* 비디오 위에 텍스트를 올리기 위해 */
-	height: 100vh; /* 전체 화면 높이 */
-	overflow: hidden; /* 비디오가 부모 요소를 넘지 않도록 설정 */
-	margin: 0; /* 기본 여백 제거 */
-	padding: 0; /* 기본 패딩 제거 */
-	top: -20px;
+
+
+
+<style>
+/* 카드 스타일 */
+.card {
+	border-radius: 10px;
+	overflow: hidden;
+	transition: transform 0.2s;
 }
 
-.main-video video {
-	width: 100%; /* 비디오의 너비를 부모에 맞춤 */
-	height: 100%; /* 비디오의 높이를 부모에 맞춤 */
-	object-fit: cover; /* 비디오가 비율에 맞게 잘림 */
+.card-header {
+	padding: 20px;
+	text-align: center;
 }
 
-.overlay-text {
-	position: absolute; /* 비디오 위에 텍스트를 올리기 위해 */
-	top: 10%; /* 수직 중앙 정렬 */
-	left: 50%; /* 수평 중앙 정렬 */
-	transform: translate(-50%, -50%); /* 중앙 정렬 */
-	color: white; /* 텍스트 색상 */
-	text-align: center; /* 텍스트 정렬 */
-	font-size: 1.5em; /* 비디오 위 텍스트 크기 조정 */
+.card-body {
+	padding: 20px;
 }
+</style>
 
+<style>
 
     /* Fade-in 애니메이션 정의 */
 @keyframes fadeInUp {
@@ -172,99 +169,80 @@ body {
 }
     
 
+
 </style>
-
-<style>
-/* 카드 스타일 */
-.card {
-	border-radius: 10px;
-	overflow: hidden;
-	transition: transform 0.2s;
-}
-
-.card-header {
-	padding: 20px;
-	text-align: center;
-}
-
-.card-body {
-	padding: 20px;
-}
-</style>
-
 
 <style>
 /* 소개 섹션의 비디오와 텍스트 스타일링 */
 .about-video-section {
-    position: relative;
-    height: 100vh;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width:100%;
-    
+	position: relative;
+	height: 100vh;
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
 }
 
 .about-video-section video {
-    width: 100%;
-    height: 140%;
-    object-fit: cover;
+	width: 100%;
+	height: 140%;
+	object-fit: cover;
 }
 
 .about-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* 어둡게 오버레이 효과 */
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.5); /* 어둡게 오버레이 효과 */
 }
 
 .about-overlay-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	color: white;
 }
 
 .about-heading {
-    margin-bottom: 10px;
-    font-weight: bold;
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+	margin-bottom: 10px;
+	font-weight: bold;
+	text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .about-description {
-    margin: 20px auto;
-    line-height: 1.6;
-    max-width: 800px;
-    font-weight: 300;
+	margin: 20px auto;
+	line-height: 1.6;
+	max-width: 800px;
+	font-weight: 300;
 }
 
 /* 서비스 아이콘과 텍스트 스타일 */
 .about-services {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    margin-top: 40px;
+	display: flex;
+	justify-content: center;
+	gap: 30px;
+	margin-top: 40px;
 }
 
 .service {
-    text-align: center;
-    color: #fff;
+	text-align: center;
+	color: #fff;
 }
 
 .service i {
-    font-size: 50px;
-    color: #a5d6a7; /* 친환경적인 녹색 계열 색상 */
-    margin-bottom: 10px;
+	font-size: 50px;
+	color: #a5d6a7; /* 친환경적인 녹색 계열 색상 */
+	margin-bottom: 10px;
 }
 
 .service p {
-    margin-top: 10px;
-    font-size: 18px;
+	margin-top: 10px;
+	font-size: 18px;
 }
 </style>
 
@@ -276,158 +254,200 @@ body {
 	<!-- Navigation START -->
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
 	<!-- Navigation END -->
-	
+
 	<!-- ChatBot START -->
-	<%@ include file="/WEB-INF/inc/chatbot.jsp" %>
+	<%@ include file="/WEB-INF/inc/chatbot.jsp"%>
 	<!-- ChatBot END -->
 
 	<!-- 사이드 네비게이션 -->
 	<div class="side-nav">
-		<a href="#main-video">메인배너 섹션</a> <a href="#horizontal-slider">슬라이더
-			섹션</a> <a href="#banner">배너 섹션</a> <a href="#about">회사 소개</a> <a
-			href="#services">서비스</a> <a href="#contact">문의</a>
+		<a href="#home" class="nav-item">HOME</a> <a href="#banner"
+			class="nav-item">BANNER</a> <a href="#introduce" class="nav-item">INTRODUCE</a>
+		<a href="#vision" class="nav-item">VISION</a> <a href="#about"
+			class="nav-item">ABOUT</a>
 	</div>
 
 	<!-- 세로 슬라이더 -->
 	<div class="vertical-slider">
-		<!-- 가로 슬라이더 섹션을 세로 슬라이더 첫 번째 페이지로 포함 -->
-
-		<section class="section" id="main-video">
-			<!-- 첫 번째 영역: 비디오 섹션 -->
-			<header class="video-section" id="section1">
+		<section class="section" id="home">
+			<!-- 소개 섹션의 비디오 배경 -->
+			<header class="about-video-section">
 				<video autoplay loop muted>
 					<source
-						src="${pageContext.request.contextPath}/resources/image/forest.mp4"
+						src="${pageContext.request.contextPath}/resources/image/graphic1.mp4"
 						type="video/mp4">
 				</video>
-				<!-- 비디오 위에 텍스트 영역 -->
-				<div class="overlay-text">
-					<h2 class="fade-in"
-						style="font-size: 40px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">제로에너지빌딩을 위한 스마트 솔루션</h2>
-					<h2 class="fade-in"
-						style="font-size: 60px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">GreenSolution</h2>
-					<p class="fade-in"
-						style="font-size: 20px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">우리는 건축물의 에너지 사용량을 분석하고 절감하여 지속 가능한 미래를 만듭니다.</p>
-					<p class="fade-in"
-						style="font-size: 20px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">제로에너지빌딩 실현을 위한 기술과 창의성을 기반으로, 에너지 절약과 환경 보호를 실천합니다.</p>
+				<!-- 어둡게 오버레이를 추가하여 텍스트 대비 향상 -->
+				<div class="about-overlay"></div>
+
+				<!-- 소개 섹션 텍스트와 아이콘 -->
+				<div class="about-overlay-text">
+					<h2 class="about-heading fade-in"
+						style="font-size: 50px; color: white;">제로에너지빌딩을 위한</h2>
+					<h2 class="about-heading fade-in"
+						style="font-size: 50px; color: white;">Green Solution</h2>
+					<p class="about-description fade-in"
+						style="font-size: 24px; color: #d1d1d1; max-width: 800px;">
+						Green Solution은 건축물의 에너지 사용량을 최소화하고 탄소 배출을 줄이기 위한 혁신적인 기술과 솔루션을
+						제공합니다. 우리는 제로에너지빌딩 실현과 에너지 효율화를 통해 지속 가능한 미래를 만듭니다.</p>
+
+
+					<div class="about-services fade-in">
+						<div class="service">
+							<i class="fas fa-solar-panel"></i>
+							<p>에너지 효율 설계</p>
+						</div>
+						<div class="service">
+							<i class="fas fa-leaf"></i>
+							<p>친환경 자재</p>
+						</div>
+						<div class="service">
+							<i class="fas fa-globe"></i>
+							<p>제로에너지빌딩 컨설팅</p>
+						</div>
+					</div>
 				</div>
 			</header>
 		</section>
 
-		<section class="section" id="horizontal-slider">
-			<div class="horizontal-slider">
+
+		<section class="section" id="banner">
+			<div class="about-video-section">
 				<div>
-					<img
-						src="${pageContext.request.contextPath}/resources/image/한전이미지1.jpg"
-						alt="슬라이드 이미지 1">
+					<img src="${pageContext.request.contextPath}/resources/image/한전이미지1.jpg" alt="슬라이드 이미지 1">
 				</div>
-				<div>
-					<img
-						src="${pageContext.request.contextPath}/resources/image/한전이미지2.jpg"
-						alt="슬라이드 이미지 2">
 				</div>
-				<div>
-					<img
-						src="${pageContext.request.contextPath}/resources/image/한전이미지3.jpg"
-						alt="슬라이드 이미지 3">
-				</div>
-			</div>
 		</section>
-		
-<section class="section" id="banner">
-    <!-- 소개 섹션의 비디오 배경 -->
-    <header class="about-video-section">
-        <video autoplay loop muted>
-            <source src="${pageContext.request.contextPath}/resources/image/graphic1.mp4" type="video/mp4">
-        </video>
-        <!-- 어둡게 오버레이를 추가하여 텍스트 대비 향상 -->
-        <div class="about-overlay"></div>
-        
-        <!-- 소개 섹션 텍스트와 아이콘 -->
-        <div class="about-overlay-text">
-            <h2 class="about-heading fade-in" style="font-size: 50px; color: white;">제로에너지빌딩을 위한</h2>
-            <h2 class="about-heading fade-in" style="font-size: 50px; color: white;">Green Solution</h2>
-            <p class="about-description fade-in" style="font-size: 24px; color: #d1d1d1; max-width: 800px;">
-                Green Solution은 건축물의 에너지 사용량을 최소화하고 탄소 배출을 줄이기 위한 혁신적인 기술과 솔루션을 제공합니다. 
-                우리는 제로에너지빌딩 실현과 에너지 효율화를 통해 지속 가능한 미래를 만듭니다.
-            </p>
-            
-            <!-- 서비스 아이콘과 설명 -->
-            <div class="about-services fade-in">
-                <div class="service">
-                    <i class="fas fa-solar-panel"></i>
-                    <p>에너지 효율 설계</p>
+
+
+<section class="section banner" id="introduce" style="background: linear-gradient(to right, #83a4d4, #b6fbff); padding: 70px 0;">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- 텍스트 섹션 -->
+            <div class="col-lg-6 text-white text-center text-lg-start">
+                <h1 class="display-4 mb-4" style="font-weight: 700;">환영합니다</h1>
+                <p class="mb-4" style="font-size: 20px; line-height: 1.8;">
+                    지속 가능한 미래를 위한 <strong>제로 에너지 솔루션</strong>에 대해 알아보세요.<br>
+                    친환경 건축과 혁신적인 기술을 통해 지속 가능한 세상을 만듭니다.
+                </p>
+                <div>
+                    <a href="#vision" class="btn btn-light btn-lg px-5 py-2 shadow me-3">비전 보기</a>
+                    <a href="#about" class="btn btn-outline-light btn-lg px-5 py-2 shadow">문의하기</a>
                 </div>
-                <div class="service">
-                    <i class="fas fa-leaf"></i>
-                    <p>친환경 자재</p>
+            </div>
+            <!-- 이미지 섹션 -->
+            <div class="col-lg-6 text-center mt-5 mt-lg-0">
+                <img 
+                    src="${pageContext.request.contextPath}/resources/image/many zeroEnergyBuilding img.jpg" 
+                    alt="슬라이드 이미지 1" 
+                    class="img-fluid rounded shadow-lg" 
+                    style="border: 5px solid rgba(255, 255, 255, 0.5); max-height: 450px; object-fit: cover;">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+		<section class="section" id="vision" style="background-color: white; padding: 50px 0;">
+    <div class="container">
+        <h2 class="text-center mb-4" style="font-weight: bold; color: #343a40;">목표</h2>
+        <p class="text-center mb-5" style="color: #6c757d; font-size: 18px;">
+            제로 에너지 건축물 실현과 지속 가능한 미래를 위한 우리의 목표를 확인하세요.
+        </p>
+        <div class="row justify-content-center g-4">
+            <!-- Card 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm h-100">
+                    <img
+                        src="${pageContext.request.contextPath}/resources/image/nature_build.png"
+                        class="card-img-top" alt="Nature Build"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="font-weight: bold; color: #28a745;">제로 에너지 건축물 등급 측정</h5>
+                        <p class="card-text text-muted">건축물의 에너지 효율을 측정하여 더 나은 환경을 만들어 갑니다.</p>
+                        <a href="${pageContext.request.contextPath}/inputView" class="btn btn-outline-success">더 알아보기</a>
+                    </div>
                 </div>
-                <div class="service">
-                    <i class="fas fa-globe"></i>
-                    <p>제로에너지빌딩 컨설팅</p>
+            </div>
+            <!-- Card 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm h-100">
+                    <img
+                        src="${pageContext.request.contextPath}/resources/image/nature_co2_image.png"
+                        class="card-img-top" alt="Nature CO2 Image"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="font-weight: bold; color: #007bff;">지도 상세보기</h5>
+                        <p class="card-text text-muted">지도와 데이터를 활용하여 건축물 정보를 한눈에 확인하세요.</p>
+                        <a href="${pageContext.request.contextPath}/mapView" class="btn btn-outline-primary">더 알아보기</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="card shadow-sm h-100">
+                    <img
+                        src="${pageContext.request.contextPath}/resources/image/Energy_Efficient.jpg"
+                        class="card-img-top" alt="Energy Efficiency"
+                        style="height: 250px; object-fit: cover;">
+                    <div class="card-body text-center">
+                        <h5 class="card-title" style="font-weight: bold; color: #ffc107;">에너지 효율 제품</h5>
+                        <p class="card-text text-muted">효율적인 에너지 소비를 위한 최신 기술과 제품을 소개합니다.</p>
+                        <a href="${pageContext.request.contextPath}/productView" class="btn btn-outline-warning">더 알아보기</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </header>
+    </div>
 </section>
-		<!-- 나머지 섹션들 -->
-		<section class="section banner" id="about">
-			<div class="banner-text">
-				<div>
-					<img
-						src="${pageContext.request.contextPath}/resources/image/mountain_banner_img.png"
-						alt="슬라이드 이미지 1">
-				</div>
-				<h1>환영합니다</h1>
-				<p>저희 웹사이트에 오신 것을 환영합니다!</p>
-			</div>
-		</section>
-
-
-
-		<section class="section" id="services">
-			<div class="card-container d-flex justify-content-center"
-				style="margin-bottom: 150px;">
-				<div class="card me-3" style="flex: 1; max-width: 500px;">
-					<img
-						src="${pageContext.request.contextPath}/resources/image/nature_co2_image.png"
-						class="card-img-top" alt="Nature Build"
-						style="width: 100%; height: 300px;">
-					<div class="card-body">
-						<h3 class="card-title">온실가스 및 건축</h3>
-						<p class="card-text">온실가스 차트 & 건축 기사</p>
-						<a href="${pageContext.request.contextPath}/gasChartView"
-							class="btn btn-success">더 알아보기</a>
-					</div>
-				</div>
-				<div class="card me-3" style="flex: 1; max-width: 500px;">
-					<img
-						src="${pageContext.request.contextPath}/resources/image/nature_build.png"
-						class="card-img-top" alt="Nature co2 image"
-						style="width: 100%; height: 300px;">
-					<div class="card-body">
-						<h3 class="card-title">탄소중립포인트 참여현황</h3>
-						<p class="card-text">광역시도별 & 기초단체별 차트</p>
-						<a href="${pageContext.request.contextPath}/cityChartView"
-							class="btn btn-success">더 알아보기</a>
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<section class="section" id="contact">
-			<h2>문의</h2>
-			<p>궁금하신 사항이 있으시면 언제든지 연락해 주세요.</p>
-		</section>
+		
+		
+<section class="section" id="about" style="background-color: white; padding: 50px 0;">
+    <div class="container">
+        <h2 class="text-center mb-4" style="font-weight: bold; color: #343a40; margin-bottom: 100px;">문의</h2>
+        <p class="text-center mb-5" style="color: #6c757d; font-size: 18px;">
+            궁금하신 사항이 있으시면 언제든지 연락해 주세요. 친절히 답변해 드리겠습니다.
+        </p>
+        <div class="row justify-content-center g-4">
+            <!-- Contact Card 1 -->
+            <div class="col-md-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-phone-alt" style="font-size: 40px; color: #17a2b8;"></i>
+                        <h5 class="card-title mt-3" style="font-weight: bold;">전화 상담</h5>
+                        <p class="card-text text-muted">문의 사항은 고객센터로 전화 주시면 빠르게 안내해 드립니다.</p>
+                        <a href="tel:+821234567890" class="btn btn-primary">전화하기</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contact Card 2 -->
+            <div class="col-md-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-envelope" style="font-size: 40px; color: #28a745;"></i>
+                        <h5 class="card-title mt-3" style="font-weight: bold;">이메일 문의</h5>
+                        <p class="card-text text-muted">이메일로 문의를 주시면 상세히 답변드리겠습니다.</p>
+                        <a href="mailto:help@company.com" class="btn btn-success">이메일 보내기</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Contact Card 3 -->
+            <div class="col-md-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body text-center">
+                        <i class="fas fa-comments" style="font-size: 40px; color: #ffc107;"></i>
+                        <h5 class="card-title mt-3" style="font-weight: bold;">실시간 채팅</h5>
+                        <p class="card-text text-muted">실시간 상담을 통해 빠르게 문제를 해결해 드립니다.</p>
+                        <a href="${pageContext.request.contextPath}/chatListView" class="btn btn-warning">채팅하기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 	</div>
-
-<!-- 
-
-	푸터
-	<footer>
-		<p>© 2024 Company Name. All Rights Reserved.</p>
-	</footer>
- -->
 
 	<!-- slick 슬라이드와 jQuery -->
 	<script
@@ -435,18 +455,8 @@ body {
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 <script>
-$(document).ready(function() {
-    // 가로 슬라이더 설정 (자동재생 비활성화)
-    $('.horizontal-slider').slick({
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        autoplay: false, // 자동 재생 끄기
-        arrows: false
-    });
-
-    // 세로 슬라이더 설정 (자동재생 비활성화)
+$(document).ready(function () {
+    // Slick 세로 슬라이더 설정
     $('.vertical-slider').slick({
         dots: false,
         infinite: false,
@@ -456,34 +466,81 @@ $(document).ready(function() {
         verticalSwiping: true,
         arrows: false,
         swipeToSlide: true,
-        autoplay: false // 자동 재생 끄기
+        autoplay: false, // 자동 재생 끄기
     });
 
-    // 사이드 네비게이션 클릭 시 섹션 이동
-    $('.side-nav a').on('click', function(e) {
+    // URL 해시 기반으로 섹션 이동
+    function goToSectionFromHash() {
+        const hash = window.location.hash; // 현재 URL의 해시 값 가져오기
+        if (hash) {
+            const sectionIndex = $(`${hash}`).index('.vertical-slider .section'); // 해당 섹션의 인덱스 가져오기
+            if (sectionIndex !== -1) {
+                $('.vertical-slider').slick('slickGoTo', sectionIndex); // Slick.js로 해당 섹션으로 이동
+            }
+        }
+    }
+
+    // 페이지 로드 시 URL 해시 처리
+    goToSectionFromHash();
+
+    // 해시 변경 감지 및 섹션 이동
+    $(window).on('hashchange', function () {
+        goToSectionFromHash();
+    });
+
+    // 사이드 네비게이션 클릭 시 섹션 이동 및 해시 변경
+    $('.side-nav .nav-item').on('click', function (e) {
         e.preventDefault();
-        const sectionID = $(this).attr('href');
-        const sectionIndex = $(sectionID).index('.vertical-slider .section');
-        $('.vertical-slider').slick('slickGoTo', sectionIndex);
-    });
-
-    // 세로 슬라이더와 사이드 네비게이션 동기화
-    $('.vertical-slider').on('afterChange', function(event, slick, currentSlide) {
-        $('.side-nav a').removeClass('active');
-        $('.side-nav a').eq(currentSlide).addClass('active');
-    });
-
-    // 마우스 휠로 세로 슬라이더 수동 이동
-    $(window).on('wheel', function(event) {
-        if (event.originalEvent.deltaY < 0) {
-            $('.vertical-slider').slick('slickPrev');
-        } else {
-            $('.vertical-slider').slick('slickNext');
+        const sectionID = $(this).attr('href'); // 클릭한 메뉴의 href 값 (#섹션ID)
+        const sectionIndex = $(sectionID).index('.vertical-slider .section'); // 해당 섹션의 인덱스 가져오기
+        if (sectionIndex !== -1) {
+            $('.vertical-slider').slick('slickGoTo', sectionIndex); // Slick.js로 이동
+            updateSidebar(sectionIndex); // 사이드바 상태 업데이트
+            window.location.hash = sectionID; // URL 해시 업데이트
         }
     });
-});
 
+    // 슬라이더 이동 시 URL 해시와 사이드바 동기화
+    $('.vertical-slider').on('afterChange', function (event, slick, currentSlide) {
+        const currentSectionID = $('.vertical-slider .section').eq(currentSlide).attr('id'); // 현재 슬라이드 ID 가져오기
+        updateSidebar(currentSlide); // 사이드바 상태 업데이트
+        window.location.hash = `#${currentSectionID}`; // URL 해시 동기화
+    });
+
+    // 버튼 클릭 시 섹션 이동 및 URL 해시 업데이트
+    $('a.btn').on('click', function (e) {
+        e.preventDefault();
+        const sectionID = $(this).attr('href'); // 버튼의 href 값 (#섹션ID)
+        const sectionIndex = $(sectionID).index('.vertical-slider .section'); // 해당 섹션의 인덱스 가져오기
+        if (sectionIndex !== -1) {
+            $('.vertical-slider').slick('slickGoTo', sectionIndex); // Slick.js로 이동
+            updateSidebar(sectionIndex); // 사이드바 상태 업데이트
+            window.location.hash = sectionID; // URL 해시 업데이트
+        }
+    });
+
+    // 마우스 휠로 슬라이더 이동
+    $(window).on('wheel', function (event) {
+        if (event.originalEvent.deltaY < 0) {
+            $('.vertical-slider').slick('slickPrev'); // 위로 스크롤 시 이전 슬라이드
+        } else {
+            $('.vertical-slider').slick('slickNext'); // 아래로 스크롤 시 다음 슬라이드
+        }
+    });
+
+    // 사이드 네비게이션 활성화 상태 업데이트 함수
+    function updateSidebar(currentSlideIndex) {
+        $('.side-nav .nav-item').removeClass('active'); // 모든 메뉴의 활성화 상태 제거
+        $('.side-nav .nav-item').eq(currentSlideIndex).addClass('active'); // 현재 슬라이드와 매칭되는 메뉴 활성화
+    }
+
+    // 초기 메뉴 활성화 상태 설정
+    const initialSlide = $('.vertical-slider').slick('slickCurrentSlide'); // 초기 슬라이드 인덱스 가져오기
+    updateSidebar(initialSlide); // 초기 메뉴 활성화
+});
 </script>
+
+
 
 </body>
 </html>

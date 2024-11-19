@@ -6,10 +6,8 @@
 <meta charset="UTF-8">
 <title>Chatbot Interface</title>
 
-<!-- jQuery & WebSocket -->
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 
 <style>
 /* 챗봇 아이콘 스타일 */
@@ -35,21 +33,17 @@
     bottom: 90px;
     right: 20px;
     width: 320px;
-    height: 600px;
+    height: 500px;
     background-color: #f9f9f9;
     border-radius: 15px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    display: flex;
+    display: none;
     flex-direction: column;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
     z-index: 1000;
 }
 
 .chatbot-interface.show {
-    opacity: 1;
-    transform: translateY(0);
+    display: flex;
 }
 
 .chatbot-header {
@@ -78,49 +72,39 @@
     gap: 10px;
 }
 
-.chat-container {
-    height: 400px;
-    overflow-y: auto;
-    padding: 10px;
-    background-color: #f5f5f5;
-    border-radius: 10px;
+.bot-message {
     margin-bottom: 10px;
+    font-size: 14px;
+    background: #f1f1f1;
+    border-radius: 10px;
+    padding: 10px;
 }
 
-.input-group {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
-}
-
-.chat-box {
-    padding: 8px;
+.menu-btn {
+    display: block;
+    width: 100%;
+    background-color: #e7f3ff;
+    color: #4A90E2;
+    border: none;
     border-radius: 8px;
-    max-width: 80%;
-    word-break: break-word;
+    padding: 10px;
+    text-align: left;
+    margin: 5px 0;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s;
 }
 
-.myChat {
-    background-color: #007bff;
-    color: white;
-    align-self: flex-end;
-    text-align: right;
-}
-
-.otherChat {
-    background-color: #e9ecef;
-    align-self: flex-start;
-}
-
-.system-message {
-    text-align: center;
-    color: #888;
-    font-size: 0.9em;
+.menu-btn:hover {
+    background-color: #d0e8ff;
 }
 </style>
 </head>
 <body>
+    <!-- 챗봇 아이콘 -->
     <div class="chatbot-icon"></div>
+    
+    <!-- 챗봇 인터페이스 -->
     <div class="chatbot-interface">
         <div class="chatbot-header">
             <span>Chatbot</span>
@@ -144,170 +128,22 @@
 
 <script>
 $(document).ready(function () {
-    let client;
-    let currentRoomNo = null;
-
-    // WebSocket 설정
-    const sock = new SockJS("${pageContext.request.contextPath}/endpoint");
-    client = Stomp.over(sock);
-
     // 챗봇 열기/닫기
     $(".chatbot-icon").on("click", function () {
         $(".chatbot-interface").toggleClass("show").toggle();
     });
+
     $(".close-btn").on("click", function () {
         $(".chatbot-interface").removeClass("show").hide();
     });
 
-    // 메뉴 클릭 이벤트
-    $(document).on("click", ".menu-btn", function () {
-        const menu = $(this).data("menu");
-        console.log(`Menu clicked: ${menu}`); // 디버깅용 로그
-        switch (menu) {
-            case "quick-move":
-                displayQuickMoveMenu();
-                break;
-            case "faq":
-                window.location.href = "${pageContext.request.contextPath}/faq/view";
-                break;
-            case "connect-agent":
-                connectAgent();
-                break;
-            case "admin-chat":
-                adminChat();
-                break;
-            case "login-required":
-                alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
-                window.location.href = "${pageContext.request.contextPath}/loginView";
-                break;
-            default:
-                console.error("Unknown menu action");
-        }
-    });
-
-    // 빠른 이동 메뉴 표시
-    function displayQuickMoveMenu() {
-        console.log("Displaying Quick Move Menu");
-        $("#chatbotContent").html(`
-            <div class="bot-message">빠른 이동 메뉴입니다.</div>
-            <div class="bot-message">
-                <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</button>
-                <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/memEditView'">회원정보수정</button>
-                <button class="menu-btn" onclick="location.href='#'">게시판</button>
-                <button class="menu-btn back-btn">뒤로가기</button>
-            </div>
-        `);
-        $(".back-btn").on("click", displayMainMenu);
-    }
-
-    // 사용자 상담 연결
-    function connectAgent() {
-        console.log("Connecting to agent...");
-        $.post(
-            "${pageContext.request.contextPath}/roomCreateDo",
-            {
-                roomName: `${loginName}님의 상담방`,
-            },
-            function (response) {
-                console.log("Agent connected response:", response);
-                if (response.status === "success") {
-                    currentRoomNo = response.roomNo;
-                    enterChatRoom(currentRoomNo);
-                } else {
-                    alert("상담 연결에 실패했습니다.");
-                }
-            }
-        ).fail(function () {
-            console.error("Failed to create room for agent connection");
-        });
-    }
-
-    // 관리자 상담 연결
-    function adminChat() {
-        console.log("Loading admin chat...");
-        $("#chatbotContent").html('<div class="bot-message">사용자 상담 목록을 불러오는 중...</div><ul id="roomList"></ul>');
-
-        $.get("${pageContext.request.contextPath}/chatListView", function (data) {
-            console.log("Admin chat list:", data);
-            if (data.roomList && data.roomList.length > 0) {
-                $("#chatbotContent").html('<div class="bot-message">사용자 상담 목록</div><ul id="roomList"></ul>');
-                data.roomList.forEach((room) => {
-                    $("#roomList").append(`
-                        <li>
-                            <button class="room-btn" data-room-no="${room.roomNo}">
-                                ${room.roomName} (방장: ${room.memName})
-                            </button>
-                        </li>
-                    `);
-                });
-
-                $(document).on("click", ".room-btn", function () {
-                    const roomNo = $(this).data("room-no");
-                    enterChatRoom(roomNo);
-                });
-            } else {
-                $("#chatbotContent").html('<div class="bot-message">현재 상담 가능한 방이 없습니다.</div>');
-            }
-        }).fail(function () {
-            console.error("Failed to load admin chat list");
-            $("#chatbotContent").html('<div class="bot-message">상담 목록을 불러오지 못했습니다.</div>');
-        });
-    }
-
-    // 채팅방 입장
-    function enterChatRoom(roomNo) {
-        console.log(`Entering chat room: ${roomNo}`);
-        currentRoomNo = roomNo;
-        $("#chatbotContent").html(`
-            <div class="chat-container" id="chatList"></div>
-            <div class="input-group">
-                <input type="text" id="msgi" class="form-control" placeholder="메시지 입력..." />
-                <button id="btnSend" class="btn btn-primary">보내기</button>
-            </div>
-            <button id="btnBack" class="btn btn-secondary">뒤로가기</button>
-        `);
-
-        client.connect({}, function () {
-            client.subscribe(`/subscribe/chat/${roomNo}`, function (chat) {
-                const content = JSON.parse(chat.body);
-                renderMessage(content);
-            });
-        });
-
-        $("#btnSend").on("click", sendMessage);
-        $("#btnBack").on("click", displayMainMenu);
-    }
-
-    // 메시지 보내기
-    function sendMessage() {
-        const message = $("#msgi").val();
-        if (!message) return;
-        console.log(`Sending message: ${message}`);
-        client.send(`/app/hello/${currentRoomNo}`, {}, JSON.stringify({
-            chatMsg: message,
-            memId: loginId,
-            memName: loginName,
-            roomNo: currentRoomNo
-        }));
-        $("#msgi").val("");
-    }
-
-    // 메시지 렌더링
-    function renderMessage(vo) {
-        const chatStyle = vo.memId === loginId ? "myChat" : "otherChat";
-        $("#chatList").append(`
-            <div class="${chatStyle} chat-box">${vo.memName}: ${vo.chatMsg}</div>
-        `);
-    }
-
-    // 메인 메뉴 표시
+    // 초기 메뉴 표시
     function displayMainMenu() {
-        console.log("Displaying main menu...");
         $("#chatbotContent").html(`
             <div class="bot-message">안녕하세요! 무엇을 도와드릴까요?</div>
             <div class="bot-message">
                 <button class="menu-btn" data-menu="quick-move">페이지 빠른 이동</button>
-                <button class="menu-btn" data-menu="faq">FAQ</button>
+                <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/faq/view'">FAQ</button>
                 <c:if test="${sessionScope.login != null && sessionScope.login.memId eq 'admin'}">
                     <button class="menu-btn" data-menu="admin-chat">사용자 상담 연결</button>
                 </c:if>
@@ -318,9 +154,95 @@ $(document).ready(function () {
         `);
     }
 
+    // 빠른 이동 메뉴
+    function displayQuickMoveMenu() {
+        $("#chatbotContent").html(`
+            <div class="bot-message">빠른 이동 메뉴입니다.</div>
+            <div class="bot-message">
+                <button class="menu-btn" data-menu="my">마이</button>
+                <button class="menu-btn" data-menu="board">게시판</button>
+                <button class="menu-btn" data-menu="map">지도</button>
+                <button class="menu-btn" data-menu="support">고객지원</button>
+                <button class="menu-btn back-btn">뒤로가기</button>
+            </div>
+        `);
+    }
+
+    // 각 세부 메뉴
+    function displayMyMenu() {
+        $("#chatbotContent").html(`
+            <div class="bot-message">마이 메뉴입니다.</div>
+            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</button>
+            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/memEditView'">회원정보수정</button>
+            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/electricityUseView'">전기사용량</button>
+            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/ocrView'">전기사용량 기입</button>
+            <button class="menu-btn back-btn">뒤로가기</button>
+        `);
+    }
+
+    function displayBoardMenu() {
+        $("#chatbotContent").html(`
+            <div class="bot-message">게시판 메뉴입니다.</div>
+            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/noticeBoardView'">공지사항</button>
+            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/reviewView'">리뷰게시판</button>
+            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/freeBoardView'">자유게시판</button>
+            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/productView'">에너지 효율 제품 게시판</button>
+            <button class="menu-btn back-btn">뒤로가기</button>
+        `);
+    }
+
+    function displayMapMenu() {
+        $("#chatbotContent").html(`
+            <div class="bot-message">지도 메뉴입니다.</div>
+            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/inputView'">제로 에너지 건축물 등급 측정</button>
+            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/mapView'">지도 상세보기</button>
+            <button class="menu-btn back-btn">뒤로가기</button>
+        `);
+    }
+
+    function displaySupportMenu() {
+        $("#chatbotContent").html(`
+            <div class="bot-message">고객지원 메뉴입니다.</div>
+            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/chatListView'">챗봇상담</button>
+            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/faq/view'">자주 묻는 질문</button>
+            <button class="menu-btn">이용 가이드</button>
+            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/proposal/view'">건의사항</button>
+            <button class="menu-btn back-btn">뒤로가기</button>
+        `);
+    }
+
+    // 메뉴 이벤트 처리
+    $(document).on("click", ".menu-btn", function () {
+        const menu = $(this).data("menu");
+        switch (menu) {
+            case "quick-move":
+                displayQuickMoveMenu();
+                break;
+            case "my":
+                displayMyMenu();
+                break;
+            case "board":
+                displayBoardMenu();
+                break;
+            case "map":
+                displayMapMenu();
+                break;
+            case "support":
+                displaySupportMenu();
+                break;
+            default:
+                displayMainMenu();
+        }
+    });
+
+    // 뒤로가기 버튼
+    $(document).on("click", ".back-btn", function () {
+        displayMainMenu();
+    });
+
+    // 초기 메뉴 표시
     displayMainMenu();
 });
-
 </script>
 
 </body>
