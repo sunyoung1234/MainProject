@@ -109,6 +109,8 @@
 	
 	.product-detail{
 		margin-bottom: 20px;
+		font-weight: bold;
+		font-size: 20px;
 	}
 	
 	.product-division1-color{
@@ -151,38 +153,38 @@
 					</colgroup>
 					<tbody>
 						<tr>
-							<td>카테고리</td>
-							<th>${getProduct.productCategory }</th>
-							<td>업체명</td>
-							<th>${getProduct.productBrand }</th>
+							<th>카테고리</th>
+							<td>${getProduct.productCategory }</td>
+							<th>업체명</th>
+							<td>${getProduct.productBrand }</td>
 						</tr>
 						<tr>
-							<td>모델명</td>
-							<th>${getProduct.productName }</th>
-							<td>국산/수입</td>
-							<th>${getProduct.productOrigin }</th>
+							<th>모델명</th>
+							<td>${getProduct.productName }</td>
+							<th>국산/수입</th>
+							<td>${getProduct.productOrigin }</td>
 						</tr>
 						<tr>
-							<td>용량</td>
-							<th>${getProduct.productVolume }</th>
-							<td>연간소비전력량</td>
-							<th>${getProduct.yearUse }</th>
+							<th>용량</th>
+							<td>${getProduct.productVolume }</td>
+							<th>연간소비전력량</th>
+							<td>${getProduct.yearUse }</td>
 						</tr>
 						<tr>
-							<td>월간소비전력량(kWh/월)</td>
-							<th>${getProduct.monthUse }</th>
-							<td>1시간 전력량</td>
-							<th>${getProduct.hourUse }</th>
+							<th>월간소비전력량(kWh/월)</th>
+							<td>${getProduct.monthUse }</td>
+							<th>1시간 전력량</th>
+							<td>${getProduct.hourUse }</td>
 						</tr>
 						<tr>
-							<td>1회 소비전력량</td>
-							<th>${getProduct.oneUse }</th>
-							<td>연간에너지비용(원)</td>
-							<th>${getProduct.yearMoney }</th>
+							<th>1회 소비전력량</th>
+							<td>${getProduct.oneUse }</td>
+							<th>연간에너지비용(원)</th>
+							<td>${getProduct.yearMoney }</td>
 						</tr>
 						<tr>
-							<td>효율등급</td>
-							<th>${getProduct.productGrade }</th>
+							<th>효율등급</th>
+							<td>${getProduct.productGrade }</td>
 						</tr>
 					</tbody>
 				</table>

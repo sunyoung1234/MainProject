@@ -81,11 +81,17 @@
 	}
 	
 	.product-box{
-		width:200px;
+		width:250px;
 		height:200px;
-		border: 1px solid black;
-	
+		border: 1px solid #ddd;
+        border-radius: 10px;
 	}
+	
+	.product-box:hover {
+       transform: translateY(-10px);
+       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+     }
+	
 	
 	.product-img{
 		display: flex;
@@ -99,7 +105,16 @@
 		display: flex;
 		justify-content: center;
 		align-items:center;
-		height:20%;
+		height: 30%;
+        background-color: #f4f7f6;
+        padding: 10px;
+        font-size: 16px;
+        font-weight: 600;
+	}
+	
+	.product-name-a{
+		text-decoration:none;
+		color:black;
 	}
 
 
@@ -126,7 +141,7 @@
 					</a>
 				</div>
 				<div class="product-name">
-					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=전기냉장고">
+					<a class="product-name-a" href="${pageContext.request.contextPath }/productDetailView?productCategory=전기냉장고">
 						전기냉장고
 					</a>
 				</div>
@@ -151,6 +166,8 @@
 					전기세탁기(일반)
 				</div>
 			</div>
+		</div>
+		<div class="product-list">
 			<div class="product-box">
 				<div class="product-img">
 					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=전기세탁기(드럼)">
@@ -174,7 +191,7 @@
 			<div class="product-box">
 				<div class="product-img">
 					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=의류건조기">
-						<img src="https://eep.energy.or.kr/images/item/i_31.png">
+						<img src="https://eep.energy.or.kr/images/item/h_51.png">
 					</a>
 				</div>	
 				<div class="product-name">

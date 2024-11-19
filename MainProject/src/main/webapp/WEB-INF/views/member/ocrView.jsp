@@ -46,13 +46,18 @@
     
     .ocr-title{
     	margin-bottom:20px;
+    	font-weight:bold;
+    	font-size:20px;
+    	
+    }
+    
+    .inputBox{
+    	border: 1px solid black;
     }
     
     .ocr-button-box{
     	display: flex;
     	margin-top:50px;
-    	
-    
     }
     
     
@@ -87,11 +92,14 @@
     
     .ocr-result{
     	margin-top:20px;
+    	color: #80B95F;
+    	font-weight:bold;
+    	font-size:20px;
     }
     
     
     .ocr-content{
-    	margin-left:250px;
+    	margin-left:200px;
     	margin-top: 100px;
     	width:500px;
     	height:500px;
@@ -100,6 +108,54 @@
     .ocr-table{
     	border-collapse: separate;
    		border-spacing: 30px 70px;
+   		width: 100%;
+	    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+	    border-radius: 8px; /* 테이블 둥근 모서리 */
+    }
+    
+    
+    #uploadImg{
+    	background-color: #198754;
+    	color: white;
+    	border: 1px solid #198754;
+    	border-radius: 3px;
+    }
+    
+    .ocr-text{
+    	width:350px;
+    
+    }
+    
+    .checkBox{
+    	margin-left: 20px;
+    	
+    }
+    
+    #checkBtn{
+    	background-color: #80B95F;
+    	color:white;
+    	width:80px;
+    	border: 1px solid #80B95F;
+    	border-radius: 5px;
+    }
+    
+    .finalBox{
+    	margin-top:150px;
+    }
+    
+    .resultText{
+    	margin-top:100px;
+    }
+    
+    .finalBox{
+    	background-color: skyblue;
+    	color:white;
+    	border: 1px solid skyblue;
+    	width:150px;
+    }
+    
+    .saveCroppedBox{
+    	margin-top: 20px;
     }
     
 </style>
@@ -113,14 +169,14 @@
 		<div class="ocr-box">
 			<div class="ocr-title">계량기 사진 첨부</div>
 			<div>
-				<div>
+				<div class="inputBox">
 					<input id="inputImg" type="file" accept="image/*">
 				</div>
 				<div class="img-container">
 					<img id="showImg" src="" alt="이미지 삽입">
 				</div>
 			</div>
-			<div>
+			<div class="saveCroppedBox">
 				<button id="saveCroppedImage" class="btn btn-primary">자른 이미지 저장</button>
 			</div>
 			<!-- 자른 이미지를 보여줄 부분 -->
@@ -130,13 +186,13 @@
 			<button id="uploadImg">이미지 보내기</button>
 			
 			<div class="ocr-result">
-				전기사용량 : 
+				전기 사용량 : 
 			</div>
 			<div class="ocr-button-box">
-				<div>
+				<div class="ocr-text">
 					입력값이 맞다면 버튼 클릭 아니면 다시 전송
 				</div>
-				<div><button id="checkBtn">확인</button></div>
+				<div class="checkBox"><button id="checkBtn">확인</button></div>
 			</div>
 		</div>
 		<div class="ocr-content">
@@ -155,22 +211,25 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>전기사용량</td>
-						<th>${electricityUse.getElectricityUse() }</th>
-						<th id="elecUse"></th>
+						<th>전기 사용량</th>
+						<td>${electricityUse.getElectricityUse() }</td>
+						<td id="elecUse"></td>
 					</tr>
 					<tr>
-						<td>탄소 배출량</td>
-						<th id="gasResult1"></th>
-						<th id="gasResult2"></th>
+						<th>탄소 배출량</th>
+						<td id="gasResult1"></td>
+						<td id="gasResult2"></td>
 					</tr>
 				</tbody>
 			</table>
+			<div class="resultText">
+				
+			</div>
+			<form action="${pageContext.request.contextPath }/ocrInsert" method="POST">
+				<button class="finalBox" type="submit">최종 확인</button>
+				<input hidden value="${electricityUse.getElectricityUse() }" name="electricityUse">
+			</form>
 		</div>
-		<form action="${pageContext.request.contextPath }/ocrInsert" method="POST">
-			<button type="submit">최종 확인</button>
-			<input hidden value="${electricityUse.getElectricityUse() }" name="electricityUse">
-		</form>
 	</div>
 	
 
@@ -257,6 +316,8 @@
 
                 v_ajax.send(v_data);
             }
+            
+            
         });
         
         
@@ -286,7 +347,16 @@
         	let v_result2 = v_elecUse * 0.424
         	document.getElementById("gasResult2").innerHTML = Math.round(v_result2*100) / 100
         	
+        	if(lastMonthUse < lastMonthUse){
+            	document.querySelector('.resultText').innerHTML = '전달보다 적게 사용하였습니다.'    
+            }else{
+            	document.querySelector('.resultText').innerHTML = '전달보다 많이 사용하였습니다.'  
+            }
         })
+        
+        
+        
+        
         
         
 	</script>
