@@ -2,7 +2,9 @@ package com.proj.main.result.dto;
 
 public class UserBuildingDTO {
 
+	private String memId;
 	private String buildingName;
+	private String buildingId;
 	private String climate;
 	private String residentialType;
 	private String structureType;
@@ -12,21 +14,21 @@ public class UserBuildingDTO {
 	private String insulationLevel;
 	private String windowLevel;
 	private String ventilationSystem;
-	private int solarPanelCount;
+	private double solarPanelKW;
 	
 	
 	public UserBuildingDTO() {
 		super();
 	}
-	
-	
 
 
-	public UserBuildingDTO(String buildingName, String climate, String residentialType, String structureType,
-			int squareMeterArea, int floors, int doors, String insulationLevel, String windowLevel,
-			String ventilationSystem, int solarPanelCount) {
+	public UserBuildingDTO(String memId, String buildingName, String buildingId, String climate, String residentialType,
+			String structureType, int squareMeterArea, int floors, int doors, String insulationLevel,
+			String windowLevel, String ventilationSystem, double solarPanelKW) {
 		super();
+		this.memId = memId;
 		this.buildingName = buildingName;
+		this.buildingId = buildingId;
 		this.climate = climate;
 		this.residentialType = residentialType;
 		this.structureType = structureType;
@@ -36,22 +38,28 @@ public class UserBuildingDTO {
 		this.insulationLevel = insulationLevel;
 		this.windowLevel = windowLevel;
 		this.ventilationSystem = ventilationSystem;
-		this.solarPanelCount = solarPanelCount;
+		this.solarPanelKW = solarPanelKW;
 	}
-
-
 
 
 	@Override
 	public String toString() {
-		return "UserBuildingDTO [buildingName=" + buildingName + ", climate=" + climate + ", residentialType="
-				+ residentialType + ", structureType=" + structureType + ", squareMeterArea=" + squareMeterArea
-				+ ", floors=" + floors + ", doors=" + doors + ", insulationLevel=" + insulationLevel + ", windowLevel="
-				+ windowLevel + ", ventilationSystem=" + ventilationSystem + ", solarPanelCount=" + solarPanelCount
-				+ "]";
+		return "UserBuildingDTO [memId=" + memId + ", buildingName=" + buildingName + ", buildingId=" + buildingId
+				+ ", climate=" + climate + ", residentialType=" + residentialType + ", structureType=" + structureType
+				+ ", squareMeterArea=" + squareMeterArea + ", floors=" + floors + ", doors=" + doors
+				+ ", insulationLevel=" + insulationLevel + ", windowLevel=" + windowLevel + ", ventilationSystem="
+				+ ventilationSystem + ", solarPanelKW=" + solarPanelKW + "]";
 	}
 
 
+	public String getMemId() {
+		return memId;
+	}
+
+
+	public void setMemId(String memId) {
+		this.memId = memId;
+	}
 
 
 	public String getBuildingName() {
@@ -59,13 +67,19 @@ public class UserBuildingDTO {
 	}
 
 
-
-
 	public void setBuildingName(String buildingName) {
 		this.buildingName = buildingName;
 	}
 
 
+	public String getBuildingId() {
+		return buildingId;
+	}
+
+
+	public void setBuildingId(String buildingId) {
+		this.buildingId = buildingId;
+	}
 
 
 	public String getClimate() {
@@ -73,13 +87,9 @@ public class UserBuildingDTO {
 	}
 
 
-
-
 	public void setClimate(String climate) {
 		this.climate = climate;
 	}
-
-
 
 
 	public String getResidentialType() {
@@ -87,13 +97,9 @@ public class UserBuildingDTO {
 	}
 
 
-
-
 	public void setResidentialType(String residentialType) {
 		this.residentialType = residentialType;
 	}
-
-
 
 
 	public String getStructureType() {
@@ -101,13 +107,9 @@ public class UserBuildingDTO {
 	}
 
 
-
-
 	public void setStructureType(String structureType) {
 		this.structureType = structureType;
 	}
-
-
 
 
 	public int getSquareMeterArea() {
@@ -115,13 +117,9 @@ public class UserBuildingDTO {
 	}
 
 
-
-
 	public void setSquareMeterArea(int squareMeterArea) {
 		this.squareMeterArea = squareMeterArea;
 	}
-
-
 
 
 	public int getFloors() {
@@ -129,13 +127,9 @@ public class UserBuildingDTO {
 	}
 
 
-
-
 	public void setFloors(int floors) {
 		this.floors = floors;
 	}
-
-
 
 
 	public int getDoors() {
@@ -143,13 +137,9 @@ public class UserBuildingDTO {
 	}
 
 
-
-
 	public void setDoors(int doors) {
 		this.doors = doors;
 	}
-
-
 
 
 	public String getInsulationLevel() {
@@ -157,13 +147,9 @@ public class UserBuildingDTO {
 	}
 
 
-
-
 	public void setInsulationLevel(String insulationLevel) {
 		this.insulationLevel = insulationLevel;
 	}
-
-
 
 
 	public String getWindowLevel() {
@@ -171,13 +157,9 @@ public class UserBuildingDTO {
 	}
 
 
-
-
 	public void setWindowLevel(String windowLevel) {
 		this.windowLevel = windowLevel;
 	}
-
-
 
 
 	public String getVentilationSystem() {
@@ -185,25 +167,26 @@ public class UserBuildingDTO {
 	}
 
 
-
-
 	public void setVentilationSystem(String ventilationSystem) {
 		this.ventilationSystem = ventilationSystem;
 	}
 
 
-
-
-	public int getSolarPanelCount() {
-		return solarPanelCount;
+	public double getSolarPanelKW() {
+		return solarPanelKW;
 	}
 
 
-
-
-	public void setSolarPanelCount(int solarPanelCount) {
-		this.solarPanelCount = solarPanelCount;
+	public void setSolarPanelKW(double solarPanelKW) {
+		this.solarPanelKW = solarPanelKW;
 	}
+
+
+	
+	
+
+
+	
 	
 	
 	

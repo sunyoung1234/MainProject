@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.main.result.dao.IResultDAO">
+
+	<insert id="insertEnergyResult" parameterType="com.proj.main.result.dto.EnergyResultDTO">
+	
+		INSERT INTO ENERGY_RESULT (
+		    mem_id, building_id, heating_perf, heating_demand, heating_load,
+		    cooling_demand, sensible_energy, dehumid_energy, cooling_load,
+		    sensible_load, dehumid_load, total_energy, co2_emissions, primary_energy,
+		    airtightness, energy_grade, climate, avg_temp, heat_degree_day, 
+		    building_type, thermal_storage, occupants, internal_heat, indoor_area, 
+		    ventilation_volume, av_ratio, av_formula, roof_transmit, wall_transmit, 
+		    floor_transmit, indirect_transmit, door_transmit, window_transmit, 
+		    glazing_prod, glazing_transmit, solar_gain, frame_prod, frame_transmit, 
+		    spacer_transmit, vent_prod, heat_eff, cool_eff, humidity_rec, power_cons, 
+		    linear_coeff, point_coeff, annual_heat_cost, annual_energy_cost
+		) VALUES (
+		    #{memId}, #{buildingId}, #{heatingPerf}, #{heatingDemand}, #{heatingLoad},
+		    #{coolingDemand}, #{sensibleEnergy}, #{dehumidEnergy}, #{coolingLoad},
+		    #{sensibleLoad}, #{dehumidLoad}, #{totalEnergy}, #{co2Emissions}, #{primaryEnergy},
+		    #{airtightness}, #{energyGrade}, #{climate}, #{avgTemp}, #{heatDegreeDay}, 
+		    #{buildingType}, #{thermalStorage}, #{occupants}, #{internalHeat}, #{indoorArea}, 
+		    #{ventilationVolume}, #{avRatio}, #{avFormula}, #{roofTransmit}, #{wallTransmit}, 
+		    #{floorTransmit}, #{indirectTransmit}, #{doorTransmit}, #{windowTransmit}, 
+		    #{glazingProd}, #{glazingTransmit}, #{solarGain}, #{frameProd}, #{frameTransmit}, 
+		    #{spacerTransmit}, #{ventProd}, #{heatEff}, #{coolEff}, #{humidityRec}, #{powerCons}, 
+		    #{linearCoeff}, #{pointCoeff}, #{annualHeatCost}, #{annualEnergyCost}
+		)
+	
+	</insert>
+	
+	<insert id="insertEnergyUsed" parameterType="com.proj.main.result.dto.EnergyUsedDTO">
+	
+		INSERT INTO ENERGY_USED (
+		    mem_id, building_id, elec_use, gas_use, solar_energy_production,
+		    annual_elec_save, annual_elec_cost_save, elec_cost, gas_cost, 
+		    all_co2, all_primary_energy, w_heating, w_hot_water, w_cooling, 
+		    w_ventilation, w_light, w_cooking, w_appliance, w_etc, 
+		    c_heating, c_hot_water, c_cooling, c_ventilation, c_light, 
+		    c_cooking, c_appliance, c_etc
+		) VALUES (
+		    #{memId}, #{buildingId}, #{elecUse}, #{gasUse}, #{solarEnergyProduction},
+		    #{annualElecSave}, #{annualElecCostSave}, #{elecCost}, #{gasCost}, 
+		    #{allCo2}, #{allPrimaryEnergy}, #{wHeating}, #{wHotWater}, #{wCooling},
+		    #{wVentilation}, #{wLight}, #{wCooking}, #{wAppliance}, #{wEtc}, 
+		    #{cHeating}, #{cHotWater}, #{cCooling}, #{cVentilation}, #{cLight}, 
+		    #{cCooking}, #{cAppliance}, #{cEtc}
+		)
+	
+	</insert>
+	
+	<insert id="insertUserBuilding">
+		INSERT INTO BUILDING_INFO (
+	        mem_id,
+	        building_name,
+	        building_id,
+	        climate,
+	        residential_type,
+	        structure_type,
+	        square_meter_area,
+	        floors,
+	        doors,
+	        insulation_level,
+	        window_level, 
+	        ventilation_system,
+	        solar_panel_kw
+	    ) VALUES (
+	        #{memId},               <!-- 사용자 ID -->
+	        #{buildingName},         <!-- 건물 이름 -->
+	        #{buildingId},           <!-- 건물 ID -->
+	        #{climate},              <!-- 기후 조건 -->
+	        #{residentialType},      <!-- 주거 유형 -->
+	        #{structureType},        <!-- 구조 유형 -->
+	        #{squareMeterArea},      <!-- 면적 (㎡) -->
+	        #{floors},               <!-- 층수 -->
+	        #{doors},                <!-- 문 개수 -->
+	        #{insulationLevel},      <!-- 단열 수준 -->
+	        #{windowLevel},          <!-- 창문 수준 -->
+	        #{ventilationSystem},    <!-- 환기 시스템 -->
+	        #{solarPanelKW}          <!-- 태양광 패널 용량 (kW) -->
+	    )
+	
+	</insert>
+
+</mapper>

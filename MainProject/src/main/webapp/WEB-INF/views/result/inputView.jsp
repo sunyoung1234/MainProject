@@ -79,6 +79,38 @@
 		    display: inline-block;
 		    margin-right: 15px;
 		}
+		
+		#loading {
+	        position: fixed;
+	        top: 0;
+	        left: 0;
+	        width: 100%;
+	        height: 100%;
+	        background-color: rgba(0, 0, 0, 0.5);
+	        display: none;
+	        flex-direction: column;
+	        justify-content: center;
+	        align-items: center;
+	        z-index: 1000;
+	        color: white;
+	        text-align: center;
+	    }
+	    .spinner {
+	        border: 5px solid #f3f3f3;
+	        border-top: 5px solid #3498db;
+	        border-radius: 50%;
+	        width: 50px;
+	        height: 50px;
+	        animation: spin 1s linear infinite;
+	    }
+	    @keyframes spin {
+	        0% { transform: rotate(0deg); }
+	        100% { transform: rotate(360deg); }
+	    }
+	    #loadingMessage {
+	        margin-top: 20px;
+	        font-size: 18px;
+	    }
 
         
  
@@ -114,9 +146,14 @@
     </script> 
 </head>
 <body>
+	<div id="loading" style="display: none;">
+	  <div class="spinner"></div>
+	  <p>데이터를 처리 중입니다. 잠시만 기다려주세요...(최대 1~2 분 소요)</p>
+	</div>
+
     <h1>건물 정보 입력</h1>
     <div class="form-container">  
-	    <form action="${pageContext.request.contextPath }/submitBuildingInfo" method="post">
+	    <form action="${pageContext.request.contextPath }/submitBuildingInfo" method="post" onsubmit="showLoading()">
 	        <!-- 건물명 입력 -->
 	        <label for="buildingName">건물명:</label>
 	        <input type="text" id="buildingName" name="buildingName" required><br><br>
@@ -194,13 +231,21 @@
 	        <label class="radio-inline"  for="normalVentilation">일반</label><br><br> 
 	
 	        <!-- 태양광 패널 개수 입력 -->
-	        <label class="radio-inline" >태양광 패널 개수:</label><br>
-	        <input type="number" id="solarPanelCount" name="solarPanelCount" min="0" step="1"><br>
+	        <label class="radio-inline" >태양광 패널 총 출력(KW):</label><br>
+	        <input type="number" id="solarPanelCount" name="solarPanelKW" min="0"><br>
 	        <input type="checkbox" id="noPanel" name="noPanel" value="0" onclick="toggleSolarPanelInput()">
 	        <label class="radio-inline"  for="noPanel">없음</label><br><br>
 	 
 	        <button type="submit">제출</button> 
 	    </form>
     </div>
+    
+    <script type="text/javascript">
+	    function showLoading() {
+	        document.getElementById('loading').style.display = 'flex';
+	    }
+    </script>
+    
+    
 </body>
 </html>
