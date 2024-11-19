@@ -202,9 +202,10 @@ public class MemberController {
 
         MemberDTO login = memberService.loginMember(member);
         
+        String memId;
         if (login != null) {
             session.setAttribute("login", login); // 세션에 로그인 정보 저장
-            String memId = login.getMemId();
+            memId = login.getMemId();
             // 쿠키 처리
             if (rememberId) {
                 // 쿠키 생성
@@ -218,61 +219,61 @@ public class MemberController {
                 response.addCookie(cookie);
             }
             
-            StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/login"); /*URL*/
-            HttpURLConnection conn = null;
-            BufferedReader rd = null;
-            try {
-                // URL 연결 및 설정
-                URL url = new URL(urlBuilder.toString());
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("POST");
-                conn.setDoOutput(true);
-                conn.setRequestProperty("Content-type", "application/json");
-                
-
-                // JSON 데이터 생성
-                String result = "{\"id\":\"" + memId + "\"}";
-                System.out.println(memId);
-
-                // 요청 본문에 데이터 전송
-                try (OutputStream os = conn.getOutputStream()) {
-                    byte[] input = result.getBytes("utf-8");
-                    os.write(input, 0, input.length);
-                }
-
-                // 응답 처리
-                if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-                    rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-                } else {
-                    rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-                }
-
-
-            } catch (IOException e) {
-                // HTTP 요청 관련 예외 처리
-                e.printStackTrace();  // 로그에 예외 출력 (필요시 로깅 활용)
-                model.addAttribute("msg", "서버와의 연결에 문제가 발생했습니다.");
-                return "member/loginView"; // 로그인 실패 시 로그인 페이지로 돌아감
-            } finally {
-                // BufferedReader, HttpURLConnection 객체 정리
-                if (rd != null) {
-                    try {
-                        rd.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (conn != null) {
-                    conn.disconnect();
-                }
-            }
-
-            // 홈으로 리다이렉트
-            return "redirect:/";
-        } else {
-            model.addAttribute("msg", "아이디 혹은 비밀번호가 올바르지 않습니다.");
-            return "member/loginView"; // 로그인 실패 시 로그인 페이지로
-        }
+	        StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/login"); /*URL*/
+	        HttpURLConnection conn = null;
+	        BufferedReader rd = null;
+	        try {
+	            // URL 연결 및 설정
+	            URL url = new URL(urlBuilder.toString());
+	            conn = (HttpURLConnection) url.openConnection();
+	            conn.setRequestMethod("POST");
+	            conn.setDoOutput(true);
+	            conn.setRequestProperty("Content-type", "application/json");
+	            
+	
+	            // JSON 데이터 생성
+	            String result = "{\"id\":\"" + memId + "\"}";
+	            System.out.println(memId);
+	
+	            // 요청 본문에 데이터 전송
+	            try (OutputStream os = conn.getOutputStream()) {
+	                byte[] input = result.getBytes("utf-8");
+	                os.write(input, 0, input.length);
+	            }
+	
+	            // 응답 처리
+	            if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+	                rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+	            } else {
+	                rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+	            }
+	
+	
+	        } catch (IOException e) {
+	            // HTTP 요청 관련 예외 처리
+	            e.printStackTrace();  // 로그에 예외 출력 (필요시 로깅 활용)
+	            model.addAttribute("msg", "서버와의 연결에 문제가 발생했습니다.");
+	            return "member/loginView"; // 로그인 실패 시 로그인 페이지로 돌아감
+	        } finally {
+	            // BufferedReader, HttpURLConnection 객체 정리
+	            if (rd != null) {
+	                try {
+	                    rd.close();
+	                } catch (IOException e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	            if (conn != null) {
+	                conn.disconnect();
+	            }
+	        }
+	
+	        // 홈으로 리다이렉트
+	        return "redirect:/";
+	    } else {
+	        model.addAttribute("msg", "아이디 혹은 비밀번호가 올바르지 않습니다.");
+	        return "member/loginView"; // 로그인 실패 시 로그인 페이지로
+	    }
     }
     
     // 로그아웃 처리
@@ -300,54 +301,6 @@ public class MemberController {
         // 로그인 정보가 없으면 로그인 페이지로 리디렉션
         if (login == null) {
             return "redirect:/loginView";  // 로그인 페이지로 리디렉션
-        }
-
-        String memId = login.getMemId();
-        model.addAttribute("member", login);
-
-        BufferedReader rd = null;
-        HttpURLConnection conn = null;
-        StringBuilder sb = new StringBuilder();
-
-        try {
-            // URL 생성 및 HttpURLConnection 열기
-            StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/post");
-            URL url = new URL(urlBuilder.toString());
-            conn = (HttpURLConnection) url.openConnection();
-
-            // 요청 설정
-            conn.setRequestMethod("GET");  // GET 방식으로 요청
-            conn.setRequestProperty("Content-type", "application/json");
-
-            // 응답 코드에 따른 스트림 처리
-            if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-                rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            } else {
-                rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-            }
-
-            // 응답 내용 읽기
-            String line;
-            while ((line = rd.readLine()) != null) {
-                sb.append(line);
-            }
-
-            System.out.println(sb.toString());  // 서버 응답 출력
-
-        } catch (Exception e) {
-            // 예외 발생 시 처리
-            e.printStackTrace();  // 예외 출력
-        } finally {
-            try {
-                if (rd != null) {
-                    rd.close();  // BufferedReader 닫기
-                }
-                if (conn != null) {
-                    conn.disconnect();  // 연결 종료
-                }
-            } catch (Exception e) {
-                e.printStackTrace();  // 예외 발생 시 처리
-            }
         }
 
         return "member/mypage";  // 페이지 리턴
