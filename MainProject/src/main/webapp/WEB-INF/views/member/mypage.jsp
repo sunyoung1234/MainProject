@@ -1,188 +1,154 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>마이 페이지</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마이페이지 대시보드</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
-    <link href="${pageContext.request.contextPath}/css/styles.css" rel="stylesheet" />
-
     <style>
-        /* 기본 스타일 */
         body {
             margin: 0;
             padding: 0;
-            height: 100vh;
-            background: #000;
-            overflow: hidden;
-            font-family: 'Arial', sans-serif;
+            background-color: #f5f7fa;
+            font-family: 'Roboto', sans-serif;
         }
 
-        /* 암전 및 깜박임 효과 */
-        .blackout {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 1);
-            z-index: 2;
-            animation: blackout 1s forwards;
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        @keyframes blackout {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
-        /* 미친듯한 배경 효과 (핵폭발, 번개, 빛 등) */
-        .background-effect {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(255, 0, 0, 0.7) 0%, rgba(255, 215, 0, 0.4) 80%);
-            animation: explosion 4s ease-out infinite, lightning 1.5s ease-in-out infinite;
-            z-index: 1;
-            filter: brightness(1.5) saturate(2);
-        }
-
-        @keyframes explosion {
-            0% { transform: scale(0.1); opacity: 1; }
-            50% { transform: scale(3); opacity: 0.8; }
-            100% { transform: scale(10); opacity: 0; }
-        }
-
-        @keyframes lightning {
-            0% { opacity: 0; }
-            50% { opacity: 1; }
-            100% { opacity: 0; }
-        }
-
-        /* 번개 효과 */
-        .lightning {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 5px;
-            height: 300px;
-            background: linear-gradient(180deg, #ffffff 0%, #fffc00 50%, #ffffff 100%);
-            animation: bolt 1s linear infinite;
-            z-index: 3;
-            transform: translate(-50%, -50%);
-        }
-
-        @keyframes bolt {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-            50% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; }
-            100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
-        }
-
-        /* 프로필 카드 */
-        .profile-card {
-            background: rgba(0, 0, 0, 0.9);
-            color: #fff;
-            border-radius: 30px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
-            padding: 50px;
+        .dashboard-header {
             text-align: center;
-            width: 500px;  /* 카드 크기 확장 */
-            backdrop-filter: blur(15px);
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            animation: cardAppear 3s ease-out forwards;
-            z-index: 4;  /* 카드가 배경 위에 */
+            margin-bottom: 30px;
         }
 
-        @keyframes cardAppear {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.3) rotate(180deg); }
-            50% { transform: translate(-50%, -50%) scale(1.05) rotate(0deg); }
-            100% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+        .dashboard-header h1 {
+            font-size: 2rem;
+            color: #333;
         }
 
-        /* 텍스트 스타일 */
-        .profile-card h1 {
-            font-size: 36px;
-            font-weight: 800;
-            margin-bottom: 20px;
-            text-shadow: 6px 6px 20px rgba(0, 0, 0, 0.8);
+        .dashboard-header p {
+            color: #666;
+            font-size: 1rem;
         }
 
-        .profile-card p {
-            font-size: 20px;
-            margin-bottom: 25px;
-            color: rgba(255, 255, 255, 0.9);
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
-        /* 버튼 스타일 */
-        .btn-edit {
-            background: linear-gradient(135deg, #FF4500, #FFD700);
+        .card {
+            background: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .card h2 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
             color: #fff;
-            padding: 18px 40px;
-            border-radius: 40px;
-            font-size: 20px;
-            font-weight: 700;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.8);
-            transition: all 0.3s ease;
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-size: 0.9rem;
             border: none;
-            transform: scale(1.1);
         }
 
-        /* 버튼 호버 효과 */
-        .btn-edit:hover {
-            transform: scale(1.2);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.9);
+        .btn-primary:hover {
+            background-color: #0056b3;
         }
 
-        /* 버튼 반짝임 효과 */
-        .btn-edit::after {
-            content: '';
-            position: absolute;
-            top: -8px; left: -8px;
-            right: -8px; bottom: -8px;
-            border-radius: 40px;
-            background: radial-gradient(circle, rgba(255, 215, 0, 0.7) 0%, rgba(255, 0, 0, 0.4) 100%);
-            animation: pulse 1s infinite alternate;
+        .extra-section {
+            margin-top: 40px;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.6; }
-            100% { transform: scale(1.15); opacity: 1; }
+        .extra-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #333;
         }
 
+        .placeholder {
+            height: 250px;
+            background: #e9ecef;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+            font-size: 1rem;
+        }
     </style>
+            <!-- Navigation START -->
+        <%@ include file="/WEB-INF/inc/top.jsp" %>
+        <!-- Navigation END -->
 </head>
 <body>
-
-    <!-- 배경과 암전 처리 -->
-    <div class="blackout"></div>
-    <div class="background-effect"></div>
-    <div class="lightning"></div> <!-- 번개 효과 -->
-
-    <main class="main-height">
-        <div class="profile-card">
-            <h1>${sessionScope.login.getMemName()} 님</h1>
-            <p>연락처: ${sessionScope.login.getMemPhone()}</p>
-            <p>이메일: ${sessionScope.login.getMemEmail()}</p>
-            <div class="divider"></div>
-            <a href="${pageContext.request.contextPath}/memEditView" class="btn btn-edit">수정하기</a>
+    <div class="dashboard-container">
+        <!-- 대시보드 헤더 -->
+        <div class="dashboard-header">
+            <h1>안녕하세요, ${sessionScope.login.memName} 님</h1>
+            <p>여기에서 회원 정보와 활동 데이터를 확인할 수 있습니다.</p>
         </div>
-    </main>
+
+        <!-- 주요 카드 섹션 -->
+        <div class="dashboard-cards">
+            <!-- 기본 정보 카드 -->
+            <div class="card">
+                <h2>회원 정보</h2>
+                <p>이름: ${sessionScope.login.memName}</p>
+                <p>이메일: ${sessionScope.login.memEmail}</p>
+                <p>전화번호: ${sessionScope.login.memPhone}</p>
+                <button class="btn-primary">정보 수정</button>
+            </div>
+
+            <!-- 활동 데이터 카드 -->
+            <div class="card">
+                <h2>활동 데이터</h2>
+                <p>최근 로그인: 준비 중</p>
+                <p>최근 사용량: 준비 중</p>
+                <p>포인트: 준비 중</p>
+            </div>
+
+            <!-- 알림 카드 -->
+            <div class="card">
+                <h2>알림</h2>
+                <p>현재 미확인 알림: 준비 중</p>
+            </div>
+        </div>
+
+        <!-- 추가 섹션: 그래프 및 게시판 요약 -->
+        <div class="extra-section">
+            <h3>에너지 사용량 및 데이터</h3>
+            <div class="placeholder">여기에 전기사용량, 가스 배출량 그래프 추가 예정</div>
+        </div>
+
+        <div class="extra-section">
+            <h3>게시판 요약</h3>
+            <div class="placeholder">최근 게시판 활동 요약 추가 예정</div>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // 페이지 로드 시 카드 등장 애니메이션
-        window.onload = function() {
-            setTimeout(function() {
-                document.querySelector('.profile-card').style.transform = 'scale(1)';
-                document.querySelector('.profile-card').style.transition = 'transform 2s ease-out';
-            }, 500);
-        };
-    </script>
 </body>
 </html>
