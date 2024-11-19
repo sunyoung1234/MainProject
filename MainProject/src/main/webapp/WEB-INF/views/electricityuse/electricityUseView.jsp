@@ -39,8 +39,8 @@
     }
     
     .elecImgBox{
-    	width:1000px;
-    	height:700px;
+    	width:1500px;
+    	height:600px;
     }
     
     .elecImg{

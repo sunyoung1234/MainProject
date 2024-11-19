@@ -173,7 +173,7 @@
 					<input id="inputImg" type="file" accept="image/*">
 				</div>
 				<div class="img-container">
-					<img id="showImg" src="" alt="이미지 삽입">
+					<img id="showImg">
 				</div>
 			</div>
 			<div class="saveCroppedBox">
@@ -181,7 +181,7 @@
 			</div>
 			<!-- 자른 이미지를 보여줄 부분 -->
 			<div class="img-container2">
-				<img id="croppedImg" src="" alt="자른 이미지 미리보기">
+				<img id="croppedImg" src="" >
 			</div>
 			<button id="uploadImg">이미지 보내기</button>
 			
@@ -337,8 +337,9 @@
         document.getElementById("lastMonth").innerHTML = lastMonth + "월";
         document.getElementById("thisMonth").innerHTML = month + "월";
         
+        let lastMonthUse = '${electricityUse.getElectricityUse() }'
         let gasResult = '${electricityUse.getElectricityUse() }'*0.424
-        console.log(Math.round(gasResult*100) / 100)
+        
         document.getElementById("gasResult1").innerHTML = Math.round(gasResult*100) / 100
         
         document.getElementById("checkBtn").addEventListener("click", ()=>{
@@ -353,6 +354,7 @@
             	document.querySelector('.resultText').innerHTML = '전달보다 많이 사용하였습니다.'  
             }
         })
+        
         
         
         
