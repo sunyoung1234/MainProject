@@ -26,7 +26,7 @@
 <style type="text/css">
 	
 	.main-height{
-		height:900px;
+		height:1100px;
 		width:1300px;
 		border: 1px solid black;
 		margin: auto;
@@ -71,8 +71,6 @@
 		
 	}
 	
-	
-	
 	.product-list{
 		display: flex;
 		justify-content:space-around;
@@ -81,8 +79,8 @@
 	}
 	
 	.product-box{
-		width:250px;
-		height:200px;
+		width:350px;
+		height:300px;
 		border: 1px solid #ddd;
         border-radius: 10px;
 	}
@@ -98,6 +96,7 @@
 		justify-content: center;
 		align-items:center;
 		height:70%;
+		
 	}
 	 
 	 

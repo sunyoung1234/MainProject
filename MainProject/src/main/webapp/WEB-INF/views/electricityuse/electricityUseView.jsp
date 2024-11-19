@@ -78,7 +78,9 @@
 					<span>주소 : 대전 서구 문정로48번길 48</span>
 				</div>
 			</div>
-			<img class="elecImg" src="http://192.168.0.51:5000/post">
+			<div class=>
+				<img class="elecImg" src="http://192.168.0.51:5000/post">
+			</div>
 		</div>
 	</div>
 	
