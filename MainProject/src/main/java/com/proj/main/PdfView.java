@@ -28,7 +28,7 @@ public class PdfView extends AbstractPdfView {
         
         Table table = new Table(1, list.size() + 1);
         table.setPadding(5);
-        
+         
         BaseFont bfKorea = BaseFont.createFont("C:\\Windows\\Fonts\\malgun.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         Font font = new Font(bfKorea);
         
