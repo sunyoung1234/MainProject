@@ -173,7 +173,7 @@
 					<input id="inputImg" type="file" accept="image/*">
 				</div>
 				<div class="img-container">
-					<img id="showImg">
+					<img id="showImg" alt="숫자 부분만 잘라 저장해주세요">
 				</div>
 			</div>
 			<div class="saveCroppedBox">
@@ -226,7 +226,7 @@
 				
 			</div>
 			<form action="${pageContext.request.contextPath }/ocrInsert" method="POST">
-				<button class="finalBox" type="submit">최종 확인</button>
+				<button class="finalBox" type="submit" disabled>최종 확인</button>
 				<input hidden value="${electricityUse.getElectricityUse() }" name="electricityUse">
 			</form>
 		</div>
@@ -343,7 +343,9 @@
         document.getElementById("gasResult1").innerHTML = Math.round(gasResult*100) / 100
         
         document.getElementById("checkBtn").addEventListener("click", ()=>{
-        	console.log("click")
+        	
+        	document.querySelector(".finalBox").disabled = false;
+        	
         	document.getElementById("elecUse").innerHTML = v_elecUse
         	let v_result2 = v_elecUse * 0.424
         	document.getElementById("gasResult2").innerHTML = Math.round(v_result2*100) / 100
