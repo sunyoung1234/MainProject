@@ -38,6 +38,24 @@
         display: flex;
     }
     
+    .elecImgBox{
+    	width:1500px;
+    	height:600px;
+    }
+    
+    .elecImg{
+    	width:100%;
+    	height:100%
+    }
+    
+    .memInfo{
+    	margin-left:100px;
+    	
+    }
+    
+    .info-car{
+    	color:  #007bff;
+    }
     
     
 </style>
@@ -48,7 +66,20 @@
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
 
 	<div class="main-height">
-		<img src="http://192.168.0.51:5000/post">
+		<div class="elecImgBox">
+			<div class="memInfo">
+				<h2>회원정보</h2>
+				<div class="info-item">
+					<i class="info-car bi-person-circle"></i>
+					<span>닉네임 : 계룡건설</span>
+				</div>
+				<div class="info-item">
+					<i class="info-car bi-house-door"></i>
+					<span>주소 : 대전 서구 문정로48번길 48</span>
+				</div>
+			</div>
+			<img class="elecImg" src="http://192.168.0.51:5000/post">
+		</div>
 	</div>
 	
 

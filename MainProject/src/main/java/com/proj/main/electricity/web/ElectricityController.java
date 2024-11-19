@@ -30,8 +30,16 @@ public class ElectricityController {
 	@RequestMapping("/ocrView")
     public String ocrTest(HttpSession session, Model model, ElectricityDTO electricity) {
 		
-		MemberDTO member = (MemberDTO)session.getAttribute("login");
-		String memId = member.getMemId();
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+	       
+
+        // 로그인 정보가 없으면 로그인 페이지로 리디렉션
+        if (login == null) {
+            return "redirect:/loginView";  // 로그인 페이지로 리디렉션
+        }
+		
+		
+		String memId = login.getMemId();
 		
 		ElectricityDTO use = electricityService.getElectricitylastMonth(memId);
 		
@@ -66,7 +74,12 @@ public class ElectricityController {
 	public String electricityUseView(HttpSession session, Model model) {
 		
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
-        String memId = login.getMemId();
+       
+
+        // 로그인 정보가 없으면 로그인 페이지로 리디렉션
+        if (login == null) {
+            return "redirect:/loginView";  // 로그인 페이지로 리디렉션
+        }
 
         model.addAttribute("member",login);
         
