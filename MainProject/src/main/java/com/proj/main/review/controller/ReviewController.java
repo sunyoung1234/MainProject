@@ -57,6 +57,10 @@ public class ReviewController {
 	
 	@RequestMapping("/reviewView")
 	public String reviewView() {
+		
+		
+		
+		
 		return "review/reviewView";
 	}
 	
