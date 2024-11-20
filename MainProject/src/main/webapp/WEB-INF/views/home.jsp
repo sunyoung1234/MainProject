@@ -245,6 +245,86 @@ body {
 	font-size: 18px;
 }
 </style>
+<style>
+/* 배너 섹션 애니메이션 도형 */
+#animated-shape {
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+    position: relative;
+    border: 5px solid #28a745;
+    border-radius: 50%;
+    animation: rotate 6s linear infinite;
+    background: radial-gradient(circle, rgba(40, 167, 69, 0.2), rgba(40, 167, 69, 0));
+    transition: transform 0.5s ease; /* 크기 변화를 부드럽게 하기 위한 트랜지션 */
+}
+
+#animated-shape::before,
+#animated-shape::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    transition: transform 0.5s ease; /* 내부 도형 크기 변화를 부드럽게 하기 위한 트랜지션 */
+}
+
+#animated-shape::before {
+    width: 150px;
+    height: 150px;
+    border: 3px dashed #28a745;
+    animation: pulse 3s ease-in-out infinite;
+}
+
+#animated-shape::after {
+    width: 100px;
+    height: 100px;
+    background-color: rgba(40, 167, 69, 0.1);
+    animation: scaleUp 2.5s ease-in-out infinite;
+}
+
+/* Hover 상태에서 도형이 커지도록 설정 */
+#animated-shape:hover {
+    transform: scale(1.5); /* 도형 전체 크기 1.5배 확대 */
+}
+
+#animated-shape:hover::before {
+    transform: translate(-50%, -50%) scale(1.5); /* 내부 dashed 도형 크기 확대 */
+}
+
+#animated-shape:hover::after {
+    transform: translate(-50%, -50%) scale(1.5); /* 내부 원 크기 확대 */
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+}
+
+@keyframes scaleUp {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.4);
+    }
+}
+
+</style>
 
 
 
@@ -311,13 +391,32 @@ body {
 		</section>
 
 
-		<section class="section" id="banner">
-			<div class="about-video-section">
-				<div>
-					<img src="${pageContext.request.contextPath}/resources/image/한전이미지1.jpg" alt="슬라이드 이미지 1">
-				</div>
-				</div>
-		</section>
+<section class="section" id="banner" style="background-color: #f8f9fa; padding: 70px 0; position: relative;">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- 텍스트 섹션 -->
+            <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="display-4 mb-4" style="font-weight: 700; color: #2c3e50;">
+                    지속 가능한 에너지를 위한<br><strong style="color: #28a745;">미래의 솔루션</strong>
+                </h1>
+                <p class="mb-4" style="font-size: 20px; line-height: 1.8; color: #34495e;">
+                    우리의 목표는 탄소 중립과 에너지 효율화를 통해<br>
+                    친환경적인 미래를 만드는 것입니다. 혁신적인 기술과<br>
+                    솔루션으로 지속 가능한 세상을 함께 만들어갑니다.
+                </p>
+                <div>
+                    <a href="#vision" class="btn btn-success btn-lg px-5 py-2 shadow me-3">더 알아보기</a>
+                    <a href="#about" class="btn btn-outline-success btn-lg px-5 py-2 shadow">문의하기</a>
+                </div>
+            </div>
+            <!-- 애니메이션 도형 섹션 -->
+            <div class="col-lg-6 text-center mt-5 mt-lg-0">
+                <div id="animated-shape"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 
 <section class="section banner" id="introduce" style="background: linear-gradient(to right, #83a4d4, #b6fbff); padding: 70px 0;">
