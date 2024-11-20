@@ -235,7 +235,7 @@ body {
     cursor: pointer; /* 포인터 커서 추가 */
     transition: transform 0.3s ease; /* 부드러운 변화를 위한 트랜지션 */
     text-decoration: none; /* 링크 밑줄 제거 */
-    gap: 30px;
+    gap: 35px;
 }
 
 .service:hover {
