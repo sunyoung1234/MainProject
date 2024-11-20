@@ -225,10 +225,7 @@
 			<div class="resultText">
 				
 			</div>
-			<form action="${pageContext.request.contextPath }/ocrInsert" method="POST">
-				<button class="finalBox" type="submit" disabled>최종 확인</button>
-				<input hidden value="${electricityUse.getElectricityUse() }" name="electricityUse">
-			</form>
+			<button class="finalBox" type="submit" disabled>최종 확인</button>
 		</div>
 	</div>
 	
@@ -288,6 +285,7 @@
         let v_use = '${monthUse}'
         
         let v_elecUse;
+        
         document.getElementById("uploadImg").addEventListener('click', ()=> {
             if (cropper) {
                 // 자른 이미지 데이터 얻기 (base64)
@@ -308,6 +306,7 @@
                         alert("이미지 업로드 성공!");
                         document.querySelector('.ocr-result').innerHTML = '전기 사용량 : ' + v_ajax.responseText
                         v_elecUse = v_ajax.responseText
+                       
                     } else {
                         console.error("이미지 전송 실패:", v_ajax.status, v_ajax.statusText);
                         alert("이미지 업로드 실패.");
@@ -333,6 +332,8 @@
         if(lastMonth<1){
         	lastMonth = 12
         }
+        
+        
            
         document.getElementById("lastMonth").innerHTML = lastMonth + "월";
         document.getElementById("thisMonth").innerHTML = month + "월";
@@ -345,18 +346,39 @@
         document.getElementById("checkBtn").addEventListener("click", ()=>{
         	
         	document.querySelector(".finalBox").disabled = false;
-        	
         	document.getElementById("elecUse").innerHTML = v_elecUse
         	let v_result2 = v_elecUse * 0.424
         	document.getElementById("gasResult2").innerHTML = Math.round(v_result2*100) / 100
         	
-        	if(lastMonthUse < lastMonthUse){
+        	if(lastMonthUse < v_elecUse){
             	document.querySelector('.resultText').innerHTML = '전달보다 적게 사용하였습니다.'    
             }else{
             	document.querySelector('.resultText').innerHTML = '전달보다 많이 사용하였습니다.'  
             }
         })
         
+        document.querySelector(".finalBox").addEventListener("click", ()=>{
+        	 let v_ajax = new XMLHttpRequest();
+             v_ajax.open("POST", "${pageContext.request.contextPath}/ocrInsert");
+             v_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+             let v_data = "electricityUse=" + v_elecUse;
+          
+             
+             v_ajax.onload = function () {
+                 if (v_ajax.status === 200) {
+                     console.log("서버 응답:", v_ajax.responseText);
+                     alert("데이터 전송 완료");
+                    
+                 } else {
+                     console.error("이미지 전송 실패:", v_ajax.status, v_ajax.statusText);
+                 }
+             };
+
+             v_ajax.send(v_data);
+             
+             
+        })
         
         
         

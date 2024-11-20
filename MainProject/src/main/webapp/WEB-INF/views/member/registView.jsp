@@ -88,19 +88,58 @@ body {
 	margin-left: 10px;
 	border: none;
 }
+
+#loading {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgba(0, 0, 0, 0.5);
+   display: none;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   z-index: 1000;
+   color: white;
+   text-align: center;
+}
+.spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+#loadingMessage {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body id="page-top">
 	<!-- Navigation -->
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
+	
+	<div id="loading" style="display: none;">
+	  <div class="spinner"></div>
+	  <p>데이터를 처리 중입니다. 잠시만 기다려주세요...(최대 1분 소요)</p>
+	</div>
 
 	<!-- Main content section -->
 	<section class="container">
 		<div class="register-card">
 			<h2 class="form-title">회원가입</h2>
 			<form id="registForm"
-				action="${pageContext.request.contextPath}/registDo" method="POST">
+				action="${pageContext.request.contextPath}/registDo" method="POST" onsubmit="showLoading()">
 				<!-- 아이디 input -->
 				<div class="form-floating mb-3">
 					<div class="d-flex">
@@ -375,6 +414,12 @@ body {
             }
         }).open();
     }
+	
+	function showLoading() {
+        document.getElementById('loading').style.display = 'flex';
+    }
+	
+	
 </script>
 
 </body>
