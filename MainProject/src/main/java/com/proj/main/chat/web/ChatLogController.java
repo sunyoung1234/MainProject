@@ -53,11 +53,13 @@ public class ChatLogController {
     // 채팅 메시지 전달
     @MessageMapping("/hello/{roomNo}")
     @SendTo("/subscribe/chat/{roomNo}")
-    public ChatLogDTO broadcasting(ChatLogDTO chat, HttpSession session) {
+    public ChatLogDTO broadcasting(ChatLogDTO chat) {
+//    	, HttpSession session
         // memName이 비어 있는 경우 세션에서 가져오기
-        if (chat.getMemName() == null || chat.getMemName().isEmpty()) {
-            chat.setMemName((String) session.getAttribute("memName"));
-        }
+//        if (chat.getMemName() == null || chat.getMemName().isEmpty()) {
+//            chat.setMemName((String) session.getAttribute("memName"));
+//        }
+        
         System.out.println("chat: " + chat);
         // 채팅 메시지 DB에 저장
         chatService.insertChat(chat);
