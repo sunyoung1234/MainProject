@@ -40,7 +40,25 @@ public class resultController {
 	}
 	
 	@RequestMapping("/resultView")
-	public String resultView() {
+	public String resultView(HttpSession session,Model model) {
+		MemberDTO mem = (MemberDTO) session.getAttribute("login");
+		String b_id = (String) session.getAttribute("bId");
+		String memId = mem.getMemId();
+		String addr = mem.getMemAddress() + mem.getExtraAddress();
+		
+		UserBuildingDTO userB = rs.getUserBuilding(b_id);
+		EnergyResultDTO e_result = rs.getEnergyResult(b_id);
+		EnergyUsedDTO e_used = rs.getEnergyUsed(b_id);
+		
+		
+		model.addAttribute("address", addr);
+		model.addAttribute("userB", userB);
+		model.addAttribute("e_result", e_result);
+		model.addAttribute("e_used", e_used);
+		
+		
+		
+		
 		return "result/resultView";
 	}
 	
@@ -62,6 +80,7 @@ public class resultController {
         ubd.setBuildingId(b_id);
         
         rs.insertUserBuilding(ubd);
+        session.setAttribute("bId", b_id);
         
         try {
 			EnergyResultDTO energyResult = ReflectionMapper.mapJsonToDto(data, EnergyResultDTO.class);

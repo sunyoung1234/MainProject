@@ -82,5 +82,17 @@
 	    )
 	
 	</insert>
+	
+	<select id="getUserBuilding" parameterType="String" resultType="com.proj.main.result.dto.UserBuildingDTO">
+	SELECT * FROM BUILDING_INFO WHERE BUILDING_ID = #{buildingId}
+	</select>
+	
+	<select id="getEnergyResult" parameterType="String" resultType="com.proj.main.result.dto.EnergyResultDTO">
+	SELECT * FROM ENERGY_RESULT WHERE BUILDING_ID = #{buildingId}
+	</select>
+	
+	<select id="getEnergyUsed" parameterType="String" resultType="com.proj.main.result.dto.EnergyUsedDTO">
+	SELECT * FROM ENERGY_USED WHERE BUILDING_ID = #{buildingId}
+	</select>
 
 </mapper>
