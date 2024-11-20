@@ -223,26 +223,38 @@ body {
 
 /* 서비스 아이콘과 텍스트 스타일 */
 .about-services {
-	display: flex;
-	justify-content: center;
-	gap: 30px;
-	margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
 }
 
 .service {
-	text-align: center;
-	color: #fff;
+    text-align: center;
+    color: #fff;
+    cursor: pointer; /* 포인터 커서 추가 */
+    transition: transform 0.3s ease; /* 부드러운 변화를 위한 트랜지션 */
+    text-decoration: none; /* 링크 밑줄 제거 */
+    gap: 35px;
+}
+
+.service:hover {
+    transform: scale(1.3); /* 아이콘 크기를 130%로 확대 */
+    color: white;
 }
 
 .service i {
-	font-size: 50px;
-	color: #a5d6a7; /* 친환경적인 녹색 계열 색상 */
-	margin-bottom: 10px;
+    font-size: 50px;
+    color: #a5d6a7; /* 친환경적인 녹색 계열 색상 */
+    margin-bottom: 10px;
+    transition: transform 0.3s ease; /* 아이콘 크기 변화에 트랜지션 추가 */
 }
 
 .service p {
-	margin-top: 10px;
-	font-size: 18px;
+    margin-top: 10px;
+    font-size: 18px;
+    text-decoration: none;
+    color:white;
 }
 </style>
 <style>
@@ -373,18 +385,18 @@ body {
 
 
 					<div class="about-services fade-in">
-						<div class="service">
-							<i class="fas fa-solar-panel"></i>
-							<p>에너지 효율 설계</p>
-						</div>
-						<div class="service">
-							<i class="fas fa-leaf"></i>
-							<p>친환경 자재</p>
-						</div>
-						<div class="service">
-							<i class="fas fa-globe"></i>
-							<p>제로에너지빌딩 컨설팅</p>
-						</div>
+					    <a href="${pageContext.request.contextPath}/productView" class="service" target="_blank">
+					        <i class="fas fa-solar-panel"></i>
+					        <p>에너지 효율 설계</p>
+					    </a>
+					    <a href="${pageContext.request.contextPath}/mapView" class="service" target="_blank">
+					        <i class="fas fa-map"></i>
+					        <p>제로에너지건축물 현황</p>
+					    </a>
+					    <a href="${pageContext.request.contextPath}/inputView" class="service" target="_blank">
+					        <i class="fas fa-globe"></i>
+					        <p>제로에너지건축물 등급측정</p>
+					    </a>
 					</div>
 				</div>
 			</header>

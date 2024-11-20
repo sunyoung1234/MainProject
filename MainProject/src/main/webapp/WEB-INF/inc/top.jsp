@@ -56,7 +56,7 @@ body {
 	font-weight: bold;
 	text-decoration: none;
 	margin-right: 30px;
-	margin-left: 270px;
+	margin-left: 230px;
 }
 
 .navi-navbar-brand:hover {
@@ -132,19 +132,19 @@ body {
 
 /* 각 dropdown-content 위치 조정 */
 .navi-dropdown-content-1 {
-	margin-left: 30.2%; /* 첫 번째 nav-item에 맞추기 */
+	margin-left: 28.5%; /* 첫 번째 nav-item에 맞추기 */
 	padding-top: 10px;
 	text-align
 }
 
 .navi-dropdown-content-2 {
-	margin-left: 5.5%; /* 두 번째 nav-item에 맞추기 (필요에 따라 조정) */
+	margin-left: 2.75%; /* 두 번째 nav-item에 맞추기 (필요에 따라 조정) */
 	padding-top: 10px;
 }
 
 .navi-dropdown-content-3 {
-	margin-left: 5.25%; /* 세 번째 nav-item에 맞추기 (필요에 따라 조정) */
-	margin-right: 4.75%;
+	margin-left: 0.75%; /* 세 번째 nav-item에 맞추기 (필요에 따라 조정) */
+	margin-right: 2.25%;
 	padding-top: 10px;
 }
 
