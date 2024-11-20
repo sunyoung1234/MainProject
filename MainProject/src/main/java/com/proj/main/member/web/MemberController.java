@@ -118,31 +118,6 @@ public class MemberController {
        
         
         
-        StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/regist"); /*URL*/
-        URL url = new URL(urlBuilder.toString());
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        
-        conn.setRequestMethod("POST");
-        conn.setDoOutput(true);
-        conn.setRequestProperty("Content-type", "application/json");
-       
-        BufferedReader rd;
-        String result = "{\"id\":\"" + memId + "\"}";
-       
-        try(OutputStream os = conn.getOutputStream()){
-            byte[] input = result.getBytes("utf-8");
-            os.write(input,0,input.length);
-        }
-        
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
-        }
-        
-        
-        rd.close();
-        conn.disconnect();
         
         
         return "redirect:/loginView"; 

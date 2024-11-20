@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -202,5 +203,41 @@ public class ElectricityController {
     	
     	return result3;
     }
+	
+	
+	@RequestMapping("/updateModel")
+	public String updateModel(HttpSession session) throws Exception {
+		
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+		String memId = login.getMemId();
+		
+		StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/regist"); /*URL*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
+        conn.setRequestProperty("Content-type", "application/json");
+       
+        BufferedReader rd;
+        String result = "{\"id\":\"" + memId + "\"}";
+       
+        try(OutputStream os = conn.getOutputStream()){
+            byte[] input = result.getBytes("utf-8");
+            os.write(input,0,input.length);
+        }
+        
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+        }
+        
+        
+        rd.close();
+        conn.disconnect();
+		
+		return "electricityuse/electricityUseView";
+	}
 	
 }

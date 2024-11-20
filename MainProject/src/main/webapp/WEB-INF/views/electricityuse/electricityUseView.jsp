@@ -57,6 +57,41 @@
     	color:  #007bff;
     }
     
+    #loading {
+	   position: fixed;
+	   top: 0;
+	   left: 0;
+	   width: 100%;
+	   height: 100%;
+	   background-color: rgba(0, 0, 0, 0.5);
+	   display: none;
+	   flex-direction: column;
+	   justify-content: center;
+	   align-items: center;
+	   z-index: 1000;
+	   color: white;
+	   text-align: center;
+	}
+	
+	.spinner {
+	    border: 5px solid #f3f3f3;
+	    border-top: 5px solid #3498db;
+	    border-radius: 50%;
+	    width: 50px;
+	    height: 50px;
+	    animation: spin 1s linear infinite;
+	}
+	
+	@keyframes spin {
+	    0% { transform: rotate(0deg); }
+	    100% { transform: rotate(360deg); }
+	}
+	
+	#loadingMessage {
+	    margin-top: 20px;
+	    font-size: 18px;
+	}
+    
     
 </style>
 
@@ -64,6 +99,11 @@
 <body class="d-flex flex-column">
 
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
+	
+	<div id="loading" style="display: none;">
+	  <div class="spinner"></div>
+	  <p>데이터를 처리 중입니다. 잠시만 기다려주세요...(최대 1분 소요)</p>
+	</div>
 
 	<div class="main-height">
 		<div class="elecImgBox">
@@ -78,6 +118,11 @@
 					<span>주소 : 대전 서구 문정로48번길 48</span>
 				</div>
 			</div>
+			
+			<form action="${pageContext.request.contextPath}/updateModel" method="post" onsubmit="showLoading()">
+				<button type="submit">전기 사용량 및 예측 불러오기</button>
+			</form>
+			
 			<div class=>
 				<img class="elecImg" src="http://192.168.0.51:5000/post">
 			</div>
@@ -93,6 +138,10 @@
 	<script src="js/scripts.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script type="text/javascript">
+		function showLoading() {
+	        document.getElementById('loading').style.display = 'flex';
+	    }
+	
 	
 	</script>
 
