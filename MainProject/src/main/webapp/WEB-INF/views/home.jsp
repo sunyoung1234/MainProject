@@ -337,7 +337,29 @@ body {
 }
 
 </style>
+<style>
+/* about 섹션 내부에서 footer가 하단에 고정되도록 설정 */
+#about {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 콘텐츠와 footer 간격 자동 조정 */
+    min-height: 100vh; /* 화면 높이 전체를 차지 */
+    padding-bottom: 0; /* 하단 패딩 제거 */
+    margin-bottom: 0; /* 하단 마진 제거 */
+}
 
+/* footer 스타일 */
+.footer {
+    margin: 0; /* 여백 완전히 제거 */
+    padding: 20px 0; /* 내부 여백 설정 */
+    width: 100%; /* 가로로 꽉 채우기 */
+    background-color: #343a40; /* footer 배경 */
+    color: white; /* 텍스트 색상 */
+    text-align: center; /* 가운데 정렬 */
+    position: fixed; /* 화면 하단에 고정 */
+    bottom: 0; /* 화면 하단에 딱 붙이기 */
+}
+</style>
 
 
 </head>
@@ -516,12 +538,12 @@ body {
 		
 		
 <section class="section" id="about" style="background-color: white; padding: 50px 0;">
-    <div class="container">
+    <div class="container" style="margin-top: 150px;">
         <h2 class="text-center mb-4" style="font-weight: bold; color: #343a40; margin-bottom: 100px;">문의</h2>
         <p class="text-center mb-5" style="color: #6c757d; font-size: 18px;">
             궁금하신 사항이 있으시면 언제든지 연락해 주세요. 친절히 답변해 드리겠습니다.
         </p>
-        <div class="row justify-content-center g-4">
+        <div class="row justify-content-center g-4" style="margin-top: 150px;">
             <!-- Contact Card 1 -->
             <div class="col-md-4">
                 <div class="card shadow-sm h-100">
@@ -557,7 +579,14 @@ body {
             </div>
         </div>
     </div>
+    	<!-- Footer-->
+	<footer class="footer py-5 bg-dark">
+		<div class="container">
+			<p class="m-0 text-center text-white">Copyright &copy; GreenSolution 2024</p>
+		</div>
+	</footer>
 </section>
+
 	</div>
 
 	<!-- slick 슬라이드와 jQuery -->
