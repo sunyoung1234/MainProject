@@ -225,51 +225,51 @@
                         <tr>
                             <th class="tg-c3ow main-color-css" rowspan="2">기후 정보</th>
                             <th class="tg-c3ow sub-main-color-css">기후 조건</th>
-                            <th class="tg-c3ow" colspan="3"></th>
+                            <th class="tg-c3ow" colspan="3">${e_result.climate }</th>
                         </tr>
                         <tr>
-                            <th class="tg-c3ow sub-main-color-css">평균 기온()</th>
-                            <th class="tg-c3ow"></th>
-                            <th class="tg-c3ow sub-main-color-css">난방도시</th>
-                            <th class="tg-c3ow"></th>
+                            <th class="tg-c3ow sub-main-color-css">평균 기온(℃)</th>
+                            <th class="tg-c3ow">${e_result.avgTemp }</th>
+                            <th class="tg-c3ow sub-main-color-css">난방도시(kkh)</th>
+                            <th class="tg-c3ow">${e_result.heatDegreeDay }</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="tg-c3ow main-color-css" rowspan="2">기본 설정</td>
                             <td class="tg-c3ow sub-main-color-css">건물 유형</td>
-                            <td class="tg-c3ow"></td>
-                            <td class="tg-c3ow sub-main-color-css">축열</td>
-                            <td class="tg-c3ow"></td>
+                            <td class="tg-c3ow">${userB.residentialType }</td>
+                            <td class="tg-c3ow sub-main-color-css">축열(Wh/㎡K)</td>
+                            <td class="tg-c3ow">${e_result.thermalStorage }</td>
                         </tr>
                         <tr>
-                            <td class="tg-c3ow sub-main-color-css">난방 온도</td>  
-                            <td class="tg-c3ow"></td>
-                            <td class="tg-c3ow sub-main-color-css">냉방 온도</td>
-                            <td class="tg-c3ow"></td>
+                            <td class="tg-c3ow sub-main-color-css">난방 온도(℃)</td>  
+                            <td class="tg-c3ow">20</td>
+                            <td class="tg-c3ow sub-main-color-css">냉방 온도(℃)</td>
+                            <td class="tg-c3ow">26</td>
                         </tr>
                         <tr>
                             <td class="tg-c3ow main-color-css" rowspan="2">발열 정보</td>
                             <td class="tg-c3ow sub-main-color-css" >전체 거주자 수</td>
-                            <td class="tg-c3ow"></td>
+                            <td class="tg-c3ow">${e_result.occupants }</td>
                             <td class="tg-c3ow sub-main-color-css" rowspan="2">내부발열<br>입력 유형</td>
-                            <td class="tg-c3ow"></td>
+                            <td class="tg-c3ow">주거시설<br>표준치</td>
                         </tr>
                         <tr>
-                            <td class="tg-c3ow sub-main-color-css">내부 발열</td>
-                            <td class="tg-c3ow"></td>
+                            <td class="tg-c3ow sub-main-color-css">내부 발열(W/㎡)</td>
+                            <td class="tg-c3ow">${e_result.internalHeat }</td>
                             <td class="tg-c3ow"></td>
                         </tr>
                         <tr>
                             <td class="tg-c3ow main-color-css" rowspan="2">면적 체적</td>
-                            <td class="tg-c3ow sub-main-color-css">유효 실내면적</td>
-                            <td class="tg-c3ow"></td>
-                            <td class="tg-c3ow sub-main-color-css">환기용 체적</td>
-                            <td class="tg-c3ow"></td>
+                            <td class="tg-c3ow sub-main-color-css">유효 실내면적(㎡)</td>
+                            <td class="tg-c3ow">${e_result.indoorArea }</td>
+                            <td class="tg-c3ow sub-main-color-css">환기용 체적(㎥)</td>
+                            <td class="tg-c3ow">${e_result.ventilationVolume }</td>
                         </tr>
                         <tr>
                             <td class="tg-c3ow sub-main-color-css ">A/V 비</td>
-                            <td class="tg-c3ow" colspan="3"></td>
+                            <td class="tg-c3ow" colspan="3">${e_result.avRatio } ${e_result.avFormula }</td>
                         </tr>
                     </tbody>
                 </table>
@@ -279,71 +279,71 @@
                 <table class="tg">
                     <thead>
                         <tr>
-                            <th class="tg-baqh main-color-css" rowspan="3">열관류율</th>
+                            <th class="tg-baqh main-color-css" rowspan="3">열관류율(W/㎡K)</th>
                             <th class="tg-baqh sub-main-color-css">지붕</th>
-                            <th class="tg-baqh"></th>
+                            <th class="tg-baqh">${e_result.roofTransmit }</th>
                             <th class="tg-baqh sub-main-color-css">외벽 등</th>
-                            <th class="tg-baqh"></th>
+                            <th class="tg-baqh">${e_result.wallTransmit }</th>
                         </tr>
                         <tr>
                             <th class="tg-baqh sub-main-color-css">바닥/지면</th>
-                            <th class="tg-baqh"></th>
+                            <th class="tg-baqh">${e_result.floorTransmit }</th>
                             <th class="tg-baqh sub-main-color-css">외기간접</th>
-                            <th class="tg-baqh"></th>
+                            <th class="tg-baqh">${e_result.indirectTransmit }</th>
                         </tr>
                         <tr>
                             <th class="tg-baqh sub-main-color-css">출 입 문</th>
-                            <th class="tg-baqh"></th>
+                            <th class="tg-baqh">${e_result.doorTransmit }</th>
                             <th class="tg-baqh sub-main-color-css">창호 전체</th>
-                            <th class="tg-baqh"></th>
+                            <th class="tg-baqh">${e_result.windowTransmit }</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="tg-baqh main-color-css" rowspan="2">기본 유리</td>
                             <td class="tg-baqh sub-main-color-css">제품</td>
-                            <td class="tg-baqh" colspan="3"></td>
+                            <td class="tg-baqh" colspan="3">${e_result.glazingProd }</td>
                         </tr>
                         <tr>
                             <td class="tg-baqh sub-main-color-css">열관류율</td>
-                            <td class="tg-baqh"></td>
+                            <td class="tg-baqh">${e_result.glazingTransmit }</td>
                             <td class="tg-baqh sub-main-color-css">일사획득계수</td>
-                            <td class="tg-baqh"></td>
+                            <td class="tg-baqh">${e_result.solarGain }</td>
                         </tr>
                         <tr>
                             <td class="tg-baqh main-color-css" rowspan="2">기본 창틀</td>
                             <td class="tg-baqh sub-main-color-css">제 품</td>
-                            <td class="tg-baqh" colspan="3"></td>
+                            <td class="tg-baqh" colspan="3">${e_result.frameProd }</td>
                         </tr>
                         <tr>
                             <td class="tg-baqh sub-main-color-css">창틀 열관류율</td>
-                            <td class="tg-baqh"></td>
+                            <td class="tg-baqh">${e_result.frameTransmit }</td>
                             <td class="tg-baqh sub-main-color-css">간봉 열관류율</td>
-                            <td class="tg-baqh"></td>
+                            <td class="tg-baqh">${e_result.spacerTransmit }</td>
                         </tr>
                         <tr>
                             <td class="tg-baqh main-color-css" rowspan="3">환기 정보</td>
                             <td class="tg-baqh sub-main-color-css">제품</td>
-                            <td class="tg-baqh" colspan="3"></td>
+                            <td class="tg-baqh" colspan="3">${e_result.ventProd }</td>
                         </tr>
                         <tr>
                             <td class="tg-baqh sub-main-color-css">난방효율</td>
-                            <td class="tg-baqh"></td>
+                            <td class="tg-baqh">${e_result.heatEff * 100 }%</td>
                             <td class="tg-baqh sub-main-color-css">냉방효율</td>
-                            <td class="tg-baqh"></td>
+                            <td class="tg-baqh">${e_result.coolEff * 100 }%</td>
                         </tr>
                         <tr>
                             <td class="tg-baqh sub-main-color-css">습도회수율</td>
-                            <td class="tg-baqh"></td>
-                            <td class="tg-baqh sub-main-color-css">전력</td>
-                            <td class="tg-baqh"></td>
+                            <td class="tg-baqh">${e_result.humidityRec * 100 }%</td>
+                            <td class="tg-baqh sub-main-color-css">전력(Wh/㎥)</td>
+                            <td class="tg-baqh">${e_result.powerCons}</td>
                         </tr>
                         <tr>
                             <td class="tg-baqh main-color-css">열교</td>
-                            <td class="tg-baqh sub-main-color-css">선형전달계수</td>
-                            <td class="tg-baqh"></td>
-                            <td class="tg-baqh sub-main-color-css">점형전달계수</td>
-                            <td class="tg-baqh"></td>
+                            <td class="tg-baqh sub-main-color-css">선형전달계수(W/K)</td>
+                            <td class="tg-baqh">${e_result.linearCoeff}</td>
+                            <td class="tg-baqh sub-main-color-css">점형전달계수(W/K)</td>
+                            <td class="tg-baqh">${e_result.pointCoeff}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -354,15 +354,15 @@
                         <tr>
                             <th class="tg-baqh main-color-css" rowspan="3">재생<br>에너지</th>
                             <th class="tg-baqh sub-main-color-css">태양열</th>
-                            <th class="tg-baqh wider"></th>
+                            <th class="tg-baqh wider">System 미설치	</th>
                         </tr>
                         <tr>
                             <th class="tg-baqh sub-main-color-css">지열</th>
-                            <th class="tg-baqh wider"></th>
+                            <th class="tg-baqh wider">System 미설치</th>
                         </tr>
                         <tr>
                             <th class="tg-baqh sub-main-color-css">태양광</th>
-                            <th class="tg-baqh wider"></th>
+                            <th class="tg-baqh wider">출력 : ${userB.solarPanelKW} kWdc, 전력생산 의존률 : 100 %	 </th>
                         </tr>
                     </thead>
                 </table>
@@ -371,10 +371,10 @@
 				    <canvas id="doughnutChart3" width="200" height="200"></canvas>
 				    <div class="summary-text">
 				        <p><strong style="color: orange; font-size: 2em;">전기요금 절감 93%</strong></p>
-				        <p>연간 CO<sub>2</sub> 절감: <strong>2.6 Ton</strong></p>
-				        <p>소나무 대체효과: <strong>398 그루</strong></p>
-				        <p>태양광 적용전: <strong>3,859 kWh/yr</strong>, <strong>602,860 원/yr</strong></p>
-				        <p>태양광 적용후: <strong>44,610 원/yr</strong></p>
+				        <p>연간 CO<sub>2</sub> 절감: <strong> Ton</strong></p>
+				        <p>소나무 대체효과: <strong> 그루</strong></p>
+				        <p>태양광 적용전: <strong> 원/yr</strong></p>
+				        <p>태양광 적용후: <strong> 원/yr</strong></p>
 				    </div>
 				</div>
                 
@@ -387,67 +387,67 @@
                     <thead>
                         <tr>
                             <th class="tg-baqh main-color-css" rowspan="3">난방</th>
-                            <th class="tg-baqh sub-main-color-css" colspan="2">난방 성능</th>
-                            <th class="tg-baqh"></th>
+                            <th class="tg-baqh sub-main-color-css" colspan="2">난방 성능<br>(리터/㎡·yr)</th>
+                            <th class="tg-baqh">${e_result.heatingPerf}</th>
                         </tr>
                         <tr>
-                            <th class="tg-sh4c sub-main-color-css" colspan="2">난방에너지 요구량</th>
-                            <th class="tg-sh4c"></th>
+                            <th class="tg-sh4c sub-main-color-css" colspan="2">난방에너지 요구량(kWh/㎡·yr)</th>
+                            <th class="tg-sh4c">${e_result.heatingDemand}</th>
                         </tr>
                         <tr>
-                            <th class="tg-sh4c sub-main-color-css" colspan="2">난방 부하</th>
-                            <th class="tg-sh4c"></th>
+                            <th class="tg-sh4c sub-main-color-css" colspan="2">난방 부하(W/㎡)</th>
+                            <th class="tg-sh4c">${e_result.heatingLoad}</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td class="tg-baqh main-color-css" rowspan="6">냉방</td>
-                            <td class="tg-ysmt sub-main-color-css" style="border-bottom: none;" colspan="2">냉방에너지 요구량</td>
-                            <td class="tg-sh4c"></td>
+                            <td class="tg-ysmt sub-main-color-css" style="border-bottom: none;" colspan="2">냉방에너지 요구량(kWh/㎡·yr)</td>
+                            <td class="tg-sh4c">${e_result.coolingDemand}</td>
                         </tr>
                         <tr>
                             <td class="tg-sh4c sub-main-color-css" style="border-top: none;" rowspan="2"></td> 
                             <td class="tg-baqh sub-main-color-css">헌열에너지</td>
-                            <td class="tg-sh4c"></td>
+                            <td class="tg-sh4c">${e_result.sensibleEnergy}</td>
                         </tr>
                         <tr>
                             <td class="tg-baqh sub-main-color-css">제습에너지</td>
-                            <td class="tg-sh4c"></td>
+                            <td class="tg-sh4c">${e_result.dehumidEnergy}</td>
                         </tr>
                         <tr>
-                            <td class="tg-sh4c sub-main-color-css" style="border-bottom: none;" colspan="2">냉방 부하</td> 
-                            <td class="tg-sh4c">ss</td>  
+                            <td class="tg-sh4c sub-main-color-css" style="border-bottom: none;" colspan="2">냉방 부하(W/㎡)</td> 
+                            <td class="tg-sh4c">${e_result.coolingLoad}</td>  
                         </tr>
                         <tr>
                             <td class="tg-sh4c sub-main-color-css" style="border-top: none;" rowspan="2"></td>
                             <td class="tg-baqh sub-main-color-css">헌열 부하</td>
-                            <td class="tg-sh4c"></td>
+                            <td class="tg-sh4c">${e_result.sensibleLoad}</td>
                         </tr>
                         <tr>
                             <td class="tg-baqh sub-main-color-css">제습 부하</td>
-                            <td class="tg-sh4c"></td>
+                            <td class="tg-sh4c">${e_result.dehumidLoad}</td>
                         </tr>
                         <tr>
                             <td class="tg-baqh main-color-css" rowspan="3">총량</td>
-                            <td class="tg-sh4c sub-main-color-css" colspan="2">총 에너지 소요량</td>
-                            <td class="tg-sh4c"></td>
+                            <td class="tg-sh4c sub-main-color-css" colspan="2">총 에너지 소요량(kWh/㎡·yr)</td>
+                            <td class="tg-sh4c">${e_result.totalEnergy}</td>
                         </tr>
                         <tr>
-                            <td class="tg-sh4c sub-main-color-css" colspan="2">CO2 배출량</td>
-                            <td class="tg-sh4c"></td>
+                            <td class="tg-sh4c sub-main-color-css" colspan="2">CO2 배출량(kg/㎡·yr)</td>
+                            <td class="tg-sh4c">${e_result.co2Emissions}</td>
                         </tr>
                         <tr>
-                            <td class="tg-sh4c sub-main-color-css" colspan="2">1차 에너지 소요량</td>
-                            <td class="tg-sh4c"></td>
+                            <td class="tg-sh4c sub-main-color-css" colspan="2">1차 에너지 소요량(kWh/㎡·yr)</td>
+                            <td class="tg-sh4c">${e_result.primaryEnergy}</td>
                         </tr>
                         <tr>
                             <td class="tg-baqh main-color-css">기밀</td>
                             <td class="tg-sh4c sub-main-color-css" colspan="2">기밀도 n50 (1/h)</td>
-                            <td class="tg-sh4c"></td>
+                            <td class="tg-sh4c">${e_result.airtightness}</td>
                         </tr>
                         <tr>
                             <td class="tg-baqh main-color-css">검토결과</td>   
-                            <td class="tg-sh4c sub-main-color-css" colspan="3">☞ 에너지 효율등급 기준에 의한 등급 :</td>
+                            <td class="tg-sh4c sub-main-color-css" colspan="3">☞ 에너지 효율등급 기준에 의한 등급 : </td>
                         </tr>
                     </tbody>
                 </table>
@@ -470,65 +470,65 @@
 				        <tbody>
 				            <tr>
 				                <td>난방</td>
-				                <td>2,448</td>
-				                <td>25%</td>
-				                <td>134,450</td>
-				                <td>35%</td>
+				                <td></td>
+				                <td>%</td>
+				                <td></td>
+				                <td>%</td>
 				            </tr>
 				            <tr>
 				                <td>온수</td>
-				                <td>3,105</td>
-				                <td>32%</td>
-				                <td>180,010</td>
-				                <td>47%</td>
+				                <td></td>
+				                <td>%</td>
+				                <td></td>
+				                <td>%</td>
 				            </tr>
 				            <tr>
 				                <td>냉방</td>
-				                <td>924</td>
-				                <td>10%</td>
-				                <td>11,778</td>
-				                <td>3%</td>
+				                <td></td>
+				                <td>%</td>
+				                <td></td>
+				                <td>%</td>
 				            </tr>
 				            <tr>
 				                <td>환기</td>
-				                <td>501</td>
-				                <td>5%</td>
-				                <td>5,608</td>
-				                <td>1%</td>
+				                <td></td>
+				                <td>%</td>
+				                <td></td>
+				                <td>%</td>
 				            </tr>
 				            <tr>
 				                <td>조명</td>
-				                <td>578</td>
-				                <td>6%</td>
-				                <td>6,474</td>
-				                <td>2%</td>
+				                <td></td>
+				                <td>%</td>
+				                <td></td>
+				                <td>%</td>
 				            </tr>
 				            <tr>
 				                <td>조리</td>
-				                <td>424</td>
-				                <td>4%</td>
-				                <td>24,744</td>
-				                <td>6%</td>
+				                <td></td>
+				                <td>%</td>
+				                <td></td>
+				                <td>%</td>
 				            </tr>
 				            <tr>
 				                <td>가전</td>
-				                <td>1,735</td>
-				                <td>18%</td>
-				                <td>19,421</td>
-				                <td>5%</td>
+				                <td></td>
+				                <td>%</td>
+				                <td></td>
+				                <td>%</td>
 				            </tr>
 				            <tr>
 				                <td>기타</td>
-				                <td>0</td>
-				                <td>0%</td>
-				                <td>0</td>
-				                <td>0%</td>
+				                <td></td>
+				                <td>%</td>
+				                <td></td>
+				                <td>%</td>
 				            </tr>
 				            <tr>
 				                <td>합 계</td>
-				                <td>9,716</td>
 				                <td></td>
-				                <td>382,484</td>
+				                <td></td>
+				                <td></td>
 				                <td></td>
 				            </tr>
 				        </tbody>
@@ -539,12 +539,12 @@
                 <div class="cost-summary">
 				    <div class="cost-item">
 				        <span class="cost-label">▶▶ 연간 난방 비용</span>
-				        <span class="cost-value">134,500 원</span>
+				        <span class="cost-value"></span>
 				    </div>
 				    <hr class="cost-line">
 				    <div class="cost-item">
 				        <span class="cost-label">▶▶ 연간 총에너지 비용</span>
-				        <span class="cost-value">382,500 원</span>
+				        <span class="cost-value"></span> 
 				    </div>
 				    <hr class="cost-line">
 				</div>
@@ -648,7 +648,7 @@
 	            pdf.addImage(imgData, "PNG", xOffset, yOffset, pdfWidth, pdfHeight);
 	
 	            // PDF 다운로드
-	            pdf.save("capture.pdf");
+	            pdf.save("capture.pdf"); 
 	        });
 	    });
 	</script> 

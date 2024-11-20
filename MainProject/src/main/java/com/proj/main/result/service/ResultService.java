@@ -29,4 +29,21 @@ public class ResultService {
 		return result;
 	}
 	
+	
+	
+	public UserBuildingDTO getUserBuilding(String b_id) {
+		UserBuildingDTO result = dao.getUserBuilding(b_id);
+		return result;
+	};
+	
+	public EnergyResultDTO getEnergyResult(String b_id) {
+		EnergyResultDTO result = dao.getEnergyResult(b_id);
+		return result;
+	};
+	
+	public EnergyUsedDTO getEnergyUsed(String b_id) {
+		EnergyUsedDTO result = dao.getEnergyUsed(b_id);
+		return result;
+	};
+	
 }

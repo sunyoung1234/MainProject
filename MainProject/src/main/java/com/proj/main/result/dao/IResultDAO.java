@@ -14,4 +14,12 @@ public interface IResultDAO {
 	int insertEnergyUsed(EnergyUsedDTO eu);
 	
 	int insertUserBuilding(UserBuildingDTO ub);
+	
+	UserBuildingDTO getUserBuilding(String b_id);
+	
+	EnergyResultDTO getEnergyResult(String b_id);
+	
+	EnergyUsedDTO getEnergyUsed(String b_id);
+	
+	
 }
