@@ -52,10 +52,12 @@
 	.product-division1{
 		background-color: #009861;
 		margin-left: 400px;
+		
 	}
 	
 	.product-division1-color{
 		color:white;
+		text-decoration: none;
 	}
 	
 	.product-division2{
