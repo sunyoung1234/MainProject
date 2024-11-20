@@ -53,16 +53,18 @@ public class ElectricityController {
     	return "member/ocrView";
     }
 	
+	@ResponseBody
 	@RequestMapping("ocrInsert")
-	public String ocrInsert(String electricityUse, HttpSession session) {
+	public String ocrInsert(@RequestBody String electricityUse, HttpSession session) {
 		
-		System.out.println(electricityUse);
+		System.out.println(electricityUse.substring(15));
 		MemberDTO member = (MemberDTO)session.getAttribute("login");
 		String memId = member.getMemId();
 		
 		ElectricityDTO use = electricityService.getElectricitylastMonth(memId);
-		use.setElectricityUse(electricityUse);
-		System.out.println(use);
+		use.setElectricityUse(electricityUse.substring(15));
+		System.out.println("electricityUse : " + electricityUse);
+		System.out.println("use : " + use);
 		electricityService.insertGetElectricityThisMonth(use);
 		
 		
