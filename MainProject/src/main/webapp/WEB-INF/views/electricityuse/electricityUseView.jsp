@@ -153,7 +153,11 @@
 		
 		let v_elecUse = '${elecUse}'
 		let v_useDate = '${useDate}'
+		
+		let v_predDate = '${predDates}'
 		let v_predUse = '${predUse}'
+		
+		let v_nextThreeMonths = '${nextThreeMonths}'
 		
 		
 		v_elecUse = v_elecUse.replace('[','')
@@ -164,26 +168,46 @@
 		
 		v_predUse = v_predUse.replace(']','')
 		v_predUse = v_predUse.replace('[','')
+		
+		v_predDate = v_predDate.replace(']','')
+		v_predDate = v_predDate.replace('[','')
+		
+		v_nextThreeMonths = v_nextThreeMonths.replace(']','')
+		v_nextThreeMonths = v_nextThreeMonths.replace('[','')
 
 		v_elecUse = v_elecUse.split(',')
 		v_useDate = v_useDate.split(',')
 		v_predUse = v_predUse.split(',')
+		v_predDate = v_predDate.split(',')
+		v_nextThreeMonths = v_nextThreeMonths.split(',')
 		
-		v_predUse.splice(0,1)
 		
 		console.log(v_elecUse)
 		console.log(v_useDate)
 		console.log(v_predUse)
+		console.log(v_predDate)
 		console.log(typeof(v_elecUse))
 		console.log(typeof(v_useDate))
 		console.log(typeof(v_predUse))
+		console.log(typeof(v_predDate))
 		
 		let combinedUse = [...v_elecUse];
+		
+		let savePredUse = [...v_elecUse]
 
 		// v_predUse 값을 v_elecUse 배열에 순서대로 추가
 		for (let i = 0; i < v_predUse.length; i++) {
 		    combinedUse.push(v_predUse[i]);
 		}
+		
+		for (let i = 0; i < v_elecUse.length - 1; i++) {
+		    v_predUse.unshift(null); // unshift는 배열의 앞에 요소를 추가
+		}
+		
+		
+		savePredUse.push(v_predUse[0]);
+		
+		
 		
 		console.log(combinedUse)
 		
@@ -191,7 +215,8 @@
 		
 		// 결과 출력
 		console.log(v_useDate);
-		
+		console.log(v_elecUse.length)
+		console.log(v_predUse[v_elecUse.length])
 		
 
 		
@@ -200,20 +225,27 @@
 		myChart = new Chart(ctx, {
 		    type: 'line',
 		    data: {
-		      labels: v_useDate,
+		      labels: v_predDate,
 		      datasets: [{
-		        label: '월별 데이터',
+		        label: '사용량 데이터',
 		        data: v_elecUse,
-		        borderColor: 'rgba(75, 192, 192, 1)',
+		        borderColor: 'rgba(75, 192, 192, 1)',  // 첫 번째 선의 색상
+		        backgroundColor: 'rgba(75, 192, 192, 0)',  // 선만 표시 (채우지 않음)
 		        borderWidth: 1,
 		        fill: false
-		      }]
+		      },{
+			        label: '예측량 데이터',
+			        data: v_predUse,
+			        borderColor: 'red',  // 첫 번째 선의 색상
+			        backgroundColor: 'rgba(75, 192, 192, 0)',  // 선만 표시 (채우지 않음)
+			        borderWidth: 1,
+			        fill: false
+			      }]
 		    },
 		    options: {
 		      responsive: true,
 		      scales: {
 		        y: {
-		          beginAtZero: true
 		        }
 		      }
 		    }
