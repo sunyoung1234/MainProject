@@ -39,10 +39,33 @@ public class resultController {
 		return "result/inputView";
 	}
 	
-	@RequestMapping("/resultView")
-	public String resultView() {
-		return "result/resultView";
+	@RequestMapping("/applyView")
+	public String applyView() {
+		return "result/applyView";
 	}
+	
+	@RequestMapping("/resultView")
+    public String resultView(HttpSession session,Model model) {
+        MemberDTO mem = (MemberDTO) session.getAttribute("login");
+        String b_id = (String) session.getAttribute("bId");
+        String memId = mem.getMemId();
+        String addr = mem.getMemAddress() + mem.getExtraAddress();
+       
+        UserBuildingDTO userB = rs.getUserBuilding(b_id);
+        EnergyResultDTO e_result = rs.getEnergyResult(b_id);
+        EnergyUsedDTO e_used = rs.getEnergyUsed(b_id);
+       
+       
+        model.addAttribute("address", addr);
+        model.addAttribute("userB", userB);
+        model.addAttribute("e_result", e_result);
+        model.addAttribute("e_used", e_used);
+       
+       
+       
+       
+        return "result/resultView";
+    }
 	
 	@RequestMapping("/submitBuildingInfo")
 	public String submitBuildingInfo(UserBuildingDTO ubd , HttpSession session , Model model) {
@@ -60,6 +83,8 @@ public class resultController {
 
         ubd.setMemId(memId);
         ubd.setBuildingId(b_id);
+        
+        session.setAttribute("bId", b_id);
         
         rs.insertUserBuilding(ubd);
         
@@ -141,7 +166,7 @@ public class resultController {
 			
 		}
 		
-        return "redirect:/resultView";
+        return "redirect:/resultView";  
 	}
 	
 	
