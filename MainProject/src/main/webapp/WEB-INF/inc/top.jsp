@@ -132,7 +132,7 @@ body {
 
 /* 각 dropdown-content 위치 조정 */
 .navi-dropdown-content-1 {
-	margin-left: 28.5%; /* 첫 번째 nav-item에 맞추기 */
+	margin-left: 29%; /* 첫 번째 nav-item에 맞추기 */
 	padding-top: 10px;
 	text-align
 }
