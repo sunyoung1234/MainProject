@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.proj.main.member.dto.MemBuildingElecDTO;
 import com.proj.main.member.dto.MemberDTO;
 
 @Mapper
@@ -28,4 +29,7 @@ public interface IMemberDAO {
 	
 	// 건물 정보 삽입
 	int insertBuilding(String memId);
+	
+	// 회원 건물 정보 가져오기
+	List<MemBuildingElecDTO> getMemBuildingElec (String memId);
 }

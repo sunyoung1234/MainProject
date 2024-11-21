@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.proj.main.member.dao.IMemberDAO;
+import com.proj.main.member.dto.MemBuildingElecDTO;
 import com.proj.main.member.dto.MemberDTO;
 
 @Service
@@ -13,6 +14,7 @@ public class MemberService {
 
 	@Autowired
 	IMemberDAO dao;
+
 	
 	public int registMember(MemberDTO mem) {
 		return dao.registMember(mem);
@@ -44,6 +46,11 @@ public class MemberService {
 	
 	public int insertBuilding(String memId) {
 		int result = dao.insertBuilding(memId);
+		return result;
+	}
+	
+	public List<MemBuildingElecDTO> getMemBuildingElec (String memId){
+		List<MemBuildingElecDTO> result = dao.getMemBuildingElec(memId);
 		return result;
 	}
 }
