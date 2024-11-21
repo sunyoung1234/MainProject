@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -105,10 +106,12 @@ public class ElectricityController {
         
         List<String> electricityUses = new ArrayList<>();
         List<String> useDates = new ArrayList<>();
+        List<String> predDates = new ArrayList<>();
         
         for(MemBuildingElecDTO item : buildingList) {
         	electricityUses.add(item.getElectricityUse());
         	useDates.add(item.getUseDate());
+        	predDates.add(item.getUseDate());
         }
         
         Collections.sort(useDates);
@@ -116,11 +119,34 @@ public class ElectricityController {
         System.out.println(electricityUses);
         System.out.println(useDates);
         
+        // 마지막 날짜 가져오기
+        String lastDateStr = predDates.get(predDates.size() - 1); // 마지막 날짜 (예: 2024-07)
+
+        // DateTimeFormatter를 사용하여 "yyyy-MM" 형식으로 날짜 처리
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+
+        // 마지막 날짜를 YearMonth로 파싱 (day 없이 월과 년만)
+        YearMonth lastDate = YearMonth.parse(lastDateStr, formatter);
+
+        // 3개월 후 날짜 생성
+        List<String> nextThreeMonths = new ArrayList<>();
+        for (int i = 1; i <= 3; i++) {
+            YearMonth nextDate = lastDate.plusMonths(i);  // 3개월씩 더함
+            nextThreeMonths.add(nextDate.format(formatter));  // "yyyy-MM" 형식으로 변환하여 리스트에 추가
+        }
+        
+        predDates.addAll(nextThreeMonths);
+
+        // 결과 출력
+        System.out.println("원래 날짜들: " + useDates);
+        System.out.println("모든 날짜들: " + predDates);
 
         
         
         model.addAttribute("useDate",useDates);
+        model.addAttribute("predDates",predDates);
         model.addAttribute("elecUse",electricityUses);
+        model.addAttribute("nextThreeMonths",nextThreeMonths);
         
         BufferedReader rd = null;
         HttpURLConnection conn = null;
