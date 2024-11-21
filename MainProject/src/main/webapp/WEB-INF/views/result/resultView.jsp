@@ -328,13 +328,13 @@
                         </tr>
                         <tr>
                             <td class="tg-baqh sub-main-color-css">난방효율</td>
-                            <td class="tg-baqh">${e_result.heatEff * 100 }%</td>
+                            <td class="tg-baqh">%</td>
                             <td class="tg-baqh sub-main-color-css">냉방효율</td>
-                            <td class="tg-baqh">${e_result.coolEff * 100 }%</td>
+                            <td class="tg-baqh">%</td>
                         </tr>
                         <tr>
                             <td class="tg-baqh sub-main-color-css">습도회수율</td>
-                            <td class="tg-baqh">${e_result.humidityRec * 100 }%</td>
+                            <td class="tg-baqh">%</td>
                             <td class="tg-baqh sub-main-color-css">전력(Wh/㎥)</td>
                             <td class="tg-baqh">${e_result.powerCons}</td>
                         </tr>
