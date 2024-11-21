@@ -41,7 +41,10 @@ public class ProposalService {
     }
     
     public boolean verifyPassword(String memId, String password) {
-        String storedPassword = dao.getPasswordByMemId(memId);
-        return storedPassword != null && storedPassword.equals(password);
+        String storedPassword = dao.getPasswordByMemId(memId); // DAO를 통해 저장된 비밀번호 조회
+        if (storedPassword == null) {
+            return false; // ID가 잘못된 경우
+        }
+        return storedPassword.equals(password);
     }
 }

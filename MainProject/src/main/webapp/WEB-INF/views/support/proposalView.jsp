@@ -5,25 +5,19 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>건의사항 게시판</title>
-<!-- Favicon -->
 <link rel="icon" type="image/x-icon"
 	href="${pageContext.request.contextPath}/resources/assets/favicon.ico" />
-<!-- Core theme CSS (includes Bootstrap) -->
 <link href="${pageContext.request.contextPath}/resources/css/styles.css"
 	rel="stylesheet" />
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
 	rel="stylesheet" />
 </head>
-
 <body class="d-flex flex-column">
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
-	<!-- ChatBot START -->
-	<%@ include file="/WEB-INF/inc/chatbot.jsp"%>
-	<!-- ChatBot END -->
 	<main class="flex-shrink-0">
 		<section class="py-5">
 			<div class="container px-5">
@@ -31,10 +25,13 @@
 					<div class="text-center mb-5">
 						<h1 class="fw-bolder">건의사항 게시판</h1>
 					</div>
+
 					<div class="text-right mb-3">
-						<a class="btn btn-success"
-							href="${pageContext.request.contextPath}/proposal/write">건의사항
-							작성</a>
+						<c:if test="${sessionScope.login != null}">
+							<a class="btn btn-success"
+								href="${pageContext.request.contextPath}/proposal/write">
+								건의사항 작성 </a>
+						</c:if>
 					</div>
 					<div class="accordion" id="proposalAccordion">
 						<c:forEach var="proposal" items="${proposalList}">
@@ -62,59 +59,35 @@
 										<p>
 											<strong>내용:</strong> ${proposal.propContent}
 										</p>
-										<div class="text-end mt-3">
-											<c:if test="${sessionScope.login.memId == 'admin'}">
-												<button class="btn btn-primary answer-button"
-													data-prop-no="${proposal.propNo}">답변 추가</button>
-											</c:if>
-										</div>
-										<!-- 답변 내용 표시 -->
+
+										<!-- 관리자 답변 표시 -->
 										<c:if test="${not empty proposal.answerContent}">
 											<hr />
 											<div class="answer-section">
 												<p>
-													<strong>관리자 답변:</strong>
+													<strong>관리자 답변:</strong> ${proposal.answerContent}
 												</p>
-												<p>${proposal.answerContent}</p>
 											</div>
+										</c:if>
+
+										<!-- 관리자만 답변 추가 버튼 표시 -->
+										<c:if
+											test="${sessionScope.login != null && sessionScope.login.memId eq 'admin'}">
+											<button class="btn btn-primary answer-button"
+												data-prop-no="${proposal.propNo}">답변 추가</button>
 										</c:if>
 									</div>
 								</div>
 							</div>
 						</c:forEach>
 					</div>
+
 				</div>
 			</div>
 		</section>
 	</main>
 	<%@ include file="/WEB-INF/inc/footer.jsp"%>
 
-	<!-- 답변 추가 모달 -->
-	<div class="modal fade" id="answerModal" tabindex="-1"
-		aria-labelledby="answerModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<form action="${pageContext.request.contextPath}/proposal/addAnswer"
-					method="POST">
-					<div class="modal-header">
-						<h5 class="modal-title" id="answerModalLabel">답변 추가</h5>
-						<button type="button" class="btn-close" data-bs-dismiss="modal"
-							aria-label="Close"></button>
-					</div>
-					<div class="modal-body">
-						<textarea name="answerContent" class="form-control" rows="5"
-							placeholder="답변 내용을 입력하세요" required></textarea>
-						<input type="hidden" name="propNo" id="propNo" value="">
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary"
-							data-bs-dismiss="modal">취소</button>
-						<button type="submit" class="btn btn-primary">답변 저장</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
 	<!-- 비밀번호 입력 모달 -->
 	<div class="modal fade" id="passwordModal" tabindex="-1"
 		aria-labelledby="passwordModalLabel" aria-hidden="true">
@@ -139,60 +112,122 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- 답변 추가 모달 -->
+	<div class="modal fade" id="answerModal" tabindex="-1"
+		aria-labelledby="answerModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form action="${pageContext.request.contextPath}/proposal/addAnswer"
+					method="POST">
+					<div class="modal-header">
+						<h5 class="modal-title" id="answerModalLabel">답변 추가</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal"
+							aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						<textarea name="answerContent" class="form-control" rows="5"
+							placeholder="답변 내용을 입력하세요" required></textarea>
+						<input type="hidden" name="propNo" id="propNo" value="">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-bs-dismiss="modal">취소</button>
+						<button type="submit" class="btn btn-primary">저장</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
-        // 아코디언 버튼 클릭 이벤트
-        document.querySelectorAll('.accordion-button').forEach(button => {
-    button.addEventListener('click', (event) => {
-        const memId = event.target.dataset.memId;
-        const propNo = event.target.dataset.propNo;
+	document.querySelectorAll('.accordion-button').forEach(button => {
+	    button.addEventListener('click', event => {
+	        const requiresAuth = button.hasAttribute('data-requires-auth'); // 인증 필요 여부
+	        const collapseTarget = document.getElementById(button.getAttribute('aria-controls')); // 목표 아코디언
+	        const propNo = button.getAttribute('data-prop-no'); // 건의사항 번호
+	        const isExpanded = button.getAttribute('aria-expanded') === 'true'; // 현재 열림 상태
 
-        // 관리자가 아닌 경우만 비밀번호 확인 요청
-        if (sessionStorage.getItem('verified') !== 'true' && sessionScope.login.memId !== 'admin') {
-            event.preventDefault(); // 아코디언 확장 방지
-            const passwordModal = new bootstrap.Modal(document.getElementById('passwordModal'));
-            passwordModal.show();
+	        if (requiresAuth) {
+	            // 인증 필요
+	            if (!sessionStorage.getItem(`verified-${propNo}`)) {
+	                event.preventDefault(); // 기본 열림/닫힘 동작 중단
 
-            // 비밀번호 확인 폼 처리
-            document.getElementById('passwordForm').addEventListener('submit', (e) => {
-                e.preventDefault();
+	                const passwordModal = new bootstrap.Modal(document.getElementById('passwordModal'));
+	                passwordModal.show();
 
-                const password = document.getElementById('passwordInput').value;
+	                const passwordForm = document.getElementById('passwordForm');
+	                passwordForm.onsubmit = async (e) => {
+	                    e.preventDefault();
 
-                // 비밀번호 확인 요청
-                fetch(`${pageContext.request.contextPath}/proposal/verifyPassword`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ memId, password }),
-                })
-                    .then(response => response.json())
-                    .then(isValid => {
-                        if (isValid) {
-                            sessionStorage.setItem('verified', 'true'); // 세션에 검증 정보 저장
-                            passwordModal.hide();
-                            document.getElementById(`collapse${propNo}`).classList.add('show');
-                        } else {
-                            alert('비밀번호가 올바르지 않습니다.');
-                        }
-                    });
-            });
-        }
+	                    const password = document.getElementById('passwordInput').value;
+	                    const memId = button.getAttribute('data-mem-id'); // 작성자 ID
+
+	                    try {
+	                        const response = await fetch(`${pageContext.request.contextPath}/proposal/verifyPassword`, {
+	                            method: 'POST',
+	                            headers: { 'Content-Type': 'application/json' },
+	                            body: JSON.stringify({ memId, password }),
+	                        });
+
+	                        const isValid = await response.json();
+	                        if (isValid) {
+	                            sessionStorage.setItem(`verified-${propNo}`, 'true'); // 인증 성공
+	                            passwordModal.hide();
+	                            collapseTarget.classList.add('show');
+	                            button.setAttribute('aria-expanded', 'true');
+	                        } else {
+	                            alert('비밀번호가 올바르지 않습니다.');
+	                        }
+	                    } catch (error) {
+	                        console.error('Error during password verification:', error);
+	                    }
+	                };
+	                return;
+	            }
+	        }
+
+	        // 인증이 완료된 상태이거나 인증이 필요 없는 경우
+	        if (isExpanded) {
+	            // 이미 열려 있는 경우 -> 닫기
+	            collapseTarget.classList.remove('show');
+	            button.setAttribute('aria-expanded', 'false');
+	        } else {
+	            // 닫혀 있는 경우 -> 열기
+	            collapseTarget.classList.add('show');
+	            button.setAttribute('aria-expanded', 'true');
+	        }
+	    });
+	});
+
+
+    window.onload = () => {
+        fetch(`${pageContext.request.contextPath}/proposal/getSessionInfo`)
+            .then(response => response.json())
+            .then(sessionInfo => {
+                if (sessionInfo && sessionInfo.memId === 'admin') {
+                    sessionStorage.setItem('isAdmin', 'true');
+                }
+            })
+            .catch(error => console.error('Error fetching session info:', error));
+    };
+
+    document.getElementById('logoutButton')?.addEventListener('click', () => {
+        sessionStorage.clear();
     });
-});
-
-
-// 답변 추가 버튼 클릭 이벤트
-    document.querySelectorAll(".answer-button").forEach(button => {
-        button.addEventListener("click", () => {
-            const propNo = button.dataset.propNo; // 답변 번호
-            document.getElementById("propNo").value = propNo; // Hidden input에 설정
-            const answerModal = new bootstrap.Modal(document.getElementById("answerModal"));
-            answerModal.show(); // 모달 표시
+    
+ // 답변 추가 버튼 클릭 이벤트
+    document.querySelectorAll('.answer-button').forEach(button => {
+        button.addEventListener('click', event => {
+            const propNo = event.target.getAttribute('data-prop-no');
+            document.getElementById('propNo').value = propNo;
+            const answerModal = new bootstrap.Modal(document.getElementById('answerModal'));
+            answerModal.show();
         });
     });
+</script>
 
-
-    </script>
 </body>
 </html>

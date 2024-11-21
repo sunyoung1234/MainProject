@@ -34,4 +34,6 @@ public class RoomService {
 		int result = dao.deleteRoom(roomNo);
 		return result;
 	};
+	
+	
 }
