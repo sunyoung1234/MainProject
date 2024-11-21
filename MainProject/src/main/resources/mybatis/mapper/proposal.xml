@@ -76,6 +76,8 @@
     </select>
 
 <select id="getPasswordByMemId" parameterType="string" resultType="string">
-    SELECT mem_pw FROM members WHERE mem_id = #{memId}
+    SELECT mem_pw
+    FROM members
+    WHERE mem_id = #{memId}
 </select>
 </mapper>

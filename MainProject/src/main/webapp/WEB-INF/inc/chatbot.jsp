@@ -37,13 +37,17 @@
     background-color: #f9f9f9;
     border-radius: 15px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    display: flex;
     flex-direction: column;
     z-index: 1000;
+    transition: visibility 0s, opacity 0.3s ease;
 }
 
 .chatbot-interface.show {
-    display: flex;
+    visibility: visible;
+    opacity: 1;
 }
 
 .chatbot-header {
@@ -99,6 +103,40 @@
     background-color: #d0e8ff;
 }
 </style>
+
+<style>
+.table {
+    width: 100%;
+    font-size: 12px;
+}
+
+.table th, .table td {
+    text-align: left;
+    padding: 5px;
+}
+
+.chat-area {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+    background-color: #f1f1f1;
+    border-radius: 10px;
+}
+
+.chat-input {
+    display: flex;
+    gap: 5px;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+</style>
 </head>
 <body>
     <!-- 챗봇 아이콘 -->
@@ -130,11 +168,11 @@
 $(document).ready(function () {
     // 챗봇 열기/닫기
     $(".chatbot-icon").on("click", function () {
-        $(".chatbot-interface").toggleClass("show").toggle();
+        $(".chatbot-interface").toggleClass("show");
     });
 
     $(".close-btn").on("click", function () {
-        $(".chatbot-interface").removeClass("show").hide();
+        $(".chatbot-interface").removeClass("show");
     });
 
     // 초기 메뉴 표시
@@ -245,5 +283,9 @@ $(document).ready(function () {
 });
 </script>
 
+
+<script>
+
+</script>
 </body>
 </html>

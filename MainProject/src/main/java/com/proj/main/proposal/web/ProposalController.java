@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -33,9 +34,8 @@ public class ProposalController {
     @GetMapping("/view")
     public String proposalView(Model model) {
         List<ProposalDTO> proposalList = proposalService.getAllProposals();
-        System.out.println(proposalList); // 데이터 확인
         if (proposalList == null || proposalList.isEmpty()) {
-            proposalList = Collections.emptyList(); // 빈 리스트 처리
+            proposalList = Collections.emptyList();
         }
         model.addAttribute("proposalList", proposalList);
         return "support/proposalView";
@@ -48,7 +48,7 @@ public class ProposalController {
         if (mem == null) {
             return "redirect:/loginView"; // 로그인하지 않은 경우 리다이렉트
         }
-        return "support/proposalWriteView"; // JSP와 연결
+        return "support/proposalWriteView";
     }
 
     // 건의사항 작성 처리
@@ -64,11 +64,11 @@ public class ProposalController {
         proposal.setPropDate(new Date()); // 작성 날짜 설정
         String proposalId = new SimpleDateFormat("yyMMddHHmmssSSS").format(new Date()) + memId;
         proposal.setPropId(proposalId);
-        proposal.setPropStatus("Pending");
+        proposal.setPropStatus("접수중");
         proposal.setPropDelYn("N");
 
-        proposalService.insertProposal(proposal); // 데이터베이스에 저장
-        return "redirect:/proposal/view"; // 목록 페이지로 이동
+        proposalService.insertProposal(proposal);
+        return "redirect:/proposal/view";
     }
 
     // 답변 추가 처리
@@ -88,18 +88,30 @@ public class ProposalController {
             return "redirect:/proposal/view?error=invalid";
         }
 
-        // 답변 저장 처리 (서비스 호출)
+        // 답변 저장 처리
         proposalService.addAnswer(propNo, answerContent, mem.getMemId());
 
-        return "redirect:/proposal/view?success=true"; // 성공 시 목록 페이지로 리다이렉트
+        return "redirect:/proposal/view?success=true";
     }
 
-    // 비밀번호 검증 (추가적으로 사용 가능)
+    // 비밀번호 검증
+    @GetMapping("/getSessionInfo")
+    @ResponseBody
+    public MemberDTO getSessionInfo(HttpSession session) {
+        MemberDTO loggedInUser = (MemberDTO) session.getAttribute("login");
+        return loggedInUser != null ? loggedInUser : new MemberDTO(); // 비로그인 시 빈 객체 반환
+    }
+
     @PostMapping("/verifyPassword")
     @ResponseBody
-    public boolean verifyPassword(@RequestParam String memId, @RequestParam String password) {
+    public boolean verifyPassword(@RequestBody Map<String, String> requestData) {
+        String memId = requestData.get("memId");
+        String password = requestData.get("password");
+
+        if (memId == null || password == null) {
+            throw new IllegalArgumentException("memId or password is missing");
+        }
+
         return proposalService.verifyPassword(memId, password);
     }
-    
-    
 }
