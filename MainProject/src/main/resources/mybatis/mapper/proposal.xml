@@ -6,7 +6,7 @@
     <insert id="insertProposal" parameterType="com.proj.main.proposal.dto.ProposalDTO">
         INSERT INTO proposal (
             prop_no,
-            mem_Id,
+            mem_id,
             prop_id,
             prop_date,
             prop_title,
@@ -31,7 +31,7 @@
     </select>
 
     <!-- 전체 건의사항 조회 -->
-<select id="getAllProposals" resultType="com.proj.main.proposal.dto.ProposalDTO">
+    <select id="getAllProposals" resultType="com.proj.main.proposal.dto.ProposalDTO">
     SELECT 
         p.prop_no AS propNo,
         p.prop_id AS propId,
@@ -41,6 +41,7 @@
         p.prop_del_yn AS propDelYn,
         p.prop_status AS propStatus,
         p.mem_id AS memId,
+        p.answercontent AS answerContent, <!-- 답변 내용 추가 -->
         m.mem_name AS memName  
     FROM 
         proposal p
@@ -51,5 +52,30 @@
 </select>
 
 
+    <!-- 답변 추가 -->
+<update id="addAnswer" parameterType="map">
+    UPDATE proposal
+    SET 
+        ANSWERCONTENT = #{answerContent},
+        ANSWERDATE = SYSDATE,
+        ANSWEREDBY = #{answeredBy}
+    WHERE 
+        prop_no = #{propNo}
+</update>
 
+    <!-- 특정 건의사항의 답변 조회 -->
+    <select id="getProposalAnswer" parameterType="int" resultType="map">
+        SELECT 
+            answer_content AS answerContent,
+            answer_date AS answerDate,
+            answered_by AS answeredBy
+        FROM 
+            proposal
+        WHERE 
+            prop_no = #{propNo}
+    </select>
+
+<select id="getPasswordByMemId" parameterType="string" resultType="string">
+    SELECT mem_pw FROM members WHERE mem_id = #{memId}
+</select>
 </mapper>
