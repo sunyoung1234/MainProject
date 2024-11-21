@@ -126,6 +126,15 @@
 			<div class=>
 				<img class="elecImg" src="http://192.168.0.51:5000/post">
 			</div>
+			
+			<div id="chart-container">
+				<canvas id="myChart"></canvas>
+			</div>
+			<button id="prev-btn">이전</button>
+			<button id="next-btn">다음</button>
+			
+			
+			
 		</div>
 	</div>
 	
@@ -141,7 +150,75 @@
 		function showLoading() {
 	        document.getElementById('loading').style.display = 'flex';
 	    }
-	
+		
+		let v_elecUse = '${elecUse}'
+		let v_useDate = '${useDate}'
+		let v_predUse = '${predUse}'
+		
+		
+		v_elecUse = v_elecUse.replace('[','')
+		v_elecUse = v_elecUse.replace(']','')
+		
+		v_useDate = v_useDate.replace('[','')
+		v_useDate = v_useDate.replace(']','')
+		
+		v_predUse = v_predUse.replace(']','')
+		v_predUse = v_predUse.replace('[','')
+
+		v_elecUse = v_elecUse.split(',')
+		v_useDate = v_useDate.split(',')
+		v_predUse = v_predUse.split(',')
+		
+		v_predUse.splice(0,1)
+		
+		console.log(v_elecUse)
+		console.log(v_useDate)
+		console.log(v_predUse)
+		console.log(typeof(v_elecUse))
+		console.log(typeof(v_useDate))
+		console.log(typeof(v_predUse))
+		
+		let combinedUse = [...v_elecUse];
+
+		// v_predUse 값을 v_elecUse 배열에 순서대로 추가
+		for (let i = 0; i < v_predUse.length; i++) {
+		    combinedUse.push(v_predUse[i]);
+		}
+		
+		console.log(combinedUse)
+		
+		
+		
+		// 결과 출력
+		console.log(v_useDate);
+		
+		
+
+		
+		
+		let ctx = document.getElementById('myChart')
+		myChart = new Chart(ctx, {
+		    type: 'line',
+		    data: {
+		      labels: v_useDate,
+		      datasets: [{
+		        label: '월별 데이터',
+		        data: v_elecUse,
+		        borderColor: 'rgba(75, 192, 192, 1)',
+		        borderWidth: 1,
+		        fill: false
+		      }]
+		    },
+		    options: {
+		      responsive: true,
+		      scales: {
+		        y: {
+		          beginAtZero: true
+		        }
+		      }
+		    }
+		  });
+
 	
 	</script>
 
