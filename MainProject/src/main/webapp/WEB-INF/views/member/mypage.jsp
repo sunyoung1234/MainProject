@@ -98,11 +98,17 @@
             font-size: 1rem;
         }
     </style>
-            <!-- Navigation START -->
-        <%@ include file="/WEB-INF/inc/top.jsp" %>
-        <!-- Navigation END -->
+
 </head>
 <body>
+<!-- 상단 네비게이션 바 -->
+<%@ include file="/WEB-INF/inc/top.jsp"%>
+
+<!-- 상세 메뉴 바 -->
+<%@ include file="/WEB-INF/inc/subnavbar.jsp"%>
+
+<!-- 챗봇 아이콘 및 인터페이스 -->
+<%@ include file="/WEB-INF/inc/chatbot.jsp" %>
     <div class="dashboard-container">
         <!-- 대시보드 헤더 -->
         <div class="dashboard-header">
