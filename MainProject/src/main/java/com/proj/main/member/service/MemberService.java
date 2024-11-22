@@ -29,7 +29,7 @@ public class MemberService {
 		return dao.updateMember(member);
 	}
 	
-	// È¸¿ø ¸ñ·Ï ºÒ·¯¿À±â ¸Ş¼Òµå
+	// íšŒì› ëª©ë¡ ë¶ˆëŸ¬ì˜¤ê¸° ë©”ì†Œë“œ
 	public List<MemberDTO> getMemberList(){
 		List<MemberDTO> result = dao.getMemberList();
 		return result;
@@ -55,6 +55,10 @@ public class MemberService {
 		return result;
 	}
 	
+
+	public MemberDTO getMemAddress(String memId) {
+		MemberDTO result = dao.getMemAddress(memId);
+
 	public int insertMyBuilding(MyBuildingDTO mb) {
 		int result = dao.insertMyBuilding(mb);
 		return result;

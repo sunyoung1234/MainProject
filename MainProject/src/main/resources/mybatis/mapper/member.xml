@@ -81,7 +81,7 @@
     
     <!-- 건물 정보 삽입  -->
     <insert id="insertBuilding" parameterType="String">
-		INSERT INTO BUILDING_MEM(
+		INSERT INTO BUILDING_ELEC_MEM(
 		    BUILDING_ADDRESS,
 		    electricity_use,
 		    use_date,
@@ -100,9 +100,16 @@
     <!-- 회원이 등록한 건물 전기 데이터 가져오기 -->
     <select id="getMemBuildingElec" parameterType="String" resultType="com.proj.main.member.dto.MemBuildingElecDTO">
 		SELECT * 
-		FROM BUILDING_MEM 
+		FROM BUILDING_ELEC_MEM 
 		where mem_id = #{memId}
 		order by use_date
+    </select>
+    
+    <select id="getMemAddress" parameterType="String" resultType="com.proj.main.member.dto.MemberDTO">
+    	SELECT
+    	*
+    	FROM MEMBERS
+    	WHERE mem_id = #{memId}
     </select>
 
 </mapper>
