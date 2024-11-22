@@ -60,6 +60,7 @@ public class ElectricityController {
 		
 		model.addAttribute("electricityUse", use);
 		
+		String elecDate = electricityService.getDate(memId);
 		
 		System.out.println(use);
 		
@@ -68,7 +69,10 @@ public class ElectricityController {
 		predictDate = predDate();
 		System.out.println("진짜왔나?" + predictDate);
 		
+		
+		System.out.println(elecDate);
 		model.addAttribute("predictDate",predictDate);
+		model.addAttribute("elecDate",elecDate);
     	
     	return "member/ocrView";
     }

@@ -35,7 +35,12 @@
 		
 	</select>
 	
-	
+	<select id="getDate" parameterType="String" resultType="String">
+		SELECT electricity_use 
+		FROM building_elec_mem 
+		WHERE use_date = TO_CHAR(SYSDATE,'YYYY-MM')
+		AND MEM_ID = #{memId}
+	</select>
 
 
 
