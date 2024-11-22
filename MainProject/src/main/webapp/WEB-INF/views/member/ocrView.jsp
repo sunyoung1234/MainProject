@@ -333,10 +333,14 @@
         	lastMonth = 12
         }
         
+        let v_predictDate = '${predictDate}'
+        let v_predictDateGas = v_predictDate * 0.424
         
+        document.getElementById("elecUse").innerHTML = Math.round(v_predictDate*100) / 100
+        document.getElementById("gasResult2").innerHTML = Math.round(v_predictDateGas*100) / 100 
            
         document.getElementById("lastMonth").innerHTML = lastMonth + "월";
-        document.getElementById("thisMonth").innerHTML = month + "월";
+        document.getElementById("thisMonth").innerHTML = month + "월 예측값";
         
         let lastMonthUse = '${electricityUse.getElectricityUse() }'
         let gasResult = '${electricityUse.getElectricityUse() }'*0.424
@@ -345,15 +349,16 @@
         
         document.getElementById("checkBtn").addEventListener("click", ()=>{
         	
+        	document.getElementById("thisMonth").innerHTML = month + "월";
         	document.querySelector(".finalBox").disabled = false;
         	document.getElementById("elecUse").innerHTML = v_elecUse
         	let v_result2 = v_elecUse * 0.424
         	document.getElementById("gasResult2").innerHTML = Math.round(v_result2*100) / 100
         	
-        	if(lastMonthUse < v_elecUse){
-            	document.querySelector('.resultText').innerHTML = '전달보다 적게 사용하였습니다.'    
+        	if(v_predictDate < v_elecUse){
+            	document.querySelector('.resultText').innerHTML =  month + '월 예측값 ' + Math.round(v_predictDate*100) / 100 + ' 보다 많이 사용하였습니다.'    
             }else{
-            	document.querySelector('.resultText').innerHTML = '전달보다 많이 사용하였습니다.'  
+            	document.querySelector('.resultText').innerHTML =  month + '월 예측값 ' + Math.round(v_predictDate*100) / 100 + ' 보다 적게 사용하였습니다.'    
             }
         })
         

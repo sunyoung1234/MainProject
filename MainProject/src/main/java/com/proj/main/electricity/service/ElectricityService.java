@@ -1,5 +1,7 @@
 package com.proj.main.electricity.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,4 +24,8 @@ public class ElectricityService {
 		return result;
 	}
 	
+	public List<String> getPredUse(String memId) {
+		List<String> result = dao.getPredUse(memId);
+		return result;
+	}
 }
