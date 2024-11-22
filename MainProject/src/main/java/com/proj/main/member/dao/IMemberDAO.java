@@ -6,33 +6,41 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.proj.main.member.dto.MemBuildingElecDTO;
 import com.proj.main.member.dto.MemberDTO;
+import com.proj.main.member.dto.MyBuildingDTO;
 
 @Mapper
 public interface IMemberDAO {
-	// È¸¿ø°¡ÀÔ 
+	// íšŒì›ê°€ì… 
 	int registMember(MemberDTO mem);
 	
-	// ·Î±×ÀÎ
+	// ë¡œê·¸ì¸
 	MemberDTO loginMember(MemberDTO member);
 	
-	// È¸¿ø Á¤º¸ ¼öÁ¤
+	// íšŒì› ì •ë³´ ìˆ˜ì •
 	int updateMember(MemberDTO member);
 	
-	// ¸ğµç È¸¿ø ¸ñ·Ï Á¶È¸ ¸Ş¼Òµå
+	// ëª¨ë“  íšŒì› ëª©ë¡ ì¡°íšŒ ë©”ì†Œë“œ
 	List<MemberDTO> getMemberList();
 	
-	// È¸¿ø Å»Åğ
+	// íšŒì› íƒˆí‡´
 	int deleteMember(String memId);
 	
-	// ¾ÆÀÌµğ Ã¼Å©
+	// ì•„ì´ë”” ì²´í¬
 	int checkId(String id);
 	
-	// °Ç¹° Á¤º¸ »ğÀÔ
+	// ê±´ë¬¼ ì „ê¸° ì •ë³´ ì‚½ì…
 	int insertBuilding(String memId);
 	
-	// È¸¿ø °Ç¹° Á¤º¸ °¡Á®¿À±â
+	// íšŒì› ê±´ë¬¼ ì „ê¸° ì •ë³´ ê°€ì ¸ì˜¤ê¸°
 	List<MemBuildingElecDTO> getMemBuildingElec (String memId);
 	
-	// È¸¿ø °Ç¹° ÁÖ¼Ò °¡Á®¿À±â
+
+	// íšŒì› ê±´ë¬¼ ì£¼ì†Œ ê°€ì ¸ì˜¤ê¸°
 	MemberDTO getMemAddress(String memId);
+
+	// íšŒì› ê±´ë¬¼ ë“±ë¡
+	int insertMyBuilding(MyBuildingDTO mb);
+	
+	List<MyBuildingDTO> getMyBuildings(String memId);
+
 }

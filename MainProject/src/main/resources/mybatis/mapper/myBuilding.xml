@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.main.member.dao.IMemberDAO">
+
+	<insert id="insertMyBuilding" parameterType="com.proj.main.member.dto.MyBuildingDTO">
+	    INSERT INTO my_building (
+	        mem_id, building_name,  building_id, road_address,
+	        jibun_address, extra_address, climate, residential_type,
+	        structure_type, square_meter_area,  floors,   doors,
+	        insulation_level,   window_level,   ventilation_system,  solar_panel_kw,
+	        building_img,   test_yn, zeb_test_yn
+	    ) VALUES (
+	        #{memId}, #{buildingName}, #{buildingId}, #{roadAddress},
+	        #{jibunAddress}, #{extraAddress}, #{climate}, #{residentialType},
+	        #{structureType}, #{squareMeterArea}, #{floors}, #{doors},
+	        #{insulationLevel}, #{windowLevel}, #{ventilationSystem}, #{solarPanelKW},
+	        #{buildingImg} , 'N' , 'N'
+	    )
+	</insert>
+	 
+	<select id="getMyBuildings" parameterType="String" resultType="com.proj.main.member.dto.MyBuildingDTO">
+		Select * FROM my_building WHERE mem_id = #{memId}
+	</select>
+
+</mapper>
