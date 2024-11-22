@@ -64,6 +64,11 @@ public class ElectricityController {
 		System.out.println(use);
 		
 		System.out.println(electricity);
+		String predictDate = null;
+		predictDate = predDate();
+		System.out.println("진짜왔나?" + predictDate);
+		
+		model.addAttribute("predictDate",predictDate);
     	
     	return "member/ocrView";
     }
@@ -177,9 +182,9 @@ public class ElectricityController {
         
         List<MemBuildingElecDTO> buildingList = memberService.getMemBuildingElec(memId);
         
-        ElectricityDTO use = electricityService.getElectricitylastMonth(memId);
+        List<String> use = electricityService.getPredUse(memId);
 		
-		model.addAttribute("electricityUse", use);
+		model.addAttribute("predUseData", use);
         
         
         List<String> electricityUses = new ArrayList<>();
@@ -219,7 +224,7 @@ public class ElectricityController {
         System.out.println("원래 날짜들: " + useDates);
         System.out.println("모든 날짜들: " + predDates);
 
-        
+         
         
         model.addAttribute("useDate",useDates);
         model.addAttribute("predDates",predDates);
@@ -405,6 +410,84 @@ public class ElectricityController {
         conn.disconnect();
 		
 		return "redirect:/electricityUseView";
+	}
+	
+	@RequestMapping("/predData")
+	public String predDate() {
+		BufferedReader rd = null;
+        HttpURLConnection conn = null;
+        StringBuilder sb = new StringBuilder();
+        
+        String predData = null;
+        
+        try {
+            // URL 생성 및 HttpURLConnection 열기
+            StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/post");
+            URL url = new URL(urlBuilder.toString());
+            conn = (HttpURLConnection) url.openConnection();
+            
+            // 요청 설정
+            conn.setRequestMethod("GET");  // GET 방식으로 요청
+            conn.setRequestProperty("Content-type", "application/json");
+            
+         
+
+            
+            // 응답 코드에 따른 스트림 처리
+            if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+                rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            } else {
+                rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+            }
+            
+            // 응답 내용 읽기
+            String line;
+            while ((line = rd.readLine()) != null) {
+                sb.append(line);
+            }
+            System.out.println(sb);
+            
+            int responseCode = conn.getResponseCode();
+            System.out.println(responseCode);
+            if(responseCode != 500) {
+            	JSONObject jsonResponse = new JSONObject(sb.toString());
+            	
+                JSONArray predUse = jsonResponse.getJSONArray("pred_use");
+                
+                JSONArray preduse = new JSONArray();
+
+                // pred_use 배열의 각 내부 배열을 1차원 배열로 펼침
+                for (int i = 0; i < predUse.length(); i++) {
+                    JSONArray innerArray = predUse.getJSONArray(i);  // 내부 배열 추출
+                    preduse.put(innerArray.getDouble(0));  // 내부 배열의 첫 번째 값을 1차원 배열에 추가
+                }
+                
+                System.out.println("preduse" + preduse);
+                System.out.println("preduse" + preduse.get(1));
+                predData = preduse.get(1).toString();
+                
+            }
+            
+            
+            
+        } catch (Exception e) {
+            // 예외 발생 시 처리
+            e.printStackTrace();  // 예외 출력
+        } finally {
+            try {
+                if (rd != null) {
+                    rd.close();  // BufferedReader 닫기
+                }
+                if (conn != null) {
+                    conn.disconnect();  // 연결 종료
+                }
+            } catch (Exception e) {
+                e.printStackTrace();  // 예외 발생 시 처리
+            }
+        }
+		
+		
+		return predData;
 	}
 	
 }

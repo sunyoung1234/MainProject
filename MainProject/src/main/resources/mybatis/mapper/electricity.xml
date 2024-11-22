@@ -27,6 +27,14 @@
 		)
 	</insert>
 	
+	<select id="getPredUse" parameterType="String" resultType="String" >
+		SELECT
+		pred_use
+		FROM BUILDING_ELEC_MEM 
+		where MEM_ID = #{memId}
+		
+	</select>
+	
 
 
 
