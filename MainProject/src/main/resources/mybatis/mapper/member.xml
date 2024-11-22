@@ -93,8 +93,16 @@
 		        a.use_date,
 		        b.mem_id
 		    FROM BEU a, MEMBERS b
-		    WHERE b.mem_address like '%' || a.building_address || '%'
+		    WHERE b.jibun_address like '%' || a.building_address || '%'
 		    AND b.mem_id = #{memId}
     </insert>
+    
+    <!-- 회원이 등록한 건물 전기 데이터 가져오기 -->
+    <select id="getMemBuildingElec" parameterType="String" resultType="com.proj.main.member.dto.MemBuildingElecDTO">
+		SELECT * 
+		FROM BUILDING_MEM 
+		where mem_id = #{memId}
+		order by use_date
+    </select>
 
 </mapper>

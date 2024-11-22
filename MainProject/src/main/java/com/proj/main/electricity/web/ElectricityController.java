@@ -4,12 +4,21 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,13 +28,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.proj.main.electricity.dto.ElectricityDTO;
 import com.proj.main.electricity.service.ElectricityService;
+import com.proj.main.member.dto.MemBuildingElecDTO;
 import com.proj.main.member.dto.MemberDTO;
+import com.proj.main.member.service.MemberService;
+
 
 @Controller
 public class ElectricityController {
 
 	@Autowired
 	ElectricityService electricityService;
+	
+	@Autowired
+	MemberService memberService;
 	
 	@RequestMapping("/ocrView")
     public String ocrTest(HttpSession session, Model model, ElectricityDTO electricity) {
@@ -85,6 +100,54 @@ public class ElectricityController {
 
         model.addAttribute("member",login);
         
+        String memId = login.getMemId();
+        
+        List<MemBuildingElecDTO> buildingList = memberService.getMemBuildingElec(memId);
+        
+        List<String> electricityUses = new ArrayList<>();
+        List<String> useDates = new ArrayList<>();
+        List<String> predDates = new ArrayList<>();
+        
+        for(MemBuildingElecDTO item : buildingList) {
+        	electricityUses.add(item.getElectricityUse());
+        	useDates.add(item.getUseDate());
+        	predDates.add(item.getUseDate());
+        }
+        
+        Collections.sort(useDates);
+        
+        System.out.println(electricityUses);
+        System.out.println(useDates);
+        
+        // 마지막 날짜 가져오기
+        String lastDateStr = predDates.get(predDates.size() - 1); // 마지막 날짜 (예: 2024-07)
+
+        // DateTimeFormatter를 사용하여 "yyyy-MM" 형식으로 날짜 처리
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM");
+
+        // 마지막 날짜를 YearMonth로 파싱 (day 없이 월과 년만)
+        YearMonth lastDate = YearMonth.parse(lastDateStr, formatter);
+
+        // 3개월 후 날짜 생성
+        List<String> nextThreeMonths = new ArrayList<>();
+        for (int i = 1; i <= 3; i++) {
+            YearMonth nextDate = lastDate.plusMonths(i);  // 3개월씩 더함
+            nextThreeMonths.add(nextDate.format(formatter));  // "yyyy-MM" 형식으로 변환하여 리스트에 추가
+        }
+        
+        predDates.addAll(nextThreeMonths);
+
+        // 결과 출력
+        System.out.println("원래 날짜들: " + useDates);
+        System.out.println("모든 날짜들: " + predDates);
+
+        
+        
+        model.addAttribute("useDate",useDates);
+        model.addAttribute("predDates",predDates);
+        model.addAttribute("elecUse",electricityUses);
+        model.addAttribute("nextThreeMonths",nextThreeMonths);
+        
         BufferedReader rd = null;
         HttpURLConnection conn = null;
         StringBuilder sb = new StringBuilder();
@@ -115,8 +178,29 @@ public class ElectricityController {
                 sb.append(line);
             }
             
-            System.out.println(sb.toString());  // 서버 응답 출력
+            JSONObject jsonResponse = new JSONObject(sb.toString());
+            
+            // JSON 출력
+            System.out.println(jsonResponse.toString(4));  // Pretty print
+            System.out.println(jsonResponse.get("date_range"));
+            System.out.println(jsonResponse.get("pred_use"));
+            
+            JSONArray predUse = jsonResponse.getJSONArray("pred_use");
+            
+            JSONArray preduse = new JSONArray();
 
+            // pred_use 배열의 각 내부 배열을 1차원 배열로 펼침
+            for (int i = 0; i < predUse.length(); i++) {
+                JSONArray innerArray = predUse.getJSONArray(i);  // 내부 배열 추출
+                preduse.put(innerArray.getDouble(0));  // 내부 배열의 첫 번째 값을 1차원 배열에 추가
+            }
+            
+            System.out.println(preduse);
+            
+            
+            System.out.println(sb.toString());  // 서버 응답 출력
+            model.addAttribute("predUse",preduse);
+            
         } catch (Exception e) {
             // 예외 발생 시 처리
             e.printStackTrace();  // 예외 출력
@@ -202,5 +286,42 @@ public class ElectricityController {
     	
     	return result3;
     }
+	
+	
+	@RequestMapping("/updateModel")
+	public String updateModel(HttpSession session) throws Exception {
+		
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+		String memId = login.getMemId();
+		
+		StringBuilder urlBuilder = new StringBuilder("http://192.168.0.51:5000/regist"); /*URL*/
+        URL url = new URL(urlBuilder.toString());
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
+        conn.setRequestProperty("Content-type", "application/json");
+       
+        BufferedReader rd;
+        String result = "{\"id\":\"" + memId + "\"}";
+       
+        try(OutputStream os = conn.getOutputStream()){
+            byte[] input = result.getBytes("utf-8");
+            os.write(input,0,input.length);
+        }
+        
+        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+            rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+        } else {
+            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+        }
+        
+        
+        
+        rd.close();
+        conn.disconnect();
+		
+		return "redirect:/electricityUseView";
+	}
 	
 }
