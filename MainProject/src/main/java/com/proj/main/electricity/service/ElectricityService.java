@@ -28,4 +28,9 @@ public class ElectricityService {
 		List<String> result = dao.getPredUse(memId);
 		return result;
 	}
+	
+	public String getDate(String memId) {
+		String result = dao.getDate(memId);
+		return result;
+	}
 }

@@ -16,5 +16,7 @@ public interface IElectricityDAO {
 	
 	List<String> getPredUse(String memId);
 	
+	String getDate(String memId);
+	
 	
 }
