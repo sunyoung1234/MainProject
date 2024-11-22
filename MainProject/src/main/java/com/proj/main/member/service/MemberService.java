@@ -29,7 +29,7 @@ public class MemberService {
 		return dao.updateMember(member);
 	}
 	
-	// �쉶�썝 紐⑸줉 遺덈윭�삤湲� 硫붿냼�뱶
+	// 회원목록 불러오기
 	public List<MemberDTO> getMemberList(){
 		List<MemberDTO> result = dao.getMemberList();
 		return result;
