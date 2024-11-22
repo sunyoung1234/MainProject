@@ -29,7 +29,7 @@ public class MemberService {
 		return dao.updateMember(member);
 	}
 	
-	// 회원 목록 불러오기 메소드
+	// 회원목록 불러오기
 	public List<MemberDTO> getMemberList(){
 		List<MemberDTO> result = dao.getMemberList();
 		return result;
@@ -58,6 +58,8 @@ public class MemberService {
 
 	public MemberDTO getMemAddress(String memId) {
 		MemberDTO result = dao.getMemAddress(memId);
+		return result;
+	}
 
 	public int insertMyBuilding(MyBuildingDTO mb) {
 		int result = dao.insertMyBuilding(mb);
