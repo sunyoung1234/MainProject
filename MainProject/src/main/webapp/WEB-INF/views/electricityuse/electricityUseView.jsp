@@ -120,12 +120,8 @@
 			</div>
 			
 			<form action="${pageContext.request.contextPath}/updateModel" method="post" onsubmit="showLoading()">
-				<button type="submit">전기 사용량 및 예측 불러오기</button>
+				<button id="updateBtn" type="submit">전기 사용량 및 예측 불러오기</button>
 			</form>
-			
-			<div class=>
-				<img class="elecImg" src="http://192.168.0.51:5000/post">
-			</div>
 			
 			<div id="chart-container">
 				<canvas id="myChart"></canvas>
@@ -133,7 +129,28 @@
 			<button id="prev-btn">이전</button>
 			<button id="next-btn">다음</button>
 			
-			
+			<table>
+				<thead>
+					<tr>
+						<th>분류</th>
+						<th>11월</th>
+						<th>12월</th>
+					</tr>
+				
+				</thead>
+				<tbody>
+					<tr>
+						<th>예측 사용량</th> 
+						<td>234234</td>
+						<td>234234</td>
+					</tr>
+					<tr>
+						<th>전기 사용량</th> 
+						<td>234234</td>
+						<td>234234</td>
+					</tr>
+				</tbody>
+			</table>
 			
 		</div>
 	</div>
@@ -146,6 +163,7 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.0/dist/chartjs-plugin-zoom.min.js"></script>
 	<script type="text/javascript">
 		function showLoading() {
 	        document.getElementById('loading').style.display = 'flex';
@@ -159,6 +177,12 @@
 		
 		let v_nextThreeMonths = '${nextThreeMonths}'
 		
+		let v_predUse1 = '${predUse}'
+		
+		let v_predData = '${use.getPredUse()}'
+		
+		console.log(v_predData)
+		 
 		
 		v_elecUse = v_elecUse.replace('[','')
 		v_elecUse = v_elecUse.replace(']','')
@@ -168,6 +192,9 @@
 		
 		v_predUse = v_predUse.replace(']','')
 		v_predUse = v_predUse.replace('[','')
+		
+		v_predUse1 = v_predUse1.replace(']','')
+		v_predUse1 = v_predUse1.replace('[','')
 		
 		v_predDate = v_predDate.replace(']','')
 		v_predDate = v_predDate.replace('[','')
@@ -180,12 +207,14 @@
 		v_predUse = v_predUse.split(',')
 		v_predDate = v_predDate.split(',')
 		v_nextThreeMonths = v_nextThreeMonths.split(',')
+		v_predUse1 = v_predUse1.split(',')
 		
 		
 		console.log(v_elecUse)
 		console.log(v_useDate)
 		console.log(v_predUse)
 		console.log(v_predDate)
+		console.log(v_nextThreeMonths)
 		console.log(typeof(v_elecUse))
 		console.log(typeof(v_useDate))
 		console.log(typeof(v_predUse))
@@ -193,7 +222,8 @@
 		
 		let combinedUse = [...v_elecUse];
 		
-		let savePredUse = [...v_elecUse]
+		let savePredUse = []
+		savePredUse.push(v_predUse1[1])
 
 		// v_predUse 값을 v_elecUse 배열에 순서대로 추가
 		for (let i = 0; i < v_predUse.length; i++) {
@@ -205,10 +235,6 @@
 		}
 		
 		
-		savePredUse.push(v_predUse[0]);
-		
-		
-		
 		console.log(combinedUse)
 		
 		
@@ -218,11 +244,14 @@
 		console.log(v_elecUse.length)
 		console.log(v_predUse[v_elecUse.length])
 		
-
+		if(v_predUse[v_elecUse.length] == undefined){
+			v_predUse[v_elecUse.length-1] = v_elecUse[v_elecUse.length-1]
+		}
 		
 		
 		let ctx = document.getElementById('myChart')
-		myChart = new Chart(ctx, {
+		
+		let v_chart = new Chart(ctx, {
 		    type: 'line',
 		    data: {
 		      labels: v_predDate,
@@ -243,14 +272,12 @@
 			      }]
 		    },
 		    options: {
-		      responsive: true,
-		      scales: {
-		        y: {
-		        }
-		      }
+		      responsive: true
 		    }
 		  });
-
+		
+		
+		
 	
 	</script>
 

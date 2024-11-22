@@ -21,4 +21,5 @@ public class ElectricityService {
 		int result = dao.insertGetElectricityThisMonth(elec);
 		return result;
 	}
+	
 }

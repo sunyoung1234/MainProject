@@ -32,4 +32,7 @@ public interface IMemberDAO {
 	
 	// 회원 건물 정보 가져오기
 	List<MemBuildingElecDTO> getMemBuildingElec (String memId);
+	
+	// 회원 건물 주소 가져오기
+	MemberDTO getMemAddress(String memId);
 }

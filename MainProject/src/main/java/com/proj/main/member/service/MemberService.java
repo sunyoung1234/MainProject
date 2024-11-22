@@ -53,4 +53,9 @@ public class MemberService {
 		List<MemBuildingElecDTO> result = dao.getMemBuildingElec(memId);
 		return result;
 	}
+	
+	public MemberDTO getMemAddress(String memId) {
+		MemberDTO result = dao.getMemAddress(memId);
+		return result;
+	}
 }
