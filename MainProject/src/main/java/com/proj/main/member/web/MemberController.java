@@ -1,18 +1,14 @@
 package com.proj.main.member.web;
 
 import java.io.BufferedReader;
-
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Base64;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -22,25 +18,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.proj.main.member.service.MemberService;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.proj.main.FileUpload;
-import com.proj.main.attach.service.AttachService;
 import com.proj.main.attach.dto.AttachDTO;
+import com.proj.main.attach.service.AttachService;
 import com.proj.main.member.dto.MemberDTO;
+import com.proj.main.member.dto.MyBuildingDTO;
+import com.proj.main.member.service.MemberService;
 
 @Controller
 public class MemberController {
@@ -299,7 +292,111 @@ public class MemberController {
     	return "member/productView";
     }
     
+    @RequestMapping("/registMyBuildingView")
+    public String  registMyBuilding() {
+    	return "member/registMyBuildingView";
+    }
     
+    @RequestMapping("/registMyBuilding")
+    public String registMyBuilding(MyBuildingDTO myB, MultipartFile[] files, HttpSession session) {
+    	
+    	MemberDTO login = (MemberDTO) session.getAttribute("login");
+    	String id = login.getMemId();
+    	
+    	Date date = new Date();
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+    	String now = sdf.format(date);
+    	String b_id = id + now;
+    	
+    	myB.setBuildingId(b_id);
+    	myB.setMemId(id);
+    	
+    	String imgPath = null;
+    	List<String> pathList = new ArrayList<>();
+    	
+    	if(files.length > 0) {
+    		try {
+				List<AttachDTO> attachList = fileUpload.getAttachListByMultiparts(files);
+				for(AttachDTO  attach : attachList) {
+					imgPath = attach.getAtchPath().substring(11);
+					attachService.insertAttach(attach);
+					pathList.add(imgPath);
+					
+					System.out.println(attach.getAtchPath());
+				}
+				ObjectMapper objectMapper = new ObjectMapper();
+				String pathListJson = objectMapper.writeValueAsString(pathList);
+				myB.setBuildingImg("{" +pathListJson + "}");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    	
+    	
+    	memberService.insertMyBuilding(myB);
+    	
+    	return "redirect:/myBuildingView";
+    }
+    
+    @RequestMapping("/myBuildingView")
+    public String myBuilding(HttpSession session, Model model) {
+    	
+    	MemberDTO login = (MemberDTO) session.getAttribute("login");
+    	
+    	if(login == null) {
+    		return "member/loginView";
+    	}
+    	
+    	
+    	String id = login.getMemId();
+    	
+    	List<MyBuildingDTO> buildings = memberService.getMyBuildings(id);
+    	
+    	if(buildings.size() > 0) {
+    		model.addAttribute("myBuildingList", buildings);
+    		List<String> mainImgList = new ArrayList<>();
+    		
+    		for(MyBuildingDTO building : buildings) {
+    			System.out.println(building.getBuildingImg());
+    			if(building.getBuildingImg().length() > 4) {
+    				
+    				int imgLen = building.getBuildingImg().length();
+    				String imgStrs = building.getBuildingImg().substring(1, imgLen-1);
+    				
+    				// JSON 파싱
+    				ObjectMapper objectMapper = new ObjectMapper();
+    				try {
+    					List<String> imageList = objectMapper.readValue(imgStrs, List.class);
+    					
+    					String mainImg = imageList.get(0);
+    					building.setBuildingImg(mainImg);
+    					System.out.println(mainImg);
+    					
+    					
+    					
+    				} catch (JsonParseException e) {
+    					e.printStackTrace();
+    				} catch (JsonMappingException e) {
+    					e.printStackTrace();
+    				} catch (IOException e) {
+    					e.printStackTrace();
+    				}
+    			}else {
+    				building.setBuildingImg("none");
+    			}
+    		}
+    		
+    	}else {
+    		String msg = "등록하신 건물이 없습니다.";
+    		model.addAttribute("msg", msg);
+    	}
+    	
+    	
+    	
+    	
+    	return "member/myBuildingView";
+    }
    
 
 

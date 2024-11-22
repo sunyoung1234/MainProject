@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.proj.main.member.dao.IMemberDAO;
 import com.proj.main.member.dto.MemBuildingElecDTO;
 import com.proj.main.member.dto.MemberDTO;
+import com.proj.main.member.dto.MyBuildingDTO;
 
 @Service
 public class MemberService {
@@ -28,7 +29,7 @@ public class MemberService {
 		return dao.updateMember(member);
 	}
 	
-	// È¸¿ø ¸ñ·Ï ºÒ·¯¿À±â ¸Ş¼Òµå
+	// íšŒì›ëª©ë¡ ë¶ˆëŸ¬ì˜¤ê¸°
 	public List<MemberDTO> getMemberList(){
 		List<MemberDTO> result = dao.getMemberList();
 		return result;
@@ -51,6 +52,22 @@ public class MemberService {
 	
 	public List<MemBuildingElecDTO> getMemBuildingElec (String memId){
 		List<MemBuildingElecDTO> result = dao.getMemBuildingElec(memId);
+		return result;
+	}
+	
+
+	public MemberDTO getMemAddress(String memId) {
+		MemberDTO result = dao.getMemAddress(memId);
+		return result;
+	}
+
+	public int insertMyBuilding(MyBuildingDTO mb) {
+		int result = dao.insertMyBuilding(mb);
+		return result;
+	}
+	
+	public List<MyBuildingDTO> getMyBuildings(String memId){
+		List<MyBuildingDTO> result = dao.getMyBuildings(memId);
 		return result;
 	}
 }

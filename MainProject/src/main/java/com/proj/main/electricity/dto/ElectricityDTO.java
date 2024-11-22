@@ -5,24 +5,26 @@ public class ElectricityDTO {
 	private String buildingAddress;
 	private String electricityUse;
 	private String useDate;
+	private String predUse;
 	private String memId;
 	
 	public ElectricityDTO() {
 		super();
 	}
 
-	public ElectricityDTO(String buildingAddress, String electricityUse, String useDate, String memId) {
+	public ElectricityDTO(String buildingAddress, String electricityUse, String useDate, String predUse, String memId) {
 		super();
 		this.buildingAddress = buildingAddress;
 		this.electricityUse = electricityUse;
 		this.useDate = useDate;
+		this.predUse = predUse;
 		this.memId = memId;
 	}
 
 	@Override
 	public String toString() {
 		return "ElectricityDTO [buildingAddress=" + buildingAddress + ", electricityUse=" + electricityUse
-				+ ", useDate=" + useDate + ", memId=" + memId + "]";
+				+ ", useDate=" + useDate + ", predUse=" + predUse + ", memId=" + memId + "]";
 	}
 
 	public String getBuildingAddress() {
@@ -49,6 +51,14 @@ public class ElectricityDTO {
 		this.useDate = useDate;
 	}
 
+	public String getPredUse() {
+		return predUse;
+	}
+
+	public void setPredUse(String predUse) {
+		this.predUse = predUse;
+	}
+
 	public String getMemId() {
 		return memId;
 	}
@@ -56,7 +66,7 @@ public class ElectricityDTO {
 	public void setMemId(String memId) {
 		this.memId = memId;
 	}
-	
+
 	
 	
 

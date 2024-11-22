@@ -5,27 +5,37 @@
 	<select id="getElectricitylastMonth" resultType="com.proj.main.electricity.dto.ElectricityDTO" parameterType="String">
 		SELECT
 		 * 
-		FROM BUILDING_MEM 
+		FROM BUILDING_ELEC_MEM 
 		WHERE USE_DATE = TO_CHAR(ADD_MONTHS(SYSDATE,-1),'YYYY-MM')
 		AND MEM_ID = #{memId}
 	</select>
 	
 	<insert id="insertGetElectricityThisMonth" parameterType="com.proj.main.electricity.dto.ElectricityDTO">
-		INSERT INTO BUILDING_MEM(
+		INSERT INTO BUILDING_ELEC_MEM(
 			BUILDING_ADDRESS,
 			ELECTRICITY_USE,
 			USE_DATE,
+			pred_use,
 			MEM_ID
 		)
 		VALUES(
 			#{buildingAddress},
 			#{electricityUse},
 			TO_CHAR(SYSDATE,'YYYY-MM'),
+			#{predUse},
 			#{memId}
 		)
-	
-	
 	</insert>
+	
+	<select id="getPredUse" parameterType="String" resultType="String" >
+		SELECT
+		pred_use
+		FROM BUILDING_ELEC_MEM 
+		where MEM_ID = #{memId}
+		
+	</select>
+	
+	
 
 
 
