@@ -19,22 +19,22 @@ public class FileUpload {
 	@Value("#{util['file.upload.path']}")
 	private String uploadPath; // C:\\uploads
 	
-	public List<AttachDTO> getAttachListByMultiparts(MultipartFile[] boFileArray) throws IOException{
+	public List<AttachDTO> getAttachListByMultiparts(MultipartFile[] boFileArray,String ext) throws IOException{
 		List<AttachDTO> attachList = new ArrayList<>();
 		
 		for(MultipartFile boFile : boFileArray) {
 			if(!boFile.isEmpty()) {
-				AttachDTO attach = getAttachByMultipart(boFile);
+				AttachDTO attach = getAttachByMultipart(boFile,ext);
 				attachList.add(attach);
 			}
 		}
-		return attachList; 
+		return attachList;  
 	}
 	
-	public AttachDTO getAttachByMultipart(MultipartFile boFile) throws IOException{
+	public AttachDTO getAttachByMultipart(MultipartFile boFile ,String ext) throws IOException{
 		String originalFileName = boFile.getOriginalFilename();
 		
-		String fileName = originalFileName.substring(0, originalFileName.lastIndexOf('.'))+ "_" + System.currentTimeMillis() + ".jpeg";
+		String fileName = originalFileName.substring(0, originalFileName.lastIndexOf('.'))+ "_" + System.currentTimeMillis() + "." + ext;
 		
 		File uploadFolder = new File(uploadPath);
 		uploadFolder.mkdir();

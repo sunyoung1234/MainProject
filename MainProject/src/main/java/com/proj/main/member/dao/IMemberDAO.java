@@ -10,7 +10,7 @@ import com.proj.main.member.dto.MyBuildingDTO;
 
 @Mapper
 public interface IMemberDAO {
-	
+
 	// �쉶�썝媛��엯 
 	int registMember(MemberDTO mem);
 	
@@ -43,5 +43,7 @@ public interface IMemberDAO {
 	int insertMyBuilding(MyBuildingDTO mb);
 	
 	List<MyBuildingDTO> getMyBuildings(String memId);
+	
+	List<MyBuildingDTO> getZebTestN(String memId);
 
 }

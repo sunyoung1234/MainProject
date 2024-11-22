@@ -29,7 +29,7 @@ public class MemberService {
 		return dao.updateMember(member);
 	}
 	
-	// 회원목록 불러오기
+	// �쉶�썝紐⑸줉 遺덈윭�삤湲�
 	public List<MemberDTO> getMemberList(){
 		List<MemberDTO> result = dao.getMemberList();
 		return result;
@@ -68,6 +68,11 @@ public class MemberService {
 	
 	public List<MyBuildingDTO> getMyBuildings(String memId){
 		List<MyBuildingDTO> result = dao.getMyBuildings(memId);
+		return result;
+	}
+	
+	public List<MyBuildingDTO> getZebTestN(String memId){
+		List<MyBuildingDTO> result = dao.getZebTestN(memId);
 		return result;
 	}
 }

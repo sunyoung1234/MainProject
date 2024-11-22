@@ -26,7 +26,7 @@
 		<!-- sockis를 이용한 소켓통신을 위해 servlet 내부와 filter 태그 내부에 async-supported = true 추가 -->
 		<async-supported>true</async-supported>
 		<multipart-config>
-			<max-file-size>31457280</max-file-size>
+			<max-file-size>209715200</max-file-size>
 			<max-request-size>1004857600</max-request-size>
 		</multipart-config>
 	</servlet>
