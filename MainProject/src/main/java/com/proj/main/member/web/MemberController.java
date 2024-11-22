@@ -34,6 +34,8 @@ import com.proj.main.attach.service.AttachService;
 import com.proj.main.member.dto.MemberDTO;
 import com.proj.main.member.dto.MyBuildingDTO;
 import com.proj.main.member.service.MemberService;
+import com.proj.main.result.dto.ApplyZEBDTO;
+import com.proj.main.result.service.ResultService;
 
 @Controller
 public class MemberController {
@@ -46,6 +48,9 @@ public class MemberController {
 
     @Autowired
     FileUpload fileUpload;
+    
+    @Autowired
+    ResultService rs;
     
     // 로그인 페이지로 이동
     @RequestMapping("/loginView")
@@ -88,10 +93,11 @@ public class MemberController {
         String extraAddress = req.getParameter("extraAddress");
 
         String imgPath;
+        String ext = "JPEG";
         try {
             // 이미지 업로드
             if (img != null && !img.isEmpty()) {
-                AttachDTO attach = fileUpload.getAttachByMultipart(img);
+                AttachDTO attach = fileUpload.getAttachByMultipart(img,ext);
                 imgPath = attach.getAtchPath().substring(11); 
                 attachService.insertAttach(attach); 
             } else {
@@ -139,7 +145,7 @@ public class MemberController {
         try {
             // 이미지를 업로드하고 경로를 얻습니다.
             if (img != null && !img.isEmpty()) {
-                AttachDTO attach = fileUpload.getAttachByMultipart(img);
+                AttachDTO attach = fileUpload.getAttachByMultipart(img,"JPEG");
                 imgPath = attach.getAtchPath().substring(11); // 업로드된 이미지 경로
                 attachService.insertAttach(attach); // 이미지 정보 DB에 저장
             } else {
@@ -201,7 +207,6 @@ public class MemberController {
 	
 	            // JSON 데이터 생성
 	            String result = "{\"id\":\"" + memId + "\"}";
-	            System.out.println(memId);
 	
 	            // 요청 본문에 데이터 전송
 	            try (OutputStream os = conn.getOutputStream()) {
@@ -316,13 +321,12 @@ public class MemberController {
     	
     	if(files.length > 0) {
     		try {
-				List<AttachDTO> attachList = fileUpload.getAttachListByMultiparts(files);
+				List<AttachDTO> attachList = fileUpload.getAttachListByMultiparts(files,"JPEG");
 				for(AttachDTO  attach : attachList) {
 					imgPath = attach.getAtchPath().substring(11);
 					attachService.insertAttach(attach);
 					pathList.add(imgPath);
 					
-					System.out.println(attach.getAtchPath());
 				}
 				ObjectMapper objectMapper = new ObjectMapper();
 				String pathListJson = objectMapper.writeValueAsString(pathList);
@@ -352,13 +356,17 @@ public class MemberController {
     	String id = login.getMemId();
     	
     	List<MyBuildingDTO> buildings = memberService.getMyBuildings(id);
+    	List<MyBuildingDTO> names = memberService.getZebTestN(id);
+    	List<String> buildingNameList = new ArrayList<>();
+    	
+    	
+    	
     	
     	if(buildings.size() > 0) {
     		model.addAttribute("myBuildingList", buildings);
     		List<String> mainImgList = new ArrayList<>();
     		
     		for(MyBuildingDTO building : buildings) {
-    			System.out.println(building.getBuildingImg());
     			if(building.getBuildingImg().length() > 4) {
     				
     				int imgLen = building.getBuildingImg().length();
@@ -371,7 +379,6 @@ public class MemberController {
     					
     					String mainImg = imageList.get(0);
     					building.setBuildingImg(mainImg);
-    					System.out.println(mainImg);
     					
     					
     					
@@ -385,7 +392,13 @@ public class MemberController {
     			}else {
     				building.setBuildingImg("none");
     			}
+    			
+    			
     		}
+    		for(MyBuildingDTO name : names) {
+    			buildingNameList.add(name.getBuildingName());
+    		}
+    		model.addAttribute("buildingName", buildingNameList);
     		
     	}else {
     		String msg = "등록하신 건물이 없습니다.";
@@ -394,8 +407,48 @@ public class MemberController {
     	
     	
     	
-    	
     	return "member/myBuildingView";
+    }
+    
+    @RequestMapping("/applyZEB")
+    public String applyZEB(String bname,ApplyZEBDTO zeb, HttpSession session, MultipartFile attachment) {
+    	
+    	MemberDTO login = (MemberDTO) session.getAttribute("login");
+    	zeb.setMemId(login.getMemId());
+    	
+    	MyBuildingDTO mb = new MyBuildingDTO();
+    	mb.setBuildingName(bname);
+    	mb.setMemId(login.getMemId());
+    	
+    	String bId = rs.getBuildingId(mb);
+    	zeb.setBuildingId(bId);
+    	
+    	String originalFileName = attachment.getOriginalFilename();
+    	String ext = "";
+        if (originalFileName != null && originalFileName.contains(".")) {
+            ext = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);
+        }
+        
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+        String sys = sdf.format(date);
+        zeb.setApplyDate(sys);
+        
+        try {
+			AttachDTO attach = fileUpload.getAttachByMultipart(attachment, ext);
+			String filePath = attach.getAtchPath().substring(11); 
+            attachService.insertAttach(attach); 
+            zeb.setFileName(filePath);
+            
+            
+		} catch (IOException e) { 
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        System.out.println(zeb);
+        rs.applyZEB(zeb);
+    	
+    	return "redirect:/myBuildingView";
     }
    
 

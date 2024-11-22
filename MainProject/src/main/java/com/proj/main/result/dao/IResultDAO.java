@@ -2,6 +2,8 @@ package com.proj.main.result.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.proj.main.member.dto.MyBuildingDTO;
+import com.proj.main.result.dto.ApplyZEBDTO;
 import com.proj.main.result.dto.EnergyResultDTO;
 import com.proj.main.result.dto.EnergyUsedDTO;
 import com.proj.main.result.dto.UserBuildingDTO;
@@ -21,5 +23,7 @@ public interface IResultDAO {
 	
 	EnergyUsedDTO getEnergyUsed(String b_id);
 	
+	int applyZEB(ApplyZEBDTO apply);
 	
+	String getBuildingId(MyBuildingDTO mb);
 }

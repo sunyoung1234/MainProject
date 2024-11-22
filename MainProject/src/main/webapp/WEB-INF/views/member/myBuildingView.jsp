@@ -166,6 +166,103 @@
 		    position: relative; /* 내부 버튼 포지셔닝에 필요 */
 		    animation: fadeIn 0.3s ease-out; /* 나타나는 애니메이션 */
 		}
+		#overlay2{
+		    position: fixed;
+		    top: 0;
+		    left: 0;
+		    width: 100vw;
+		    height: 100vh;
+		    background-color: rgba(0, 0, 0, 0.6); /* 배경 어둡게 처리 */
+		    z-index: 998; /* 화면 위로 */
+		    justify-content: center;
+		    align-items: center;
+		    display: none ; 
+		} 
+
+		/* 모달 박스 */
+		.modal2 {
+		    background: #fff;
+		    border-radius: 8px;
+		    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		    width: 400px;
+		    max-width: 90%; /* 화면 크기에 맞춰 반응형 처리 */
+		    padding: 20px;
+		    z-index: 999; /* 오버레이 위로 */
+		    animation: fadeIn 0.3s ease-out; /* 나타나는 애니메이션 */
+		}
+		
+		/* 입력 폼 스타일 */
+		.modal2 form {
+		    display: flex;
+		    flex-direction: column;
+		    gap: 15px;
+		}
+		
+		.modal2 label {
+		    font-weight: bold;
+		    margin-bottom: 5px;
+		}
+		
+		.modal2 select,
+		.modal2 input[type="file"],
+		.modal2 input[type="text"],
+		.modal2 button {
+		    padding: 10px;
+		    border: 1px solid #ccc;
+		    border-radius: 4px;
+		    font-size: 14px;
+		    box-sizing: border-box; /* 패딩 포함한 크기 조정 */
+		}
+		
+		.modal2 select:focus,
+		.modal2 input[type="file"]:focus,
+		.modal2 input[type="text"]:focus {
+		    outline: none;
+		    border-color: #5b9bd5;
+		    box-shadow: 0 0 5px rgba(91, 155, 213, 0.5);
+		}
+		
+		.modal2 button {
+		    background-color: #5b9bd5;
+		    color: #fff;
+		    font-weight: bold;
+		    cursor: pointer;
+		    border: none;
+		    border-radius: 4px;
+		    padding: 10px 20px;
+		    font-size: 14px;
+		    transition: background-color 0.3s ease;
+		}
+		
+		/* 제출 버튼 스타일 */
+		.modal2 button[type="submit"] {
+		    background-color: #5b9bd5;
+		}
+		
+		.modal2 button[type="submit"]:hover {
+		    background-color: #4a8ad4;
+		}
+		
+		/* 뒤로가기 버튼 스타일 */
+		.modal2 .back-btn2 {
+		    background-color: #dc3545;
+		}
+		
+		.modal2 .back-btn2:hover {
+		    background-color: #c82333;
+		}
+		
+		/* 나타나는 애니메이션 */
+		@keyframes fadeIn {
+		    from {
+		        opacity: 0;
+		        transform: scale(0.9);
+		    }
+		    to {
+		        opacity: 1;
+		        transform: scale(1);
+		    }
+		}
 		
 		/* 모달의 나타나는 애니메이션 */
 		@keyframes fadeIn {
@@ -266,7 +363,7 @@
                     <p class="building-name">${building.buildingName}</p>
                     <p class="building-address">${building.roadAddress}</p>
                     <p class="building-test">테스트 여부: ${building.testYn}</p>
-                    <p class="building-test">ZEB 등급: ${building.zebTestYn}</p>
+                    <p class="building-test">ZEB 등록 여부: ${building.zebTestYn }</p>
                 </div>
                 <div class="btn-box">
                     <!-- zeb 테스트하기 버튼: 조건에 따라 스타일 및 비활성화 처리 -->
@@ -279,7 +376,14 @@
                         </c:otherwise>
                     </c:choose>
                     <!-- zeb 신청하기 버튼 (기본 설정) -->
-                    <button id="registBuilding" class="regist-building btn-green">ZEB 건축물<br>등록하기</button> 
+                    <c:choose>
+                    	<c:when test="${building.zebTestYn == 'N' }">
+		                    <button id="registBuilding" class="regist-building btn-green">ZEB 건축물<br>등록하기</button> 
+                    	</c:when>
+                    	<c:otherwise>
+                    		<button id="registBuilding" class="regist-building btn-disabled" disabled>ZEB 건축물<br>등록하기</button> 
+                    	</c:otherwise>
+                    </c:choose> 
                 </div>
             </div>
 			<div class="modal-overlay">
@@ -332,7 +436,7 @@
 			            </tr>
 			            <tr>
 			                <th>태양광 패널 용량(kW)</th>
-			                <td>${building.solarPanelKW }</td>
+			                <td>${building.solarPanelKW } kW</td>
 			            </tr>
 			        </table>
 	                <div style="text-align: center; margin-top: 20px;">
@@ -341,9 +445,34 @@
 			        </div>
 			    </div>
 			</div>
-
-
+			
         </c:forEach>
+        
+        <div id="overlay2">
+				<div class="modal2">
+					<form action="${pageContext.request.contextPath }/applyZEB" method="post" enctype="multipart/form-data" >
+					
+						<label for="selectBuilding"> 건물 선택</label>
+						<select id="selectBuilding" name="bname" required>
+							<option>===== 선택 =====</option>
+							<c:forEach var="b_name" items="${buildingName }" varStatus="status">
+								<option class="options" value="${b_name}">${b_name }</option>
+							</c:forEach>
+						</select>
+						
+						<label for="inputPdf"> 인증 파일 첨부 </label>
+						<input id="inputPdf" name="attachment" type="file" accept=".pdf, .xls, .xlsx, .xlsm" required>
+						
+						<label for="inputOrg">발급기관명</label>
+						<input id="inputOrg" name="applianceOrg" required>
+						
+						<div style="display: flex; justify-content: space-between; gap: 10px;">
+						    <button type="button" class="back-btn2">뒤로가기</button>
+						    <button type="submit">제출</button>
+						</div>
+					</form>
+				</div>
+		</div>
         
     </div>
     <button class="floating-btn" onclick="location.href='registerBuildingPage'">+</button>
@@ -395,6 +524,10 @@
 	    let v_overlay = document.querySelectorAll('.modal-overlay');
 	    let v_form = document.querySelector('#submitForm');
 	    
+	    let v_options = document.querySelectorAll('.options');
+	    
+	    let v_backBtn2 = document.querySelectorAll('.back-btn2')[0];
+	    let v_overlay2 = document.querySelector('#overlay2');
 	    
 	    v_testModal.forEach((v_tm,idx) =>{
 	    	v_tm.addEventListener('click',()=>{
@@ -408,6 +541,18 @@
 	    	})
 	    })
 	    
+	    v_registBtn.forEach( (v_rb,idx) =>{ 
+	    	v_rb.addEventListener('click',()=>{
+		    	v_overlay2.style.display = "flex";
+	    	})
+	    })
+	    
+	   
+    	v_backBtn2.addEventListener('click',()=>{
+    		v_overlay2.style.display = "none"; 
+    	})
+	    
+	    
 	    let v_table = document.querySelectorAll('.modal-table')
 	    
 	    v_testBtn.forEach((v_test,idx)=>{
@@ -420,7 +565,7 @@
 	    			if(idx != 1){
 		    			if(inputs[idx].type == 'number'){
 		    				inputs[idx].value = Number(row.innerText);
-		    				if(idx == 10){
+		    				if(idx == 11){
 		    					inputs[idx].value = parseFloat(row.innerText);
 		    				}
 		    			}else{

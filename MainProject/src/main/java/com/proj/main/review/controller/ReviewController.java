@@ -89,7 +89,7 @@ public class ReviewController {
 		
 		try {
 			if(files.length > 0) {
-				List<AttachDTO> attachList = fileUpload.getAttachListByMultiparts(files);
+				List<AttachDTO> attachList = fileUpload.getAttachListByMultiparts(files,"JPEG");
 				for(AttachDTO attach : attachList) {
 					imgPath = attach.getAtchPath().substring(11);
 					attachService.insertAttach(attach);

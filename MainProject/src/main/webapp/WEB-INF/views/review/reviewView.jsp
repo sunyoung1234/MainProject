@@ -59,7 +59,6 @@
 					<div class="text-center mb-5">
 						<h1 class="fw-bolder">리뷰 게시판</h1>
 					</div>
-					<a href="${pageContext.request.contextPath }/pdf" target="_blank">pdf</a>
 					<div class="row gx-5 justify-content-center">
 						<div class="col-lg-12 col-xl-10">
 							<table class="table table-bordered">

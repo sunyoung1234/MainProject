@@ -10,37 +10,39 @@ import com.proj.main.member.dto.MyBuildingDTO;
 
 @Mapper
 public interface IMemberDAO {
-	// 회원가입 
+	// �쉶�썝媛��엯 
 	int registMember(MemberDTO mem);
 	
-	// 로그인
+	// 濡쒓렇�씤
 	MemberDTO loginMember(MemberDTO member);
 	
-	// 회원 정보 수정
+	// �쉶�썝 �젙蹂� �닔�젙
 	int updateMember(MemberDTO member);
 	
-	// 모든 회원 목록 조회 메소드
+	// 紐⑤뱺 �쉶�썝 紐⑸줉 議고쉶 硫붿냼�뱶
 	List<MemberDTO> getMemberList();
 	
-	// 회원 탈퇴
+	// �쉶�썝 �깉�눜
 	int deleteMember(String memId);
 	
-	// 아이디 체크
+	// �븘�씠�뵒 泥댄겕
 	int checkId(String id);
 	
-	// 건물 전기 정보 삽입
+	// 嫄대Ъ �쟾湲� �젙蹂� �궫�엯
 	int insertBuilding(String memId);
 	
-	// 회원 건물 전기 정보 가져오기
+	// �쉶�썝 嫄대Ъ �쟾湲� �젙蹂� 媛��졇�삤湲�
 	List<MemBuildingElecDTO> getMemBuildingElec (String memId);
 	
 
-	// 회원 건물 주소 가져오기
+	// �쉶�썝 嫄대Ъ 二쇱냼 媛��졇�삤湲�
 	MemberDTO getMemAddress(String memId);
 
-	// 회원 건물 등록
+	// �쉶�썝 嫄대Ъ �벑濡�
 	int insertMyBuilding(MyBuildingDTO mb);
 	
 	List<MyBuildingDTO> getMyBuildings(String memId);
+	
+	List<MyBuildingDTO> getZebTestN(String memId);
 
 }

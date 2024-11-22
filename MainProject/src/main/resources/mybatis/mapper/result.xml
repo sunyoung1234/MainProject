@@ -94,5 +94,16 @@
 	<select id="getEnergyUsed" parameterType="String" resultType="com.proj.main.result.dto.EnergyUsedDTO">
 	SELECT * FROM ENERGY_USED WHERE BUILDING_ID = #{buildingId}
 	</select>
-
+	
+	<insert id="applyZEB" parameterType="com.proj.main.result.dto.ApplyZEBDTO">
+		INSERT INTO APPLY_ZEB(
+			mem_id, building_id, file_name, appliance_org, apply_date, approve_yn
+		)VALUES(
+			#{memId}, #{buildingId}, #{fileName}, #{applianceOrg}, #{applyDate}, 'N'
+		)
+	</insert>
+	
+	<select id="getBuildingId" parameterType="com.proj.main.member.dto.MyBuildingDTO" resultType="String">
+		SELECT building_id FROM my_building WHERE 1=1 AND mem_id = #{memId} AND building_name = #{buildingName}
+	</select>
 </mapper>

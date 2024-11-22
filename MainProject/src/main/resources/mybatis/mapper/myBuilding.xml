@@ -19,7 +19,10 @@
 	</insert>
 	 
 	<select id="getMyBuildings" parameterType="String" resultType="com.proj.main.member.dto.MyBuildingDTO">
-		Select * FROM my_building WHERE mem_id = #{memId}
+		SELECT * FROM my_building WHERE 1=1 AND mem_id = #{memId}
 	</select>
 
+	<select id="getZebTestN" parameterType="String" resultType="com.proj.main.member.dto.MyBuildingDTO">
+		SELECT building_name FROM my_building WHERE 1=1 AND mem_id= #{memId} AND zeb_test_yn= 'N'
+	</select>
 </mapper>

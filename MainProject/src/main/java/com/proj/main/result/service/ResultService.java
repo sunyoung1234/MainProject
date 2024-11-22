@@ -3,7 +3,9 @@ package com.proj.main.result.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.proj.main.member.dto.MyBuildingDTO;
 import com.proj.main.result.dao.IResultDAO;
+import com.proj.main.result.dto.ApplyZEBDTO;
 import com.proj.main.result.dto.EnergyResultDTO;
 import com.proj.main.result.dto.EnergyUsedDTO;
 import com.proj.main.result.dto.UserBuildingDTO;
@@ -45,5 +47,13 @@ public class ResultService {
 		EnergyUsedDTO result = dao.getEnergyUsed(b_id);
 		return result;
 	};
+	
+	public int applyZEB(ApplyZEBDTO apply) {
+		return dao.applyZEB(apply);
+	}
+	
+	public String getBuildingId(MyBuildingDTO mb) {
+		return dao.getBuildingId(mb);
+	}
 	
 }
