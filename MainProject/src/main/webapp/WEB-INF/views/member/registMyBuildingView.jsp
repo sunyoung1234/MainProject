@@ -172,8 +172,7 @@
 	        <label for="buildingName">건물명:</label>
 	        <input type="text" id="buildingName" name="buildingName" required><br><br>
 	        
-	        <label for="buildingaddr">건물주소:</label>
-	        <input type="text" id="buildingaddr" name="buildingaddr" required><br><br>
+	        <label >건물주소:</label>
 	        <!-- 주소 input -->
 			<div class="form-floating mb-3">
 
@@ -184,12 +183,12 @@
 			</div>
 
 			<div class="form-floating mb-3">
-			    <input type="text" id="sample4_roadAddress" name="memAddress" class="form-control" placeholder="도로명 주소" readonly />
+			    <input type="text" id="sample4_roadAddress" name="roadAddress" class="form-control" placeholder="도로명 주소" readonly />
 			    <label for="sample4_roadAddress" class="label-small">도로명 주소</label>
 			</div>
 			 
 			<div class="form-floating mb-3">
-			    <input type="text" id="sample4_jibunAddress" name="jibunAddress" class="form-control" placeholder="상세 주소" />
+			    <input type="text" id="sample4_jibunAddress" name="jibunAddress" class="form-control" placeholder="지번 주소" readonly  />
 			    <label for="sample4_jibunAddress" class="label-small">지번 주소</label>
 			</div>
 			
