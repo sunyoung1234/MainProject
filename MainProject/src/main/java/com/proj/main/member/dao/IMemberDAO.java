@@ -10,6 +10,7 @@ import com.proj.main.member.dto.MyBuildingDTO;
 
 @Mapper
 public interface IMemberDAO {
+
 	// �쉶�썝媛��엯 
 	int registMember(MemberDTO mem);
 	

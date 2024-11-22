@@ -179,7 +179,7 @@
 		
 		let v_predUse1 = '${predUse}'
 		
-		let v_predData = '${use.getPredUse()}'
+		let v_predData = '${predUseData}'
 		
 		console.log(v_predData)
 		 
@@ -201,6 +201,9 @@
 		
 		v_nextThreeMonths = v_nextThreeMonths.replace(']','')
 		v_nextThreeMonths = v_nextThreeMonths.replace('[','')
+		
+		v_predData = v_predData.replace(']','')
+		v_predData = v_predData.replace('[','')
 
 		v_elecUse = v_elecUse.split(',')
 		v_useDate = v_useDate.split(',')
@@ -208,6 +211,7 @@
 		v_predDate = v_predDate.split(',')
 		v_nextThreeMonths = v_nextThreeMonths.split(',')
 		v_predUse1 = v_predUse1.split(',')
+		v_predData = v_predData.split(',')
 		
 		
 		console.log(v_elecUse)
@@ -269,12 +273,41 @@
 			        backgroundColor: 'rgba(75, 192, 192, 0)',  // 선만 표시 (채우지 않음)
 			        borderWidth: 1,
 			        fill: false
-			      }]
+			      },{
+				        label: '예측량 데이터2',
+				        data: v_predData,
+				        borderColor: 'red',  // 첫 번째 선의 색상
+				        backgroundColor: 'rgba(75, 192, 192, 0)',  // 선만 표시 (채우지 않음)
+				        borderWidth: 1,
+				        fill: false,
+				        pointStyle: 'circle',  // 점 모양 설정 (기본값은 'circle')
+				        pointRadius: 5,  // 점 크기 조정
+				        pointBackgroundColor: 'blue',  // 점 색상 설정
+				        borderColor: 'transparent',  // 선을 숨기기 위한 설정 (선 색상 투명)
+				        fill: false  // 선을 채우지 않음
+				      }]
 		    },
 		    options: {
-		      responsive: true
-		    }
-		  });
+		        responsive: true,
+		        plugins: {
+		          legend: {
+		            labels: {
+		              generateLabels: function(chart) {
+		                let original = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+		                // '예측량 데이터2'의 범례만 점 모양으로 변경
+		                original.forEach(function(label) {
+		                  if (label.datasetIndex === 2) {
+		                    label.pointStyle = 'circle';  // 점 모양 설정
+		                    label.strokeStyle = 'blue';  // 점 테두리 색상 설정
+		                  }
+		                });
+		                return original;
+		              }
+		            }
+		          }
+		        }
+		      }
+		    });
 		
 		
 		

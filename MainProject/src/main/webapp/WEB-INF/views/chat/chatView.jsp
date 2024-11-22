@@ -56,7 +56,14 @@
     </style>
 </head>
 <body id="page-top">
-    <%@ include file="/WEB-INF/inc/top.jsp"%>
+<!-- 상단 네비게이션 바 -->
+<%@ include file="/WEB-INF/inc/top.jsp"%>
+
+<!-- 상세 메뉴 바 -->
+<%@ include file="/WEB-INF/inc/subnavbar.jsp"%>
+
+<!-- 챗봇 아이콘 및 인터페이스 -->
+<%@ include file="/WEB-INF/inc/chatbot.jsp" %>
     <section class="page-section" id="contact">
         <div class="container pt-5">
             <div class="main-title">${room.roomName} 채팅방</div>

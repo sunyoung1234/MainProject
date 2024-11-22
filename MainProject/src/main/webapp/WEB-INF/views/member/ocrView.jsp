@@ -332,30 +332,65 @@
         if(lastMonth<1){
         	lastMonth = 12
         }
+        let v_predictDate
+        let v_predictDateGas
+        let v_elecDate = '${elecDate}';
+	     if (!v_elecDate) {
+	         v_predictDate = '${predictDate}';  // 서버에서 전달된 예측값
+	         v_predictDate = parseFloat(v_predictDate);  // 숫자로 변환
+	         v_predictDateGas = v_predictDate * 0.424;
+	
+	         document.getElementById("elecUse").innerHTML = Math.round(v_predictDate * 100) / 100;
+	         document.getElementById("gasResult2").innerHTML = Math.round(v_predictDateGas * 100) / 100;
+	
+	         document.getElementById("lastMonth").innerHTML = lastMonth + "월";
+	         document.getElementById("thisMonth").innerHTML = month + "월 예측값";
+	         
+	         let lastMonthUse = '${electricityUse.getElectricityUse() }'
+             let gasResult = '${electricityUse.getElectricityUse() }'*0.424
+	             
+             document.getElementById("gasResult1").innerHTML = Math.round(gasResult*100) / 100
+             
+             document.getElementById("checkBtn").addEventListener("click", ()=>{
+             	
+             	document.getElementById("thisMonth").innerHTML = month + "월";
+             	document.querySelector(".finalBox").disabled = false;
+             	document.getElementById("elecUse").innerHTML = v_elecUse
+             	let v_result2 = v_elecUse * 0.424
+             	document.getElementById("gasResult2").innerHTML = Math.round(v_result2*100) / 100
+             	
+             	if(v_predictDate < v_elecUse){
+                 	document.querySelector('.resultText').innerHTML =  month + '월 예측값 ' + Math.round(v_predictDate*100) / 100 + ' 보다 많이 사용하였습니다.'    
+                 }else{
+                 	document.querySelector('.resultText').innerHTML =  month + '월 예측값 ' + Math.round(v_predictDate*100) / 100 + ' 보다 적게 사용하였습니다.'    
+                 }
+             })
+	     }else{
+	    	 
+	    	 let v_elecDateGas = v_elecDate * 0.424;
+	    	 document.getElementById("elecUse").innerHTML = v_elecDate
+	         document.getElementById("gasResult2").innerHTML = Math.round(v_elecDateGas * 100) / 100;
+	
+	         document.getElementById("lastMonth").innerHTML = lastMonth + "월";
+	         document.getElementById("thisMonth").innerHTML = month + "월";
+	         
+	         let lastMonthUse = '${electricityUse.getElectricityUse() }'
+             let gasResult = '${electricityUse.getElectricityUse() }'*0.424
+	             
+             document.getElementById("gasResult1").innerHTML = Math.round(gasResult*100) / 100
+             	
+           	
+           	if(lastMonthUse < v_elecDate){
+               	document.querySelector('.resultText').innerHTML =  lastMonth + '월  ' + Math.round(lastMonthUse * 100) / 100 + ' 보다 많이 사용하였습니다.'    
+               }else{
+               	document.querySelector('.resultText').innerHTML =  lastMonth + '월  ' + Math.round(lastMonthUse * 100) / 100 + ' 보다 적게 사용하였습니다.'    
+               }
+             
+	     }
+
         
         
-           
-        document.getElementById("lastMonth").innerHTML = lastMonth + "월";
-        document.getElementById("thisMonth").innerHTML = month + "월";
         
-        let lastMonthUse = '${electricityUse.getElectricityUse() }'
-        let gasResult = '${electricityUse.getElectricityUse() }'*0.424
-        
-        document.getElementById("gasResult1").innerHTML = Math.round(gasResult*100) / 100
-        
-        document.getElementById("checkBtn").addEventListener("click", ()=>{
-        	
-        	document.querySelector(".finalBox").disabled = false;
-        	document.getElementById("elecUse").innerHTML = v_elecUse
-        	let v_result2 = v_elecUse * 0.424
-        	document.getElementById("gasResult2").innerHTML = Math.round(v_result2*100) / 100
-        	
-        	if(lastMonthUse < v_elecUse){
-            	document.querySelector('.resultText').innerHTML = '전달보다 적게 사용하였습니다.'    
-            }else{
-            	document.querySelector('.resultText').innerHTML = '전달보다 많이 사용하였습니다.'  
-            }
-        })
         
         document.querySelector(".finalBox").addEventListener("click", ()=>{
         	 let v_ajax = new XMLHttpRequest();

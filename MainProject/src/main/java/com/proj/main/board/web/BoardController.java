@@ -16,4 +16,10 @@ public class BoardController {
 		return "board/noticeBoardView";
 	}
 	
+	@RequestMapping("/infoBoardView")
+	public String infoBoardView() {
+		return "board/infoBoardView";
+		
+	}
+	
 }
