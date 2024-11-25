@@ -79,7 +79,7 @@
 .bot-message {
     margin-bottom: 10px;
     font-size: 14px;
-    background: #f1f1f1;
+    background: #e7f3ff;
     border-radius: 10px;
     padding: 10px;
 }
@@ -134,7 +134,70 @@
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+</style>
 
+<style>
+.chat-room-card {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    margin: 10px 0;
+    padding: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.chat-room-card:hover {
+    transform: translateY(-5px);
+}
+
+.chat-room-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.room-name {
+    color: #4A90E2;
+    font-size: 14px;
+}
+
+.room-date {
+    font-size: 12px;
+    color: #aaa;
+}
+
+.chat-room-body {
+    margin-top: 10px;
+}
+
+.room-info {
+    font-size: 12px;
+    color: #555;
+}
+
+.room-number,
+.room-owner {
+    display: block;
+}
+
+.view-room-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: #4A90E2;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.view-room-btn:hover {
+    background-color: #357ab7;
+}
 
 </style>
 </head>
@@ -163,6 +226,10 @@
             </div>
         </div>
     </div>
+<script type="text/javascript">
+    // JSP에서 contextPath를 JavaScript로 전달
+    var contextPath = '${pageContext.request.contextPath}';
+</script>
 
 <script>
 $(document).ready(function () {
@@ -181,7 +248,7 @@ $(document).ready(function () {
             <div class="bot-message">안녕하세요! 무엇을 도와드릴까요?</div>
             <div class="bot-message">
                 <button class="menu-btn" data-menu="quick-move">페이지 빠른 이동</button>
-                <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/faq/view'">FAQ</button>
+                <button class="menu-btn" onclick="location.href='${contextPath}/faq/view'">FAQ</button>
                 <c:if test="${sessionScope.login != null && sessionScope.login.memId eq 'admin'}">
                     <button class="menu-btn" data-menu="admin-chat">사용자 상담 연결</button>
                 </c:if>
@@ -210,10 +277,10 @@ $(document).ready(function () {
     function displayMyMenu() {
         $("#chatbotContent").html(`
             <div class="bot-message">마이 메뉴입니다.</div>
-            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/mypage'">마이페이지</button>
-            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/memEditView'">회원정보수정</button>
-            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/electricityUseView'">전기사용량</button>
-            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/ocrView'">전기사용량 기입</button>
+            <button class="menu-btn" onclick="location.href='${contextPath}/mypage'">마이페이지</button>
+            <button class="menu-btn" onclick="location.href='${contextPath}/memEditView'">회원정보수정</button>
+            <button class="menu-btn" onclick="location.href='${contextPath}/electricityUseView'">전기사용량</button>
+            <button class="menu-btn" onclick="location.href='${contextPath}/ocrView'">전기사용량 기입</button>
             <button class="menu-btn back-btn">뒤로가기</button>
         `);
     }
@@ -221,10 +288,10 @@ $(document).ready(function () {
     function displayBoardMenu() {
         $("#chatbotContent").html(`
             <div class="bot-message">게시판 메뉴입니다.</div>
-            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/noticeBoardView'">공지사항</button>
-            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/reviewView'">리뷰게시판</button>
-            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/freeBoardView'">자유게시판</button>
-            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/productView'">에너지 효율 제품 게시판</button>
+            <button class="menu-btn" onclick="location.href='${contextPath}/noticeBoardView'">공지사항</button>
+            <button class="menu-btn" onclick="location.href='${contextPath}/reviewView'">리뷰게시판</button>
+            <button class="menu-btn" onclick="location.href='${contextPath}/freeBoardView'">자유게시판</button>
+            <button class="menu-btn" onclick="location.href='${contextPath}/productView'">에너지 효율 제품 게시판</button>
             <button class="menu-btn back-btn">뒤로가기</button>
         `);
     }
@@ -232,8 +299,8 @@ $(document).ready(function () {
     function displayMapMenu() {
         $("#chatbotContent").html(`
             <div class="bot-message">지도 메뉴입니다.</div>
-            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/inputView'">제로 에너지 건축물 등급 측정</button>
-            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/mapView'">지도 상세보기</button>
+            <button class="menu-btn" onclick="location.href='${contextPath}/inputView'">제로 에너지 건축물 등급 측정</button>
+            <button class="menu-btn" onclick="location.href='${contextPath}/mapView'">지도 상세보기</button>
             <button class="menu-btn back-btn">뒤로가기</button>
         `);
     }
@@ -241,13 +308,90 @@ $(document).ready(function () {
     function displaySupportMenu() {
         $("#chatbotContent").html(`
             <div class="bot-message">고객지원 메뉴입니다.</div>
-            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/chatListView'">챗봇상담</button>
-            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/faq/view'">자주 묻는 질문</button>
+            <button class="menu-btn" onclick="location.href='${contextPath}/chatListView'">챗봇상담</button>
+            <button class="menu-btn" onclick="location.href='${contextPath}/faq/view'">자주 묻는 질문</button>
             <button class="menu-btn">이용 가이드</button>
-            <button class="menu-btn" onclick="location.href='${pageContext.request.contextPath}/proposal/view'">건의사항</button>
+            <button class="menu-btn" onclick="location.href='${contextPath}/proposal/view'">건의사항</button>
             <button class="menu-btn back-btn">뒤로가기</button>
         `);
     }
+    
+    // AJAX로 채팅방 목록 가져오기
+function getRoomList() {
+    $.ajax({
+        url: contextPath + "/getRoomList",  // contextPath를 사용
+        method: "GET",
+        success: function(response) {
+            console.log("응답 데이터:", response);  // 받아온 데이터 확인
+            if (response.length === 0) {
+                $("#chatbotContent").html('<div class="bot-message">현재 채팅방이 없습니다.</div>');
+            } else {
+                var html = '<div class="bot-message">채팅방 목록</div>';
+
+                $.each(response, function(index, room) {
+                    console.log("채팅방 객체:", room); // 각 room 객체 확인
+
+                    var roomNo = room.roomNo || '정보 없음';  // 값이 없으면 '정보 없음'
+                    var roomName = room.roomName || '정보 없음';
+                    var memName = room.memName || '정보 없음';
+                    var regDate = room.regDate || '정보 없음';
+
+                    // 채팅방을 카드 형식으로 표시
+                    html += '<div class="chat-room-card" id="room-' + roomNo + '">' +
+                        '<div class="chat-room-header">' +
+                            '<span class="room-name">' + roomName + '</span>' +
+                            '<span class="room-date">' + regDate + '</span>' +
+                        '</div>' +
+                        '<div class="chat-room-body">' +
+                            '<div class="room-info">' +
+                                '<span class="room-number">방번호: ' + roomNo + '</span>' +
+                                '<span class="room-owner">방장: ' + memName + '</span>' +
+                            '</div>' +
+                            '<a href="' + contextPath + '/chatView?roomNo=' + room.roomNo + '" class="view-room-btn">채팅방 보기</a>' +
+                            '<button class="delete-room-btn" data-room-no="' + room.roomNo + '">삭제</button>' +  // 삭제 버튼 추가
+                        '</div>' +
+                    '</div>';
+                });
+
+                // 뒤로가기 버튼 추가
+                html += '<div class="bot-message">' +
+                            '<button class="menu-btn back-btn">뒤로가기</button>' +
+                        '</div>';
+
+                console.log("생성된 HTML:", html);  // 최종 HTML 확인
+
+                $("#chatbotContent").html(html);  // 생성된 HTML을 화면에 표시
+            }
+        },
+        error: function() {
+            alert("채팅방 목록을 가져오는 데 실패했습니다.");
+        }
+    });
+}
+    // 채팅방 삭제 요청
+$(document).on("click", ".delete-room-btn", function () {
+    var roomNo = $(this).data("room-no");  // 삭제할 채팅방 번호 가져오기
+    
+    if (confirm("정말 이 채팅방을 삭제하시겠습니까?")) {
+        $.ajax({
+            url: contextPath + "/deleteRoom",  // 채팅방 삭제 요청
+            method: "POST",
+            data: { roomNo: roomNo },
+            success: function(response) {
+                if (response === "success") {
+                    // 삭제 성공 시 해당 채팅방 카드 삭제
+                    $("#room-" + roomNo).remove();
+                    alert("채팅방이 삭제되었습니다.");
+                } else {
+                    alert("채팅방 삭제에 실패했습니다.");
+                }
+            },
+            error: function() {
+                alert("삭제 요청 중 오류가 발생했습니다.");
+            }
+        });
+    }
+});
 
     // 메뉴 이벤트 처리
     $(document).on("click", ".menu-btn", function () {
@@ -268,6 +412,9 @@ $(document).ready(function () {
             case "support":
                 displaySupportMenu();
                 break;
+            case "admin-chat":
+                getRoomList();
+                break;
             default:
                 displayMainMenu();
         }
@@ -281,11 +428,6 @@ $(document).ready(function () {
     // 초기 메뉴 표시
     displayMainMenu();
 });
-</script>
-
-
-<script>
-
 </script>
 </body>
 </html>

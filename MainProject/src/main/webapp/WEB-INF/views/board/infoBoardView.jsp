@@ -70,46 +70,7 @@
         margin: 5px 0 0;
         font-size: 14px;
     }
-    /* 상세 메뉴 바 스타일 */
-    .sub-nav-bar {
-        background-color: #0056b3;
-        margin-top: 20px;
-        display: flex;
-    }
-    .sub-nav-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: start;
-        width: 30%;
-    }
-    .sub-nav-item {
-        flex: 1;
-        text-align: start;
-        position: relative;
-        padding: 0px 0;
-        text-decoration: none;
-    }
-    .sub-nav-item:first-child {
-        background-color: #004080;
-        height: 100%;
-    }
-    .sub-nav-item:last-child {
-        background-color: #0066cc;
-    }
-    .sub-nav-item > a {
-        color: white !important;
-        text-decoration: none !important;
-        font-size: 20px;
-        padding: 20px 15px;
-        display: flex;
-        align-items: center;
-    }
-    .sub-nav-item > a:hover {
-        text-decoration: none !important;
-        color: white !important;
-    }
+
     /* 드롭다운 메뉴 스타일 */
     .dropdown-menu {
         display: none;
@@ -142,43 +103,7 @@
     }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-    $(".sub-nav-item a.active").on("click", function(e) {
-        e.preventDefault();
-        var parent = $(this).closest(".sub-nav-item");
 
-        if (parent.hasClass("show")) {
-            parent.find(".dropdown-menu").css({
-                "max-height": "0",
-                "opacity": "0",
-                "padding": "0"
-            });
-            setTimeout(function() {
-                parent.removeClass("show");
-                parent.find(".dropdown-menu").css("display", "none");
-            }, 300);
-        } else {
-            $(".sub-nav-item").not(parent).removeClass("show")
-                .find(".dropdown-menu").css({
-                "max-height": "0",
-                "opacity": "0",
-                "padding": "0"
-            }).hide();
-
-            parent.addClass("show");
-            parent.find(".dropdown-menu").css("display", "block");
-            setTimeout(function() {
-                parent.find(".dropdown-menu").css({
-                    "max-height": "500px",
-                    "opacity": "1",
-                    "padding": "15px 0"
-                });
-            }, 0);
-        }
-    });
-});
-</script>
 </head>
 <body>
 
@@ -187,20 +112,7 @@ $(document).ready(function() {
 <!-- Navigation END -->
 
 <!-- 상세 메뉴 바 -->
-<div class="sub-nav-bar">
-    <div class="container d-flex justify-content-start align-items-center">
-        <ul class="sub-nav-list">
-            <li class="sub-nav-item"><a href="#">지도</a></li>
-            <li class="sub-nav-item"><a href="#" class="active">메뉴<span class="arrow-icon">&#9662;</span></a>
-                <div class="dropdown-menu">
-                    <a href="#" class="dropdown-item">제로 에너지 건축물 등급 측정</a>
-                    <a href="#" class="dropdown-item">지도 상세보기</a>
-                    <a href="#" class="dropdown-item">에너지 관련 정보</a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</div>
+<%@ include file="/WEB-INF/inc/subnavbarMap.jsp"%>
 
 <div class="info-container">
     <div class="section-title">관련정보</div>

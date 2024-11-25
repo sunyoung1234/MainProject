@@ -60,7 +60,7 @@ body {
     padding: 0px 10px;
     background-color: white;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-    border-radius: 8px;
+    border-radius: 8px;	
     overflow: hidden;
     opacity: 0;
     visibility: hidden;
@@ -96,23 +96,19 @@ body {
     String currentPath = request.getRequestURI();
     String contextPath = request.getContextPath();
 %>
-<% 
-    System.out.println("currentPath: " + currentPath);
-    System.out.println("contextPath: " + contextPath);
-%>
 <div class="sub-nav-bar">
     <ul class="sub-nav-list">
         <li class="sub-nav-item">
             <a href="#" class="active">
                 <!-- 메뉴 이름 동적 설정 -->
                 <c:choose>
-                    <c:when test="${currentPath.contains('/mypage') || currentPath.contains('/memEditView') || currentPath.contains('/electricityUseView')}">
+                    <c:when test="${currentPath.contains(contextPath + '/mypage') || currentPath.contains(contextPath + '/memEditView') || currentPath.contains(contextPath + '/electricityUseView')}">
                         마이
                     </c:when>
-                    <c:when test="${currentPath.contains('/noticeBoardView') || currentPath.contains('/reviewView')}">
+                    <c:when test="${currentPath.contains(contextPath + '/noticeBoardView') || currentPath.contains(contextPath + '/reviewView')}">
                         게시판
                     </c:when>
-                    <c:when test="${currentPath.contains('/inputView') || currentPath.contains('/mapView')}">
+                    <c:when test="${currentPath.contains(contextPath + '/inputView') || currentPath.contains(contextPath + '/mapView')}">
                         지도
                     </c:when>
                     <c:otherwise>
@@ -124,19 +120,19 @@ body {
             <div class="sub-nav-dropdown-menu">
                 <!-- 드롭다운 메뉴 동적 설정 -->
                 <c:choose>
-                    <c:when test="${currentPath.contains('/mypage') || currentPath.contains('/memEditView') || currentPath.contains('/electricityUseView')}">
+                    <c:when test="${currentPath.contains(contextPath + '/mypage') || currentPath.contains(contextPath + '/memEditView') || currentPath.contains(contextPath + '/electricityUseView')}">
                         <a href="${contextPath}/mypage" class="sub-nav-dropdown-item">마이페이지</a>
                         <a href="${contextPath}/memEditView" class="sub-nav-dropdown-item">회원정보수정</a>
                         <a href="${contextPath}/electricityUseView" class="sub-nav-dropdown-item">전기사용량</a>
                         <a href="${contextPath}/ocrView" class="sub-nav-dropdown-item">전기 사용량 기입</a>
                     </c:when>
-                    <c:when test="${currentPath.contains('/noticeBoardView') || currentPath.contains('/reviewView')}">
+                    <c:when test="${currentPath.contains(contextPath + '/noticeBoardView') || currentPath.contains(contextPath + '/reviewView')}">
                         <a href="${contextPath}/noticeBoardView" class="sub-nav-dropdown-item">공지사항</a>
                         <a href="${contextPath}/reviewView" class="sub-nav-dropdown-item">리뷰게시판</a>
                         <a href="${contextPath}/freeBoardView" class="sub-nav-dropdown-item">자유게시판</a>
                         <a href="${contextPath}/productView" class="sub-nav-dropdown-item">에너지 효율 제품 게시판</a>
                     </c:when>
-                    <c:when test="${currentPath.contains('/inputView') || currentPath.contains('/mapView')}">
+                    <c:when test="${currentPath.contains(contextPath + '/inputView') || currentPath.contains(contextPath + '/mapView')}">
                         <a href="${contextPath}/inputView" class="sub-nav-dropdown-item">제로 에너지 건축물 등급 측정</a>
                         <a href="${contextPath}/mapView" class="sub-nav-dropdown-item">지도 상세보기</a>
                         <a href="${contextPath}/infoBoardView" class="sub-nav-dropdown-item">에너지 관련 정보</a>

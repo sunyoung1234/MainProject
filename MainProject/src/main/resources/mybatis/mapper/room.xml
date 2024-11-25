@@ -3,19 +3,19 @@
 <mapper namespace="com.proj.main.chat.dao.IRoomDAO">
 
     <!-- 채팅방 목록 가져오기 -->
-    <select id="getRoomList" resultType="com.proj.main.chat.dto.RoomDTO">
-        SELECT
-              room_no
-            , room_name
-            , mem_id
-            , mem_name
-            , TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI') AS reg_date
-            , del_yn
-        FROM
-            rooms
-        WHERE del_yn = 'N'
-        ORDER BY reg_date DESC
-    </select>
+<select id="getRoomList" resultType="com.proj.main.chat.dto.RoomDTO">
+    SELECT
+          room_no
+        , room_name
+        , mem_id
+        , mem_name
+        , TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI') AS reg_date
+        , del_yn
+    FROM
+        rooms
+    WHERE del_yn = 'N' -- 삭제된 방 제외
+    ORDER BY reg_date DESC
+</select>
 
     <!-- 특정 채팅방 정보 가져오기 -->
     <select id="getRoom" parameterType="int" resultType="com.proj.main.chat.dto.RoomDTO">

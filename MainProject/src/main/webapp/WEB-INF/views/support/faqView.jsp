@@ -84,7 +84,7 @@ $(document).ready(function () {
 <%@ include file="/WEB-INF/inc/top.jsp"%>
 
 <!-- 상세 메뉴 바 -->
-<%@ include file="/WEB-INF/inc/subnavbar.jsp"%>
+<%@ include file="/WEB-INF/inc/subnavbarSupport.jsp"%>
 
 <!-- 챗봇 아이콘 및 인터페이스 -->
 <%@ include file="/WEB-INF/inc/chatbot.jsp" %>
