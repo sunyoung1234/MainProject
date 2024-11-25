@@ -14,6 +14,7 @@ public class ProductDTO {
 	private String oneUse;
 	private String yearMoney;
 	private String productImage;
+	private String productLink;
 	
 	
 	public ProductDTO() {
@@ -23,7 +24,7 @@ public class ProductDTO {
 
 	public ProductDTO(String productCategory, String productName, String productGrade, String productVolume,
 			String productBrand, String productOrigin, String yearUse, String monthUse, String hourUse, String oneUse,
-			String yearMoney, String productImage) {
+			String yearMoney, String productImage, String productLink) {
 		super();
 		this.productCategory = productCategory;
 		this.productName = productName;
@@ -37,6 +38,7 @@ public class ProductDTO {
 		this.oneUse = oneUse;
 		this.yearMoney = yearMoney;
 		this.productImage = productImage;
+		this.productLink = productLink;
 	}
 
 
@@ -45,7 +47,8 @@ public class ProductDTO {
 		return "ProductDTO [productCategory=" + productCategory + ", productName=" + productName + ", productGrade="
 				+ productGrade + ", productVolume=" + productVolume + ", productBrand=" + productBrand
 				+ ", productOrigin=" + productOrigin + ", yearUse=" + yearUse + ", monthUse=" + monthUse + ", hourUse="
-				+ hourUse + ", oneUse=" + oneUse + ", yearMoney=" + yearMoney + ", productImage=" + productImage + "]";
+				+ hourUse + ", oneUse=" + oneUse + ", yearMoney=" + yearMoney + ", productImage=" + productImage
+				+ ", productLink=" + productLink + "]";
 	}
 
 
@@ -167,6 +170,17 @@ public class ProductDTO {
 	public void setProductImage(String productImage) {
 		this.productImage = productImage;
 	}
+
+
+	public String getProductLink() {
+		return productLink;
+	}
+
+
+	public void setProductLink(String productLink) {
+		this.productLink = productLink;
+	}
+
 
 	
 	

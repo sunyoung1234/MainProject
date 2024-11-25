@@ -8,7 +8,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content />
 <meta name="author" content />
-<title>마이 페이지</title>
+<title>전기 사용량</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 <!-- Custom Google font-->
@@ -53,6 +53,15 @@
     	
     }
     
+    .info-item-box{
+    	display: flex;
+    	
+    }
+    
+    .info-item2{
+    	margin-left:20px;
+    }
+    
     .info-car{
     	color:  #007bff;
     }
@@ -91,7 +100,24 @@
 	    margin-top: 20px;
 	    font-size: 18px;
 	}
+	
+	.get-btn-box{
+		display: flex;
+		justify-content: end;
+		margin-right: 100px;
+		
+	}
     
+    .get-btn{
+    	background-color: #28A745;
+    	border: 1px solid #28A745;
+    	border-radius: 5px;
+    	color : white;
+    }
+    
+    #chart-container{
+    	margin-top :50px;
+    }
     
 </style>
 
@@ -109,48 +135,29 @@
 		<div class="elecImgBox">
 			<div class="memInfo">
 				<h2>회원정보</h2>
-				<div class="info-item">
-					<i class="info-car bi-person-circle"></i>
-					<span>닉네임 : 계룡건설</span>
+				<div class="info-item-box">
+					<div class="info-item">
+						<i class="info-car bi-person-circle"></i>
+						<span>닉네임 : ${member1.getMemName() }</span>
+					</div>
+					<div class="info-item2">
+						<i class="info-car bi-house-door"></i>
+						<span>주소 : ${member1.getJibunAddress() }</span>
+					</div>
 				</div>
-				<div class="info-item">
-					<i class="info-car bi-house-door"></i>
-					<span>주소 : 대전 서구 문정로48번길 48</span>
-				</div>
+				
 			</div>
 			
-			<form action="${pageContext.request.contextPath}/updateModel" method="post" onsubmit="showLoading()">
-				<button id="updateBtn" type="submit">전기 사용량 및 예측 불러오기</button>
-			</form>
+			
 			
 			<div id="chart-container">
+				<form action="${pageContext.request.contextPath}/updateModel" method="post" onsubmit="showLoading()">
+					<div class="get-btn-box">
+						<button class="get-btn" id="updateBtn" type="submit">전기 사용량 예측값 불러오기</button>
+					</div>
+				</form>
 				<canvas id="myChart"></canvas>
 			</div>
-			<button id="prev-btn">이전</button>
-			<button id="next-btn">다음</button>
-			
-			<table>
-				<thead>
-					<tr>
-						<th>분류</th>
-						<th>11월</th>
-						<th>12월</th>
-					</tr>
-				
-				</thead>
-				<tbody>
-					<tr>
-						<th>예측 사용량</th> 
-						<td>234234</td>
-						<td>234234</td>
-					</tr>
-					<tr>
-						<th>전기 사용량</th> 
-						<td>234234</td>
-						<td>234234</td>
-					</tr>
-				</tbody>
-			</table>
 			
 		</div>
 	</div>

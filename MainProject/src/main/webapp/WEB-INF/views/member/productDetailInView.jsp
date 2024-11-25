@@ -9,7 +9,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content />
 <meta name="author" content />
-<title>마이 페이지</title>
+<title>제품 상세보기</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 <!-- Custom Google font-->
@@ -27,10 +27,9 @@
 <style type="text/css">
 	
 	.main-height{
-		height:1000px;
+		height:900px;
 		width:1300px;
-		border: 1px solid black;
-		margin: auto;
+		margin: auto; 
 		margin-top:50px;
 		margin-bottom: 50px;
 	}
@@ -54,8 +53,6 @@
 		background-color: #009861;
 		color:white;
 		margin-left: 400px;
-		
-		
 	}
 	
 	.product-division2{
@@ -76,42 +73,42 @@
 	.product-list{
 		padding-left:150px;
 		padding-right:50px;
-		width:800px;
-	
+		width:1000px;
+		padding-top:55px;
+		padding-bottom:50px;
+	 
 	}
 	
 	.product-box{
 		width:200px;
 		height:200px;
-		border: 1px solid black;
 	
 	}
 	
 	.product-img{
 		display: flex;
-		justify-content: center;
-		align-items:center;
+		justify-content: center; 
 	}
 	 
 	
 	.context-box{
 		display: flex;
 		padding-left:50px;
-		margin-top:200px;
+		margin-top:50px;
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 	}
 	
 	.product-img{
 		width:400px;
 		height:500px;
 		overflow: hidden;
-		border: 1px solid black;
 	}
 	
 	.product-detail{
 		margin-bottom: 20px;
 		font-weight: bold;
-		font-size: 20px;
-	}
+		font-size: 20px;  
+	}  
 	
 	.product-division1-color{
 		color:white;
@@ -121,6 +118,25 @@
 		width:100%;
 		height:100%;
 	}
+	
+	.go-link{
+		color:blue;
+		font-size:10px; 
+	}
+	
+	.go-link:hover{
+		cursor: pointer;
+	}
+	
+	.text-copy{
+		width:30px;
+		height:20px;
+	}
+	
+	.text-copy:hover{
+		cursor: pointer;
+	}
+	
 
 </style>
 
@@ -146,10 +162,10 @@
 				<div class="product-detail">제품상세정보</div>
 				<table class="table table-hover">
 					<colgroup>
-						<col width="25%">
-						<col width="25%">
-						<col width="30%">
-						<col width="20%">
+						<col width="35%">
+						<col width="15%">
+						<col width="55%">
+						<col width="15%">    
 					</colgroup>
 					<tbody>
 						<tr>
@@ -185,9 +201,15 @@
 						<tr>
 							<th>효율등급</th>
 							<td>${getProduct.productGrade }</td>
+							<th>구매 링크</th>
+							<td class="go-link" onclick="goLink('${getProduct.productLink }')">${getProduct.productLink }</td>
 						</tr>
 					</tbody>
 				</table>
+				<div>
+					구매 링크 복사
+					<img  onclick="confirmAndCopy('${getProduct.productLink}')"  class="text-copy" src="${pageContext.request.contextPath }/resources/image/텍스트 아이콘.png">
+				</div>
 			</div>
 		</div>
 		
@@ -201,6 +223,33 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script type="text/javascript">
+		function goLink(link){
+			window.open(link)
+		}
+		
+		function confirmAndCopy(productLink) {
+		    // 확인 창을 띄워서 사용자가 모델명 복사를 확인하도록 함
+		    let confirmation = confirm("구매 링크를 복사하시겠습니까?");
+		    
+		    // 사용자가 확인 버튼을 누른 경우
+		    if (confirmation) {
+		        copyText(productLink);
+		    }
+		}
+	
+		function copyText(text) {
+		    // Clipboard API를 사용해 텍스트를 클립보드에 복사
+		    navigator.clipboard.writeText(text).then(function() {
+		        // 복사 성공 시 실행되는 콜백
+		        alert("복사된 링크: " + text);
+		    }).catch(function(err) {
+		        // 복사 실패 시 실행되는 콜백
+		        alert("복사 실패: " + err);
+		    });
+	
+		}
+	</script>
     
 </body>
 </html>

@@ -33,4 +33,6 @@ public class ElectricityService {
 		String result = dao.getDate(memId);
 		return result;
 	}
+	
+	
 }

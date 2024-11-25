@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.main.buildingElec.dao.IBuildingDAO">
+	
+	<insert id="newInsertInfo" parameterType="com.proj.main.buildingElec.dto.BuildingDTO">
+		INSERT INTO BEU(
+			building_address,
+			electricity_use,
+			use_date
+		)
+		VALUES(
+			#{buildingAddress},
+			#{electricityUse},
+			#{useDate}
+		)
+	
+	</insert>
+
+
+</mapper>

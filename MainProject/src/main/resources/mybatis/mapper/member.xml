@@ -93,7 +93,7 @@
 		        a.use_date,
 		        b.mem_id
 		    FROM BEU a, MEMBERS b
-		    WHERE b.jibun_address like '%' || a.building_address || '%'
+		    WHERE b.jibun_address = a.building_address
 		    AND b.mem_id = #{memId}
     </insert>
     

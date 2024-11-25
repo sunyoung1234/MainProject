@@ -41,7 +41,7 @@
 		WHERE use_date = TO_CHAR(SYSDATE,'YYYY-MM')
 		AND MEM_ID = #{memId}
 	</select>
-
+	
 
 
 
