@@ -164,8 +164,8 @@
 					<colgroup>
 						<col width="35%">
 						<col width="15%">
-						<col width="55%">
-						<col width="15%">    
+						<col width="40%">
+						<col width="20%">     
 					</colgroup>
 					<tbody>
 						<tr>
