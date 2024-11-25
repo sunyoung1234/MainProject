@@ -1,5 +1,7 @@
 package com.proj.main.result.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.proj.main.member.dto.MyBuildingDTO;
@@ -26,4 +28,10 @@ public interface IResultDAO {
 	int applyZEB(ApplyZEBDTO apply);
 	
 	String getBuildingId(MyBuildingDTO mb);
+	
+	List<ApplyZEBDTO> applyStatusById(String memId);
+	
+	List<ApplyZEBDTO> applyStatusAdmin();
+	
+	ApplyZEBDTO getApplyByBid(String buildingId);
 }

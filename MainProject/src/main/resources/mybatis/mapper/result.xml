@@ -38,14 +38,14 @@
 		    all_co2, all_primary_energy, w_heating, w_hot_water, w_cooling, 
 		    w_ventilation, w_light, w_cooking, w_appliance, w_etc, 
 		    c_heating, c_hot_water, c_cooling, c_ventilation, c_light, 
-		    c_cooking, c_appliance, c_etc
+		    c_cooking, c_appliance, c_etc, save_co2, save_wood
 		) VALUES (
 		    #{memId}, #{buildingId}, #{elecUse}, #{gasUse}, #{solarEnergyProduction},
 		    #{annualElecSave}, #{annualElecCostSave}, #{elecCost}, #{gasCost}, 
 		    #{allCo2}, #{allPrimaryEnergy}, #{wHeating}, #{wHotWater}, #{wCooling},
 		    #{wVentilation}, #{wLight}, #{wCooking}, #{wAppliance}, #{wEtc}, 
 		    #{cHeating}, #{cHotWater}, #{cCooling}, #{cVentilation}, #{cLight}, 
-		    #{cCooking}, #{cAppliance}, #{cEtc}
+		    #{cCooking}, #{cAppliance}, #{cEtc}, #{saveCo2}, #{saveWood}
 		)
 	
 	</insert>
@@ -97,11 +97,24 @@
 	
 	<insert id="applyZEB" parameterType="com.proj.main.result.dto.ApplyZEBDTO">
 		INSERT INTO APPLY_ZEB(
-			mem_id, building_id, file_name, appliance_org, apply_date, approve_yn
+			mem_id, building_id, building_name, file_name, appliance_org, apply_date, approve_yn, reject_yn, zeb_level
 		)VALUES(
-			#{memId}, #{buildingId}, #{fileName}, #{applianceOrg}, #{applyDate}, 'N'
+			#{memId}, #{buildingId}, #{buildingName}, #{fileName}, #{applianceOrg}, #{applyDate}, 'N' , 'N', '0'
 		)
 	</insert>
+	
+	<select id="applyStatusById" parameterType="String" resultType="com.proj.main.result.dto.ApplyZEBDTO">
+		SELECT * FROM APPLY_ZEB WHERE 1=1 AND mem_id = #{memId}
+	</select>
+	
+	<select id="applyStatusAdmin" resultType="com.proj.main.result.dto.ApplyZEBDTO">
+		SELECT * FROM APPLY_ZEB
+	</select>
+	
+	<select id="getApplyByBid" parameterType="String" resultType="com.proj.main.result.dto.ApplyZEBDTO">
+		SELECT * FROM APPLY_ZEB WHERE building_id = #{buildingId}
+	</select>
+	
 	
 	<select id="getBuildingId" parameterType="com.proj.main.member.dto.MyBuildingDTO" resultType="String">
 		SELECT building_id FROM my_building WHERE 1=1 AND mem_id = #{memId} AND building_name = #{buildingName}

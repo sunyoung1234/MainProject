@@ -155,7 +155,7 @@ public class resultController {
 			}else {
 				energyUsed.setAnnualElecSave("0");
 			}
-			
+			System.out.println(energyUsed);
 			rs.insertEnergyResult(energyResult);
 			rs.insertEnergyUsed(energyUsed);
 			
