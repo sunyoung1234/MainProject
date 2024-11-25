@@ -195,6 +195,22 @@
     transition: background-color 0.3s ease;
 }
 
+.delete-room-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 12px;
+    background-color: red;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.delete-room-btn:hover {
+    background-color: darkred;  /* 마우스를 올렸을 때 색상 변경 */
+}
+
 .view-room-btn:hover {
     background-color: #357ab7;
 }
@@ -348,7 +364,8 @@ function getRoomList() {
                                 '<span class="room-owner">방장: ' + memName + '</span>' +
                             '</div>' +
                             '<a href="' + contextPath + '/chatView?roomNo=' + room.roomNo + '" class="view-room-btn">채팅방 보기</a>' +
-                            '<button class="delete-room-btn" data-room-no="' + room.roomNo + '">삭제</button>' +  // 삭제 버튼 추가
+                            // 삭제 버튼을 <a> 태그로 변경
+                            '<a href="#" class="delete-room-btn" data-room-no="' + room.roomNo + '">삭제</a>' + 
                         '</div>' +
                     '</div>';
                 });
@@ -368,8 +385,11 @@ function getRoomList() {
         }
     });
 }
+
     // 채팅방 삭제 요청
-$(document).on("click", ".delete-room-btn", function () {
+$(document).on("click", ".delete-room-btn", function (event) {
+    event.preventDefault();  // 기본 동작인 링크 이동을 방지
+
     var roomNo = $(this).data("room-no");  // 삭제할 채팅방 번호 가져오기
     
     if (confirm("정말 이 채팅방을 삭제하시겠습니까?")) {
@@ -392,6 +412,7 @@ $(document).on("click", ".delete-room-btn", function () {
         });
     }
 });
+
 
     // 메뉴 이벤트 처리
     $(document).on("click", ".menu-btn", function () {
@@ -427,6 +448,35 @@ $(document).on("click", ".delete-room-btn", function () {
 
     // 초기 메뉴 표시
     displayMainMenu();
+});
+</script>
+
+<script>
+$(document).on("click", ".connect-agent", function () {
+    var memName = "${sessionScope.login.memName}";  // 로그인된 사용자의 이름
+    var roomName = memName + "의 상담방";  // 방 제목 (사용자 이름으로 설정)
+
+    // AJAX로 채팅방 생성 요청
+    $.ajax({
+        url: contextPath + "/createRoom",  // 채팅방 생성 API
+        method: "POST",
+        data: {
+            roomName: roomName,
+            memName: memName
+        },
+        success: function (response) {
+            if (response && response.roomNo) {
+                var roomNo = response.roomNo;  // 생성된 방 번호
+                // 채팅방 생성 후 해당 방으로 이동
+                window.location.href = contextPath + "/chatView?roomNo=" + roomNo;
+            } else {
+                alert("채팅방 생성에 실패했습니다.");
+            }
+        },
+        error: function () {
+            alert("채팅방 생성 요청에 실패했습니다.");
+        }
+    });
 });
 </script>
 </body>

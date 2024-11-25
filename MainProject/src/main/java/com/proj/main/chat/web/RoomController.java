@@ -1,6 +1,8 @@
 package com.proj.main.chat.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -46,22 +48,13 @@ public class RoomController {
     }
     
     // 채팅방 생성
-    @RequestMapping("/roomCreateDo")
-    public String roomCreateDo(RoomDTO room, HttpSession session) {
-        System.out.println(room);
-        
-        MemberDTO login = (MemberDTO)session.getAttribute("login");
-        
-        if (login == null) {
-            return "redirect:/loginView";
-        }
-        
-        room.setMemId(login.getMemId());
-        room.setMemName(login.getMemName());
-        
-        roomService.createRoom(room);  // 채팅방 생성 서비스 호출
-        
-        return "redirect:/chatbot";  // 채팅방 목록을 보여주는 화면으로 리다이렉션
+    @RequestMapping("/createRoom")
+    @ResponseBody
+    public Map<String, Object> createRoom(@RequestParam String roomName, @RequestParam String memName) {
+        int roomNo = roomService.createRoom(roomName, memName);  // RoomService 호출하여 방 생성
+        Map<String, Object> response = new HashMap<>();
+        response.put("roomNo", roomNo);  // 생성된 방 번호 반환
+        return response;
     }
     
     // 채팅방 삭제 요청 처리
