@@ -174,7 +174,8 @@
 		}
 		 #download-pdf {
 		    margin-top: 70px;  /* 아래로 20px 이동 */  
-		    margin-left: 200px; /* 오른쪽으로 50px 이동 */  
+		    margin-left: 200px; /* 오른쪽으로 50px 이동 */ 
+		    width: 300px; 
 		    padding: 10px 20px; /* 버튼 크기 조정 */
 		    background-color: #4CAF50; /* 버튼 배경색 */
 		    color: white; /* 텍스트 색상 */
@@ -328,13 +329,13 @@
                         </tr>
                         <tr>
                             <td class="tg-baqh sub-main-color-css">난방효율</td>
-                            <td class="tg-baqh">%</td>
+                            <td class="tg-baqh">${e_result.heatEff * 100 }%</td>
                             <td class="tg-baqh sub-main-color-css">냉방효율</td>
-                            <td class="tg-baqh">%</td>
+                            <td class="tg-baqh">${e_result.coolEff * 100 }%</td>
                         </tr>
                         <tr>
                             <td class="tg-baqh sub-main-color-css">습도회수율</td>
-                            <td class="tg-baqh">%</td>
+                            <td class="tg-baqh">${e_result.humidityRec * 100 }%</td>
                             <td class="tg-baqh sub-main-color-css">전력(Wh/㎥)</td>
                             <td class="tg-baqh">${e_result.powerCons}</td>
                         </tr>
@@ -362,7 +363,16 @@
                         </tr>
                         <tr>
                             <th class="tg-baqh sub-main-color-css">태양광</th>
-                            <th class="tg-baqh wider">출력 : ${userB.solarPanelKW} kWdc, 전력생산 의존률 : 100 %	 </th>
+                            <th class="tg-baqh wider">출력 : ${userB.solarPanelKW} kWdc, <br>
+                            	<c:choose>
+							        <c:when test="${(e_used.solarEnergyProduction / e_used.elecUse) * 100 > 100}">
+							            전체 전력소비량의 <br>100%
+							        </c:when>
+							        <c:otherwise>
+							            전체 전력소비량의 <br>${Math.round((e_used.solarEnergyProduction / e_used.elecUse) * 100)}%
+							        </c:otherwise>
+							    </c:choose>	 
+                            </th>
                         </tr>
                     </thead>
                 </table>
@@ -370,11 +380,12 @@
                 <div class="energy-summary">
 				    <canvas id="doughnutChart3" width="200" height="200"></canvas>
 				    <div class="summary-text">
-				        <p><strong style="color: orange; font-size: 2em;">전기요금 절감 93%</strong></p>
-				        <p>연간 CO<sub>2</sub> 절감: <strong> Ton</strong></p>
-				        <p>소나무 대체효과: <strong> 그루</strong></p>
-				        <p>태양광 적용전: <strong> 원/yr</strong></p>
-				        <p>태양광 적용후: <strong> 원/yr</strong></p>
+				        <p><strong style="color: orange; font-size: 2em;">전기요금 절감 ${ Math.round((e_used.annualElecCostSave / (e_used.annualElecCostSave + e_used.elecCost ) ) * 100)}%</strong></p>
+				        <p id="savePercent" style="display:none;">${ Math.round((e_used.annualElecCostSave / (e_used.annualElecCostSave + e_used.elecCost ) ) * 100)}</p>
+				        <p>연간 CO<sub>2</sub> 절감: <strong>${e_used.saveCo2 } Ton</strong></p>
+				        <p>소나무 대체효과: <strong>${e_used.saveWood } 그루</strong></p>
+				        <p>태양광 적용전: <strong> ${e_used.annualElecCostSave + e_used.elecCost }원/yr</strong></p>
+				        <p>태양광 적용후: <strong> ${e_used.elecCost }원/yr</strong></p>
 				    </div>
 				</div>
                 
@@ -470,66 +481,66 @@
 				        <tbody>
 				            <tr>
 				                <td>난방</td>
-				                <td></td>
-				                <td>%</td>
-				                <td></td>
-				                <td>%</td>
+				                <td class="w-used">${e_used.wHeating }</td>
+				                <td class="w-ratio">%</td>
+				                <td class="cost-used">${e_used.cHeating }</td>
+				                <td class="c-ratio">%</td>
 				            </tr>
 				            <tr>
 				                <td>온수</td>
-				                <td></td>
-				                <td>%</td>
-				                <td></td>
-				                <td>%</td>
+				                <td class="w-used">${e_used.wHotWater }</td>
+				                <td class="w-ratio" >%</td>
+				                <td class="cost-used">${e_used.cHotWater }</td>
+				                <td class="c-ratio">%</td>
 				            </tr>
 				            <tr>
 				                <td>냉방</td>
-				                <td></td>
-				                <td>%</td>
-				                <td></td>
-				                <td>%</td>
+				                <td class="w-used">${e_used.wCooling }</td>
+				                <td class="w-ratio">%</td>
+				                <td class="cost-used">${e_used.cCooling }</td>
+				                <td class="c-ratio">%</td>
 				            </tr>
 				            <tr>
 				                <td>환기</td>
-				                <td></td>
-				                <td>%</td>
-				                <td></td>
-				                <td>%</td>
+				                <td class="w-used">${e_used.wVentilation }</td>
+				                <td class="w-ratio">%</td>
+				                <td class="cost-used">${e_used.cVentilation }</td>
+				                <td class="c-ratio">%</td>
 				            </tr>
 				            <tr>
 				                <td>조명</td>
-				                <td></td>
-				                <td>%</td>
-				                <td></td>
-				                <td>%</td>
+				                <td class="w-used">${e_used.wLight }</td>
+				                <td class="w-ratio">%</td>
+				                <td class="cost-used">${e_used.cLight }</td>
+				                <td class="c-ratio">%</td>
 				            </tr>
 				            <tr>
 				                <td>조리</td>
-				                <td></td>
-				                <td>%</td>
-				                <td></td>
-				                <td>%</td>
+				                <td class="w-used">${e_used.wCooking }</td>
+				                <td class="w-ratio">%</td>
+				                <td class="cost-used">${e_used.cCooking }</td>
+				                <td class="c-ratio">%</td>
 				            </tr>
 				            <tr>
 				                <td>가전</td>
-				                <td></td>
-				                <td>%</td>
-				                <td></td>
-				                <td>%</td>
+				                <td class="w-used">${e_used.wAppliance }</td>
+				                <td class="w-ratio">%</td>
+				                <td class="cost-used">${e_used.cAppliance }</td>
+				                <td class="c-ratio">%</td>
 				            </tr>
 				            <tr>
 				                <td>기타</td>
-				                <td></td>
-				                <td>%</td>
-				                <td></td>
-				                <td>%</td>
+				                <td class="w-used">${e_used.wEtc }</td>
+				                <td class="w-ratio">%</td>
+				                <td class="cost-used">${e_used.cEtc }</td>
+				                <td class="c-ratio">%</td>
 				            </tr>
 				            <tr>
 				                <td>합 계</td>
+				                <td id="sumWh"></td>
 				                <td></td>
-				                <td></td>
-				                <td></td>
-				                <td></td>
+				                <td id="sumCost"></td>
+				                <td></td> 
 				            </tr>
 				        </tbody>
 				    </table>
@@ -539,12 +550,12 @@
                 <div class="cost-summary">
 				    <div class="cost-item">
 				        <span class="cost-label">▶▶ 연간 난방 비용</span>
-				        <span class="cost-value"></span>
+				        <span class="cost-value">${e_result.annualHeatCost }</span>
 				    </div>
 				    <hr class="cost-line">
 				    <div class="cost-item">
 				        <span class="cost-label">▶▶ 연간 총에너지 비용</span>
-				        <span class="cost-value"></span> 
+				        <span class="cost-value">${e_result.annualEnergyCost }</span> 
 				    </div>
 				    <hr class="cost-line">
 				</div>
@@ -554,11 +565,41 @@
     <%@ include file="/WEB-INF/inc/footer.jsp"%>
     <script>
     
+    
+    
+    
+      
+   	sumWandC();
+     
+    function sumWandC(){
+	    const v_sumWh = document.getElementById('sumWh');
+	    const v_sumCost = document.getElementById('sumCost');
+	    const v_wRatio = document.querySelectorAll('.w-ratio');
+	    const v_cRatio = document.querySelectorAll('.c-ratio');
+	    const v_wUsed = document.querySelectorAll('.w-used');
+	    const v_cUsed = document.querySelectorAll('.cost-used');    
+	    
+    	let sum_wh = ${e_used.wHeating + e_used.wHotWater + e_used.wCooling + e_used.wVentilation + e_used.wLight + e_used.wCooking + e_used.wAppliance + e_used.wEtc};
+    	let sum_cost = ${e_used.cHeating + e_used.cHotWater + e_used.cCooling + e_used.cVentilation + e_used.cLight + e_used.cCooking + e_used.cAppliance + e_used.cEtc};
+    	
+    	v_wRatio.forEach((wr,idx) =>{
+    		console.log(v_wUsed[idx]);
+    		wr.innerHTML = Math.round(( (v_wUsed[idx].innerHTML || 0) / sum_wh)*100) + "%"
+    	})
+    	v_cRatio.forEach((cr,idx) =>{
+    		console.log(v_cUsed[idx]);
+    		cr.innerHTML = Math.round(( (v_cUsed[idx].innerHTML || 0) / sum_cost)*100) + "%"
+    	})
+    	
+    	v_sumWh.innerHTML = sum_wh;
+    	v_sumCost.innerHTML = sum_cost;
+    }
+    
     const ctx2 = document.getElementById('doughnutChart2').getContext('2d');
 
 	 // 데이터와 레이블
 	 const labels2 = ['난방', '온수', '냉방', '환기', '조명', '조리', '가전', '기타'];
-	 const data2 = [134450, 180010, 11778, 5608, 6474, 24744, 19421, 0];
+	 const data2 = [${e_used.cHeating}, ${e_used.cHotWater}, ${e_used.cCooling}, ${e_used.cVentilation}, ${e_used.cLight}, ${e_used.cCooking}, ${e_used.cAppliance}, ${e_used.cEtc}];
 	
 	 // 도넛 차트 생성
 	 const doughnutChart2 = new Chart(ctx2, {
@@ -590,11 +631,14 @@
 	     }
 	 });
 	 
+	 	let v_save = document.querySelector('#savePercent');
+	 
 	    const ctx3 = document.getElementById('doughnutChart3').getContext('2d');
 
 	    // 데이터 설정
 	    const labels3 = ['전기요금 절감', '기타'];
-	    const data3 = [93, 7];
+	    let save = v_save.innerHTML;
+	    const data3 = [save, 100-save];
 
 	    // 차트 생성
 	    const doughnutChart3 = new Chart(ctx3, {
@@ -648,7 +692,7 @@
 	            pdf.addImage(imgData, "PNG", xOffset, yOffset, pdfWidth, pdfHeight);
 	
 	            // PDF 다운로드
-	            pdf.save("capture.pdf"); 
+	            pdf.save("ZEB_${userB.buildingName}.pdf"); 
 	        });
 	    });
 	</script> 

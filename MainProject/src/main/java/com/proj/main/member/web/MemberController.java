@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -422,6 +423,7 @@ public class MemberController {
     	
     	String bId = rs.getBuildingId(mb);
     	zeb.setBuildingId(bId);
+    	zeb.setBuildingName(bname);
     	
     	String originalFileName = attachment.getOriginalFilename();
     	String ext = "";
@@ -445,12 +447,70 @@ public class MemberController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        System.out.println(zeb);
+        
         rs.applyZEB(zeb);
     	
     	return "redirect:/myBuildingView";
     }
+    
+    @RequestMapping("/applyStatusView")
+    public String applyStatus(HttpSession session, Model model) {
+    	MemberDTO login = (MemberDTO) session.getAttribute("login");
+    	String m_id = login.getMemId();
+    	
+    	List<ApplyZEBDTO> applys = rs.applyStatusById(m_id);
+    	model.addAttribute("applys", applys);
+    	
+    	
+    	List<String> statusList = new ArrayList<>();
+    	
+    	for(ApplyZEBDTO apply : applys) {
+    		
+    		if(apply.getRejectYn().equals("Y")) {
+    			statusList.add("취소"); 
+    		}else if(apply.getApproveYn().equals("Y")) {
+    			statusList.add("완료 (" + apply.getZebLevel() + "등급)");
+    		}else {
+    			statusList.add("신청중");
+    		}
+    	}
+    	
+    	
+    	model.addAttribute("statusList", statusList);
+    	
+    	if(m_id.equals("admin")) {
+    		List<ApplyZEBDTO> applyAdmins = rs.applyStatusAdmin();
+    		model.addAttribute("applyAdmin", applyAdmins);
+    		
+    		List<String> statusAdmin = new ArrayList<>();
+    		
+    		for(ApplyZEBDTO apply : applyAdmins) {
+        		
+        		if(apply.getRejectYn().equals("Y")) {
+        			statusAdmin.add("취소"); 
+        		}else if(apply.getApproveYn().equals("Y")) {
+        			statusAdmin.add("완료 (" + apply.getZebLevel() + "등급)");
+        		}else {
+        			statusAdmin.add("신청중");
+        		}
+        	}
+    		
+    		model.addAttribute("statusAdmin", statusAdmin);
+    	}
+    	
+    	
+    	return "member/applyStatusView"; 
+    }
    
+    @RequestMapping("/applyZEBDetailView")
+    public String applyZEBDetailView(String bId, Model mo) {
+    	
+    	ApplyZEBDTO apply = rs.getApplyByBid(bId);
+    	
+    	mo.addAttribute("apply", apply);
+    	
+        return "member/applyZEBDetailView";
+    }
 
 
 }

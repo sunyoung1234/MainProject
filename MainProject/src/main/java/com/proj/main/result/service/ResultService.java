@@ -1,5 +1,7 @@
 package com.proj.main.result.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,5 +57,17 @@ public class ResultService {
 	public String getBuildingId(MyBuildingDTO mb) {
 		return dao.getBuildingId(mb);
 	}
+	
+	public List<ApplyZEBDTO> applyStatusById(String memId){
+		return dao.applyStatusById(memId);
+	};
+	
+	public List<ApplyZEBDTO> applyStatusAdmin(){
+		return dao.applyStatusAdmin();
+	}
+	
+	public ApplyZEBDTO getApplyByBid(String buildingId) {
+		return dao.getApplyByBid(buildingId);
+	};
 	
 }

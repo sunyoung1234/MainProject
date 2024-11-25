@@ -23,7 +23,9 @@
             display: flex;
             flex-wrap: wrap;
             gap: 20px;
-            justify-content: center;
+            justify-content: space-between;
+            margin-left: 30px;
+            margin-right: 30px;   
         }
         .building-card {
             background: #fff;
@@ -33,6 +35,7 @@
             width: 350px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 30px;
         }
         .building-card:hover {
             transform: translateY(-5px);
@@ -475,9 +478,9 @@
 		</div>
         
     </div>
-    <button class="floating-btn" onclick="location.href='registerBuildingPage'">+</button>
+    <button class="floating-btn" onclick="location.href='registMyBuildingView'">+</button>
     <div class="msg-box">다른 건물 추가 등록하기</div>
-    <form id="submitForm" style="display: none;" action="${pageContext.request.contextPath }//submitBuildingInfo" method="post" onsubmit="showLoading()">
+    <form id="submitForm" style="display: none;" action="${pageContext.request.contextPath }/submitBuildingInfo" method="post" onsubmit="showLoading()">
 		<!-- 건물명 입력 -->
 		<input type="text" id="buildingName" name="buildingName" required><br><br>
 		<input type="text" id="buildingAddr" name="buildingAddr"><br><br>
