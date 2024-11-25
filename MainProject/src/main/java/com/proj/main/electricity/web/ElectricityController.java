@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -24,8 +25,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.proj.main.buildingElec.dto.BuildingDTO;
+import com.proj.main.buildingElec.service.BuildingService;
 import com.proj.main.electricity.dto.ElectricityDTO;
 import com.proj.main.electricity.service.ElectricityService;
 import com.proj.main.member.dto.MemBuildingElecDTO;
@@ -41,6 +45,9 @@ public class ElectricityController {
 	
 	@Autowired
 	MemberService memberService;
+	
+	@Autowired
+	BuildingService buildingService;
 	
 	@RequestMapping("/ocrView")
     public String ocrTest(HttpSession session, Model model, ElectricityDTO electricity) {
@@ -184,12 +191,23 @@ public class ElectricityController {
         
         String memId = login.getMemId();
         
+        MemberDTO member1 = memberService.getMemAddress(memId);
+        
+        model.addAttribute("member1",member1);
+        
         List<MemBuildingElecDTO> buildingList = memberService.getMemBuildingElec(memId);
         
         List<String> use = electricityService.getPredUse(memId);
 		
 		model.addAttribute("predUseData", use);
+		
+		System.out.println(buildingList);
+		
+		if(buildingList.size() == 0) {
+			return "electricityuse/electricityUseInput";
+		}
         
+		
         
         List<String> electricityUses = new ArrayList<>();
         List<String> useDates = new ArrayList<>();
@@ -312,6 +330,37 @@ public class ElectricityController {
 		
 		return "electricityuse/electricityUseView";
 	}
+	
+	@RequestMapping("/electricityUseInput")
+	public String electricityUseInput(){
+		
+		return "electricityuse/electricityUseInput";
+	}
+	
+	@RequestMapping("/saveElec")
+	public String saveElec(@RequestParam("electricityUse[]") List<String> electricityUse[], @RequestParam("months[]") List<String> months[], HttpSession session) {
+		
+		MemberDTO member = (MemberDTO)session.getAttribute("login");
+		String memAddress = member.getJibunAddress();
+		String memId = member.getMemId();
+		
+		BuildingDTO building = new BuildingDTO();
+		
+        
+        for(int i = 0; i < electricityUse.length; i++) {
+        	building.setBuildingAddress(memAddress);
+        	building.setElectricityUse(electricityUse[i].get(0));
+        	building.setUseDate(months[i].get(0));
+        	System.out.println(building);
+        	buildingService.newInsertInfo(building);
+        }
+        
+        memberService.insertBuilding(memId);
+        
+		
+		return "electricityuse/electricityUseInput";
+	}
+	
 	
 	@ResponseBody
     @RequestMapping("/uploadImage")

@@ -9,7 +9,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content />
 <meta name="author" content />
-<title>마이 페이지</title>
+<title>계량기 사진 첨부</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 <!-- Custom Google font-->
@@ -158,6 +158,23 @@
     	margin-top: 20px;
     }
     
+    .fast-link-box{
+    	margin-top: 20px;
+    	border: 1px solid yellow;
+    	width:250px;
+    	text-align: center;
+    	background-color: yellow;
+    	
+    }
+    
+    .fast-link{
+    	text-decoration: none;
+    	color : black;
+    	
+    	
+    	
+    }
+    
 </style>
 
 </head>
@@ -226,6 +243,9 @@
 				
 			</div>
 			<button class="finalBox" type="submit" disabled>최종 확인</button>
+			<div class="fast-link-box">
+				<a class="fast-link" href="${pageContext.request.contextPath }/electricityUseView">전기 사용량 및 예측값 보러가기</a>
+			</div>
 		</div>
 	</div>
 	

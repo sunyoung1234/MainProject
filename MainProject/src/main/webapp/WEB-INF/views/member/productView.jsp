@@ -8,7 +8,7 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 <meta name="description" content />
 <meta name="author" content />
-<title>마이 페이지</title>
+<title>에너지 효율 제품</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
 <!-- Custom Google font-->
@@ -26,15 +26,13 @@
 <style type="text/css">
 	
 	.main-height{
-		height:1100px;
 		width:1300px;
-		border: 1px solid black;
 		margin: auto;
 		margin-top:50px;
-		margin-bottom: 50px;
+		margin-bottom: 200px;
 	}
 	
-	.product-division{
+	.product-division{ 
 		display: flex;
 
 		margin-top: 70px;
@@ -117,6 +115,98 @@
 		text-decoration:none;
 		color:black;
 	}
+	
+	/* 기본 스타일 */
+	.energy-efficiency-comparison {
+	    max-width: 1100px;
+	    margin: 0 auto;
+	    padding: 20px;
+	    border-radius: 12px;
+	    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	   	margin-top:50px;
+	}
+	
+	.energy-efficiency-comparison h2 { 
+	    text-align: center;
+	    font-size: 28px;
+	    font-weight: 600;
+	    color: #333;
+	    margin-bottom: 20px;
+	}
+	
+	/* 비교 항목을 담은 컨테이너 */
+	.comparison-container {
+	    display: flex;
+	    justify-content: space-between;
+	    align-items: center;
+	    gap: 30px;
+	}
+	
+	/* 각 항목 (1등급, 3등급, 5등급) */
+	.comparison-item {
+	    width: 30%;
+	    text-align: center;
+	    border-radius: 8px;
+	    padding: 20px;
+	    background: linear-gradient(135deg, rgba(0, 204, 255, 0.1), rgba(255, 255, 255, 0.6));
+	    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	    transition: transform 0.3s ease;
+	}
+	
+	.comparison-item:hover {
+	    transform: scale(1.05);
+	}
+	
+	/* 헤더 스타일 (1등급, 3등급, 5등급) */
+	.comparison-header {
+	    font-size: 22px;
+	    font-weight: bold;
+	    color: #333;
+	    margin-bottom: 15px;
+	    padding: 10px 20px;
+	    border-radius: 8px;
+	    background: #04b89f;
+	    color: white;
+	}
+	
+	/* 본문 스타일 */
+	.comparison-body {
+	    font-size: 16px;
+	    color: #333;
+	}
+	
+	.comparison-body p {
+	    margin: 5px 0; 
+	}
+	
+	/* VS 구분자 */
+	.vs-divider {
+	    font-size: 32px;
+	    font-weight: bold;
+	    color: #333;
+	    text-transform: uppercase;
+	    padding: 10px 20px;
+	    border-radius: 10px;
+	    width: 70px;
+	    text-align: center;
+	}
+	
+	/* 모바일 및 작은 화면을 위한 반응형 */
+	@media (max-width: 768px) {
+	    .comparison-container {
+	        flex-direction: column;
+	        align-items: center;
+	    }
+	    .comparison-item {
+	        width: 80%;
+	        margin-bottom: 20px;
+	    }
+	    .vs-divider {
+	        margin: 20px 0;
+	    }
+	}
+
+
 
 
 </style>
@@ -134,6 +224,41 @@
 			<div class="product-division2">설비</div>
 			<div class="product-division3">신재생 에너지</div>
 		</div>
+		
+		<div class="energy-efficiency-comparison">
+	    <h2>에너지 효율 등급 비교 : 전기냉장고(830L)</h2>
+		    <div class="comparison-container">
+		        <div class="comparison-item vs-item">
+		            <div class="comparison-header">1등급</div>
+		            <div class="comparison-body">
+		                <p>연간소비전력량 (kWh): 369.8</p>
+		                <p class="cost">연간에너지비용 (원): 59,000</p> <!-- 강조된 비용 -->
+		            </div>
+		        </div>
+		        <div class="vs-divider">VS</div>
+		        <div class="comparison-item vs-item">
+		            <div class="comparison-header">3등급</div>
+		            <div class="comparison-body">
+		                <p>연간소비전력량 (kWh): 449</p>
+		                <p class="cost">연간에너지비용 (원): 72,000</p>
+		            </div>
+		        </div>
+		        <div class="vs-divider">VS</div>
+		        <div class="comparison-item vs-item highlighted">
+		            <div class="comparison-header">5등급</div>
+		            <div class="comparison-body">
+		                <p>연간소비전력량 (kWh): 588.4</p>
+		                <p class="cost highlight-cost">연간에너지비용 (원): 94,000</p> <!-- 강조된 비용 -->
+		            </div>
+		        </div>
+		    </div>
+		</div>
+
+
+		
+		
+		
+		 	
 		<div class="product-list">
 			<div class="product-box">
 				<div class="product-img">
@@ -154,7 +279,9 @@
 					</a>
 				</div>
 				<div class="product-name">
-					김치냉장고
+					<a class="product-name-a" href="${pageContext.request.contextPath }/productDetailView?productCategory=전기냉장고">
+						김치냉장고
+					</a>
 				</div>
 			</div>
 			<div class="product-box">
@@ -164,7 +291,9 @@
 					</a>
 				</div>
 				<div class="product-name">
-					전기세탁기(일반)
+					<a class="product-name-a" href="${pageContext.request.contextPath }/productDetailView?productCategory=전기냉장고">
+						전기세탁기(일반)
+					</a>
 				</div>
 			</div>
 		</div>
@@ -176,7 +305,9 @@
 					</a>
 				</div>
 				<div class="product-name">
-					전기세탁기(드럼)
+					<a class="product-name-a" href="${pageContext.request.contextPath }/productDetailView?productCategory=전기세탁기(드럼)">
+						전기세탁기(드럼)
+					</a>
 				</div>
 			</div>
 			<div class="product-box">
@@ -186,7 +317,9 @@
 					</a>
 				</div>
 				<div class="product-name">
-					제습기
+					<a class="product-name-a" href="${pageContext.request.contextPath }/productDetailView?productCategory=제습기">
+						제습기
+					</a>
 				</div>
 			</div>
 			<div class="product-box">
@@ -194,9 +327,11 @@
 					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=의류건조기">
 						<img src="https://eep.energy.or.kr/images/item/h_51.png">
 					</a>
-				</div>	
+				</div>
 				<div class="product-name">
-					의류건조기
+					<a class="product-name-a" href="${pageContext.request.contextPath }/productDetailView?productCategory=의류건조기">
+						의류건조기
+					</a>
 				</div>
 			</div>
 		</div>
