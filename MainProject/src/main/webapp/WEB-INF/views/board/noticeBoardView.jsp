@@ -52,6 +52,9 @@
 <body class="d-flex flex-column">
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
 
+<!-- 상세 메뉴 바 -->
+<%@ include file="/WEB-INF/inc/subnavbarBoard.jsp"%>
+
 	<main class="flex-shrink-0">
 		<section class="py-5">
 			<div class="container px-5">
