@@ -216,7 +216,7 @@
 	<%@ include file="/WEB-INF/inc/top.jsp" %>
     <div id="capture-div" class="container1">  
         <h1>에너지 결과 페이지</h1>
-        <h5>주소 : 미래융합교육원</h5>
+        <h5>건물명 : ${userB.buildingName }</h5>
         <div class="content">
             <div class="left-section">
                 <!-- 왼쪽 구역 내용 -->
@@ -458,7 +458,7 @@
                         </tr>
                         <tr>
                             <td class="tg-baqh main-color-css">검토결과</td>   
-                            <td class="tg-sh4c sub-main-color-css" colspan="3">☞ 에너지 효율등급 기준에 의한 등급 : </td>
+                            <td class="tg-sh4c sub-main-color-css" colspan="3">☞ 에너지 효율등급 기준에 의한 등급 : ${e_result.energyGrade }</td>
                         </tr>
                     </tbody>
                 </table>
