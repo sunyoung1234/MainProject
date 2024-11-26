@@ -31,12 +31,12 @@
     .main-height{
         height: 900px;
         width: 1300px;
-        border: 1px solid black;
         margin: auto;
         margin-top: 50px;
         margin-bottom: 50px;
-        
-        display: flex;
+        display: flex; 
+         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+	    border-radius: 8px; /* 테이블 둥근 모서리 */
     }
     
     .ocr-box{
@@ -45,9 +45,12 @@
     }
     
     .ocr-title{
-    	margin-bottom:20px;
-    	font-weight:bold;
-    	font-size:20px;
+    	font-size: 24px;
+	    color: #333;
+	    margin-bottom: 20px;
+	    border-bottom: 2px solid #04b89f;
+	    padding-bottom: 10px;
+	    font-weight: bold;
     	
     }
     
@@ -57,8 +60,8 @@
     
     .ocr-button-box{
     	display: flex;
-    	margin-top:50px;
-    }
+    	margin-top:20px;
+    } 
     
     
 
@@ -66,7 +69,7 @@
         text-align: center;
         margin-top: 20px;
         overflow: hidden;
-        width:300px;
+        width:90%;
         height:200px;
     }
     
@@ -74,7 +77,7 @@
         text-align: center;
         margin-top: 20px;
         overflow: hidden;
-        width:190px;
+        width:200px;
         height:150px;
     }
 
@@ -98,20 +101,40 @@
     }
     
     
-    .ocr-content{
-    	margin-left:200px;
-    	margin-top: 100px;
-    	width:500px;
-    	height:500px;
-    }
-    
-    .ocr-table{
-    	border-collapse: separate;
-   		border-spacing: 30px 70px;
-   		width: 100%;
-	    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
-	    border-radius: 8px; /* 테이블 둥근 모서리 */
-    }
+    .ocr-content {
+    	flex: 1.5;
+    	margin-left: 150px;
+    	margin-top: 120px;  
+	}
+	
+	.ocr-content table {
+	    width: 95%; 
+	    border-collapse: collapse;
+	    margin-top: 30px;
+	    background: #fafafa;
+	    border-radius: 12px;
+	    overflow: hidden;
+	}
+	
+	.ocr-content th,
+	.ocr-content td {
+	    padding: 20px;
+	    text-align: center;
+	    font-size: 16px; 
+	    border-bottom: 1px solid #ddd;
+	}
+	
+	.ocr-content th {
+	    background: #04b89f;
+	    color: white;
+	    font-weight: bold;
+	    font-size: 18px;
+	}
+	
+	.ocr-content td:last-child {
+	    font-weight: bold;
+	    color: #333;
+	}
     
     
     #uploadImg{
@@ -122,7 +145,7 @@
     }
     
     .ocr-text{
-    	width:350px;
+    	width:385px;
     
     }
     
@@ -140,11 +163,12 @@
     }
     
     .finalBox{
-    	margin-top:150px;
+    	margin-top:30px;
     }
     
     .resultText{
-    	margin-top:100px;
+    	margin-top:20px;
+    	margin-bottom: 20px; 
     }
     
     .finalBox{
@@ -160,19 +184,29 @@
     
     .fast-link-box{
     	margin-top: 20px;
-    	border: 1px solid yellow;
     	width:250px;
     	text-align: center;
-    	background-color: yellow;
+    	background-color: #04b89f;
+    	border-radius: 5px;
     	
     }
     
     .fast-link{
     	text-decoration: none;
-    	color : black;
-    	
-    	
-    	
+    	color : white;
+    }
+    
+    .myChart-box{
+    	margin-top: 70px;
+    	width:95%;
+    }
+    
+    .explain{
+    	margin-top: 15px;
+    }
+    
+    .title-explain{
+    	font-size: 12px; 
     }
     
 </style>
@@ -181,16 +215,20 @@
 <body class="d-flex flex-column">
 
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
-
+	
 	<div class="main-height">
 		<div class="ocr-box">
-			<div class="ocr-title">계량기 사진 첨부</div>
+			<div class="ocr-title">계량기 사진 첨부 <br><span class="title-explain">※ 예측값이 안 나올 시 우측 하단 버튼 클릭하여 예측값을 불러와주시기 바랍니다.</span></div>
 			<div>
 				<div class="inputBox">
 					<input id="inputImg" type="file" accept="image/*">
 				</div>
 				<div class="img-container">
-					<img id="showImg" alt="숫자 부분만 잘라 저장해주세요">
+					<img id="showImg" alt="숫자 부분만 잘라 저장해주세요" src="https://cdn-icons-png.flaticon.com/512/4481/4481168.png">
+				</div>
+				<div class="explain">
+					<span>※ 사진 내 박스를 조정하여 숫자만 잘라주시기 바랍니다.</span>
+					<span><br>※ 사진 내 마우스 휠로 사진의 크기를 조정할 수 있습니다.</span>
 				</div>
 			</div>
 			<div class="saveCroppedBox">
@@ -207,7 +245,7 @@
 			</div>
 			<div class="ocr-button-box">
 				<div class="ocr-text">
-					입력값이 맞다면 버튼 클릭 아니면 다시 전송
+					입력값이 맞다면 확인 클릭 아니면 다시 전송해주세요
 				</div>
 				<div class="checkBox"><button id="checkBtn">확인</button></div>
 			</div>
@@ -239,10 +277,13 @@
 					</tr>
 				</tbody>
 			</table>
+			<div class="myChart-box">
+				<canvas id="myChart"></canvas>
+			</div>
 			<div class="resultText">
 				
 			</div>
-			<button class="finalBox" type="submit" disabled>최종 확인</button>
+			<button class="finalBox" type="submit" disabled>데이터 전송</button>
 			<div class="fast-link-box">
 				<a class="fast-link" href="${pageContext.request.contextPath }/electricityUseView">전기 사용량 및 예측값 보러가기</a>
 			</div>
@@ -355,6 +396,7 @@
         let v_predictDate
         let v_predictDateGas
         let v_elecDate = '${elecDate}';
+        console.log(v_elecDate)
 	     if (!v_elecDate) {
 	         v_predictDate = '${predictDate}';  // 서버에서 전달된 예측값
 	         v_predictDate = parseFloat(v_predictDate);  // 숫자로 변환
@@ -384,6 +426,9 @@
                  }else{
                  	document.querySelector('.resultText').innerHTML =  month + '월 예측값 ' + Math.round(v_predictDate*100) / 100 + ' 보다 적게 사용하였습니다.'    
                  }
+             	
+             	myChart['data']['datasets'][0]['data'] = [v_monthLast, v_elecUse]
+             	myChart.update()
              })
 	     }else{
 	    	 
@@ -436,7 +481,62 @@
         })
         
         
+        let v_monthLast = '${electricityUse.getElectricityUse()} '
+        console.log(v_monthLast)
+        	
+        let ctx = document.getElementById("myChart")
         
+        let myChart = new Chart(ctx,{
+        	type:'line',
+        	data:{
+        		labels:[lastMonth+'월', month+'월'],
+        		datasets:[{
+        			label:'전기 사용량',
+        			data:[v_monthLast,null],
+        			borderColor: 'rgba(75, 192, 192, 1)',  // 첫 번째 선의 색상
+    		        backgroundColor: 'rgba(75, 192, 192, 0)',  // 선만 표시 (채우지 않음)
+    		        borderWidth: 1,
+    		        fill: false
+        		},{
+        			label:'전기 사용량 예측값',
+            		data:[null,v_predictDate],
+            		borderColor: 'red',  // 첫 번째 선의 색상
+			        backgroundColor: 'rgba(75, 192, 192, 0)',  // 선만 표시 (채우지 않음)
+			        borderWidth: 1,
+			        fill: false,
+			        pointStyle: 'circle',  // 점 모양 설정 (기본값은 'circle')
+			        pointRadius: 5,  // 점 크기 조정
+			        pointBackgroundColor: 'blue',  // 점 색상 설정
+			        borderColor: 'transparent',  // 선을 숨기기 위한 설정 (선 색상 투명)
+			        fill: false  // 선을 채우지 않음
+        		}]
+        	},
+		    options: {
+		    	x: {
+		        ticks: {
+		            stepSize: 0.5 // 라벨 간격 설정
+		        }
+		    },
+		        responsive: true,
+		        plugins: {
+		          legend: {
+		            labels: {
+		              generateLabels: function(chart) {
+		                let original = Chart.defaults.plugins.legend.labels.generateLabels(chart);
+		                // '예측량 데이터2'의 범례만 점 모양으로 변경
+		                original.forEach(function(label) {
+		                  if (label.datasetIndex === 1) {
+		                    label.pointStyle = 'circle';  // 점 모양 설정
+		                    label.strokeStyle = 'blue';  // 점 테두리 색상 설정
+		                  }
+		                });
+		                return original;
+		              }
+		            }
+		          }
+		        }
+		      }
+        })
         
         
         

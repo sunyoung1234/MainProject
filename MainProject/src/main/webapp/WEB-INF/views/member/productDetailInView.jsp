@@ -121,7 +121,7 @@
 	
 	.go-link{
 		color:blue;
-		font-size:10px; 
+		font-size:4px;
 	}
 	
 	.go-link:hover{
@@ -133,7 +133,7 @@
 		height:20px;
 	}
 	
-	.text-copy:hover{
+	.text-copy:hover{ 
 		cursor: pointer;
 	}
 	
@@ -162,10 +162,10 @@
 				<div class="product-detail">제품상세정보</div>
 				<table class="table table-hover">
 					<colgroup>
-						<col width="35%">
-						<col width="15%">
-						<col width="40%">
-						<col width="20%">     
+						<col width="20%">
+						<col width="20%">
+						<col width="30%">
+						<col width="20%">        
 					</colgroup>
 					<tbody>
 						<tr>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.main.pageLog.dao.IPageLogDAO">
+	
+	<insert id="insertPageLog" parameterType="com.proj.main.pageLog.dto.PageLogDTO">
+		MERGE INTO page_log p
+		USING (SELECT #{memId} AS MEM_ID, #{pageName} AS PAGE_NAME FROM dual) new_data
+		ON (p.MEM_ID = new_data.MEM_ID AND p.PAGE_NAME = new_data.PAGE_NAME)
+		WHEN MATCHED THEN
+		    UPDATE SET p.VISIT_COUNT = p.VISIT_COUNT + 1, p.LAST_VISIT_DATE = CURRENT_TIMESTAMP
+		WHEN NOT MATCHED THEN
+		    INSERT (MEM_ID, PAGE_NAME, VISIT_COUNT, LAST_VISIT_DATE)
+		    VALUES (#{memId}, #{pageName}, 1, CURRENT_TIMESTAMP)
+	</insert>
+	
+	<select id="selectPageLog" parameterType="com.proj.main.pageLog.dto.PageLogDTO" resultType="com.proj.main.pageLog.dto.PageLogDTO">
+		SELECT 
+		    MEM_ID,
+		    PAGE_NAME,
+		    VISIT_COUNT,
+		    TO_CHAR(LAST_VISIT_DATE, 'YYYY-MM-DD HH24:MI:SS') AS LAST_VISIT_DATE
+		FROM page_log
+		WHERE MEM_ID = #{memId}
+	</select>
+	
+	<select id="allSelectPageLog" resultType="com.proj.main.pageLog.dto.PageLogDTO">
+		SELECT
+		    PAGE_NAME,
+		    sum(VISIT_COUNT) as visit_count
+		FROM page_log
+		group by page_name
+	</select>
+	
+	<select id="memIdSelectPageLog" resultType="com.proj.main.pageLog.dto.PageLogDTO">
+		SELECT 
+		   Distinct(MEM_ID)
+		FROM page_log
+	</select>
+	
+	<select id="distinctpageName" resultType="com.proj.main.pageLog.dto.PageLogDTO">
+		SELECT 
+		    distinct(page_name)
+		FROM page_log
+	</select>
+	
+	<select id="pageNameSelectPageLog" parameterType="String" resultType="com.proj.main.pageLog.dto.PageLogDTO">
+		SELECT 
+		    mem_id,
+		    visit_count
+		FROM page_log
+		where page_name = #{pageName}
+	</select>
+
+</mapper>
