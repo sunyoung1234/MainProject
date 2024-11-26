@@ -15,49 +15,53 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
 
 
-@Configuration  // 다른 context 파일처럼 서버 기동시 자동으로 로드됨
+@Configuration  // 서버가 기동할 때 자동 로드
 @EnableWebSocketMessageBroker
-public class WebSocketConfig implements WebSocketMessageBrokerConfigurer{
+public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-    	
-    	// /subscribe로 시작하는 "destination" 헤더를 가진 메세지를 브로커로 라우팅한다.
-        config.enableSimpleBroker("/subscribe");
+        // 메시지를 클라이언트로 발송할 브로커를 설정
+        config.enableSimpleBroker("/topic");  // 클라이언트가 메시지를 받는 경로 설정
         
-        // 이렇게 적어주고 /app/hello/' + roomNo 형태로 요청하면
-        // ChatLogController의 @MessageMapping("/hello/{roomNo}")가 동작
-        config.setApplicationDestinationPrefixes("/app");  
+        // 클라이언트가 서버로 요청할 경로 설정
+        config.setApplicationDestinationPrefixes("/app");  // 메시지를 서버로 보낼 때 경로 접두사
     }
     
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-    	// WebSocket 또는 SockJS Client가 웹소켓 핸드셰이크 커넥션을 생성할 경로
-        registry.addEndpoint("/endpoint").withSockJS();
+        // 클라이언트가 연결할 WebSocket 엔드포인트를 설정
+        registry.addEndpoint("/endpoint").withSockJS();  // `/endpoint`로 WebSocket 연결
     }
 
-	@Override
-	public void configureWebSocketTransport(WebSocketTransportRegistration registry) {
-	}
+    @Override
+    public void configureWebSocketTransport(WebSocketTransportRegistration registry) {
+        // WebSocket 전송에 관련된 추가적인 설정이 필요하면 이 메소드에서 설정
+    }
 
-	@Override
-	public void configureClientInboundChannel(ChannelRegistration registration) {
-	}
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        // 클라이언트가 서버로 보내는 메시지에 대한 설정
+    }
 
-	@Override
-	public void configureClientOutboundChannel(ChannelRegistration registration) {
-	}
+    @Override
+    public void configureClientOutboundChannel(ChannelRegistration registration) {
+        // 서버에서 클라이언트로 보내는 메시지에 대한 설정
+    }
 
-	@Override
-	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-	}
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        // 메소드 인자 해결에 관련된 설정이 필요한 경우 이곳에서 설정
+    }
 
-	@Override
-	public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers) {
-	}
+    @Override
+    public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers) {
+        // 메소드 반환값 처리기 설정
+    }
 
-	@Override
-	public boolean configureMessageConverters(List<MessageConverter> messageConverters) {
-		return true;
-	}
+    @Override
+    public boolean configureMessageConverters(List<MessageConverter> messageConverters) {
+        // 메시지 컨버터 관련 설정
+        return true;
+    }
 }
