@@ -208,7 +208,7 @@
 	        </table>
 	    </div>
 	</c:if>
-    
+    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
 	
 	<%@ include file="/WEB-INF/inc/footer.jsp" %>
 	
@@ -255,6 +255,8 @@
 				forms[idx].submit();
 			})
 		})
+		
+		
 		
 		
 	</script>
