@@ -2,6 +2,8 @@ package com.proj.main.usersession.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.proj.main.usersession.dto.UserSessionDTO;
+
 @Mapper
 public interface IUserSessionDAO {
 	
@@ -14,5 +16,7 @@ public interface IUserSessionDAO {
 	
 	// 로그아웃 시간이 기록되면, 세션 지속 시간을 계산하여 SESSION_DURATION 컬럼에 업데이트
 	int updateTimeCalc(String memId);
+	
+	UserSessionDTO selectAvgDuration(String memId);
 	
 }
