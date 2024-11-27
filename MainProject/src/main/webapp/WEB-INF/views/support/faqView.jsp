@@ -90,7 +90,7 @@ $(document).ready(function () {
 <%@ include file="/WEB-INF/inc/chatbot.jsp" %>
 
 <main class="container my-5 faq-container-box">
-    <h1 class="text-center faq-header mb-5" style="margin-top: 50px; font-size: 32px;">자주 묻는 질문</h1>
+    <h1 class="text-center faq-header mb-5" style="margin-top: 30px; font-size: 32px;">자주 묻는 질문</h1>
 
     <div id="faqAccordion" style="margin-top: 100px;">
         <c:forEach var="faq" items="${faqList}">
