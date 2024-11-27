@@ -22,4 +22,9 @@ public interface IRoomDAO {
 	// 채팅방 삭제하기
 	public int deleteRoom(int roomNo);
 	
+	// memId가 members 테이블에 존재하는지 확인하는 메서드
+    public boolean checkMemIdExists(String memId);
+    
+ // memId로 채팅방을 찾는 메서드 추가
+    RoomDTO getRoomByMemId(String memId);
 }

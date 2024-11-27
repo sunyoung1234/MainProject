@@ -582,6 +582,7 @@
 			}
 			return html;
 		}
+
 		
 		// 종료 버튼 클릭 이벤트
 		document.querySelector('#endChat').addEventListener('click', function () {
@@ -621,7 +622,7 @@
 		
 		
 
-	
+
 
 		
 	</script>

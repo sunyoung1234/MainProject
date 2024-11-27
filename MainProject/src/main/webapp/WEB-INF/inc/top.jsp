@@ -227,7 +227,7 @@ body {
 			<ul class="navi-navbar-nav">
 				<li class="navi-nav-item"><a href="#" class="navi-nav-link">마이</a></li>
 				<li class="navi-nav-item"><a href="#" class="navi-nav-link">게시판</a></li>
-				<li class="navi-nav-item"><a href="#" class="navi-nav-link">지도</a></li>
+				<li class="navi-nav-item"><a href="#" class="navi-nav-link">제로에너지 건축물</a></li>
 				<li class="navi-nav-item"><a href="#" class="navi-nav-link">고객지원</a></li>
 			</ul>
 		</div>
@@ -267,22 +267,21 @@ body {
 			</div>
 			<!-- 지도 메뉴 dropdown-content -->
 			<div class="navi-dropdown-content-3 center-text">
+				<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">에너지 관련 정보</a>
 				<a href="${pageContext.request.contextPath}/inputView" class="navi-dropdown-item">제로 에너지 건축물 등급 측정</a> 
 				<a href="${pageContext.request.contextPath}/mapView" class="navi-dropdown-item">지도 상세보기</a>
-				<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">에너지 관련 정보</a>
 			</div>
 			<!-- 고객지원 메뉴 dropdown-content -->
 			<div class="navi-dropdown-content-4 center-text">
-				<a href="${pageContext.request.contextPath}/chatListView"
-					class="navi-dropdown-item">챗봇상담</a> <a href="${pageContext.request.contextPath}/faq/view"
-					class="navi-dropdown-item">자주 묻는 질문</a> <a href="#"
-					class="navi-dropdown-item">이용 가이드</a><a
-					href="${pageContext.request.contextPath}/proposal/view"
-					class="navi-dropdown-item">건의사항</a>
-
+				<a href="${pageContext.request.contextPath}/faq/view" class="navi-dropdown-item">자주 묻는 질문</a>
+				<a href="${pageContext.request.contextPath}/chatListView" class="navi-dropdown-item">챗봇상담</a> 
+				<a href="#" class="navi-dropdown-item">이용 가이드</a>
+				<a href="${pageContext.request.contextPath}/proposal/view" class="navi-dropdown-item">건의사항</a>
 			</div>
 		</div>
 	</nav>
 	<div class="overlay"></div>
+	
+	
 </body>
 </html>

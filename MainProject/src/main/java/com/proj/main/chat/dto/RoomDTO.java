@@ -39,9 +39,9 @@ public class RoomDTO {
 	public String getMemId() {
 		return memId;
 	}
-	public void setMemId(String memId) {
-		this.memId = memId;
-	}
+    public void setMemId(String memId) {
+        this.memId = (memId == null) ? "" : memId; // null일 경우 빈 문자열로 설정
+    }
 	public String getMemName() {
 		return memName;
 	}
