@@ -492,7 +492,7 @@
 
         // WebSocket 연결
         function startWebSocket(roomNo) {
-            socket = new WebSocket('ws://' + window.location.hostname + '/endpoint'); // 포트번호를 생략
+            socket = new WebSocket('${pageContext.request.contextPath}/endpoint'); // 포트번호를 생략
 
             socket.onopen = function(event) {
                 console.log("WebSocket 연결됨");
