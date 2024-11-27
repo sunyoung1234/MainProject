@@ -34,5 +34,9 @@ public class ElectricityService {
 		return result;
 	}
 	
+	public String predictUse(String memId) {
+		String result = dao.predictUse(memId);
+		return result;
+	}
 	
 }

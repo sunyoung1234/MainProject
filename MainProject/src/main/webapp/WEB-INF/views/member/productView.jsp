@@ -191,26 +191,16 @@
 	    text-align: center;
 	}
 	
-	/* 모바일 및 작은 화면을 위한 반응형 */
-	@media (max-width: 768px) {
-	    .comparison-container {
-	        flex-direction: column;
-	        align-items: center;
-	    }
-	    .comparison-item {
-	        width: 80%;
-	        margin-bottom: 20px;
-	    }
-	    .vs-divider {
-	        margin: 20px 0;
-	    }
-	}
 	
 	.text-box{
 		margin-top: 20px;
 	}
 
-
+	.red{
+		color:red;
+	}  
+	
+	
 
 </style>
 
@@ -256,8 +246,8 @@
 		        </div>
 		    </div>
 		    <div class="text-box">
-		    	<span>전기 냉장고 사용 기한 10년 기준으로 1등급 사용 시 350,000(원) 에너지 비용이 절감된다.</span>
-		    	<span><br>이것은 냉장고 하나의 기준이므로 다른 가전제품 또한 에너지 효율 등급이 높은 제품(1등급)을 사용할 시 더 많은 에너지 비용 절감을 할 수 있을 것으므로 기대된다.</span> 
+		    	<span>전기 냉장고 사용 기한 10년 기준으로 1등급 사용 시 <span class="red">350,000(원)</span> 에너지 비용이 절감된다.</span> 
+		    	<span><br>이것은 냉장고 하나의 기준이므로 다른 가전제품 또한 <span class="red">에너지 효율 등급이 높은 제품(1등급)</span>을 사용할 시 더 많은 <span class="red">에너지 비용 절감</span>을 할 수 있을 것으므로 기대된다.</span> 
 		    	<span>또한 누진세로 인해 보다 많은 전기세를 납부하고 있다면 에너지 효율 등급이 높은 제품을 선택하는 것도 방법이 될 것이다.</span>
 		    </div>
 		</div> 

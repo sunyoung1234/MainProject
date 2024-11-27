@@ -42,6 +42,13 @@
 		AND MEM_ID = #{memId}
 	</select>
 	
+	<select id="predictUse" parameterType="String" resultType="String">
+		SELECT pred_use 
+		FROM building_elec_mem 
+		WHERE use_date = TO_CHAR(SYSDATE,'YYYY-MM')
+		AND MEM_ID = #{memId}
+	</select>
+	
 
 
 
