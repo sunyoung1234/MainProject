@@ -154,7 +154,7 @@
 .chat-input {
     display: flex;
     gap: 10px;
-    margin-top: 10px;
+    margin-top: 10px; /* 채팅 종료 버튼과의 간격 */
 }
 
 .chat-input input {
@@ -175,6 +175,8 @@
     font-size: 14px;
     transition: background-color 0.3s ease;
 }
+
+
 
 .chat-input button:hover {
     background-color: #357ab7;
@@ -243,6 +245,99 @@
     background-color: #357ab7;
 }
 
+/* 채팅 종료 버튼 */
+#endChat {
+    position: relative; /* 부모 요소의 흐름에 따라 배치 */
+    margin: 10px auto; /* 위, 아래 여백 설정 및 가운데 정렬 */
+    width: 150px; /* 버튼 너비 */
+    background-color: #ff4d4d; /* 빨간색 배경 */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center; /* 텍스트 가운데 정렬 */
+}
+
+#endChat:hover {
+    background-color: #d93636; /* 더 어두운 빨간색으로 변경 */
+}
+
+
+.modal {
+    display: none; /* 기본적으로 숨김 */
+    position: absolute; /* chatRoom 내부에 고정 */
+    top: 50%; /* 세로 중앙 */
+    left: 50%; /* 가로 중앙 */
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    width: 100%; /* chatRoom 크기에 맞게 */
+    height: 100%; /* chatRoom 크기에 맞게 */
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 모달 내용 */
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    width: 280px;
+    animation: fadeIn 0.3s ease;
+}
+
+/* 버튼 스타일 */
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.confirm-btn {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-btn:hover {
+    background-color: #d93636;
+}
+
+.cancel-btn {
+    background-color: #ccc;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.cancel-btn:hover {
+    background-color: #aaa;
+}
+
+/* 모달 애니메이션 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 
 
 
@@ -265,23 +360,50 @@
 		    <div class="bot-message">
 		        <button class="menu-btn" data-menu="quick-move">페이지 빠른 이동</button>
 		        <button class="menu-btn" data-menu="faq">FAQ</button>
+		        
+		        
+		        <!-- admin -->
 		        <c:if test="${sessionScope.login != null && sessionScope.login.memId eq 'admin'}">
-		            <button class="menu-btn" data-menu="admin-chat">사용자 상담 연결</button>
+		            <button class="menu-btn" id="adminChat">사용자 상담 연결</button>
+		            <button style="display:none;" class="menu-btn" id="connectAgent">상담사 연결</button>
 		        </c:if>
+		        
+		        
+		        
+		        <!-- 사용자 -->
 		        <c:if test="${sessionScope.login != null && sessionScope.login.memId ne 'admin'}">
-		            <button class="menu-btn" data-menu="connect-agent">상담사 연결</button>
+		        	<button style="display:none;" class="menu-btn" id="adminChat">사용자 상담 연결</button>
+		            <button class="menu-btn" id="connectAgent">상담사 연결</button>
 		        </c:if>
+		        
+		        
+		        
 		    </div>
 		</div>
 		
 		<!-- 채팅방 영역 -->
 		<div class="chat-room" id="chatRoom">
 		    <div class="chat-area" id="chatArea"></div>
+	        <button id="endChat">채팅 종료</button> 
 		    <div class="chat-input">
 		        <input type="text" id="userMessage" placeholder="메시지를 입력하세요..." />
 		        <button id="sendMessage">전송</button>
 		    </div>
+		    		<!-- 종료 확인 모달 -->
+			<div id="confirmModal" class="modal">
+			    <div class="modal-content">
+			        <p>정말로 종료하시겠습니까?</p>
+			        <div class="modal-actions">
+			            <button id="confirmExit" class="confirm-btn">확인</button>
+			            <button id="cancelExit" class="cancel-btn">취소</button>
+			        </div> 
+			    </div>
+			</div>
 		</div>
+		
+
+		
+
 
 	</div>
 
@@ -299,17 +421,66 @@
 		        chatbotInterface.classList.add('show'); // 인터페이스 열기
 		    }
 		});
-	
+	 
 		// 닫기 버튼 클릭 시 인터페이스 닫기
 		document.querySelector('.close-btn').addEventListener('click', function () {
 		    const chatbotInterface = document.querySelector('.chatbot-interface');
 		    chatbotInterface.classList.remove('show');
 		});
 		
-		
+		document.querySelector('#adminChat').addEventListener('click',()=>{
+			const chatRoom = document.getElementById('chatRoom');
+		    const chatbotContent = document.querySelector('.chatbot-content');
+
+		    // 기본 챗봇 화면 숨기기
+		    chatbotContent.style.display = 'none';
+
+		    // 채팅방 표시
+		    chatRoom.style.display = 'flex';
+		    
+		    
+		    // 여기서 채팅방 리시트 보여주고 채팅방 클릭시 번호를 따와서 연결시키면 끝
+		    
+		    var roomNo = 155;
+		    var messageInput = $('#userMessage');
+			// 소켓 통신 객체 생성 (sockjs 객체에 WebSocketConfig에서 설정한 /endpoint 주소 입력)
+			var sock = new SockJS("${pageContext.request.contextPath}/endpoint");
+			// sockjs 객체로부터 stomp 객체 생성
+			client = Stomp.over(sock);
+			
+			document.querySelector('#sendMessage').addEventListener('click',()=>{
+				
+				var messageContent = document.querySelector('#userMessage').value;
+				
+				client.send('/app/hello/' + roomNo, {}, 
+				JSON.stringify({
+					chatMsg : messageContent,
+					memId : "${sessionScope.login.memId }",
+					memName : "${sessionScope.login.memName }",
+					roomNo : 155
+				}));
+				messageInput.val('');
+			})  
+			
+			
+			// 연결이 맺어지면 실행
+			client.connect({},function() {
+				// 상대방이 보낸 메세지 전달 받을 때마다 실행         
+				client.subscribe('/subscribe/chat/'+ 155, function(chat) {
+					// 받은 데이터
+					let content = JSON.parse(chat.body);
+					
+					// 받은 데이터를 그려줄 html 코드
+					let v_tag = renderList(content);
+					$("#chatArea").append(v_tag); 
+					
+				});
+	
+			});
+		})
 		
 		// 상담사 연결 버튼 클릭 이벤트
-		document.querySelector('[data-menu="connect-agent"]').addEventListener('click', function () {
+		document.querySelector('#connectAgent').addEventListener('click', function () {
 		    const chatRoom = document.getElementById('chatRoom');
 		    const chatbotContent = document.querySelector('.chatbot-content');
 
@@ -369,7 +540,6 @@
 						client.subscribe('/subscribe/chat/'+ response.roomNo, function(chat) {
 							// 받은 데이터
 							let content = JSON.parse(chat.body);
-							
 							// 받은 데이터를 그려줄 html 코드
 							let v_tag = renderList(content);
 							$("#chatArea").append(v_tag); 
@@ -412,6 +582,46 @@
 			}
 			return html;
 		}
+
+		
+		// 종료 버튼 클릭 이벤트
+		document.querySelector('#endChat').addEventListener('click', function () {
+		    const confirmModal = document.getElementById('confirmModal');
+		    confirmModal.style.display = 'flex'; // 모달 열기
+		});
+
+		// "확인" 버튼 클릭 이벤트
+		document.querySelector('#confirmExit').addEventListener('click', function () {
+		    const chatRoom = document.getElementById('chatRoom');
+		    const chatbotContent = document.querySelector('.chatbot-content');
+		    const chatArea = document.getElementById('chatArea');
+		    const confirmModal = document.getElementById('confirmModal');
+
+		    // 연결 종료
+		    if (client && client.connected) {
+		        client.disconnect(() => {
+		            console.log('Chat session disconnected.');
+		        });
+		    }
+
+		    // 채팅방 닫기 및 초기화
+		    chatRoom.style.display = 'none';
+		    chatbotContent.style.display = 'block'; // 기본 챗봇 화면 다시 표시
+		    chatArea.innerHTML = '<button id="endChat">채팅 종료</button>'; // 채팅 내용 초기화
+
+		    // 모달 닫기
+		    confirmModal.style.display = 'none';
+		});
+
+		// "취소" 버튼 클릭 이벤트
+		document.querySelector('#cancelExit').addEventListener('click', function () {
+		    const confirmModal = document.getElementById('confirmModal');
+		    confirmModal.style.display = 'none'; // 모달 닫기
+		});
+
+		
+		
+
 
 
 		

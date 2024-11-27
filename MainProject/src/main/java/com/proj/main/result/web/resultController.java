@@ -21,8 +21,12 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.proj.main.ReflectionMapper;
 import com.proj.main.member.dto.MemberDTO;
+import com.proj.main.member.dto.MyBuildingDTO;
+import com.proj.main.member.service.MemberService;
+import com.proj.main.result.dto.ApplyResultDTO;
 import com.proj.main.result.dto.EnergyResultDTO;
 import com.proj.main.result.dto.EnergyUsedDTO;
+import com.proj.main.result.dto.TestResultDTO;
 import com.proj.main.result.dto.UserBuildingDTO;
 import com.proj.main.result.service.ResultService;
 
@@ -31,6 +35,8 @@ public class resultController {
 	
 	@Autowired
 	ResultService rs;
+	@Autowired
+	MemberService ms;
 	
 	
 	@RequestMapping("/inputView")
@@ -77,9 +83,7 @@ public class resultController {
         String memId = mem.getMemId();
         String buildingName = ubd.getBuildingName();
         
-        Date date = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-        String b_id = buildingName + sdf.format(date);
+        String b_id = ubd.getBuildingId();
 
         ubd.setMemId(memId);
         ubd.setBuildingId(b_id);
@@ -87,6 +91,15 @@ public class resultController {
         session.setAttribute("bId", b_id);
         
         rs.insertUserBuilding(ubd);
+        
+        TestResultDTO tr = new TestResultDTO();
+        tr.setMemId(memId);
+        tr.setBuildingId(b_id);
+        
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+        
+        tr.setTestDate(sdf.format(date));
         
         try {
 			EnergyResultDTO energyResult = ReflectionMapper.mapJsonToDto(data, EnergyResultDTO.class);
@@ -142,13 +155,45 @@ public class resultController {
 					energyResult.setEnergyGrade("7등급");
 				}
 			}
+			tr.setEnergyGrade(energyResult.getEnergyGrade());
 			
 			EnergyUsedDTO energyUsed = ReflectionMapper.mapJsonToDto(data, EnergyUsedDTO.class);
 			energyUsed.setMemId(memId);
 			energyUsed.setBuildingId(b_id);
 			int w_energy = Integer.parseInt(energyUsed.getElecUse().replace(",",""));
+			int g_energy = Integer.parseInt(energyUsed.getGasUse().replace(",",""));
 			int s_energy = Integer.parseInt(energyUsed.getSolarEnergyProduction().replace(",",""));
-		
+			
+			int total_energy = w_energy + g_energy;
+			double ratio = (double) s_energy / total_energy * 100;
+			
+			tr.setEnergyIndependenceRate((int) Math.round(ratio) + "");
+			
+			if(tr.getEnergyGrade().equals("1+++등급") || tr.getEnergyGrade().equals("1++등급")) {
+				if(ratio>=0 && ratio<20) {
+					tr.setZebGrade(6);
+				}else if(ratio < 40) {
+					tr.setZebGrade(5);
+				}else if(ratio < 60) {
+					tr.setZebGrade(4);
+				}else if(ratio < 80) {
+					tr.setZebGrade(3);
+				}else if(ratio < 100) {
+					tr.setZebGrade(2);
+				}else {
+					tr.setZebGrade(1);
+				}
+			}else {
+				tr.setZebGrade(6);
+			}
+			
+			System.out.println(tr);
+			
+			MyBuildingDTO mybuilding = new MyBuildingDTO();
+			mybuilding.setBuildingId(tr.getBuildingId());
+			mybuilding.setZebLevel(tr.getZebGrade());
+			
+			ms.updateZebLev(mybuilding);
 			
 			if(w_energy > s_energy) {
 				energyUsed.setAnnualElecSave(energyUsed.getSolarEnergyProduction());
@@ -158,7 +203,8 @@ public class resultController {
 			System.out.println(energyUsed);
 			rs.insertEnergyResult(energyResult);
 			rs.insertEnergyUsed(energyUsed);
-			
+			rs.insertTestResult(tr);
+	        
 			
 		} catch (Exception e) { 
 			// TODO Auto-generated catch block
@@ -190,5 +236,19 @@ public class resultController {
 	    return response.getBody();
 	}
 	
+	@RequestMapping("/applyResult")
+	public String applyResult(ApplyResultDTO ar) {
+	
+		rs.applyResult(ar);
+		MyBuildingDTO mb = new MyBuildingDTO();
+		
+		mb.setBuildingId(ar.getBuildingId());
+		
+		rs.updateApplyStatus(ar.getBuildingId());
+		
+		ms.updateZebTestYn(mb);
+		
+		return "redirect:/applyStatusView";
+	}
 	
 }

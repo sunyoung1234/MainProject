@@ -5,9 +5,11 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.proj.main.member.dto.MyBuildingDTO;
+import com.proj.main.result.dto.ApplyResultDTO;
 import com.proj.main.result.dto.ApplyZEBDTO;
 import com.proj.main.result.dto.EnergyResultDTO;
 import com.proj.main.result.dto.EnergyUsedDTO;
+import com.proj.main.result.dto.TestResultDTO;
 import com.proj.main.result.dto.UserBuildingDTO;
 
 @Mapper
@@ -34,4 +36,10 @@ public interface IResultDAO {
 	List<ApplyZEBDTO> applyStatusAdmin();
 	
 	ApplyZEBDTO getApplyByBid(String buildingId);
+	
+	int insertTestResult(TestResultDTO tr);
+	
+	int applyResult(ApplyResultDTO ar);
+	
+	int updateApplyStatus(String buildingId);
 }

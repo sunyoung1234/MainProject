@@ -12,6 +12,8 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
         }
         h1 {
             text-align: center;
@@ -19,13 +21,13 @@
             padding-bottom: 30px;
             padding-top: 35px; 
         }
-        .building-list {
-            display: flex;
+        .building-list {  
+        	width: 85%; 
+            display: flex;  
             flex-wrap: wrap;
             gap: 20px;
-            justify-content: space-between;
-            margin-left: 30px;
-            margin-right: 30px;   
+            justify-content: center;
+            margin: auto;
         }
         .building-card {
             background: #fff;
@@ -85,6 +87,14 @@
             background-color: #28a745;
             color: #fff;
         }
+        .btn-blue {
+            background-color: #5b9bd5;
+            color: #fff;
+        }
+        .btn-yellow {
+            background-color: purple;
+            color: #fff;
+        }
         .btn-green:hover {
             background-color: #218838;
         }
@@ -96,51 +106,7 @@
         button:active {
             transform: translateY(0);
         }
-        .floating-btn {
-            position: fixed;
-            bottom: 100px; 
-            right: 50px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 24px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .floating-btn:hover {
-            background-color: #0056b3;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-            transform: translateY(-2px);
-        }
-        @keyframes blink {
-	    0%, 49% {
-	        opacity: 1; /* 툴팁이 보임 */
-	   	 }
-	    50%, 100% {
-	        opacity: 0; /* 툴팁이 사라짐 */  
-	   	 }
-		}
-        
-        .msg-box{ 
-            position: fixed;
-            bottom: 120px; 
-            right: 120px;
-            background-color: #333;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            opacity: 1; 
-            animation: blink 7s infinite; 
-        }
+       
         /* 모달 오버레이 */
 		.modal-overlay {
 		    position: fixed;
@@ -317,29 +283,118 @@
 	        height: 100%;
 	        background-color: rgba(0, 0, 0, 0.5);
 	        display: none;
-	        flex-direction: column;
+	        flex-direction: column; 
 	        justify-content: center;
 	        align-items: center;
 	        z-index: 1000;
 	        color: white;
 	        text-align: center;
 	    }
-	    .spinner {
-	        border: 5px solid #f3f3f3;
-	        border-top: 5px solid #3498db;
-	        border-radius: 50%;
-	        width: 50px;
-	        height: 50px;
-	        animation: spin 1s linear infinite;
-	    }
-	    @keyframes spin {
-	        0% { transform: rotate(0deg); }
-	        100% { transform: rotate(360deg); }
-	    }
-	    #loadingMessage {
-	        margin-top: 20px;
-	        font-size: 18px;
-	    }
+	    /* 로딩 바 컨테이너 */
+		.loading-bar-container {
+		    width: 65%; /* 전체 바의 너비 */
+		    height: 10px; /* 바의 높이 */
+		    background-color: #f3f3f3; /* 바 배경색 */
+		    border-radius: 5px;
+		    overflow: hidden;
+		    margin: 0 auto; /* 가운데 정렬 */ 
+		    position: relative;
+		}
+		 
+		/* 로딩 바 */
+		.loading-bar {
+		    width: 0%; /* 초기 너비 */
+		    height: 100%;
+		    background-color: #4caf50; /* 로딩 바 색상 */
+		    animation: loadingAnimation 90s linear infinite; /* 애니메이션 추가 */
+		    border-radius: 5px;
+		}
+		
+		/* 로딩 애니메이션 */
+		@keyframes loadingAnimation {
+		    0% {
+		        width: 0%;
+		    }
+		    10% {
+		        width: 10%;
+		    }
+		    20% {
+		        width: 20%;
+		    }
+		    30% {
+		        width: 30%;
+		    }
+		    40% {
+		        width: 40%;
+		    }
+		    50% {
+		        width: 50%;
+		    }
+		    60% {
+		        width: 60%;
+		    }
+		    70% { 
+		        width: 70%;
+		    }
+		    80% {
+		        width: 80%;
+		    }
+		    90% {
+		        width: 90%;
+		    }
+		    100% {
+		        width: 100%;
+		    }
+		    
+		}
+
+	    .file-upload {
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    justify-content: center;
+		    width: 100%;
+		    height: 100%;
+		    color: #555;
+		    font-size: 16px;
+		}
+		
+		.upload-label {
+		    display: flex;
+		    flex-direction: column;
+		    align-items: center;
+		    gap: 8px;
+		    cursor: pointer;
+		    color: #4A90E2;
+		    text-decoration: none;
+		    font-weight: bold;
+		}
+		
+		.upload-label:hover {
+		    color: #357ab7;
+		}
+		
+		/* 아이콘 스타일 */
+		.upload-icon {
+		    font-size: 40px;
+		}
+		
+		/* 숨겨진 파일 입력 필드 */
+		.file-input {
+		    display: none;
+		}
+		
+		.size-pinned{
+		    width: 355px; /* 크기 고정 */
+		    height: 555px; /* 크기 고정 */
+		    display: flex; 
+		    flex-direction: column;
+		    align-items: center;
+		    justify-content: center;
+		    border: 1px dashed #ccc;
+		    border-radius: 10px;
+		    background-color: #f8f9fa;
+		}
 
 
     </style>
@@ -348,8 +403,10 @@
 	<%@ include file="/WEB-INF/inc/top.jsp" %>
 	
 	<div id="loading" style="display: none;">
-	  <div class="spinner"></div>
-	  <p>데이터를 처리 중입니다. 잠시만 기다려주세요...(최대 1~2 분 소요)</p>
+	    <div class="loading-bar-container">
+	        <div class="loading-bar"></div>
+	    </div>
+	    <p>데이터를 처리 중입니다. 잠시만 기다려주세요...(최대 1~2 분 소요)</p>
 	</div>
 	
     <h1>내 건물 목록</h1>
@@ -367,26 +424,41 @@
                     <p class="building-address">${building.roadAddress}</p>
                     <p class="building-test">테스트 여부: ${building.testYn}</p>
                     <p class="building-test">ZEB 등록 여부: ${building.zebTestYn }</p>
+                    <c:choose>
+					    <c:when test="${building.testYn == 'N'}">
+					        <p style="display:none;" class="building-test">ZEB 등급: ${building.zebLevel == 6 ? '미충족' : building.zebLevel} 등급</p>     
+					    </c:when>
+					    
+					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'N'}">
+					    	<p  class="building-test">ZEB 등급: ${building.zebLevel == 6 ? '미충족' : building.zebLevel }${building.zebLevel == 6 ? '' : '등급' } </p> 
+					    </c:when>
+					    
+					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'Y'}">
+					    	<p  class="building-test">ZEB 등급: ${building.zebLevel == 6 ? '미충족' : building.zebLevel }${building.zebLevel == 6 ? '' : '등급' } </p>  
+					    </c:when> 
+					</c:choose>
                 </div>
                 <div class="btn-box">
-                    <!-- zeb 테스트하기 버튼: 조건에 따라 스타일 및 비활성화 처리 -->
                     <c:choose>
-                        <c:when test="${building.testYn == 'N'}">
-                            <button id="testModal" class="test-modal btn-green">ZEB 테스트</button>
-                        </c:when>
-                        <c:otherwise>
-                            <button class="test-modal btn-disabled" disabled>ZEB 테스트</button>
-                        </c:otherwise>
-                    </c:choose>
-                    <!-- zeb 신청하기 버튼 (기본 설정) -->
-                    <c:choose>
-                    	<c:when test="${building.zebTestYn == 'N' }">
-		                    <button id="registBuilding" class="regist-building btn-green">ZEB 건축물<br>등록하기</button> 
-                    	</c:when>
-                    	<c:otherwise>
-                    		<button id="registBuilding" class="regist-building btn-disabled" disabled>ZEB 건축물<br>등록하기</button> 
-                    	</c:otherwise>
-                    </c:choose> 
+					    <c:when test="${building.testYn == 'N'}">
+					        <button id="testModal" class="test-modal btn-green">ZEB 테스트</button>
+					        <button style="display: none;" id="registBuilding" class="regist-building btn-green">ZEB 건축물<br>등록하기</button> 
+					        <button style="display: none;" class=" btn-yellow goToMap">지도<br>보러가기</button> 
+					    </c:when>
+					    
+					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'N'}">
+					    	<button style="display: none;" id="testModal" class="test-modal btn-green">ZEB 테스트</button>
+					        <button id="registBuilding" class="regist-building btn-blue">ZEB 건축물<br>등록하기</button>
+					        <button style="display: none;"  class=" btn-yellow goToMap" >지도<br>보러가기</button>
+					    </c:when>
+					    
+					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'Y'}">
+					    	<button style="display: none;" id="testModal" class="test-modal btn-green">ZEB 테스트</button>
+					    	<button style="display: none;" id="registBuilding" class="regist-building btn-green">ZEB 건축물<br>등록하기</button>
+					    	<button  class=" btn-yellow goToMap">지도<br>보러가기</button> 
+					    </c:when>
+					</c:choose>
+					<div style="display:none;" class="zeblv">${building.zebLevel }</div> 
                 </div>
             </div>
 			<div class="modal-overlay">
@@ -441,6 +513,10 @@
 			                <th>태양광 패널 용량(kW)</th>
 			                <td>${building.solarPanelKW } kW</td>
 			            </tr>
+			            <tr style="display: none;">
+        			        <th>bid</th>
+			                <td>${building.buildingId}</td> 
+			            </tr>
 			        </table>
 	                <div style="text-align: center; margin-top: 20px;">
 			            <button class="back-btn">뒤로가기</button>
@@ -450,6 +526,14 @@
 			</div>
 			
         </c:forEach>
+        <div class="building-card size-pinned">
+		    <div onclick="moveToRegist()" class="file-upload">
+		        <label for="fileInput" class="upload-label">
+		            <span class="upload-icon">🏢</span>
+		            <span class="upload-text">내 건물 추가</span>
+		        </label>
+		    </div>
+		</div>
         
         <div id="overlay2">
 				<div class="modal2">
@@ -478,8 +562,6 @@
 		</div>
         
     </div>
-    <button class="floating-btn" onclick="location.href='registMyBuildingView'">+</button>
-    <div class="msg-box">다른 건물 추가 등록하기</div>
     <form id="submitForm" style="display: none;" action="${pageContext.request.contextPath }/submitBuildingInfo" method="post" onsubmit="showLoading()">
 		<!-- 건물명 입력 -->
 		<input type="text" id="buildingName" name="buildingName" required><br><br>
@@ -492,7 +574,7 @@
 		<input type="text" id="residential" name="residentialType" required>
 	
 		<!-- 구조 형식 선택 -->
-		<input type="text" id="wood" name="structureType"  required>
+		<input type="text" id="wood" name="structureType"  required> 
 	
 		<!-- 실내 연면적 입력 -->
 		<input type="number" id="squareMeterArea" name="squareMeterArea" step="0.01" oninput="convertSquareMeterToPyeong()"><br>
@@ -515,6 +597,7 @@
 		<!-- 태양광 패널 kW 입력 -->
 		<input type="number" id="solarPanelCount" name="solarPanelKW" min="0"><br>
 	
+		<input type="text" id="buildingId" name="buildingId" required><br><br>
 		<button id="submitBtn" type="submit">제출</button> 
 	</form>
     <%@ include file="/WEB-INF/inc/footer.jsp" %>
@@ -543,11 +626,20 @@
 	    		v_overlay[idx].style.display = "none";
 	    	})
 	    })
-	    
+	     
 	    v_registBtn.forEach( (v_rb,idx) =>{ 
+	    	
+	    	
+	    
 	    	v_rb.addEventListener('click',()=>{
-		    	v_overlay2.style.display = "flex";
+	    		if(document.querySelectorAll('.zeblv')[idx].innerHTML == 6){
+		    		alert('조건을 충족하지 않습니다.')
+	    		}else{
+			    	v_overlay2.style.display = "flex";
+	    		}
 	    	})
+	    	
+	    	
 	    })
 	    
 	   
@@ -576,16 +668,48 @@
 		    			}
 	    			}
 	    			
+	    			
 	    		})
 	    		document.getElementById('submitBtn').click();
 	    		
 	    	})	
 	    })
+	    
+	    document.querySelector('#submitForm').addEventListener('submit', (event) => {
+		    const loading = document.getElementById('loading');
+		    const loadingBar = document.querySelector('.loading-bar');
+		
+		    // 로딩 화면 표시
+		    loading.style.display = 'flex';
+		
+		    // 로딩바 점진적으로 채우기
+		    let progress = 0;
+		    const interval = setInterval(() => {
+		        progress += 10; // 10%씩 증가
+		        loadingBar.style.width = `${progress}%`;
+		
+		        if (progress >= 90) clearInterval(interval); // 90%까지 도달 시 중단
+		    }, 500); // 500ms마다 진행
+		
+		    // 폼 제출은 그대로 진행
+		});
     
    	    function showLoading() {
 	        document.getElementById('loading').style.display = 'flex';
 	    }
-    
+    	function moveToRegist(){
+    		location.href = "${pageContext.request.contextPath}/registMyBuildingView";
+    	}
+    	
+    	let v_maps = document.querySelectorAll('.goToMap');
+    	
+    	v_maps.forEach(map =>{
+    		map.addEventListener('click',()=>{
+    			location.href = "${pageContext.request.contextPath}/mapView";
+    		})
+    	})
+    	
+    	
     </script>
 </body>
 </html>
