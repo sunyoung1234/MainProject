@@ -9,6 +9,7 @@ import com.proj.main.member.dao.IMemberDAO;
 import com.proj.main.member.dto.MemBuildingElecDTO;
 import com.proj.main.member.dto.MemberDTO;
 import com.proj.main.member.dto.MyBuildingDTO;
+import com.proj.main.result.dto.TestResultDTO;
 
 @Service
 public class MemberService {
@@ -29,7 +30,7 @@ public class MemberService {
 		return dao.updateMember(member);
 	}
 	
-	// �쉶�썝紐⑸줉 遺덈윭�삤湲�
+	// 占쎌돳占쎌뜚筌뤴뫖以� �겫�뜄�쑎占쎌궎疫뀐옙
 	public List<MemberDTO> getMemberList(){
 		List<MemberDTO> result = dao.getMemberList();
 		return result;
@@ -74,5 +75,32 @@ public class MemberService {
 	public List<MyBuildingDTO> getZebTestN(String memId){
 		List<MyBuildingDTO> result = dao.getZebTestN(memId);
 		return result;
+	}
+	
+	public MyBuildingDTO getMyBuildingsByBuildingId(String buildingId) {
+		return dao.getMyBuildingsByBuildingId(buildingId);
+	}
+	
+	public int updateTestYn(String buildingName) {
+		return dao.updateTestYn(buildingName);
+	}
+	
+	public String getBuildingId(String buildingName) {
+		return dao.getBuildingId(buildingName);
+	}
+	
+	public TestResultDTO getTestResult(String buildingId) {
+		return dao.getTestResult(buildingId);
+	}
+	
+	public int updateZebLev(MyBuildingDTO mb) {
+		return dao.updateZebLev(mb);
+	}
+	
+	public int updateGradeByName(TestResultDTO tr) {
+		return dao.updateGradeByName(tr); 
+	}
+	public int updateZebTestYn(MyBuildingDTO mb) {
+		return dao.updateZebTestYn(mb);
 	}
 }

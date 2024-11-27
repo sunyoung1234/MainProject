@@ -558,7 +558,7 @@
 		            let resultDiv = document.createElement('div');
 		            resultDiv.textContent = result.title + '-' + result.addr;
 		            searchResults.appendChild(resultDiv); 
-		            resultDiv.onclick = () => {
+		            resultDiv.onclick = () => { 
 		            	document.getElementById('searchInput').value = result.title; 
 		                searchResults.style.display = 'none';  
 		            };

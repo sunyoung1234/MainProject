@@ -22,7 +22,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +35,7 @@ import com.proj.main.member.dto.MemberDTO;
 import com.proj.main.member.dto.MyBuildingDTO;
 import com.proj.main.member.service.MemberService;
 import com.proj.main.result.dto.ApplyZEBDTO;
+import com.proj.main.result.dto.TestResultDTO;
 import com.proj.main.result.service.ResultService;
 
 @Controller
@@ -360,6 +360,9 @@ public class MemberController {
     	List<MyBuildingDTO> names = memberService.getZebTestN(id);
     	List<String> buildingNameList = new ArrayList<>();
     	
+    	List<Integer> zebList = new ArrayList<>();
+    	List<String> eList = new ArrayList<>();
+    	List<String> iList = new ArrayList<>();
     	
     	
     	
@@ -369,6 +372,7 @@ public class MemberController {
     		
     		for(MyBuildingDTO building : buildings) {
     			if(building.getBuildingImg().length() > 4) {
+    				
     				
     				int imgLen = building.getBuildingImg().length();
     				String imgStrs = building.getBuildingImg().substring(1, imgLen-1);
@@ -394,11 +398,11 @@ public class MemberController {
     				building.setBuildingImg("none");
     			}
     			
-    			
+    			if(building.getZebLevel() < 6) {
+    				buildingNameList.add(building.getBuildingName());
+    			}
     		}
-    		for(MyBuildingDTO name : names) {
-    			buildingNameList.add(name.getBuildingName());
-    		}
+    		
     		model.addAttribute("buildingName", buildingNameList);
     		
     	}else {
@@ -412,7 +416,7 @@ public class MemberController {
     }
     
     @RequestMapping("/applyZEB")
-    public String applyZEB(String bname,ApplyZEBDTO zeb, HttpSession session, MultipartFile attachment) {
+    public String applyZEB(Model model, String bname,ApplyZEBDTO zeb, HttpSession session, MultipartFile attachment) {
     	
     	MemberDTO login = (MemberDTO) session.getAttribute("login");
     	zeb.setMemId(login.getMemId());
@@ -508,6 +512,10 @@ public class MemberController {
     	ApplyZEBDTO apply = rs.getApplyByBid(bId);
     	
     	mo.addAttribute("apply", apply);
+    	
+    	TestResultDTO tr = memberService.getTestResult(bId);
+    	tr.getZebGrade();
+    	mo.addAttribute("grade", tr.getZebGrade()); 
     	
         return "member/applyZEBDetailView";
     }

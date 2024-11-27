@@ -119,4 +119,43 @@
 	<select id="getBuildingId" parameterType="com.proj.main.member.dto.MyBuildingDTO" resultType="String">
 		SELECT building_id FROM my_building WHERE 1=1 AND mem_id = #{memId} AND building_name = #{buildingName}
 	</select>
+	
+	<insert id="insertTestResult" parameterType="com.proj.main.result.dto.TestResultDTO">
+		 INSERT INTO TEST_RESULT (
+	        mem_id,
+	        building_id,
+	        test_date,
+	        energy_grade,
+	        energy_independence_rate,
+	        zeb_grade
+	    ) VALUES (
+	        #{memId},
+	        #{buildingId},
+	        #{testDate},
+	        #{energyGrade},
+	        #{energyIndependenceRate},
+	        #{zebGrade}
+	    )
+	</insert>
+	
+	<insert id="applyResult" parameterType="com.proj.main.result.dto.ApplyResultDTO">
+		 INSERT INTO APPLY_RESULT (
+	        building_id,
+			approve_yn,
+			reject_reason,
+			zeb_level
+	    ) VALUES (
+	        #{buildingId},
+			#{approveYn},
+			#{rejectReason},
+			#{zebLevel} 
+	    )
+	</insert>
+	
+	<update id="updateApplyStatus" parameterType="String">
+		UPDATE APPLY_ZEB
+		SET APPROVE_YN ='Y'
+		WHERE BUILDING_ID = #{buildingId}
+	</update>
+	
 </mapper>

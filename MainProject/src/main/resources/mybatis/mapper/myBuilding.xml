@@ -8,21 +8,52 @@
 	        jibun_address, extra_address, climate, residential_type,
 	        structure_type, square_meter_area,  floors,   doors,
 	        insulation_level,   window_level,   ventilation_system,  solar_panel_kw,
-	        building_img,   test_yn, zeb_test_yn
+	        building_img,   test_yn, zeb_test_yn , zeb_level
 	    ) VALUES (
 	        #{memId}, #{buildingName}, #{buildingId}, #{roadAddress},
 	        #{jibunAddress}, #{extraAddress}, #{climate}, #{residentialType},
 	        #{structureType}, #{squareMeterArea}, #{floors}, #{doors},
 	        #{insulationLevel}, #{windowLevel}, #{ventilationSystem}, #{solarPanelKW},
-	        #{buildingImg} , 'N' , 'N'
+	        #{buildingImg} , 'N' , 'N', 6
 	    )
 	</insert>
 	 
 	<select id="getMyBuildings" parameterType="String" resultType="com.proj.main.member.dto.MyBuildingDTO">
 		SELECT * FROM my_building WHERE 1=1 AND mem_id = #{memId}
 	</select>
+	
+	<select id="getMyBuildingsByBuildingId" parameterType="String" resultType="com.proj.main.member.dto.MyBuildingDTO">
+		SELECT * FROM my_building WHERE 1=1 AND building_id = #{buildingId}
+	</select>
 
 	<select id="getZebTestN" parameterType="String" resultType="com.proj.main.member.dto.MyBuildingDTO">
 		SELECT building_name FROM my_building WHERE 1=1 AND mem_id= #{memId} AND zeb_test_yn= 'N'
 	</select>
+	
+	<update id="updateTestYn" parameterType="String">
+		UPDATE my_building
+		SET test_yn = 'Y'
+		WHERE building_id= #{buildingId}
+	</update>
+	
+	<select id="getBuildingId" parameterType="String" resultType="String">
+		SELECT building_id FROM my_building WHERE building_name = #{buildingName}
+	</select>
+	
+	<select id="getTestResult" parameterType="String" resultType="com.proj.main.result.dto.TestResultDTO">
+		SELECT * FROM TEST_RESULT WHERE 1=1 AND BUILDING_ID= #{buildingId}
+	</select>
+	
+	<update id="updateZebLev" parameterType="com.proj.main.member.dto.MyBuildingDTO">
+		UPDATE MY_BUILDING
+		SET ZEB_LEVEL = #{zebLevel},
+			test_yn = 'Y'
+		WHERE building_id = #{buildingId}
+	</update>
+	
+	<update id="updateZebTestYn" parameterType="com.proj.main.member.dto.MyBuildingDTO">
+		UPDATE MY_BUILDING
+		SET zeb_test_yn = 'Y'
+		WHERE building_id = #{buildingId}
+	</update>
 </mapper>
