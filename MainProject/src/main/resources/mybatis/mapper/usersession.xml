@@ -26,6 +26,13 @@
 		SET SESSION_DURATION = LOGOUT_TIME - LOGIN_TIME
 		WHERE LOGOUT_TIME IS NOT NULL AND MEM_ID = #{memId}
 	</update>
+	
+	<select id="selectAvgDuration" parameterType="String" resultType="com.proj.main.usersession.dto.UserSessionDTO">
+		SELECT MEM_ID, AVG(EXTRACT(DAY FROM SESSION_DURATION) * 86400 + EXTRACT(HOUR FROM SESSION_DURATION) * 3600 + EXTRACT(MINUTE FROM SESSION_DURATION) * 60 + EXTRACT(SECOND FROM SESSION_DURATION)) AS AVG_SESSION_DURATION
+		FROM user_sessions
+		WHERE session_duration IS NOT NULL
+		GROUP BY MEM_ID
+	</select>
 
 
 </mapper>

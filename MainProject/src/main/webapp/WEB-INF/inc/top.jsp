@@ -281,7 +281,62 @@ body {
 		</div>
 	</nav>
 	<div class="overlay"></div>
+	<script type="text/javascript">
+		let timeoutTimer;
 	
+		// 세션 타임아웃을 감지하고 타이머를 설정하는 함수
+		function resetSessionTimeout() {
+		    clearTimeout(timeoutTimer);  // 기존 타이머 취소
+		    timeoutTimer = setTimeout(function() {
+		        alert("세션이 만료되었습니다. 로그아웃됩니다.");
+		        logoutSession();
+		    }, 30 * 60 * 1000); // 30분 후 세션 만료 (30분 = 30 * 60 * 1000ms)
+	
+		    // 세션 연장 요청을 서버로 보냄 (세션 타임아웃 갱신)
+		    keepSessionAlive();
+		}
+	
+		// 세션 연장 요청 함수
+		function keepSessionAlive() {
+		    let v_ajax = new XMLHttpRequest();
+		    v_ajax.open('GET', '${pageContext.request.contextPath}/keep-session-alive', true);  // 서버에 세션 연장 요청
+		    v_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		    v_ajax.onreadystatechange = function() {
+		        if (v_ajax.readyState === 4 && v_ajax.status === 200) {
+		            console.log("세션이 연장되었습니다");
+		        } else if (v_ajax.readyState === 4) {
+		            console.error("세션 연장 실패");
+		        }
+		    };
+		    v_ajax.send();
+		}
+		
+		// 세션 타임아웃 후 로그아웃 처리
+		function logoutSession() {
+		    var v_ajax = new XMLHttpRequest();
+		    v_ajax.open('GET', '${pageContext.request.contextPath}/logout', true);  // 로그아웃 처리
+		    v_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		    v_ajax.onreadystatechange = function() {
+		        if (v_ajax.readyState === 4 && v_ajax.status === 200) {
+		            // 로그아웃 성공 시 로그인 페이지로 이동
+		            window.location.href = '{pageContext.request.contextPath}/loginView';
+		        } else if (xhr.readyState === 4) {
+		            console.error("로그아웃 실패");
+		        }
+		    };
+		    v_ajax.send();
+		}
+
+		
+	
+		// 사용자의 마우스나 키보드 입력을 감지하여 타이머 리셋
+		document.addEventListener('mousemove', resetSessionTimeout);  // 마우스 움직임 감지
+		document.addEventListener('keydown', resetSessionTimeout);    // 키보드 입력 감지
+	
+		// 초기 타이머 시작
+		resetSessionTimeout();
+	
+	</script>
 	
 </body>
 </html>
