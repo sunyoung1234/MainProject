@@ -18,6 +18,7 @@ public interface IElectricityDAO {
 	
 	String getDate(String memId);
 	
+	String predictUse(String memId);
 	
 	
 	

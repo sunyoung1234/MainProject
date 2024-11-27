@@ -38,8 +38,8 @@
         }
 
         .page-count-all {
-    		width:1100px;
-    		height:700px;    
+    		width:600px;
+    		height:400px;    
     		margin-bottom: 10px; 
         }
  
@@ -85,15 +85,17 @@
         .select-division{
         	width:30%; 
         	font-weight: bold;
-        	font-size:20px;
+        	font-size:12px;
         	display: flex;
         	align-items: center;
-        	justify-content: center;
+        	justify-content: center; 
+        	margin-right: 10px;
         }
         
         .page-count-all-h2{
         	text-align: center;
         }
+        
 
 
     </style>
@@ -107,7 +109,7 @@
     	<h2>이용자 방문 현황</h2>
         <!-- 전체 페이지 방문 횟수 차트 -->
         <div class="page-count-all">
-        	<h2 class="page-count-all-h2">페이지 방문 횟수 총합</h2>
+        	<h4 class="page-count-all-h2">페이지 방문 횟수 총합</h4>
             <canvas id="myChart"></canvas>
         </div>
 
