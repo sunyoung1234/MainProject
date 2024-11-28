@@ -578,12 +578,13 @@
 		        agentMessage.textContent = vo.chatMsg;
 		        chatArea.appendChild(agentMessage);
 		        
-		        html = agentMessage
+		          html = agentMessage
 			}
 			return html;
 		}
-
 		
+		
+
 		// 종료 버튼 클릭 이벤트
 		document.querySelector('#endChat').addEventListener('click', function () {
 		    const confirmModal = document.getElementById('confirmModal');
@@ -618,10 +619,6 @@
 		    const confirmModal = document.getElementById('confirmModal');
 		    confirmModal.style.display = 'none'; // 모달 닫기
 		});
-
-		
-		
-
 
 
 		
