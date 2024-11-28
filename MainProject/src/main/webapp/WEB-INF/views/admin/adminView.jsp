@@ -148,23 +148,42 @@
         .page-rank-title{
         	display: flex;
         	justify-content: center;
-        	margin-bottom: 80px;
+        	margin-bottom: 50px;
         	margin-top:50px;
         }
         
         .page-rank-first{
-        	margin-left: 50px;
-        	margin-bottom:30px;
+        	margin-left: 100px;
+        	margin-bottom:30px;  
         }
         
         .page-rank-second{
-        	margin-left: 50px;
+        	margin-left: 100px;
         	margin-bottom:30px;
         }
         
         .page-rank-thrid{
-        	margin-left: 50px;
+        	margin-left: 100px;
         	margin-bottom:30px;
+        }
+        
+        img{
+        	width:50px;
+        	height:50px;
+        }
+        
+        .king-img{ 
+        	padding-right:8px;
+        }
+        
+        .select-date{
+        	width:30%; 
+        	font-weight: bold;
+        	font-size:25px;
+        	display: flex;
+        	align-items: center;
+        	justify-content: center; 
+        	margin-right: 10px;
         }
 
 
@@ -197,7 +216,19 @@
     	</div>
     	
     	<div>
-    		
+    		<div class="select-option">
+    			<div class="select-box">
+            		<div class="select-date">
+	            		시간별 로그인 횟수
+            		</div>
+            		<div class="select-option">
+            			<select id="selectDate"> 
+            			</select>
+            		</div>
+            	</div>
+         		
+            	<canvas id="userDateChart"></canvas>
+         	</div>
     	</div> 
     	
     	<div class="page-middle-container">
@@ -208,7 +239,9 @@
 	        </div>
 	        <div class="page-rank-container">
 	           	<div class="page-rank-title">페이지 접속 순위</div>
-	           	<div class="page-rank-first">1위 : 전기 사용량(230) </div>
+	           	<div class="page-rank-first">
+	           		
+	           </div>
 	           	<div class="page-rank-second">2위 : 전기 사용량(230) </div>
 	           	<div class="page-rank-thrid">3위 : 전기 사용량(230) </div>
 	        </div>
@@ -265,10 +298,13 @@
         // 페이지 데이터 처리
         let v_pageNameAll = '${pageNameAll}';
         let v_visitCountAll = '${visitCountAll}';
+        
 
         v_pageNameAll = v_pageNameAll.replace("[", "").replace("]", "").split(",");
         v_visitCountAll = v_visitCountAll.replace("[", "").replace("]", "").split(",");
-
+		
+        document.querySelector('.page-rank-first').innerHTML = '<div class="king-img"><img src="https://cdn-icons-png.flaticon.com/512/862/862758.png"></div> 1위 : ' + v_pageNameAll[0] + " ("+ v_visitCountAll[0] + ")"
+        document.querySelector('.page-rank-second').innerHTML = "2위 : " + v_pageNameAll[1] + " ("+ v_visitCountAll[1] + ")"
         console.log(v_pageNameAll);
         console.log(v_visitCountAll);
 
@@ -323,18 +359,23 @@
         });
 
         let v_visitMemId = '${visitMemId}';
+        let v_selectIdPageId = '${selectIdPageId}';
+        let v_selectIdPageCounting = '${selectIdPageCounting}'
         v_visitMemId = v_visitMemId.replace("[", "").replace("]", "").split(",");
+        v_selectIdPageCounting = v_selectIdPageCounting.replace("[", "").replace("]", "").split(",");
+        v_selectIdPageId = v_selectIdPageId.replace("[", "").replace("]", "").split(",");
 		console.log("asdasd")
 		console.log(v_visitMemId)
 		console.log(v_visitCountAll)
+		console.log(v_selectIdPageCounting)
         let ctx2 = document.getElementById('myChartPage');
         let myChart2 = new Chart(ctx2, {
             type: 'bar',
-            data: {
-                labels: v_visitMemId,
+            data: { 
+                labels: v_selectIdPageId,
                 datasets: [{
                     label: '페이지별 방문 횟수',
-                    data: v_visitCountAll,
+                    data: v_selectIdPageCounting,
                     borderWidth: 1,
                     backgroundColor: '#ffc107',
                     borderColor: '#e0a800'
@@ -357,6 +398,10 @@
 
         let v_selectElement = document.getElementById("selectId");
         let v_selectOption = document.createElement('option');
+        v_selectOption = document.createElement('option');
+        v_selectOption.value = 'all';
+        v_selectOption.text = '전체';
+        v_selectElement.appendChild(v_selectOption);
         for (let i = 0; i < v_memIdAll.length; i++) {
             v_selectOption = document.createElement('option');
             v_selectOption.value = v_memIdAll[i];
@@ -369,6 +414,7 @@
             v_ajax.open("POST", '${pageContext.request.contextPath}/selectId');
             console.log(event.target.value);
             let v_data = "memId=" + event.target.value;
+            console.log(event.target.value)
 
             v_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
@@ -391,6 +437,10 @@
 
         let v_selectElementPage = document.getElementById("selectPageName");
         let v_selectOptionPage = document.createElement('option');
+        v_selectOptionPage = document.createElement('option');
+        v_selectOptionPage.value = 'all';
+        v_selectOptionPage.text = '전체';
+        v_selectElementPage.appendChild(v_selectOptionPage);
         for (let i = 0; i < v_logPageName.length; i++) {
             v_selectOptionPage = document.createElement('option');
             v_selectOptionPage.value = v_logPageName[i];
@@ -418,6 +468,88 @@
 
             v_ajax.send(v_data);
         });
+        
+        
+        let v_userDate = '${userDate}'
+        v_userDate = v_userDate.replace("[", "").replace("]", "").trim().split(",");
+        v_userDate.reverse()
+        let v_selectElementDate = document.getElementById("selectDate");
+        let v_selectOptionDate;
+        
+        console.log(v_userDate)
+        
+        for (let i = 0; i < v_userDate.length; i++) {
+        	v_selectOptionDate = document.createElement('option');
+        	v_selectOptionDate.value = v_userDate[i];
+        	v_selectOptionDate.text = v_userDate[i];
+        	v_selectElementDate.appendChild(v_selectOptionDate);
+        }
+
+        let v_loginHour = '${loginHour}'
+        let v_loginCount = '${loginCount}'
+        
+        v_loginHour = v_loginHour.replace("[", "").replace("]", "").trim().split(",");
+        v_loginCount = v_loginCount.replace("[", "").replace("]", "").trim().split(",");
+        
+        let v_userDateChart = document.getElementById("userDateChart")
+        let v_userChart = new Chart(v_userDateChart, {
+            type: 'line',
+            data: { 
+                labels: v_loginHour,
+                datasets: [{
+                    label: '시간별 로그인 횟수',
+                    data: v_loginCount,
+                    borderWidth: 1,
+                    backgroundColor: '#ffc107',
+                    borderColor: '#e0a800'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                	x: {
+                        title: {
+                            display: true,   // 제목 표시 여부
+                            text: '시'   // x축 제목
+                        }
+                    },
+                	 y: {
+                		 title:{
+                			 display: true,   // 제목 표시 여부
+                             text: '횟수',
+                           	 rotation: -270   
+                		 },
+                		 // beginAtZero: true ,
+                         ticks: {
+                             stepSize: 1  // y축의 값을 1씩 증가
+                         }
+                     }
+                }
+            }
+        });
+        
+        document.getElementById("selectDate").addEventListener("change", () => {
+            let v_ajax = new XMLHttpRequest();
+            v_ajax.open("POST", '${pageContext.request.contextPath}/selectDate');
+            console.log(event.target.value);
+            let v_data = "userDate=" + event.target.value;
+
+            v_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+            v_ajax.onload = () => {
+                if (v_ajax.response) {
+                    let v_region = JSON.parse(v_ajax.response);
+                    v_userChart.data.datasets[0].label = '페이지별 방문 횟수';
+                    v_userChart['data']['labels'] = v_region["userHour"];
+                    v_userChart['data']['datasets'][0]['data'] = v_region["userCount"];
+                    v_userChart.update();
+                }
+            };
+
+            v_ajax.send(v_data);
+        });
+        
+        
     </script>
 
 </body>

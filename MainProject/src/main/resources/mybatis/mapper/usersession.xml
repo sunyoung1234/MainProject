@@ -81,6 +81,35 @@
 		AND MEM_ID != 'admin'
 	</select>
 	
-
+	<select id="userLoginCount" resultType="com.proj.main.usersession.dto.UserCountDTO" parameterType="String">
+		SELECT 
+		    TRUNC(LOGIN_TIME) AS LOGIN_DATE,               
+		    TO_CHAR(LOGIN_TIME, 'HH24') AS LOGIN_HOUR,
+		    COUNT(*) AS LOGIN_COUNT
+		FROM 
+		    user_sessions
+		WHERE 
+		    TRUNC(LOGIN_TIME) = TO_DATE(#{loginDate}, 'YYYY-MM-DD')
+		GROUP BY 
+		    TRUNC(LOGIN_TIME),
+		    TO_CHAR(LOGIN_TIME, 'HH24')
+		ORDER BY 
+		    LOGIN_DATE, 
+		    LOGIN_HOUR
+	</select>
+	
+	<select id="selectDate" resultType="String">
+		SELECT 
+		   TO_CHAR(LOGIN_TIME,'YYYY-MM-DD') AS LOGIN_DATE 
+		FROM 
+		    user_sessions
+		WHERE 
+		    LOGIN_TIME >= TO_DATE('2024-11-27', 'YYYY-MM-DD')
+		    AND LOGIN_TIME &lt; TRUNC(SYSDATE) + 1  
+		GROUP BY 
+		   TO_CHAR(LOGIN_TIME,'YYYY-MM-DD')
+		ORDER BY 
+		    LOGIN_DATE
+	</select>
 
 </mapper>

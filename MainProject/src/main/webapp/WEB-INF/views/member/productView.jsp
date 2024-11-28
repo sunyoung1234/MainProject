@@ -210,13 +210,6 @@
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
 
 	<div class="main-height">
-		<div class="product-division">
-			<div class="product-division1">
-				<a class="product-division1-color" href="${pageContext.request.contextPath }/productView">제품</a>
-			</div>
-			<div class="product-division2">설비</div>
-			<div class="product-division3">신재생 에너지</div>
-		</div>
 		
 		<div class="energy-efficiency-comparison">
 	    <h2>에너지 효율 등급 비교 : 전기냉장고(830L)</h2>

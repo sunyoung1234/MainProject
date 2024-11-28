@@ -54,4 +54,15 @@ public class UserService {
 		int result = dao.todayUserAvg();
 		return result;
 	}
+	
+	public List<UserCountDTO> userLoginCount(String loginDate) {
+		List<UserCountDTO> result = dao.userLoginCount(loginDate);
+		return result;
+	}
+	
+	public List<String> selectDate() {
+		List<String> result = dao.selectDate();
+		return result;
+	}
+	
 }

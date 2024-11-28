@@ -25,4 +25,9 @@ public interface IPageLogDAO {
 	
 	// page 이름으로 가져오기
 	List<PageLogDTO> pageNameSelectPageLog(String pageName);
+	
+	// 아이디별 페이지 접속 횟수 가져오기
+	List<PageLogDTO> selectIdPageCount();
+	
+	
 }
