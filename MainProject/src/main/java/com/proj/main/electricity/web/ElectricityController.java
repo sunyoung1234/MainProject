@@ -37,6 +37,7 @@ import com.proj.main.member.dto.MemberDTO;
 import com.proj.main.member.service.MemberService;
 import com.proj.main.pageLog.dto.PageLogDTO;
 import com.proj.main.pageLog.service.PageLogService;
+import com.proj.main.usersession.service.UserService;
 
 
 @Controller
@@ -53,6 +54,9 @@ public class ElectricityController {
 	
 	@Autowired
 	PageLogService pageLogService;
+	
+	
+	
 	
 	@RequestMapping("/ocrView")
     public String ocrTest(HttpSession session, Model model, ElectricityDTO electricity) {
@@ -71,6 +75,9 @@ public class ElectricityController {
 		log.setMemId(memId);
 		log.setPageName("OCR");
 		
+		
+		
+		
 		pageLogService.insertPageLog(log);
 		
 		ElectricityDTO use = electricityService.getElectricitylastMonth(memId);
@@ -78,6 +85,10 @@ public class ElectricityController {
 		model.addAttribute("electricityUse", use);
 		
 		String elecDate = electricityService.getDate(memId);
+		
+		String predUseOneMonth = electricityService.predictUse(memId);
+		
+		model.addAttribute("predUseOneMonth",predUseOneMonth);
 		
 		System.out.println(use);
 		
@@ -200,6 +211,9 @@ public class ElectricityController {
         model.addAttribute("member",login);
         
         String memId = login.getMemId();
+        
+        
+        
         
         PageLogDTO log = new PageLogDTO();
 		log.setMemId(memId);

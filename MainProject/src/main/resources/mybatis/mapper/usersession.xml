@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.proj.main.usersession.dao.IUserSessionDAO">
+	
+	<insert id="insertLoginUser" parameterType="String">
+		INSERT INTO user_sessions (
+			SESSION_ID, 
+			MEM_ID, 
+			LOGIN_TIME, 
+			LOGOUT_TIME)
+		VALUES (
+			user_sessions_seq.NEXTVAL,
+			#{memId},
+			CURRENT_TIMESTAMP,
+			NULL)
+	</insert>
+	
+	<update id="updateLogoutTime" parameterType="String">
+		UPDATE user_sessions
+		SET LOGOUT_TIME = CURRENT_TIMESTAMP
+		WHERE MEM_ID = #{memId} AND LOGOUT_TIME IS NULL
+		
+	</update>
+	
+	<update id="updateTimeCalc" parameterType="String">
+		UPDATE user_sessions
+		SET SESSION_DURATION = 
+		    (EXTRACT(DAY FROM (LOGOUT_TIME - LOGIN_TIME)) * 86400) +  
+		    (EXTRACT(HOUR FROM (LOGOUT_TIME - LOGIN_TIME)) * 3600) + 
+		    (EXTRACT(MINUTE FROM (LOGOUT_TIME - LOGIN_TIME)) * 60) + 
+		    EXTRACT(SECOND FROM (LOGOUT_TIME - LOGIN_TIME))
+		WHERE LOGOUT_TIME IS NOT NULL AND MEM_ID = #{memId}
+	</update>
+	
+	<select id="selectAvgDuration" resultType="com.proj.main.usersession.dto.UserSessionDTO">
+		SELECT MEM_ID,
+       		ROUND(AVG(SESSION_DURATION) / 60) AS SESSION_DURATION
+		FROM user_sessions
+		WHERE SESSION_DURATION IS NOT NULL
+		AND MEM_ID != 'admin'
+		GROUP BY MEM_ID
+	</select>
+	
+	
+	<select id="yesterdayUserCount" resultType="int">
+		SELECT SUM(login_count) AS yesterdayUserCount
+	    FROM (
+	        SELECT MEM_ID, COUNT(DISTINCT MEM_ID) AS login_count
+	        FROM user_sessions
+	        WHERE login_time >= TRUNC(SYSDATE) - INTERVAL '1' DAY
+	        AND login_time &lt; TRUNC(SYSDATE)
+	        AND mem_id != 'admin'
+	        GROUP BY MEM_ID
+	    ) user_logins
+	</select>
+	
+	<select id="todayUserCount" resultType="int">
+		SELECT SUM(count_per_id) AS total_login_count
+		FROM (
+		    SELECT MEM_ID, COUNT(DISTINCT MEM_ID) AS count_per_id
+		    FROM user_sessions
+		    WHERE TRUNC(login_time) = TRUNC(SYSDATE)
+		    AND mem_id != 'admin'
+		    GROUP BY MEM_ID
+		) login_counts
+	</select>
+	
+	<select id="yesterdayUserAvg" resultType="int">
+		SELECT ROUND(AVG(SESSION_DURATION) / 60) AS avg_session_duration_minutes
+		FROM user_sessions
+		WHERE TRUNC(LOGIN_TIME) = TRUNC(SYSDATE) - 1  
+		AND SESSION_DURATION IS NOT NULL
+		AND MEM_ID != 'admin'
+	</select>
+	
+	<select id="todayUserAvg" resultType="int">
+		SELECT ROUND(AVG(SESSION_DURATION) / 60) AS avg_session_duration_minutes
+		FROM user_sessions
+		WHERE TRUNC(LOGIN_TIME) = TRUNC(SYSDATE)
+		AND SESSION_DURATION IS NOT NULL
+		AND MEM_ID != 'admin'
+	</select>
+	
+
+
+</mapper>

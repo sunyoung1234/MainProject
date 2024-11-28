@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 
 import com.proj.main.member.dto.MyBuildingDTO;
 import com.proj.main.result.dao.IResultDAO;
+import com.proj.main.result.dto.ApplyResultDTO;
 import com.proj.main.result.dto.ApplyZEBDTO;
 import com.proj.main.result.dto.EnergyResultDTO;
 import com.proj.main.result.dto.EnergyUsedDTO;
+import com.proj.main.result.dto.TestResultDTO;
 import com.proj.main.result.dto.UserBuildingDTO;
 
 @Service
@@ -70,4 +72,15 @@ public class ResultService {
 		return dao.getApplyByBid(buildingId);
 	};
 	
+	public int insertTestResult(TestResultDTO tr) {
+		return dao.insertTestResult(tr);
+	}
+	
+	public int applyResult(ApplyResultDTO ar) {
+		return dao.applyResult(ar);
+	}
+	
+	public int updateApplyStatus(String buildingId) {
+		return dao.updateApplyStatus(buildingId);
+	}
 }

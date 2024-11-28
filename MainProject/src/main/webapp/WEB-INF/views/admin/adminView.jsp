@@ -29,18 +29,24 @@
         }
 
         .main-height {
-            max-width: 1300px;
+            width: 1300px;
             margin: 50px auto;
             padding: 20px;
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
+        
+        .page-middle-container{
+        	display:flex;
+        	justify-content: space-between; 
+        	
+        }
 
         .page-count-all {
-    		width:1100px;
-    		height:700px;    
-    		margin-bottom: 10px; 
+    		width:800px;
+    		height:400px;    
+    		margin-bottom: 80px; 
         }
  
         .page-count-box {
@@ -85,14 +91,80 @@
         .select-division{
         	width:30%; 
         	font-weight: bold;
-        	font-size:20px;
+        	font-size:12px;
         	display: flex;
         	align-items: center;
-        	justify-content: center;
+        	justify-content: center; 
+        	margin-right: 10px;
         }
         
         .page-count-all-h2{
         	text-align: center;
+        }
+        
+        .user-container{
+        	width: 90%;
+        	height:300px;
+        	border: 1px solid black;
+        	display: flex;
+        	justify-content: space-between;
+        	margin-left:70px;
+        	margin-bottom:60px;
+        }
+        
+        .user-box{
+        	width: calc(100% / 3 - 5px);
+        	border: 1px solid black; 
+        	
+        }
+        
+        .user-title{
+        	font-size: 25px;
+        	display: flex;
+        	justify-content: center;
+        	margin-top: 70px;
+        	margin-bottom: 50px;
+        	 
+        }
+        
+        .user-count{
+        	margin-left:80px; 
+        	margin-bottom: 20px;
+        }
+        
+        .user-time{
+        	margin-left:80px; 
+        }
+        
+        .page-rank-container{
+        	width:350px;
+        	hegiht:180px;
+        	border: 1px solid black;
+        	margin-right:30px;  
+        	margin-top:50px;
+        	margin-bottom:50px;
+        }
+        
+        .page-rank-title{
+        	display: flex;
+        	justify-content: center;
+        	margin-bottom: 80px;
+        	margin-top:50px;
+        }
+        
+        .page-rank-first{
+        	margin-left: 50px;
+        	margin-bottom:30px;
+        }
+        
+        .page-rank-second{
+        	margin-left: 50px;
+        	margin-bottom:30px;
+        }
+        
+        .page-rank-thrid{
+        	margin-left: 50px;
+        	margin-bottom:30px;
         }
 
 
@@ -105,11 +177,43 @@
 
     <div class="main-height">
     	<h2>이용자 방문 현황</h2>
-        <!-- 전체 페이지 방문 횟수 차트 -->
-        <div class="page-count-all">
-        	<h2 class="page-count-all-h2">페이지 방문 횟수 총합</h2>
-            <canvas id="myChart"></canvas>
-        </div>
+    	
+    	<div class="user-container">
+    		<div class="user-box">
+	    		<div class="user-title">전체</div>
+	    		<div class="user-count">접속자 수 : ${userAllCount } 명  </div>
+	    		<div class="user-time">평균 접속 시간 : ${userAllAvg } 분</div>
+	    	</div>
+	    	<div class="user-box"> 
+	    		<div class="user-title">오늘</div>
+	    		<div class="user-count">접속자 수 : ${todayCount} 명</div>
+	    		<div class="user-time">평균 접속 시간 : ${todayUserAvg }</div>
+	    	</div>
+	    	<div class="user-box">
+	    		<div class="user-title">어제</div>
+	    		<div class="user-count">접속자 수 : ${yesterdayCount} 명</div>
+	    		<div class="user-time">평균 접속 시간 : ${yesterdayUserAvg }</div>
+	    	</div>
+    	</div>
+    	
+    	<div>
+    		
+    	</div> 
+    	
+    	<div class="page-middle-container">
+    		<!-- 전체 페이지 방문 횟수 차트 -->
+	        <div class="page-count-all">
+	        	<h4 class="page-count-all-h2">페이지 방문 횟수 총합</h4>
+	            <canvas id="myChart"></canvas>
+	        </div>
+	        <div class="page-rank-container">
+	           	<div class="page-rank-title">페이지 접속 순위</div>
+	           	<div class="page-rank-first">1위 : 전기 사용량(230) </div>
+	           	<div class="page-rank-second">2위 : 전기 사용량(230) </div>
+	           	<div class="page-rank-thrid">3위 : 전기 사용량(230) </div>
+	        </div>
+    	</div>
+        
 
         <!-- 아이디별 페이지 횟수, 페이지별 아이디 횟수 -->
         <div class="page-count-box">
@@ -220,7 +324,9 @@
 
         let v_visitMemId = '${visitMemId}';
         v_visitMemId = v_visitMemId.replace("[", "").replace("]", "").split(",");
-
+		console.log("asdasd")
+		console.log(v_visitMemId)
+		console.log(v_visitCountAll)
         let ctx2 = document.getElementById('myChartPage');
         let myChart2 = new Chart(ctx2, {
             type: 'bar',

@@ -193,6 +193,10 @@
                     <td id="download-link">💾 ${apply.fileName}</td>
                 </tr>
                 <tr>
+                    <th>측정 등급</th>
+                    <td id="grade">${grade} 등급</td>
+                </tr>
+                <tr>
                     <th>신청 기관</th>
                     <td>${apply.applianceOrg}</td>
                 </tr>
@@ -211,7 +215,7 @@
             </tbody>
         </table>
 		<c:if test="${apply.rejectYn == 'N' && apply.approveYn == 'N' }">
-	        <form id="submitForm" action="applyResult" method="post">
+	        <form id="submitForm" action="${pageContext.request.contextPath }/applyResult" method="post">
 	            <!-- 승인 여부 -->
 	            <div class="radio-container">
 				    <div>
@@ -223,6 +227,7 @@
 				        <label for="reject">거절</label>
 				    </div>
 				</div>
+				<input style="display: none;" name="buildingId" value="${apply.buildingId }">
 	
 	            <!-- 승인: ZEB Level -->
 	            <div class="input-container" id="levBox">

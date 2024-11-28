@@ -209,13 +209,94 @@
 		    font-weight: bold; /* 폰트를 진하게 설정 */
 		    font-size: 15px; /* 기본 폰트 크기 */
 		}
+		#loading {
+	        position: fixed;
+	        top: 0;
+	        left: 0;
+	        width: 100%;
+	        height: 100%;
+	        background-color: rgba(0, 0, 0, 0.5);
+	        display: none;
+	        flex-direction: column;
+	        justify-content: center;
+	        align-items: center;
+	        z-index: 1000;
+	        color: white;
+	        text-align: center;
+	    }
+	    /* 로딩 바 컨테이너 */
+		.loading-bar-container {
+		    width: 80%; /* 전체 바의 너비 */
+		    height: 10px; /* 바의 높이 */
+		    background-color: #f3f3f3; /* 바 배경색 */
+		    border-radius: 5px;
+		    overflow: hidden;
+		    margin: 0 auto; /* 가운데 정렬 */ 
+		    position: relative;
+		}
+		 
+		/* 로딩 바 */
+		.loading-bar {
+		    width: 0%; /* 초기 너비 */
+		    height: 100%;
+		    background-color: #4caf50; /* 로딩 바 색상 */
+		    animation: loadingAnimation 120s linear infinite; /* 애니메이션 추가 */
+		    border-radius: 5px;
+		}
+		
+		/* 로딩 애니메이션 */
+		@keyframes loadingAnimation {
+		    0% {
+		        width: 0%;
+		    }
+		    10% {
+		        width: 10%;
+		    }
+		    20% {
+		        width: 20%;
+		    }
+		    30% {
+		        width: 30%;
+		    }
+		    40% {
+		        width: 40%;
+		    }
+		    50% {
+		        width: 50%;
+		    }
+		    60% {
+		        width: 60%;
+		    }
+		    70% { 
+		        width: 70%;
+		    }
+		    80% {
+		        width: 80%;
+		    }
+		    90% {
+		        width: 90%;
+		    }
+		    100% {
+		        width: 100%;
+		    }
+		    
+		}
     </style> 
 </head>
 <body>
+	<div id="loading" style="display: none;">
+	    <div class="loading-bar-container">
+	        <div class="loading-bar"></div>
+	    </div>
+	    <p>데이터를 처리 중입니다. 잠시만 기다려주세요...(최대 1~2 분 소요)</p>
+	</div>
+
+
 	<button id="download-pdf">PDF 다운로드</button>
 	<%@ include file="/WEB-INF/inc/top.jsp" %>
     <div id="capture-div" class="container1">  
         <h1>에너지 결과 페이지</h1>
+        <h5>건물명 : ${userB.buildingName }</h5>
         <h5>건물명 : ${userB.buildingName }</h5>
         <div class="content">
             <div class="left-section">
@@ -667,6 +748,7 @@
 
 	</script>
 	<script type="text/javascript">
+
 	
 		document.getElementById("download-pdf").addEventListener("click", function () {
 	        // A4 크기 (pt 단위)

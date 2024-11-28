@@ -21,6 +21,7 @@ public class MyBuildingDTO {
 	private String buildingImg;
 	private String testYn;
 	private String zebTestYn;
+	private int zebLevel;
 	
 	public MyBuildingDTO() {
 		super();
@@ -29,7 +30,7 @@ public class MyBuildingDTO {
 	public MyBuildingDTO(String memId, String buildingName, String buildingId, String roadAddress, String jibunAddress,
 			String extraAddress, String climate, String residentialType, String structureType, int squareMeterArea,
 			int floors, int doors, String insulationLevel, String windowLevel, String ventilationSystem,
-			double solarPanelKW, String buildingImg, String testYn, String zebTestYn) {
+			double solarPanelKW, String buildingImg, String testYn, String zebTestYn, int zebLevel) {
 		super();
 		this.memId = memId;
 		this.buildingName = buildingName;
@@ -50,6 +51,7 @@ public class MyBuildingDTO {
 		this.buildingImg = buildingImg;
 		this.testYn = testYn;
 		this.zebTestYn = zebTestYn;
+		this.zebLevel = zebLevel;
 	}
 
 	@Override
@@ -60,7 +62,7 @@ public class MyBuildingDTO {
 				+ ", squareMeterArea=" + squareMeterArea + ", floors=" + floors + ", doors=" + doors
 				+ ", insulationLevel=" + insulationLevel + ", windowLevel=" + windowLevel + ", ventilationSystem="
 				+ ventilationSystem + ", solarPanelKW=" + solarPanelKW + ", buildingImg=" + buildingImg + ", testYn="
-				+ testYn + ", zebTestYn=" + zebTestYn + "]";
+				+ testYn + ", zebTestYn=" + zebTestYn + ", zebLevel=" + zebLevel + "]";
 	}
 
 	public String getMemId() {
@@ -215,8 +217,15 @@ public class MyBuildingDTO {
 		this.zebTestYn = zebTestYn;
 	}
 
-	
+	public int getZebLevel() {
+		return zebLevel;
+	}
 
+	public void setZebLevel(int zebLevel) {
+		this.zebLevel = zebLevel;
+	}
+
+	
 	
 	
 	
