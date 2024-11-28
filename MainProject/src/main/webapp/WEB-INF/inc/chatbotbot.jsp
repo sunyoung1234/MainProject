@@ -384,21 +384,11 @@
 		<!-- 채팅방 영역 -->
 		<div class="chat-room" id="chatRoom">
 		    <div class="chat-area" id="chatArea"></div>
-	        <button id="endChat">채팅 종료</button> 
 		    <div class="chat-input">
 		        <input type="text" id="userMessage" placeholder="메시지를 입력하세요..." />
 		        <button id="sendMessage">전송</button>
 		    </div>
-		    		<!-- 종료 확인 모달 -->
-			<div id="confirmModal" class="modal">
-			    <div class="modal-content">
-			        <p>정말로 종료하시겠습니까?</p>
-			        <div class="modal-actions">
-			            <button id="confirmExit" class="confirm-btn">확인</button>
-			            <button id="cancelExit" class="cancel-btn">취소</button>
-			        </div> 
-			    </div>
-			</div>
+		    
 		</div>
 		
 
@@ -441,7 +431,7 @@
 		    
 		    // 여기서 채팅방 리시트 보여주고 채팅방 클릭시 번호를 따와서 연결시키면 끝
 		    
-		    var roomNo = 155;
+		    var roomNo = 233;
 		    var messageInput = $('#userMessage');
 			// 소켓 통신 객체 생성 (sockjs 객체에 WebSocketConfig에서 설정한 /endpoint 주소 입력)
 			var sock = new SockJS("${pageContext.request.contextPath}/endpoint");
@@ -457,7 +447,7 @@
 					chatMsg : messageContent,
 					memId : "${sessionScope.login.memId }",
 					memName : "${sessionScope.login.memName }",
-					roomNo : 155
+					roomNo : 233
 				}));
 				messageInput.val('');
 			})  
@@ -466,7 +456,7 @@
 			// 연결이 맺어지면 실행
 			client.connect({},function() {
 				// 상대방이 보낸 메세지 전달 받을 때마다 실행         
-				client.subscribe('/subscribe/chat/'+ 155, function(chat) {
+				client.subscribe('/subscribe/chat/'+ 233, function(chat) {
 					// 받은 데이터
 					let content = JSON.parse(chat.body);
 					
@@ -532,19 +522,27 @@
 						}));
 						messageInput.val('');
 					})  
-					
+					client.debug = function(message) {
+					    console.log("STOMP debug:", message); // 디버그 메시지 출력
+					};
 					
 					// 연결이 맺어지면 실행
 					client.connect({},function() {
+						
+						console.log(response.roomNo); 
 						// 상대방이 보낸 메세지 전달 받을 때마다 실행         
 						client.subscribe('/subscribe/chat/'+ response.roomNo, function(chat) {
 							// 받은 데이터
+							console.log("subscribe success");
+							
 							let content = JSON.parse(chat.body);
 							// 받은 데이터를 그려줄 html 코드
 							let v_tag = renderList(content);
 							$("#chatArea").append(v_tag); 
 							
-						});
+						},function(error) {
+						    console.error("Subscription error:", error); // 구독 실패 시 오류 출력
+						}); 
 			
 					});
 				    
@@ -562,7 +560,7 @@
 			var date = vo.sendDate;
 			var html = "";
 			var content ="";
-			
+			 
 			//내가 보낸 채팅일 경우
 			if(vo.memId=="${sessionScope.login.memId }"){
 				const userMessage = document.createElement('div');
@@ -580,9 +578,11 @@
 		        
 		          html = agentMessage
 			}
+			console.log(html);
 			return html;
 		}
 		
+
 		
 
 		// 종료 버튼 클릭 이벤트
@@ -619,6 +619,7 @@
 		    const confirmModal = document.getElementById('confirmModal');
 		    confirmModal.style.display = 'none'; // 모달 닫기
 		});
+
 
 
 		

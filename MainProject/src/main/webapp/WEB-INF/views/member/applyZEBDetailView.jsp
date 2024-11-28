@@ -173,6 +173,8 @@
 	        color: #003865; /* 더 어두운 색상으로 변경 */
 	    }
     </style>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e0184ed647e553cf5795a108feda8a4a&libraries=clusterer,services"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e0184ed647e553cf5795a108feda8a4a"></script>
 </head>
 <body>
     <h1>ZEB 신청내용</h1>
@@ -214,6 +216,7 @@
                 </tr>
             </tbody>
         </table>
+        <div style="display:none;" id="roadAddress">${road }</div>
 		<c:if test="${apply.rejectYn == 'N' && apply.approveYn == 'N' }">
 	        <form id="submitForm" action="${pageContext.request.contextPath }/applyResult" method="post">
 	            <!-- 승인 여부 -->
@@ -246,6 +249,11 @@
 	                <label for="rejectReason">거절 사유</label>
 	                <input id="rejectReason" name="rejectReason" type="text" placeholder="거절 사유를 입력해주세요">
 	            </div>
+	            
+	            <input id="latitude" name="latitude">
+	            <input id="longitude" name="longitude">
+	            
+	            
 	
 	            <!-- 버튼 -->
 	            <div class="button-container">
@@ -288,6 +296,21 @@
         	location.href = "${pageContext.request.contextPath}/downLoadFile?fileName=" + fileName;
         	
         })
+        
+        
+        var geocoder = new kakao.maps.services.Geocoder();
+
+		var callback = function(result, status) {
+		    if (status === kakao.maps.services.Status.OK) {
+		        console.log(result[0].x);
+		        console.log(result[0].y);
+		        document.querySelector('#latitude').value = result[0].y;
+		        document.querySelector('#longitude').value = result[0].x;
+		    }
+		};
+
+		geocoder.addressSearch(document.querySelector('#roadAddress').innerHTML, callback);
     </script>
+    
 </body>
 </html>

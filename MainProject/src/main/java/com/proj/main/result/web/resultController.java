@@ -20,6 +20,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.proj.main.ReflectionMapper;
+import com.proj.main.map.dto.ZeroDTO;
+import com.proj.main.map.service.MapService;
 import com.proj.main.member.dto.MemberDTO;
 import com.proj.main.member.dto.MyBuildingDTO;
 import com.proj.main.member.service.MemberService;
@@ -37,6 +39,8 @@ public class resultController {
 	ResultService rs;
 	@Autowired
 	MemberService ms;
+	@Autowired
+	MapService mapService;
 	
 	
 	@RequestMapping("/inputView")
@@ -236,7 +240,7 @@ public class resultController {
 	    return response.getBody();
 	}
 	
-	@RequestMapping("/applyResult")
+	@RequestMapping("/applyResult") 
 	public String applyResult(ApplyResultDTO ar) {
 	
 		rs.applyResult(ar);
@@ -247,6 +251,10 @@ public class resultController {
 		rs.updateApplyStatus(ar.getBuildingId());
 		
 		ms.updateZebTestYn(mb);
+		
+		MyBuildingDTO myBuilding = ms.getMyBuildingsByBuildingId(ar.getBuildingId());
+		
+		ZeroDTO zero = new ZeroDTO();
 		
 		return "redirect:/applyStatusView";
 	}

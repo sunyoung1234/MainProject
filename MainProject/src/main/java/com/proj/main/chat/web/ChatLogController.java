@@ -91,7 +91,8 @@ public class ChatLogController {
         // 날짜 설정 후 반환
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         chat.setSendDate(sdf.format(new Date()));
-
+        
+        System.out.println(chat);
         return chat;
     }
     

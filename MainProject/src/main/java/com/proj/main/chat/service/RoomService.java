@@ -19,23 +19,19 @@ public class RoomService {
 		return result;
 	};
 	
-	public RoomDTO getRoom(int roomNo) { 	
+	public RoomDTO getRoom(int roomNo) {
 		RoomDTO result = dao.getRoom(roomNo);
 		return result;
 	};
 	
-	public int createRoom(String roomName, String memName) {
-	    RoomDTO room = new RoomDTO();
-	    room.setRoomName(roomName);
-	    room.setMemName(memName);
-	    return dao.createRoom(room);  // DAO에서 createRoom 호출
-	}
+	public int createRoom(RoomDTO room) {
+		int result = dao.createRoom(room);
+		return result;
+	};
 	
 	
 	public int deleteRoom(int roomNo) {
 		int result = dao.deleteRoom(roomNo);
 		return result;
 	};
-	
-	
 }
