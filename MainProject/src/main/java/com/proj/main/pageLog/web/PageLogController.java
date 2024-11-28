@@ -1,5 +1,6 @@
 package com.proj.main.pageLog.web;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,12 +18,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.proj.main.member.dto.MemberDTO;
 import com.proj.main.pageLog.dto.PageLogDTO;
 import com.proj.main.pageLog.service.PageLogService;
+import com.proj.main.usersession.dto.UserSessionDTO;
+import com.proj.main.usersession.service.UserService;
 
 @Controller
 public class PageLogController {
 	
 	@Autowired
 	PageLogService pageLogService;
+	
+	@Autowired
+	UserService userSessionService;
 	
 	@RequestMapping("/adminView")
 	public String adminView(HttpSession session, String memId, Model model ) {
@@ -72,8 +78,56 @@ public class PageLogController {
 		model.addAttribute("logMemId", logMemId);
 		model.addAttribute("logPageName", logPageName);
 		
-		
 		System.out.println(logAll);
+		
+		/////////////////////////////////////////////////////
+		// userSession
+
+		// 평균 접속 시간
+		List<UserSessionDTO> userAvgDuration = userSessionService.selectAvgDuration();
+		
+		List<String> userAvgDurationName = new ArrayList<>();
+		List<Long> userAvgDurationNumber = new ArrayList<>();
+		
+		for(UserSessionDTO item5 : userAvgDuration) {
+			userAvgDurationName.add(item5.getMemId());
+			userAvgDurationNumber.add(item5.getSessionDuration());
+		}
+		
+		System.out.println(userAvgDurationName.size());
+		int userAllCount = userAvgDurationName.size();
+		
+		long sum = 0;
+		for(int i = 0; i < userAvgDurationNumber.size(); i++) {
+			sum += userAvgDurationNumber.get(i);
+		}
+		
+		System.out.println("sum");
+		System.out.println(sum);
+		System.out.println(sum/3);
+		System.out.println(Math.round(sum)/userAvgDurationNumber.size());
+		long userAllAvg = Math.round(sum)/userAvgDurationNumber.size();
+		model.addAttribute("userAllCount",userAllCount);
+		model.addAttribute("userAllAvg",userAllAvg);
+		
+		System.out.println("dssdfsdf");
+		System.out.println(userAvgDuration);
+		System.out.println(userAvgDurationName);
+		System.out.println(userAvgDurationNumber);
+		
+		// 어제 오늘 접속자 (중복x)
+		int yesterdayCount = userSessionService.yesterdayUserCount();
+		int todayCount = userSessionService.todayUserCount();
+		model.addAttribute("yesterdayCount",yesterdayCount);
+		model.addAttribute("todayCount",todayCount);
+		System.out.println(yesterdayCount);
+		System.out.println(todayCount);
+		
+		int yesterdayUserAvg = userSessionService.yesterdayUserAvg();
+		int todayUserAvg = userSessionService.todayUserAvg();
+		
+		model.addAttribute("yesterdayUserAvg",yesterdayUserAvg);
+		model.addAttribute("todayUserAvg",todayUserAvg);
 		
 		return "admin/adminView";
 	}

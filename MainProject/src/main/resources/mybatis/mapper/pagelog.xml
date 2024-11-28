@@ -21,6 +21,7 @@
 		    TO_CHAR(LAST_VISIT_DATE, 'YYYY-MM-DD HH24:MI:SS') AS LAST_VISIT_DATE
 		FROM page_log
 		WHERE MEM_ID = #{memId}
+		AND MEM_ID != 'admin'
 	</select>
 	
 	<select id="allSelectPageLog" resultType="com.proj.main.pageLog.dto.PageLogDTO">
@@ -28,6 +29,7 @@
 		    PAGE_NAME,
 		    sum(VISIT_COUNT) as visit_count
 		FROM page_log
+		WHERE MEM_ID != 'admin'
 		group by page_name
 	</select>
 	
@@ -35,12 +37,14 @@
 		SELECT 
 		   Distinct(MEM_ID)
 		FROM page_log
+		WHERE MEM_ID != 'admin'
 	</select>
 	
 	<select id="distinctpageName" resultType="com.proj.main.pageLog.dto.PageLogDTO">
 		SELECT 
 		    distinct(page_name)
 		FROM page_log
+		WHERE MEM_ID != 'admin'
 	</select>
 	
 	<select id="pageNameSelectPageLog" parameterType="String" resultType="com.proj.main.pageLog.dto.PageLogDTO">
@@ -49,6 +53,7 @@
 		    visit_count
 		FROM page_log
 		where page_name = #{pageName}
+		AND MEM_ID != 'admin'
 	</select>
 
 </mapper>
