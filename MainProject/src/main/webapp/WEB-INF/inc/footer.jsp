@@ -34,7 +34,7 @@
     </main>
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
+        <div class="footer-container">
             <p class="m-0 text-center">Copyright &copy; GreenSolution 2024</p>
         </div>
     </footer>
