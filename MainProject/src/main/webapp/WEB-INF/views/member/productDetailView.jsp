@@ -168,8 +168,6 @@
 			<div class="product-division1">
 				<a class="product-division1-color" href="${pageContext.request.contextPath }/productView">제품</a>
 			</div>
-			<div class="product-division2">설비</div>
-			<div class="product-division3">신재생 에너지</div>
 		</div>
 		<div class="product-list">
 			<c:forEach items="${productCategory }" var="product">

@@ -22,6 +22,7 @@
 		FROM page_log
 		WHERE MEM_ID = #{memId}
 		AND MEM_ID != 'admin'
+		order by visit_count desc
 	</select>
 	
 	<select id="allSelectPageLog" resultType="com.proj.main.pageLog.dto.PageLogDTO">
@@ -31,6 +32,7 @@
 		FROM page_log
 		WHERE MEM_ID != 'admin'
 		group by page_name
+		order by visit_count desc
 	</select>
 	
 	<select id="memIdSelectPageLog" resultType="com.proj.main.pageLog.dto.PageLogDTO">
@@ -52,8 +54,22 @@
 		    mem_id,
 		    visit_count
 		FROM page_log
-		where page_name = #{pageName}
+		WHERE 1 = 1
+		AND page_name = #{pageName}
 		AND MEM_ID != 'admin'
+		order by visit_count desc
 	</select>
+	
+	<select id="selectIdPageCount"  resultType="com.proj.main.pageLog.dto.PageLogDTO">
+		SELECT 
+	    	mem_id,
+		    sum(visit_count) as VISIT_COUNT
+		FROM page_log
+		WHERE mem_id != 'admin'
+		group by mem_id
+		order by visit_count desc
+	</select>
+
+
 
 </mapper>

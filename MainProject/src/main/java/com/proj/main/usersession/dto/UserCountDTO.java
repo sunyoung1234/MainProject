@@ -2,40 +2,67 @@ package com.proj.main.usersession.dto;
 
 public class UserCountDTO {
 	
-	private long yesterdayUserCount;
-	private long todayUserCount;
+	private String loginDate;
+	private String loginHour;
+	private String loginCount;
 	
 	public UserCountDTO() {
 		super();
 	}
+	
+	
 
-	public UserCountDTO(long yesterdayUserCount, long todayUserCount) {
+	public UserCountDTO(String loginDate, String loginHour, String loginCount) {
 		super();
-		this.yesterdayUserCount = yesterdayUserCount;
-		this.todayUserCount = todayUserCount;
+		this.loginDate = loginDate;
+		this.loginHour = loginHour;
+		this.loginCount = loginCount;
 	}
+
+
 
 	@Override
 	public String toString() {
-		return "UserCountDTO [yesterdayUserCount=" + yesterdayUserCount + ", todayUserCount=" + todayUserCount + "]";
+		return "UserCountDTO [loginDate=" + loginDate + ", loginHour=" + loginHour + ", loginCount=" + loginCount + "]";
 	}
 
-	public long getYesterdayUserCount() {
-		return yesterdayUserCount;
+
+
+	public String getLoginDate() {
+		return loginDate;
 	}
 
-	public void setYesterdayUserCount(long yesterdayUserCount) {
-		this.yesterdayUserCount = yesterdayUserCount;
+
+
+	public void setLoginDate(String loginDate) {
+		this.loginDate = loginDate;
 	}
 
-	public long getTodayUserCount() {
-		return todayUserCount;
+
+
+	public String getLoginHour() {
+		return loginHour;
 	}
 
-	public void setTodayUserCount(long todayUserCount) {
-		this.todayUserCount = todayUserCount;
+
+
+	public void setLoginHour(String loginHour) {
+		this.loginHour = loginHour;
 	}
 
+
+
+	public String getLoginCount() {
+		return loginCount;
+	}
+
+
+
+	public void setLoginCount(String loginCount) {
+		this.loginCount = loginCount;
+	}
+
+	
 	
 	
 	

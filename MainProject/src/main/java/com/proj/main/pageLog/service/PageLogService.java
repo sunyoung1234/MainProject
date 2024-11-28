@@ -44,4 +44,11 @@ public class PageLogService {
 		return result;
 		
 	}
+	
+	public List<PageLogDTO> selectIdPageCount(){
+		List<PageLogDTO> result = dao.selectIdPageCount();
+		return result;
+	}
+	
+	
 }

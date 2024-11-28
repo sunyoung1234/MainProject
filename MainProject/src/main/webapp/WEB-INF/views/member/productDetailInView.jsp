@@ -55,6 +55,12 @@
 		margin-left: 400px;
 	}
 	
+	.product-division1:hover{
+		cursor: pointer;
+		color:black;
+		background-color: yellow;  
+	}
+	
 	.product-division2{
 		background-color: #6AAAEC;
 		color:white;
@@ -96,6 +102,8 @@
 		padding-left:50px;
 		margin-top:50px;
 		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+		padding-top:50px;
+		padding-bottom:50px;
 	}
 	
 	.product-img{
@@ -148,11 +156,9 @@
 	<div class="main-height">
 		<div class="product-division">
 			<div class="product-division1">
-				<a class="product-division1-color" href="${pageContext.request.contextPath }/productView">제품</a>
+				뒤로가기
 			</div>
-			<div class="product-division2">설비</div>
-			<div class="product-division3">신재생 에너지</div>
-		</div>
+		</div> 
 		<div class="context-box">
 			<div class="product-img">
 				<img class="image" src="${getProduct.productImage }">
@@ -249,6 +255,11 @@
 		    });
 	
 		}
+		
+		document.querySelector(".product-division1").addEventListener("click", ()=>{
+			window.history.back()
+		})
+		
 	</script>
     
 </body>
