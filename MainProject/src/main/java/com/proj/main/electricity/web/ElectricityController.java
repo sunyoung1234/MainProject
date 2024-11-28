@@ -55,17 +55,7 @@ public class ElectricityController {
 	@Autowired
 	PageLogService pageLogService;
 	
-	@Autowired
-	UserService userService;
 	
-	// 세션 연장 요청 처리
-    @ResponseBody
-    @RequestMapping("/keep-session-alive")
-    public String keepSessionAlive(HttpSession session) {
-        // 세션 타임아웃을 30분으로 연장
-        session.setMaxInactiveInterval(30 * 60); // 30분
-        return "{\"message\": \"세션이 연장되었습니다\"}";
-    }
 	
 	
 	@RequestMapping("/ocrView")
@@ -85,7 +75,7 @@ public class ElectricityController {
 		log.setMemId(memId);
 		log.setPageName("OCR");
 		
-		userService.insertLoginUser(memId);
+		
 		
 		
 		pageLogService.insertPageLog(log);
@@ -222,8 +212,7 @@ public class ElectricityController {
         
         String memId = login.getMemId();
         
-        userService.updateLogoutTime(memId);
-        userService.updateTimeCalc(memId);
+        
         
         
         PageLogDTO log = new PageLogDTO();

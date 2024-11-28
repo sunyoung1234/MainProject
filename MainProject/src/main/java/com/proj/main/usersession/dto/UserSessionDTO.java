@@ -16,14 +16,14 @@ public class UserSessionDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp logoutTime;             // 로그아웃 시간
     
-    private Duration sessionDuration;         // 세션 지속 시간 (Duration 타입 사용)
+    private long sessionDuration;         // 세션 지속 시간 (Duration 타입 사용)
 	
     public UserSessionDTO() {
 		super();
 	}
 
 	public UserSessionDTO(int sessionId, String memId, Timestamp loginTime, Timestamp logoutTime,
-			Duration sessionDuration) {
+			long sessionDuration) {
 		super();
 		this.sessionId = sessionId;
 		this.memId = memId;
@@ -70,13 +70,14 @@ public class UserSessionDTO {
 		this.logoutTime = logoutTime;
 	}
 
-	public Duration getSessionDuration() {
+	public long getSessionDuration() {
 		return sessionDuration;
 	}
 
-	public void setSessionDuration(Duration sessionDuration) {
+	public void setSessionDuration(long sessionDuration) {
 		this.sessionDuration = sessionDuration;
 	}
+
 	
     
     
