@@ -516,6 +516,11 @@ public class MemberController {
     	TestResultDTO tr = memberService.getTestResult(bId);
     	tr.getZebGrade();
     	mo.addAttribute("grade", tr.getZebGrade()); 
+    	MyBuildingDTO myBuilding = memberService.getMyBuildingsByBuildingId(bId);
+    	String roadAddress = myBuilding.getRoadAddress();
+    	System.out.println(roadAddress);
+    	
+    	mo.addAttribute("road", roadAddress); 
     	
         return "member/applyZEBDetailView";
     }

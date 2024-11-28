@@ -22,7 +22,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
         // 메시지를 클라이언트로 발송할 브로커를 설정
-        config.enableSimpleBroker("/topic");  // 클라이언트가 메시지를 받는 경로 설정
+        config.enableSimpleBroker("/subscribe");  // 클라이언트가 메시지를 받는 경로 설정 
         
         // 클라이언트가 서버로 요청할 경로 설정
         config.setApplicationDestinationPrefixes("/app");  // 메시지를 서버로 보낼 때 경로 접두사
