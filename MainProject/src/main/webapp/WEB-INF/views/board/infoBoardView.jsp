@@ -50,6 +50,10 @@ body {
 	align-items: center;
 }
 
+.info-item img {
+	
+}
+
 .info-item:last-child {
 	border-bottom: none;
 }
@@ -174,6 +178,7 @@ body {
 	color: #555;
 	margin-bottom: 30px;
 	line-height: 1.5;
+	text-align: center;
 }
 
 .intro-boxes {
@@ -201,6 +206,7 @@ body {
 	text-align: center;
 	border-radius: 8px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	background-color: rgba(0, 86, 179, 0.8);
 }
 
 .info-bar h3 {
@@ -280,7 +286,7 @@ body {
 }
 
 .intro-footer {
-	margin:auto;
+	margin: auto;
 	margin-top: 50px;
 	width: 100%;
 	font-size: 14px;
@@ -291,6 +297,156 @@ body {
 	padding: 10px 15px;
 	background-color: rgba(0, 86, 179, 0.8);
 	color: white;
+	width: 100%;
+}
+</style>
+
+<style>
+.energy-certification-section {
+	margin: 50px auto;
+	padding: 20px;
+	max-width: 1200px;
+	background-color: white;
+	border-radius: 8px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	text-align: center;
+}
+
+.section-title {
+	font-size: 24px;
+	font-weight: bold;
+	margin-bottom: 15px;
+}
+
+.section-description {
+	font-size: 16px;
+	color: #666;
+	margin-bottom: 30px;
+}
+
+.table {
+	width: 100%;
+	border: 1px solid #ddd;
+}
+
+.table th, .table td {
+	text-align: center;
+	padding: 10px;
+	border: 1px solid #ddd;
+	font-size: 14px;
+}
+
+.table th {
+	background-color: #0056b3;
+	color: black;
+	font-weight: bold;
+	text-align: center;
+}
+
+.table-hover tbody tr:hover {
+	background-color: #f1f1f1;
+}
+</style>
+<style>
+.certification-blocks {
+	display: flex;
+	justify-content: center; /* 중앙 정렬 */
+	align-items: stretch; /* 세로 방향으로 높이 일치 */
+	gap: 20px; /* 박스 간격 */
+}
+
+
+
+.certification-block {
+	flex: 1; /* 동일한 너비 */
+	background-color: white;
+	border-radius: 8px;
+	padding: 15px; /* 내부 여백 */
+	display: flex;
+	flex-direction: column; /* 세로 정렬 */
+	justify-content: space-between; /* 아이템 간 간격 조정 */
+	align-items: center; /* 중앙 정렬 */
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	font-size: 14px;
+	color: #0056b3;
+	text-decoration: none;
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+.certification-block:hover {
+	transform: scale(1.05);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.certification-block p {
+	margin: 10px 0;
+	text-align: center; /* 텍스트 중앙 정렬 */
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.certification-block:nth-child(2):p{
+
+}
+
+.certification-block a{
+	text-decoration: none;
+}
+
+.icon-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.icon-container img {
+	width: 80px;
+	height: 80px;
+	object-fit: contain;
+	cursor: pointer;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	justify-content: center;
+	align-items: center;
+	z-index: 999;
+}
+
+.modal-content {
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	max-width: 600px;
+	width: 80%;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	text-align: center;
+}
+
+.modal-content h4 {
+	margin-top: 0;
+	font-size: 20px;
+	color: #0056b3;
+}
+
+.modal-content p {
+	font-size: 14px;
+	color: #333;
+}
+
+.close-btn {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+	font-size: 24px;
+	cursor: pointer;
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -303,7 +459,7 @@ body {
 	<!-- Navigation END -->
 
 	<!-- 상세 메뉴 바 -->
-	<%@ include file="/WEB-INF/inc/subnavbarBoard.jsp"%>
+	<%@ include file="/WEB-INF/inc/subnavbarMap.jsp"%>
 
 
 
@@ -321,7 +477,7 @@ body {
 				<div class="info-wrapper">
 					<div class="info-bar">
 						<h3>패시브</h3>
-						<p>냉·난방 에너지요구량 최소화 </p>
+						<p>냉·난방 에너지요구량 최소화</p>
 						<p>(단열·기밀성능 강화 등)</p>
 						<p></p>
 					</div>
@@ -341,7 +497,7 @@ body {
 				<div class="info-wrapper">
 					<div class="info-bar">
 						<h3>액티브</h3>
-						<p>에너지 소비량 최소화 </p>
+						<p>에너지 소비량 최소화</p>
 						<p>(고효율 설비, BEMS 적용)</p>
 					</div>
 					<div class="intro-box"
@@ -360,7 +516,7 @@ body {
 				<div class="info-wrapper">
 					<div class="info-bar">
 						<h3>신재생</h3>
-						<p>신재생에너지 생산 </p>
+						<p>신재생에너지 생산</p>
 						<p>(태양광, 지열, 연료전지 등)</p>
 					</div>
 					<div class="intro-box"
@@ -370,6 +526,130 @@ body {
 			</div>
 			<p class="intro-footer">신축 건물부문 온실가스 감축 핵심 이행방안으로 제로에너지건축물 보급확산
 				필요</p>
+		</div>
+
+
+		<div class="certification-intro">
+			<h3 class="section-title">제로에너지건축물 인증/의무 대상</h3>
+			<p class="intro-description">
+				(인증대상) 건축물 에너지효율등급 인증대상 중 건축주가 제로에너지건축물 인증을 신청하는 건물 <br> <span
+					class="sub-text">* 단독·공동주택, 업무시설, 근린생활시설 등 다부문 용도의 건축물을 포함</span>
+			</p>
+			<div class="certification-blocks">
+				<!-- 왼쪽 박스 -->
+				<div class="certification-block" id="modal-trigger">
+					<p>(참고) 제로에너지건축물 인증대상 건축물의 범위</p>
+					<div class="icon-container">
+						<img
+							src="${pageContext.request.contextPath}/resources/image/modal_img.png"
+							alt="모달 열기">
+					</div>
+				</div>
+				<!-- 오른쪽 박스 -->
+				<div class="certification-block">
+					<a
+						href="https://law.go.kr/%EB%B2%95%EB%A0%B9%EB%B3%84%ED%91%9C%EC%84%9C%EC%8B%9D/(%EA%B1%B4%EC%B6%95%EB%B2%95%EC%8B%9C%ED%96%89%EB%A0%B9,%EB%B3%84%ED%91%9C1)"
+						target="_blank">
+						<p>(참고) 건축법 시행령 별표1</p>
+						<div class="icon-container">
+							<img
+								src="${pageContext.request.contextPath}/resources/image/href_img.png"
+								alt="외부 링크">
+						</div>
+					</a>
+				</div>
+			</div>
+			<p class="intro-footer">신축·재축 또는 기존 건축물의 대지에 범위의 건축물을 증축하는 연면적
+				500㎡ 이상의 에너지절약계획서 (30세대 이상의 공동주택의 경우 친환경 주택 에너지절약계획) 제출 대상의 공공 건축물은
+				인증 표시 의무 대상 건축물에 해당</p>
+		</div>
+
+		<!-- 모달 창 -->
+		<div id="modal" class="modal hidden">
+			<div class="modal-content">
+				<span id="close-modal" class="close-btn">&times;</span>
+				<h6>「건축물 에너지효율등급 인증 및 제로에너지건축물 인증에 관한 규칙」제2조</h6>
+				<p>
+					제2조(적용대상) 「녹색건축물 조성 지원법」 (이하 "법"이라 한다) 제17조제5항 및 「녹색건축물 조성 지원법 시행령」
+					(이하 "영"이라 한다) 제12조제1항에 따른 건축물 에너지효율등급 인증 및 제로에너지건축물 인증은 「건축법 시행령」
+					별표 1 각 호에 따른 건축물을 대상으로 한다. 다만, 「건축법 시행령」 별표 1 제3호부터 제13호까지 및 제15호부터
+					제29호까지의 규정에 따른 건축물 중 국토교통부장관과 산업통상자원부장관이 공동으로 고시하는 실내 냉방·난방 온도
+					설정조건으로 인증 평가가 불가능한 건축물 또는 이에 해당하는 공간이 전체 연면적의 100분의 50 이상을 차지하는
+					건축물은 제외한다.
+					<개정2015.11.18., 2017. 1. 20., 2021. 8. 23.>
+				</p>
+			</div>
+		</div>
+
+
+
+		<div class="energy-certification-section">
+			<h3 class="section-title">
+				「녹색건축물 조성 지원법」 시행령
+				<개정2022.12.27>
+			</h3>
+			<p class="section-description">에너지효율등급 인증 또는 제로에너지건축물 인증 표시 의무 대상
+				건축물</p>
+			<div class="table-responsive">
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>요건</th>
+							<th>에너지효율등급 인증 표시 의무 대상</th>
+							<th>제로에너지건축물 인증 및 에너지효율등급 인증 표시 의무 대상</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>소유 또는 관리주체</td>
+							<td>가. 제9조제2항 각 호의 기관<br>나. 교육관<br>다. 공공주택 특별법
+								제4조에 따른 공공주택사업자
+							</td>
+							<td>가. 제9조제2항 각 호의 기관<br>나. 교육관<br>다. 공공주택 특별법
+								제4조에 따른 공공주택사업자
+							</td>
+						</tr>
+						<tr>
+							<td>건축 및 리모델링의 범위</td>
+							<td>신축·재축 또는 증축하는 경우일 것.<br> 단, 증축의 경우에는 기존 건축물의 대지에
+								범위가<br> 건축물로 증축하는 경우로 한정한다.
+							</td>
+							<td>신축·재축 또는 증축하는 경우일 것.<br> 단, 증축의 경우에는 기존 건축물의 대지에
+								범위가<br> 건축물로 증축하는 경우로 한정한다.
+							</td>
+						</tr>
+						<tr>
+							<td>건축물의 범위</td>
+							<td>법 제17조제5항제1호에 따라 국토교통부와 산업통상자원부의<br> 공동 부령으로 정하는
+								건축물<br> 단, 「건축법 시행령」 별표 1 제2호 라목에 따른 기숙사<br> (아파트 기숙사만
+								해당한다)는 제외한다.
+							</td>
+							<td>법 제17조제5항제1호에 따라 국토교통부와 산업통상자원부의<br> 공동 부령으로 정하는
+								건축물<br> 단, 「건축법 시행령」 별표 1 제2호 라목에 따른 기숙사<br> (아파트 기숙사만
+								해당한다)는 제외한다.
+							</td>
+						</tr>
+						<tr>
+							<td>공동주택의 세대수 또는 건축물의 면적적</td>
+							<td>가. 공동주택의 경우: 전체 세대 수 30세대 이상<br> 나. 기숙사의 경우: 연면적 3천
+								제곱미터 이상<br> 다. 공공주택 외의 건축물의 경우: 연면적 5백제곱미터 이상
+							</td>
+							<td>가. 공동주택의 경우: 전체 세대 수 30세대 이상<br> 나. 기숙사의 경우: 연면적 3천
+								제곱미터 이상<br> 다. 공공주택 외의 건축물의 경우: 연면적 5백제곱미터 이상
+							</td>
+						</tr>
+						<tr>
+							<td>에너지 절약계획서 등 제출 대상 여부</td>
+							<td>가. 공동주택의 경우: 「주택법」시행규칙 등에 관한 규정<br> 나. 제64조제2항에 따른
+								친환경 주택 에너지 절약계획서 제출 대상
+							</td>
+							<td>가. 공동주택 외의 건축물의 경우: 법 제14조제1항에 따른<br> 에너지 절약계획서 제출
+								대상일 것
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 
 
@@ -392,23 +672,6 @@ body {
 		</ul>
 	</div>
 
-<div class="info-container">
-    <div class="section-title">관련정보</div>
-    <div class="info-boxes">
-        <!-- 첫 번째 박스 -->
-        <div class="info-box">
-            <img src="${pageContext.request.contextPath}/resources/image/제로 에너지 건축 의무화 로드맵.png" 
-                 alt="제로 에너지 건축 의무화 로드맵"
-                 style="width: 100%; height: auto; border-radius: 8px;">
-        </div>
-        <!-- 두 번째 박스 -->
-        <div class="info-box">
-            <img src="${pageContext.request.contextPath}/resources/image/example2.jpg" 
-                 alt="Example 2"
-                 style="width: 100%; height: auto; border-radius: 8px;">
-        </div>
-    </div>
-</div>
 
 
 	<footer class="footer py-5 bg-dark">
@@ -416,5 +679,21 @@ body {
 			GreenSolution</p>
 	</footer>
 
+	<script>
+document.getElementById('modal-trigger').addEventListener('click', () => {
+    document.getElementById('modal').style.display = 'flex';
+});
+
+document.getElementById('close-modal').addEventListener('click', () => {
+    document.getElementById('modal').style.display = 'none';
+});
+
+window.addEventListener('click', (e) => {
+    const modal = document.getElementById('modal');
+    if (e.target === modal) {
+        modal.style.display = 'none';
+    }
+});
+</script>
 </body>
 </html>
