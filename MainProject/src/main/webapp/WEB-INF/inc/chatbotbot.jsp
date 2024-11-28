@@ -576,16 +576,49 @@
 		        agentMessage.textContent = vo.chatMsg;
 		        chatArea.appendChild(agentMessage);
 		        
-		        html = agentMessage
+		          html = agentMessage
 			}
 			console.log(html);
 			return html;
 		}
-
 		
 
 		
-		
+
+		// 종료 버튼 클릭 이벤트
+		document.querySelector('#endChat').addEventListener('click', function () {
+		    const confirmModal = document.getElementById('confirmModal');
+		    confirmModal.style.display = 'flex'; // 모달 열기
+		});
+
+		// "확인" 버튼 클릭 이벤트
+		document.querySelector('#confirmExit').addEventListener('click', function () {
+		    const chatRoom = document.getElementById('chatRoom');
+		    const chatbotContent = document.querySelector('.chatbot-content');
+		    const chatArea = document.getElementById('chatArea');
+		    const confirmModal = document.getElementById('confirmModal');
+
+		    // 연결 종료
+		    if (client && client.connected) {
+		        client.disconnect(() => {
+		            console.log('Chat session disconnected.');
+		        });
+		    }
+
+		    // 채팅방 닫기 및 초기화
+		    chatRoom.style.display = 'none';
+		    chatbotContent.style.display = 'block'; // 기본 챗봇 화면 다시 표시
+		    chatArea.innerHTML = '<button id="endChat">채팅 종료</button>'; // 채팅 내용 초기화
+
+		    // 모달 닫기
+		    confirmModal.style.display = 'none';
+		});
+
+		// "취소" 버튼 클릭 이벤트
+		document.querySelector('#cancelExit').addEventListener('click', function () {
+		    const confirmModal = document.getElementById('confirmModal');
+		    confirmModal.style.display = 'none'; // 모달 닫기
+		});
 
 
 

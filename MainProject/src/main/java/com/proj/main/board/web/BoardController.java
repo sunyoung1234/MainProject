@@ -11,10 +11,6 @@ public class BoardController {
 		return "board/freeBoradView";
 	}
 	
-	@RequestMapping("/noticeBoardView")
-	public String noticeBoardView(){
-		return "board/noticeBoardView";
-	}
 	
 	@RequestMapping("/infoBoardView")
 	public String infoBoardView() {
@@ -22,6 +18,6 @@ public class BoardController {
 		
 	}
 	
-	
+
 	
 }

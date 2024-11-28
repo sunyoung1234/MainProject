@@ -37,6 +37,7 @@ import com.proj.main.member.service.MemberService;
 import com.proj.main.result.dto.ApplyZEBDTO;
 import com.proj.main.result.dto.TestResultDTO;
 import com.proj.main.result.service.ResultService;
+import com.proj.main.usersession.service.UserService;
 
 @Controller
 public class MemberController {
@@ -52,6 +53,9 @@ public class MemberController {
     
     @Autowired
     ResultService rs;
+    
+    @Autowired
+	UserService userService;
     
     // 로그인 페이지로 이동
     @RequestMapping("/loginView")
@@ -181,6 +185,7 @@ public class MemberController {
         if (login != null) {
             session.setAttribute("login", login); // 세션에 로그인 정보 저장
             memId = login.getMemId();
+            System.out.println(session.getAttribute("login"));
             // 쿠키 처리
             if (rememberId) {
                 // 쿠키 생성
@@ -241,7 +246,7 @@ public class MemberController {
 	                conn.disconnect();
 	            }
 	        }
-	
+	        userService.insertLoginUser(memId);
 	        // 홈으로 리다이렉트
 	        return "redirect:/";
 	    } else {
@@ -253,6 +258,32 @@ public class MemberController {
     // 로그아웃 처리
     @RequestMapping("/logout")
     public String logout(HttpSession session) {
+    	
+    	MemberDTO login = (MemberDTO) session.getAttribute("login");
+    	System.out.println("nullPoint1");
+    	System.out.println(login);
+    	String memId = login.getMemId();
+    	System.out.println(memId);
+    	System.out.println("nullPoint2");
+    	userService.updateLogoutTime(memId);
+    	System.out.println("nullPoint3");
+        userService.updateTimeCalc(memId);
+        System.out.println("nullPoint4");
+    	
+        session.invalidate(); // 세션 무효화
+        return "redirect:/"; // 홈으로 리다이렉트
+    }
+    
+    @ResponseBody
+    @RequestMapping("/sessionOut")
+    public String sessionOut(HttpSession session, String memId) {
+    	
+    	System.out.println(memId);
+    	userService.updateLogoutTime(memId);
+    	System.out.println("nullPoint3");
+        userService.updateTimeCalc(memId);
+        System.out.println("nullPoint4");
+    	
         session.invalidate(); // 세션 무효화
         return "redirect:/"; // 홈으로 리다이렉트
     }
@@ -524,6 +555,27 @@ public class MemberController {
     	
         return "member/applyZEBDetailView";
     }
-
+   
+    // 세션 연장 요청 처리
+    @ResponseBody
+    @RequestMapping("/keep-session-alive")
+    public String keepSessionAlive(HttpSession session) {
+    	
+    	if (session == null) {
+            return "{\"message\": \"세션이 만료되었습니다.\"}";
+        }
+    	
+    	String memId = "";
+    	if(session.getAttribute("login") != null) {
+    		MemberDTO login = (MemberDTO) session.getAttribute("login");
+        	memId = login.getMemId();
+    	}
+    	
+    	
+        // 세션 타임아웃을 30분으로 연장
+        session.setMaxInactiveInterval(3*60); // 30분
+        return memId;
+    }
+	
 
 }
