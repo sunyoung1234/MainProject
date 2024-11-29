@@ -200,10 +200,12 @@ body {
 				</li>
 				<li class="navi-dropdown-content">
 					<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">에너지 관련 정보</a>
-					<a href="${pageContext.request.contextPath}/inputView" class="navi-dropdown-item">제로 에너지 건축물 등급 측정</a>
+					<a href="${pageContext.request.contextPath }/registMyBuildingView" class="navi-dropdown-item">내 건물 등록</a>
+					<a href="${pageContext.request.contextPath}/myBuildingView" class="navi-dropdown-item">내 건물 목록</a>
+					<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">ZEB 등록현황</a>
 					<a href="${pageContext.request.contextPath}/mapView" class="navi-dropdown-item">지도 상세보기</a>
 				</li>
-				<li class="navi-dropdown-content">
+				<li class="navi-dropdown-content"> 
 					<a href="${pageContext.request.contextPath}/faq/view" class="navi-dropdown-item">자주 묻는 질문</a>
 					<a href="${pageContext.request.contextPath}/chatListView" class="navi-dropdown-item">챗봇상담</a>
 					<a href="#" class="navi-dropdown-item">이용 가이드</a>
