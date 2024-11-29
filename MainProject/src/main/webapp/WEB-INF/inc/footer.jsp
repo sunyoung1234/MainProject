@@ -56,6 +56,7 @@
     </main>
     <!-- Footer -->
     <footer class="footer">
+
     	<div class="footer-top">
     		<div>
     			<div class="footer-top-left">상호명 : GreenSolution</div> 
@@ -67,6 +68,10 @@
     	
         <div class="footer-bottom">
             <p class="m-0 text-center">Copyright &copy; GreenSolution All rights reserved.</p>
+
+        <div class="footer-container">
+            <p class="m-0 text-center">Copyright &copy; GreenSolution 2024</p>
+
         </div>
     </footer>
     <!-- Bootstrap core JS -->

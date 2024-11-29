@@ -7,10 +7,10 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>자주 묻는 질문</title>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+<link href="${pageContext.request.contextPath}/css/styles.css?v=1.0" rel="stylesheet" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/scripts.js"></script>
+<script src="${pageContext.request.contextPath}/js/scripts.js?v=1.0"></script>
 <style>
 /* FAQ 스타일 정의 */
 .faq-header {
