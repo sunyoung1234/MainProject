@@ -94,10 +94,9 @@ body {
         <div class="support-menu">
 			<a href="${pageContext.request.contextPath}/noticeBoardView" class="sub-nav-dropdown-item">공지사항</a> 
 			<a href="${pageContext.request.contextPath}/reviewView" class="sub-nav-dropdown-item">리뷰게시판</a> 
-			<a href="${pageContext.request.contextPath}/freeBoardView" class="sub-nav-dropdown-item">자유게시판</a> 
 			<a href="${pageContext.request.contextPath}/productView" class="sub-nav-dropdown-item">에너지 효율 제품 게시판</a>
         </div>
-    </div>	
+    </div>	  
 
 </body>
 </html>

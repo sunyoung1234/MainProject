@@ -36,8 +36,18 @@
 	
 	.product-division{
 		display: flex;
-
-		margin-top: 70px;
+		justify-content:center;
+		align-items:center;
+		margin-left:520px; 
+		font-size:25px;
+		font-weight:bold;
+		 
+		width:300px;
+		height:100px;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+	    border-radius: 8px; /* 테이블 둥근 모서리 */
+	    border: 1px solid #66D18B;
+		
 	}
 	
 	.product-division > div{
@@ -50,15 +60,25 @@
 	}
 	
 	.product-division1{
-		background-color: #009861;
-		color:white;
-		margin-left: 400px;
+		background-color: #7AD493;
+		color:#464A44;
+		position:relative;
+		left:500px;
+		top:-30px;
+		height:50px;
+		width:200px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+	    border-radius: 8px; /* 테이블 둥근 모서리 */
+	    font-weight: bold;
 	}
 	
 	.product-division1:hover{
 		cursor: pointer;
-		color:black;
-		background-color: yellow;  
+		color:white;
+		background-color: #3C6948;  
 	}
 	
 	.product-division2{
@@ -152,13 +172,12 @@
 <body class="d-flex flex-column">
 
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
-
+	<%@ include file="/WEB-INF/inc/subnavbarBoard.jsp"%> 
+	
 	<div class="main-height">
 		<div class="product-division">
-			<div class="product-division1">
-				뒤로가기
-			</div>
-		</div> 
+			제품 상세 정보
+		</div>   
 		<div class="context-box">
 			<div class="product-img">
 				<img class="image" src="${getProduct.productImage }">
@@ -216,6 +235,9 @@
 					구매 링크 복사
 					<img  onclick="confirmAndCopy('${getProduct.productLink}')"  class="text-copy" src="${pageContext.request.contextPath }/resources/image/텍스트 아이콘.png">
 				</div>
+				<div class="product-division1">
+					뒤로가기
+				</div>  
 			</div>
 		</div>
 		

@@ -40,7 +40,15 @@
         .page-middle-container{
         	display:flex;
         	justify-content: space-between; 
-        	
+        	border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding-top: 20px;
+            padding-left: 20px; 
+            margin-bottom: 20px;
+            margin-top:30px;
+            border: 1px solid #6FFBE9;
+            margin-right:50px; 
+            
         }
 
         .page-count-all {
@@ -54,6 +62,14 @@
             justify-content: space-between;
             gap: 20px;
             margin-bottom: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            padding-left: 20px; 
+            border: 1px solid #5F92CF;
+            margin-right: 50px;
         }
 
         .page-count-id, .page-count-page {
@@ -85,7 +101,7 @@
         }
         
         .select-option{
-        	width:100%;
+        	width:50%;
         }
         
         .select-division{
@@ -102,74 +118,97 @@
         	text-align: center;
         }
         
-        .user-container{
-        	width: 90%;
+        .user-container{ 
+        	width:100%;
         	height:300px;
-        	border: 1px solid black;
         	display: flex;
         	justify-content: space-between;
-        	margin-left:70px;
         	margin-bottom:60px;
+        	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+	    	border-radius: 8px; /* 테이블 둥근 모서리 */
+	    	border: 1px solid #4AE398;
+        	
         }
         
         .user-box{
         	width: calc(100% / 3 - 5px);
-        	border: 1px solid black; 
+        	margin-bottom:20px;
+        	margin-top:30px;
+        	margin-left:30px;
+        	margin-right:30px;
+        	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+	    	border-radius: 8px; /* 테이블 둥근 모서리 */
+	    	border: 1px solid #319665;
         	
         }
         
         .user-title{
-        	font-size: 25px;
+        	font-size: 30px;
         	display: flex;
         	justify-content: center;
-        	margin-top: 70px;
-        	margin-bottom: 50px;
+        	margin-top: 30px;
+        	margin-bottom: 40px; 
         	 
         }
         
         .user-count{
-        	margin-left:80px; 
+        	margin-left:60px; 
         	margin-bottom: 20px;
+        	color:#354BDB;
+        	font-size:25px; 
         }
         
         .user-time{
-        	margin-left:80px; 
+        	margin-left:60px; 
+        	color: #DB3F33;
+        	font-size:25px; 
         }
         
         .page-rank-container{
-        	width:350px;
-        	hegiht:180px;
-        	border: 1px solid black;
+        	width:300px;
+        	hegiht:150px;
+        	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+	    	border-radius: 8px; /* 테이블 둥근 모서리 */
         	margin-right:30px;  
+        	margin-left:30px;  
         	margin-top:50px;
-        	margin-bottom:50px;
+        	margin-bottom:80px; 
+        	border: 1px solid #CF5B5B;
         }
         
         .page-rank-title{
         	display: flex;
         	justify-content: center;
-        	margin-bottom: 50px;
+        	margin-bottom: 40px;
         	margin-top:50px;
+        	font-weight: bold;
+        	font-size:25px;
         }
         
         .page-rank-first{
-        	margin-left: 100px;
+        	margin-left: 35px; 
         	margin-bottom:30px;  
+        	color: #E9EB13;
+        	font-weight:bold;
         }
         
         .page-rank-second{
-        	margin-left: 100px;
+        	margin-left: 70px;
         	margin-bottom:30px;
+        	color: #D2E0EB;
+        	font-weight:bold
         }
         
         .page-rank-thrid{
-        	margin-left: 100px;
+        	margin-left: 70px; 
         	margin-bottom:30px;
+        	color: #BA9F7D;
+        	font-weight:bold
         }
         
         img{
-        	width:50px;
-        	height:50px;
+        	width:30px;
+        	height:30px;
         }
         
         .king-img{ 
@@ -179,12 +218,96 @@
         .select-date{
         	width:30%; 
         	font-weight: bold;
-        	font-size:25px;
+        	font-size:15px;
         	display: flex;
         	align-items: center;
         	justify-content: center; 
         	margin-right: 10px;
         }
+        
+        .userChartBox{
+        	display: flex;
+        	margin-bottom: 50px;
+        	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+	    	border-radius: 8px; /* 테이블 둥근 모서리 */
+	    	padding-top: 20px;
+	    	padding-left: 20px; 
+	    	border:  1px solid #ffc107;   
+	    	
+	    	 
+        }
+        
+        .userChartBoxLeft{
+        	width:600px;
+        }
+        
+        .userChartBoxLeft{
+        	margin-top:90px;
+        }
+        
+        .login-count-title {
+		    position: relative;
+		    top: 20px;
+		    font-size: 18px;
+		    font-weight: bold; 
+		    margin-left:20px;
+		    background-color: #ffc107;
+		    width:250px;
+		    height:50px;  
+		    display: flex;
+			align-items: center;
+			padding-left: 10px;
+			padding-right:10px;   
+			justify-content: center;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+	    	border-radius: 8px; /* 테이블 둥근 모서리 */
+		}
+		
+		.login-count-page {
+		    position: relative;
+		    top: 20px;
+		    font-size: 18px;
+		    font-weight: bold; 
+		    margin-left:20px;
+		    background-color: skyblue;
+		    width:250px;
+		    height:50px;  
+		    display: flex;
+			align-items: center;
+			padding-left: 10px;
+			padding-right:10px;   
+			justify-content: center;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+	    	border-radius: 8px; /* 테이블 둥근 모서리 */
+		}
+		
+		.page-container-main{
+			border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding-top: 20px;
+            padding-left: 20px; 
+            margin-bottom: 20px;
+            border: 1px solid skyblue;
+		
+		}
+		
+		.login-count-visit {
+		    position: relative;
+		    top: 20px;
+		    font-size: 18px;
+		    font-weight: bold; 
+		    margin-left:20px;
+		    background-color: #4AE398;
+		    width:250px;
+		    height:50px;  
+		    display: flex;
+			align-items: center;
+			padding-left: 10px;
+			padding-right:10px;   
+			justify-content: center;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+	    	border-radius: 8px; /* 테이블 둥근 모서리 */
+		}
 
 
     </style>
@@ -195,31 +318,36 @@
     <%@ include file="/WEB-INF/inc/top.jsp"%>
 
     <div class="main-height">
-    	<h2>이용자 방문 현황</h2>
     	
+    	<div class="login-count-visit">이용자 방문 현황</div>
     	<div class="user-container">
     		<div class="user-box">
 	    		<div class="user-title">전체</div>
-	    		<div class="user-count">접속자 수 : ${userAllCount } 명  </div>
+	    		<div class="user-count">접속자 수 : ${allUserVisit } 명  </div>
 	    		<div class="user-time">평균 접속 시간 : ${userAllAvg } 분</div>
 	    	</div>
 	    	<div class="user-box"> 
 	    		<div class="user-title">오늘</div>
 	    		<div class="user-count">접속자 수 : ${todayCount} 명</div>
-	    		<div class="user-time">평균 접속 시간 : ${todayUserAvg }</div>
+	    		<div class="user-time">평균 접속 시간 : ${todayUserAvg } 분</div>
 	    	</div>
 	    	<div class="user-box">
 	    		<div class="user-title">어제</div>
 	    		<div class="user-count">접속자 수 : ${yesterdayCount} 명</div>
-	    		<div class="user-time">평균 접속 시간 : ${yesterdayUserAvg }</div>
+	    		<div class="user-time">평균 접속 시간 : ${yesterdayUserAvg } 분</div>
 	    	</div>
     	</div>
     	
-    	<div>
+    	<div class="login-count-title">날짜·시간별 로그인 횟수</div>
+    	<div class="userChartBox">
+    		<div class="userChartBoxLeft">
+    			<canvas id="allUserDateChart"></canvas>
+    		</div>
+    	
     		<div class="select-option">
     			<div class="select-box">
             		<div class="select-date">
-	            		시간별 로그인 횟수
+            			날짜
             		</div>
             		<div class="select-option">
             			<select id="selectDate"> 
@@ -231,59 +359,59 @@
          	</div>
     	</div> 
     	
-    	<div class="page-middle-container">
-    		<!-- 전체 페이지 방문 횟수 차트 -->
-	        <div class="page-count-all">
-	        	<h4 class="page-count-all-h2">페이지 방문 횟수 총합</h4>
-	            <canvas id="myChart"></canvas>
-	        </div>
-	        <div class="page-rank-container">
-	           	<div class="page-rank-title">페이지 접속 순위</div>
-	           	<div class="page-rank-first">
-	           		
-	           </div>
-	           	<div class="page-rank-second">2위 : 전기 사용량(230) </div>
-	           	<div class="page-rank-thrid">3위 : 전기 사용량(230) </div>
-	        </div>
-    	</div>
-        
-
-        <!-- 아이디별 페이지 횟수, 페이지별 아이디 횟수 -->
-        <div class="page-count-box">
-            <div class="page-count-id">
-            	<div class="select-box">
-            		<div class="select-division">
-	            		아이디
-            		</div>
-            		<div class="select-option">
-            			<select id="selectId"> 
-               		 	</select>
-            		</div>
-            	</div>
-                
-                <canvas id="myChartId"></canvas>
-            </div>
-            <div class="page-count-page">
-           		<div class="select-box">
-            		<div class="select-division">
-	            		페이지 이름
-            		</div>
-            		<div class="select-option">
-            			<select id="selectPageName">
-	                	</select>
-            		</div>
-            	</div>
-            	
+    	<div class="login-count-page">페이지 방문 횟수</div>
+    	<div  class="page-container-main">
+	    	<div class="page-middle-container">
+	    		<!-- 전체 페이지 방문 횟수 차트 -->
+		        <div class="page-count-all">
+		        	<h4 class="page-count-all-h2"></h4>
+		            <canvas id="myChart"></canvas>
+		        </div>
+		        <div class="page-rank-container">
+		           	<div class="page-rank-title">페이지 접속 순위</div>
+		           	<div class="page-rank-first">
+		           		
+		           </div>
+		           	<div class="page-rank-second">2위 : 전기 사용량(230) </div>
+		           	<div class="page-rank-thrid">3위 : 전기 사용량(230) </div>
+		        </div>
+	    	</div>
+	        
+		
+	        <!-- 아이디별 페이지 횟수, 페이지별 아이디 횟수 -->
+	        <div class="page-count-box">
+	            <div class="page-count-id">
+	            	<div class="select-box">
+	            		<div class="select-division">
+		            		아이디
+	            		</div>
+	            		<div class="select-option">
+	            			<select id="selectId"> 
+	               		 	</select>
+	            		</div>
+	            	</div>
 	                
-            	
-                <canvas id="myChartPage"></canvas>
-            </div>
-        </div>
-
-        <!-- 사용자 접속 시간 -->
-        <div>
-            <canvas id="myChartTime"></canvas>
-        </div>
+	                <canvas id="myChartId"></canvas>
+	            </div>
+	            <div class="page-count-page">
+	           		<div class="select-box">
+	            		<div class="select-division">
+		            		페이지 이름
+	            		</div>
+	            		<div class="select-option">
+	            			<select id="selectPageName">
+		                	</select>
+	            		</div>
+	            	</div>
+	            	
+		                
+	            	
+	                <canvas id="myChartPage"></canvas>
+	            </div>
+	        </div>
+    		
+    	</div>
+    	
     </div>
 
     <%@ include file="/WEB-INF/inc/footer.jsp" %>
@@ -303,7 +431,7 @@
         v_pageNameAll = v_pageNameAll.replace("[", "").replace("]", "").split(",");
         v_visitCountAll = v_visitCountAll.replace("[", "").replace("]", "").split(",");
 		
-        document.querySelector('.page-rank-first').innerHTML = '<div class="king-img"><img src="https://cdn-icons-png.flaticon.com/512/862/862758.png"></div> 1위 : ' + v_pageNameAll[0] + " ("+ v_visitCountAll[0] + ")"
+        document.querySelector('.page-rank-first').innerHTML = '<img src="https://cdn-icons-png.flaticon.com/512/862/862758.png"> 1위 : ' + v_pageNameAll[0] + " ("+ v_visitCountAll[0] + ")"
         document.querySelector('.page-rank-second').innerHTML = "2위 : " + v_pageNameAll[1] + " ("+ v_visitCountAll[1] + ")"
         console.log(v_pageNameAll);
         console.log(v_visitCountAll);
@@ -317,8 +445,8 @@
                     label: '페이지별 이용 횟수',
                     data: v_visitCountAll,
                     borderWidth: 1,
-                    backgroundColor: '#007bff',
-                    borderColor: '#0056b3'
+                    backgroundColor: '#5BCFC0',
+                    borderColor: '#5BCFC0'
                 }]
             },
             options: {
@@ -342,8 +470,8 @@
                     label: '아이디별 방문 횟수',
                     data: v_visitCountAll,
                     borderWidth: 1,
-                    backgroundColor: '#28a745',
-                    borderColor: '#218838'
+                    backgroundColor: '#5F92CF',
+                    borderColor: '#5F92CF'
                 }]
             },
             options: {
@@ -377,8 +505,8 @@
                     label: '페이지별 방문 횟수',
                     data: v_selectIdPageCounting,
                     borderWidth: 1,
-                    backgroundColor: '#ffc107',
-                    borderColor: '#e0a800'
+                    backgroundColor: '#76BECF',
+                    borderColor: '#76BECF'
                 }]
             },
             options: {
@@ -549,6 +677,50 @@
             v_ajax.send(v_data);
         });
         
+        let v_allLoginHour = '${allLoginHour}'
+        let v_allLoginCount = '${allLoginCount}'
+        
+        
+        v_allLoginHour = v_allLoginHour.replace("[", "").replace("]", "").trim().split(",");
+        v_allLoginCount = v_allLoginCount.replace("[", "").replace("]", "").trim().split(",");
+        console.log(v_allLoginHour)
+        
+        let v_allUserDateChart = document.getElementById("allUserDateChart")
+        let v_allUserChart = new Chart(v_allUserDateChart, {
+            type: 'line',
+            data: { 
+                labels: v_allLoginHour,
+                datasets: [{
+                    label: '로그인 횟수',
+                    data: v_allLoginCount,
+                    borderWidth: 1,
+                    backgroundColor: '#ffc107',
+                    borderColor: '#e0a800'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                	x: {
+                        title: {
+                            display: true,   // 제목 표시 여부
+                            text: '시'   // x축 제목
+                        }
+                    },
+                	 y: {
+                		 title:{
+                			 display: true,   // 제목 표시 여부
+                             text: '횟수',
+                           	    
+                		 },
+                		 // beginAtZero: true ,
+                         ticks: {
+                             stepSize: 1  // y축의 값을 1씩 증가
+                         }
+                     }
+                }
+            }
+        });
         
     </script>
 

@@ -45,7 +45,7 @@
 	<select id="yesterdayUserCount" resultType="int">
 		SELECT SUM(login_count) AS yesterdayUserCount
 	    FROM (
-	        SELECT MEM_ID, COUNT(DISTINCT MEM_ID) AS login_count
+	        SELECT MEM_ID, COUNT(MEM_ID) AS login_count
 	        FROM user_sessions
 	        WHERE login_time >= TRUNC(SYSDATE) - INTERVAL '1' DAY
 	        AND login_time &lt; TRUNC(SYSDATE)
@@ -54,10 +54,10 @@
 	    ) user_logins
 	</select>
 	
-	<select id="todayUserCount" resultType="int">
+	<select id="todayUserCount" resultType="Integer">
 		SELECT SUM(count_per_id) AS total_login_count
 		FROM (
-		    SELECT MEM_ID, COUNT(DISTINCT MEM_ID) AS count_per_id
+		    SELECT MEM_ID, COUNT(MEM_ID) AS count_per_id
 		    FROM user_sessions
 		    WHERE TRUNC(login_time) = TRUNC(SYSDATE)
 		    AND mem_id != 'admin'
@@ -110,6 +110,29 @@
 		   TO_CHAR(LOGIN_TIME,'YYYY-MM-DD')
 		ORDER BY 
 		    LOGIN_DATE
+	</select>
+	
+	<select id="selectAllLoginCount" resultType="com.proj.main.usersession.dto.UserCountDTO">
+		SELECT 
+		    TO_CHAR(LOGIN_TIME, 'HH24') AS LOGIN_HOUR,
+		    COUNT(*) AS LOGIN_COUNT
+		FROM 
+		    user_sessions
+		WHERE 
+		    LOGIN_TIME >= TO_DATE('2024-11-27', 'YYYY-MM-DD')
+		    AND LOGIN_TIME &lt; TRUNC(SYSDATE)+1  
+		   GROUP BY 
+		    TO_CHAR(LOGIN_TIME, 'HH24')
+		ORDER BY  
+		    LOGIN_HOUR
+	</select>
+	
+	<select id="selectAllUserVisit" resultType="Integer">
+		select sum(count(mem_id)) as mem_id
+		from user_sessions
+		where 1=1
+		AND mem_id != 'admin'
+		GROUP BY mem_id
 	</select>
 
 </mapper>

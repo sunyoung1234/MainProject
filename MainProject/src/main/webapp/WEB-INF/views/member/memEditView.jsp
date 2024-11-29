@@ -60,7 +60,7 @@
 <main class="flex-shrink-0">
 
     <%@ include file="/WEB-INF/inc/top.jsp"%>
-
+	<%@ include file="/WEB-INF/inc/subnavbarMy.jsp"%>
     <section class="container">
         <div class="edit-card">
             <h2 class="form-title">회원정보 수정</h2>

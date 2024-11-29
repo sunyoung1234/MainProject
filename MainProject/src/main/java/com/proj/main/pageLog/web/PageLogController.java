@@ -35,6 +35,13 @@ public class PageLogController {
 	@RequestMapping("/adminView")
 	public String adminView(HttpSession session, String memId, Model model, String loginDate ) {
 		
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+		String adminId = login.getMemId();
+		
+		if(!adminId.equals("admin")) {
+			return "redirect:/";
+		}
+		
 		
 		List<PageLogDTO> logAll = pageLogService.allSelectPageLog();
 		
@@ -108,7 +115,7 @@ public class PageLogController {
 			userAvgDurationNumber.add(item5.getSessionDuration());
 		}
 		
-		int userAllCount = userAvgDurationName.size();
+		Integer userAllCount = userAvgDurationName.size();
 		
 		long sum = 0;
 		for(int i = 0; i < userAvgDurationNumber.size(); i++) {
@@ -118,14 +125,14 @@ public class PageLogController {
 		long userAllAvg = Math.round(sum)/userAvgDurationNumber.size();
 		model.addAttribute("userAllCount",userAllCount);
 		model.addAttribute("userAllAvg",userAllAvg);
-		// 어제 오늘 접속자 (중복x)
-		int yesterdayCount = userSessionService.yesterdayUserCount();
-		int todayCount = userSessionService.todayUserCount();
+		// 어제 오늘 접속자
+		Integer yesterdayCount = userSessionService.yesterdayUserCount();
+		Integer todayCount = userSessionService.todayUserCount();
 		model.addAttribute("yesterdayCount",yesterdayCount);
 		model.addAttribute("todayCount",todayCount);
 		
-		int yesterdayUserAvg = userSessionService.yesterdayUserAvg();
-		int todayUserAvg = userSessionService.todayUserAvg();
+		Integer yesterdayUserAvg = userSessionService.yesterdayUserAvg();
+		Integer todayUserAvg = userSessionService.todayUserAvg();
 		
 		model.addAttribute("yesterdayUserAvg",yesterdayUserAvg);
 		model.addAttribute("todayUserAvg",todayUserAvg);
@@ -156,6 +163,24 @@ public class PageLogController {
 		
 		model.addAttribute("loginHour",loginHour);
 		model.addAttribute("loginCount",loginCount);
+		
+		// 전체 사용자 시간대별 로그인 횟수
+		List<UserCountDTO> allUserCount = userSessionService.selectAllLoginCount();
+		
+		List<String> allLoginHour = new ArrayList<>();
+		List<String> allLoginCount = new ArrayList<>();
+		
+		for(UserCountDTO items : allUserCount) {
+			allLoginHour.add(items.getLoginHour());
+			allLoginCount.add(items.getLoginCount());
+		}
+		
+		model.addAttribute("allLoginHour",allLoginHour);
+		model.addAttribute("allLoginCount",allLoginCount);
+		
+		// 모든 유저 접속자 수
+		Integer allUserVisit = userSessionService.selectAllUserVisit();
+		model.addAttribute("allUserVisit",allUserVisit);
 		
 		
 		return "admin/adminView";

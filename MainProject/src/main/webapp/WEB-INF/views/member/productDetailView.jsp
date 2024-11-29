@@ -162,7 +162,8 @@
 <body class="d-flex flex-column">
 
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
-
+	<%@ include file="/WEB-INF/inc/subnavbarBoard.jsp"%> 
+	
 	<div class="main-height">
 		<div class="product-division">
 			<div class="product-division1">

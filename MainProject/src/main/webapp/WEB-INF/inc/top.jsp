@@ -166,10 +166,10 @@ body {
 		</a>
 		<div class="nav-wrapper">
 			<ul class="navi-navbar-nav">
-				<li class="navi-nav-item"><a href="#" class="navi-nav-link">마이</a></li>
-				<li class="navi-nav-item"><a href="#" class="navi-nav-link">게시판</a></li>
-				<li class="navi-nav-item"><a href="#" class="navi-nav-link">제로에너지 건축물</a></li>
-				<li class="navi-nav-item"><a href="#" class="navi-nav-link">고객지원</a></li>
+				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/mypage" class="navi-nav-link">마이</a></li>
+				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-nav-link">게시판</a></li>
+				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/infoBoardView" class="navi-nav-link">제로에너지 건축물</a></li>
+				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/faq/view" class="navi-nav-link">고객지원</a></li>
 			</ul>
 		</div>
 		<div class="navi-navbar-right">
@@ -196,7 +196,6 @@ body {
 				<li class="navi-dropdown-content">
 					<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a>
 					<a href="${pageContext.request.contextPath}/reviewView" class="navi-dropdown-item">리뷰게시판</a>
-					<a href="${pageContext.request.contextPath}/freeBoardView" class="navi-dropdown-item">자유게시판</a>
 					<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품 게시판</a>
 				</li>
 				<li class="navi-dropdown-content">
@@ -225,9 +224,8 @@ body {
 			function resetSessionTimeout() {
 			    clearTimeout(timeoutTimer);  // 기존 타이머 취소
 			    timeoutTimer = setTimeout(function() {
-			        alert("세션이 만료되었습니다. 로그아웃됩니다.");
 			        logoutSession();
-			    },  6*30 * 1000); // 30분 후 세션 만료 (30분 = 30 * 60 * 1000ms)
+			    },  60*30 * 1000); // 30분 후 세션 만료 (30분 = 30 * 60 * 1000ms)
 		
 			    // 세션 연장 요청을 서버로 보냄 (세션 타임아웃 갱신)
 			    keepSessionAlive();
@@ -240,7 +238,6 @@ body {
 			    v_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			    v_ajax.onreadystatechange = function() {
 			        if (v_ajax.readyState === 4 && v_ajax.status === 200) {
-			            console.log("세션이 연장되었습니다");
 			        } else if (v_ajax.readyState === 4) {
 			            console.error("세션 연장 실패");
 			        }
@@ -258,6 +255,7 @@ body {
 			        if (v_ajax.readyState === 4 && v_ajax.status === 200) {
 			            // 로그아웃 성공 시 로그인 페이지로 이동
 			            window.location.href = '${pageContext.request.contextPath}/loginView';
+			            alert("세션이 만료되었습니다. 로그아웃됩니다.");
 			        } else if (v_ajax.readyState === 4) {
 			            console.error("로그아웃 실패");
 			        }

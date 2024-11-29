@@ -4,7 +4,19 @@
 	
 	<select id="productList" parameterType="String" resultType="com.proj.main.product.dto.ProductDTO">
 		SELECT
-		 *
+		 product_category,
+		 product_name,
+		 product_Grade,
+		 product_Volume,
+		 product_Brand,
+		 product_Origin,
+		 year_Use,
+		 month_Use,
+		 hour_Use,
+		 one_Use,
+		 round(year_Money) as year_Money,
+		 product_Image,
+		 product_Link
 		FROM PRODUCTLIST
 		WHERE product_category = #{productCategory}
 		order by product_grade
