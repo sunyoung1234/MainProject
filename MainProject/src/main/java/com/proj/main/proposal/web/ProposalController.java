@@ -77,19 +77,20 @@ public class ProposalController {
             @RequestParam("propNo") Integer propNo,
             @RequestParam("answerContent") String answerContent,
             HttpSession session) {
-        // 관리자만 답변 추가 가능
         MemberDTO mem = (MemberDTO) session.getAttribute("login");
         if (mem == null || !"admin".equals(mem.getMemId())) {
             return "redirect:/loginView";
         }
 
-        // 유효성 검사
         if (propNo == null || propNo <= 0 || answerContent == null || answerContent.trim().isEmpty()) {
             return "redirect:/proposal/view?error=invalid";
         }
 
-        // 답변 저장 처리
         proposalService.addAnswer(propNo, answerContent, mem.getMemId());
+
+        // 최신 데이터를 다시 조회
+        List<ProposalDTO> updatedProposals = proposalService.getAllProposals();
+        session.setAttribute("proposalList", updatedProposals);
 
         return "redirect:/proposal/view?success=true";
     }

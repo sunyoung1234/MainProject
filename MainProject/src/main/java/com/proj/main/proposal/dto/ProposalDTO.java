@@ -1,5 +1,6 @@
 package com.proj.main.proposal.dto;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ProposalDTO {
@@ -97,6 +98,10 @@ public class ProposalDTO {
 	public void setAnswerContent(String answerContent) {
 		this.answerContent = answerContent;
 	}
+	public String getFormattedPropDate() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return propDate != null ? dateFormat.format(propDate) : "";
+    }
 	
 	
 	

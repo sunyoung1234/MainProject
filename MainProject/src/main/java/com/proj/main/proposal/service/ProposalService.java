@@ -2,6 +2,8 @@ package com.proj.main.proposal.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.proj.main.proposal.dao.IProposalDAO;
 import com.proj.main.proposal.dto.ProposalDTO;
 
@@ -9,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Transactional
 @Service
 public class ProposalService {
 
@@ -33,7 +36,10 @@ public class ProposalService {
         params.put("answerContent", answerContent);
         params.put("answeredBy", answeredBy);
 
-        dao.addAnswer(params); // 매퍼 호출
+        System.out.println("addAnswer 호출: " + params);
+
+        int updatedRows = dao.addAnswer(params);
+        System.out.println("업데이트된 행 수: " + updatedRows);
     }
 
     public Map<String, Object> getProposalAnswer(int propNo) {
