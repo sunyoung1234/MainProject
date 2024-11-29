@@ -27,14 +27,16 @@
 		mem_name,
 		room_no,
 		chat_msg,
-		send_date
+		send_date,
+		read_yn
 		) VALUES (
 		chatlog_seq.NEXTVAL,  <!-- 자동 증가 시퀀스 -->
 		#{memId},
 		#{memName},  <!-- 닉네임 -->
 		#{roomNo},
 		#{chatMsg},
-		SYSDATE
+		SYSDATE,
+		'N'
 		)
 	</insert>
 

@@ -27,4 +27,6 @@ public interface IRoomDAO {
     
  // memId로 채팅방을 찾는 메서드 추가
     RoomDTO getRoomByMemId(String memId);
+    
+    RoomDTO getRoomByName(String roomName);
 }

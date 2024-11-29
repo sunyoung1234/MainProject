@@ -549,7 +549,6 @@ public class MemberController {
     	mo.addAttribute("grade", tr.getZebGrade()); 
     	MyBuildingDTO myBuilding = memberService.getMyBuildingsByBuildingId(bId);
     	String roadAddress = myBuilding.getRoadAddress();
-    	System.out.println(roadAddress);
     	
     	mo.addAttribute("road", roadAddress); 
     	
@@ -573,7 +572,7 @@ public class MemberController {
     	
     	
         // 세션 타임아웃을 30분으로 연장
-        session.setMaxInactiveInterval(3*60); // 30분
+        session.setMaxInactiveInterval(30*60); // 30분
         return memId;
     }
 	

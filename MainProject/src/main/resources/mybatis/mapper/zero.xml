@@ -5,5 +5,37 @@
 	<select id="getZeroList" resultType="com.proj.main.map.dto.ZeroDTO">
 		SELECT * FROM ZERO_BUILDING
 	</select>
+	
+	<insert id="addZeroBuilding" parameterType="com.proj.main.map.dto.ZeroDTO">
+		INSERT INTO ZERO_BUILDING (
+		    mem_id,
+		    building_division,
+		    building_use,
+		    region,
+		    building_address,
+		    latitude,
+		    longitude,
+		    building_name,
+		    applicant_organization,
+		    total_area,
+		    zero_level,
+		    certificate_date,
+		    measure_method
+		) VALUES (
+		    #{memId},
+		    #{buildingDivision},
+		    #{buildingUse},
+		    #{region},
+		    #{buildingAddress},
+		    #{latitude},
+		    #{longitude},
+		    #{buildingName},
+		    #{applicantOrganization},
+		    #{totalArea},
+		    #{zeroLevel},
+		    #{certificateDate},
+		    #{measureMethod}
+		)
+	</insert>
 
 </mapper>

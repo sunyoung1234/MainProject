@@ -8,7 +8,13 @@ public class ChatLogDTO {
     private int roomNo;         /* 채팅방 번호 */
     private String chatMsg;     /* 채팅 메시지 내용 */
     private String sendDate;    /* 메시지 날짜 */
-	public ChatLogDTO(int chatNo, String memId, String memName, int roomNo, String chatMsg, String sendDate) {
+    private String readYn;    /* 읽음 여부 */
+    
+	public ChatLogDTO() {
+		super();
+	}
+	public ChatLogDTO(int chatNo, String memId, String memName, int roomNo, String chatMsg, String sendDate,
+			String readYn) {
 		super();
 		this.chatNo = chatNo;
 		this.memId = memId;
@@ -16,14 +22,12 @@ public class ChatLogDTO {
 		this.roomNo = roomNo;
 		this.chatMsg = chatMsg;
 		this.sendDate = sendDate;
-	}
-	public ChatLogDTO() {
-		super();
+		this.readYn = readYn;
 	}
 	@Override
 	public String toString() {
 		return "ChatLogDTO [chatNo=" + chatNo + ", memId=" + memId + ", memName=" + memName + ", roomNo=" + roomNo
-				+ ", chatMsg=" + chatMsg + ", sendDate=" + sendDate + "]";
+				+ ", chatMsg=" + chatMsg + ", sendDate=" + sendDate + ", readYn=" + readYn + "]";
 	}
 	public int getChatNo() {
 		return chatNo;
@@ -61,6 +65,14 @@ public class ChatLogDTO {
 	public void setSendDate(String sendDate) {
 		this.sendDate = sendDate;
 	}
+	public String getReadYn() {
+		return readYn;
+	}
+	public void setReadYn(String readYn) {
+		this.readYn = readYn;
+	}
+    
+	
 
     
 }

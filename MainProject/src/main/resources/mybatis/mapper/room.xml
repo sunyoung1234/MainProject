@@ -71,5 +71,19 @@
     SELECT * FROM rooms WHERE mem_id = #{memId} AND del_yn = 'N'
 </select>
 
+		<select id="getRoomByName" parameterType="String" resultType="com.proj.main.chat.dto.RoomDTO">
+	        SELECT
+	              room_no
+	            , room_name
+	            , mem_id
+	            , mem_name
+	            , TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI') AS reg_date
+	            , del_yn
+	        FROM
+	            rooms
+	        WHERE room_name = #{roomName}
+	          AND del_yn = 'N'
+	    </select>
+
 
 </mapper>

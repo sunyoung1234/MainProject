@@ -362,17 +362,8 @@
 		        <button class="menu-btn" data-menu="faq">FAQ</button>
 		        
 		        
-		        <!-- admin -->
-		        <c:if test="${sessionScope.login != null && sessionScope.login.memId eq 'admin'}">
-		            <button class="menu-btn" id="adminChat">사용자 상담 연결</button>
-		            <button style="display:none;" class="menu-btn" id="connectAgent">상담사 연결</button>
-		        </c:if>
-		        
-		        
-		        
 		        <!-- 사용자 -->
 		        <c:if test="${sessionScope.login != null && sessionScope.login.memId ne 'admin'}">
-		        	<button style="display:none;" class="menu-btn" id="adminChat">사용자 상담 연결</button>
 		            <button class="menu-btn" id="connectAgent">상담사 연결</button>
 		        </c:if>
 		        
@@ -418,56 +409,6 @@
 		    chatbotInterface.classList.remove('show');
 		});
 		
-		document.querySelector('#adminChat').addEventListener('click',()=>{
-			const chatRoom = document.getElementById('chatRoom');
-		    const chatbotContent = document.querySelector('.chatbot-content');
-
-		    // 기본 챗봇 화면 숨기기
-		    chatbotContent.style.display = 'none';
-
-		    // 채팅방 표시
-		    chatRoom.style.display = 'flex';
-		    
-		    
-		    // 여기서 채팅방 리시트 보여주고 채팅방 클릭시 번호를 따와서 연결시키면 끝
-		    
-		    var roomNo = 233;
-		    var messageInput = $('#userMessage');
-			// 소켓 통신 객체 생성 (sockjs 객체에 WebSocketConfig에서 설정한 /endpoint 주소 입력)
-			var sock = new SockJS("${pageContext.request.contextPath}/endpoint");
-			// sockjs 객체로부터 stomp 객체 생성
-			client = Stomp.over(sock);
-			
-			document.querySelector('#sendMessage').addEventListener('click',()=>{
-				
-				var messageContent = document.querySelector('#userMessage').value;
-				
-				client.send('/app/hello/' + roomNo, {}, 
-				JSON.stringify({
-					chatMsg : messageContent,
-					memId : "${sessionScope.login.memId }",
-					memName : "${sessionScope.login.memName }",
-					roomNo : 233
-				}));
-				messageInput.val('');
-			})  
-			
-			
-			// 연결이 맺어지면 실행
-			client.connect({},function() {
-				// 상대방이 보낸 메세지 전달 받을 때마다 실행         
-				client.subscribe('/subscribe/chat/'+ 233, function(chat) {
-					// 받은 데이터
-					let content = JSON.parse(chat.body);
-					
-					// 받은 데이터를 그려줄 html 코드
-					let v_tag = renderList(content);
-					$("#chatArea").append(v_tag); 
-					
-				});
-	
-			});
-		})
 		
 		// 상담사 연결 버튼 클릭 이벤트
 		document.querySelector('#connectAgent').addEventListener('click', function () {
@@ -508,7 +449,6 @@
 					// sockjs 객체로부터 stomp 객체 생성
 					client = Stomp.over(sock);
 					
-					
 					document.querySelector('#sendMessage').addEventListener('click',()=>{
 						
 						var messageContent = document.querySelector('#userMessage').value;
@@ -522,15 +462,10 @@
 						}));
 						messageInput.val('');
 					})  
-					client.debug = function(message) {
-					    console.log("STOMP debug:", message); // 디버그 메시지 출력
-					};
 					
 					// 연결이 맺어지면 실행
 					client.connect({},function() {
 						
-						console.log(response.roomNo); 
-						// 상대방이 보낸 메세지 전달 받을 때마다 실행         
 						client.subscribe('/subscribe/chat/'+ response.roomNo, function(chat) {
 							// 받은 데이터
 							console.log("subscribe success");
@@ -581,45 +516,6 @@
 			console.log(html);
 			return html;
 		}
-		
-
-		
-
-		// 종료 버튼 클릭 이벤트
-		document.querySelector('#endChat').addEventListener('click', function () {
-		    const confirmModal = document.getElementById('confirmModal');
-		    confirmModal.style.display = 'flex'; // 모달 열기
-		});
-
-		// "확인" 버튼 클릭 이벤트
-		document.querySelector('#confirmExit').addEventListener('click', function () {
-		    const chatRoom = document.getElementById('chatRoom');
-		    const chatbotContent = document.querySelector('.chatbot-content');
-		    const chatArea = document.getElementById('chatArea');
-		    const confirmModal = document.getElementById('confirmModal');
-
-		    // 연결 종료
-		    if (client && client.connected) {
-		        client.disconnect(() => {
-		            console.log('Chat session disconnected.');
-		        });
-		    }
-
-		    // 채팅방 닫기 및 초기화
-		    chatRoom.style.display = 'none';
-		    chatbotContent.style.display = 'block'; // 기본 챗봇 화면 다시 표시
-		    chatArea.innerHTML = '<button id="endChat">채팅 종료</button>'; // 채팅 내용 초기화
-
-		    // 모달 닫기
-		    confirmModal.style.display = 'none';
-		});
-
-		// "취소" 버튼 클릭 이벤트
-		document.querySelector('#cancelExit').addEventListener('click', function () {
-		    const confirmModal = document.getElementById('confirmModal');
-		    confirmModal.style.display = 'none'; // 모달 닫기
-		});
-
 
 
 		

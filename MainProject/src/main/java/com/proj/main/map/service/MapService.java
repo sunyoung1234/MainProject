@@ -19,4 +19,8 @@ public class MapService {
 		List<ZeroDTO> result = dao.getZeroList();
 		return result;
 	}
+	
+	public int addZeroBuilding(ZeroDTO zero) {
+		return dao.addZeroBuilding(zero);
+	}
 }
