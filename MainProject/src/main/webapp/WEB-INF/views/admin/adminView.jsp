@@ -429,10 +429,11 @@
         
 
         v_pageNameAll = v_pageNameAll.replace("[", "").replace("]", "").split(",");
-        v_visitCountAll = v_visitCountAll.replace("[", "").replace("]", "").split(",");
-		
+        v_visitCountAll = v_visitCountAll.replace("[", "").replace("]", "").replace(/\s+/g, '').split(",");
+        
         document.querySelector('.page-rank-first').innerHTML = '<img src="https://cdn-icons-png.flaticon.com/512/862/862758.png"> 1위 : ' + v_pageNameAll[0] + " ("+ v_visitCountAll[0] + ")"
         document.querySelector('.page-rank-second').innerHTML = "2위 : " + v_pageNameAll[1] + " ("+ v_visitCountAll[1] + ")"
+        document.querySelector('.page-rank-thrid').innerHTML = "3위 : " + v_pageNameAll[2] + " ("+ v_visitCountAll[2] + ")"
         console.log(v_pageNameAll);
         console.log(v_visitCountAll);
 

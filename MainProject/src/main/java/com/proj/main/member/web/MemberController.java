@@ -34,6 +34,8 @@ import com.proj.main.attach.service.AttachService;
 import com.proj.main.member.dto.MemberDTO;
 import com.proj.main.member.dto.MyBuildingDTO;
 import com.proj.main.member.service.MemberService;
+import com.proj.main.pageLog.dto.PageLogDTO;
+import com.proj.main.pageLog.service.PageLogService;
 import com.proj.main.result.dto.ApplyZEBDTO;
 import com.proj.main.result.dto.TestResultDTO;
 import com.proj.main.result.service.ResultService;
@@ -56,6 +58,9 @@ public class MemberController {
     
     @Autowired
 	UserService userService;
+    
+    @Autowired
+    PageLogService pageLogService;
     
     // 로그인 페이지로 이동
     @RequestMapping("/loginView")
@@ -324,7 +329,18 @@ public class MemberController {
     
     
     @RequestMapping("/productView")
-    public String productView() {
+    public String productView(HttpSession session) {
+    	
+    	MemberDTO login = (MemberDTO) session.getAttribute("login");
+    	if(login != null) {
+    		String memId = login.getMemId();
+        	PageLogDTO log = new PageLogDTO();
+    		log.setMemId(memId);
+    		log.setPageName("제품 게시판");
+    		pageLogService.insertPageLog(log);
+    	}
+    	
+    	
     	
     	return "member/productView";
     }
