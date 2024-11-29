@@ -69,8 +69,12 @@
 		}
 		
 		.chat-item.active {
-		    background-color: #007bff; /* 선택된 항목의 파란 배경 */
-		    color: #fff;
+		    background-color: #ffcc00; /* 노란색 배경 */
+		    color: #333; /* 텍스트를 어두운 회색으로 */
+		    border-left: 5px solid #ff9900; /* 강조용 좌측 테두리 */
+		    font-weight: bold; /* 글씨 굵게 */
+		    transform: scale(1.02); /* 살짝 확대 */
+		    transition: background-color 0.3s, transform 0.2s; /* 부드러운 전환 효과 */
 		}
 		
 		.chat-item img {
@@ -183,7 +187,7 @@
             <c:forEach items="${roomList }" var="room">
             
             	<div class="chat-item" >
-				    <div class="room-no">${room.roomNo }</div>   
+				    <div id="room-no" class="room-no">${room.roomNo }</div>   
 				    <div class="chat-info">
 				        <div class="chat-title">${room.memName }</div>
 				        <div class="chat-preview">마지막 메시지가 여기에 표시됩니다.</div>
@@ -197,7 +201,7 @@
         <!-- 오른쪽 채팅창 -->
         <div class="chat-window">
             <!-- 채팅방 헤더 -->
-            <div class="chat-header" id="chat-header">111</div> 
+            <div class="chat-header" id="chat-header"></div> 
 
             <!-- 채팅 메시지 -->
             <div class="chat-messages" id="chat-messages">
@@ -208,139 +212,156 @@
 
             <!-- 메시지 입력 -->
             <div class="chat-input">
-                <form onsubmit="sendMessage(event)">
-                    <input type="text" id="chat-input" placeholder="메시지를 입력하세요.">
-                    <button id="sendMsg" type="submit">보내기</button>
-                </form>
+                 
             </div>
         </div>
     </div>
 
     <script>
-    	let rooms = document.querySelectorAll('.chat-item');
-    	let chatWindow = document.querySelectorAll('.chat-window')[0];
-    	let v_alpha = "";
-    	
-        var sock = new SockJS("${pageContext.request.contextPath}/endpoint");
-        var client = Stomp.over(sock);
+    let currentRoomNo = null; 
+    let currentSubscription = null; 
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const rooms = document.querySelectorAll('.chat-item');
+        const chatWindow = document.querySelectorAll('.chat-window')[0];
+        let v_alpha = "";
+
+        // WebSocket 연결 설정
+        const sock = new SockJS("${pageContext.request.contextPath}/endpoint");
+        const client = Stomp.over(sock);
 
         client.connect({}, function () {
             console.log("WebSocket 연결 성공");
-            
-            rooms.forEach((room,idx) =>{
-            	room.addEventListener('click',()=>{
-            		let roomNo = ${roomList.get(idx).roomNo};
-            		let memName = '${roomList.get(idx).memName}';
-            		chatWindow.innerHTML = "";
-            		$.ajax({
-        		        url: '${pageContext.request.contextPath}/getChatHistory', // 컨트롤러의 매핑 주소
-        		        method: 'POST', 
-        		        contentType: 'application/json',
-        		        data: JSON.stringify({
-        		            roomNo: roomNo,
-        		        }),
-        		        success: function (response) {
-        		            console.log(response);
-        				    
-        		            
-        				    let v_beta = "";
-        		            
-        		            
-        		            
-        		            for(let i=0; i<response.length; i++){
-        		            	
-        		            	let history_content = renderList(response[i]);
-        		            	v_beta += history_content;
-        		            }
-        		            
-        		            v_alpha = '<div class="chat-header" id="chat-header">'+ memName +'님 상담창</div><div class="chat-messages" id="chat-messages">';
-                			v_alpha += v_beta + '</div><div class="chat-input"><div><input type="text" id="chat-input" placeholder="메시지를 입력하세요.">';
-                			v_alpha += '<button id="sendMsg" type="submit">보내기</button></div></div>';
-        		            
-                			
-                			document.querySelector('#sendMsg').addEventListener('click',()=>{
-          						
-          						var messageContent = document.querySelector('#chat-input').value;
-          						
-          						client.send('/app/hello/' + roomNo, {}, 
-          						JSON.stringify({
-          							chatMsg : messageContent,
-          							memId : "${sessionScope.login.memId }",
-          							memName : "${sessionScope.login.memName }",
-          							roomNo : roomNo  
-          						}));
-          						messageInput.val('');   
-          					})   
-        		        },
-        		        error: function (xhr, status, error) {
-        		            console.error('Error connecting to agent:', error);
-        		        }
-        		    });
-                		chatWindow.innerHTML = v_alpha; 
-                  		var messageInput = $('#chat-input');
-                  		// 관리자 채팅방 구독
-                        client.subscribe('/subscribe/chat/' + roomNo, function (chat) {
-                            const content = JSON.parse(chat.body); 
-                        	
-                            let v_tag = renderList(content);
-                            
-                            console.log(v_tag); 
-                            
-                            $("#chat-messages").append(v_tag);
-                        });
-                  		
-      					
-            		
-      		         
-            	})
-            })
-            
-            
-          
+
+            rooms.forEach((room, idx) => {
+                room.addEventListener('click', function () {
+                    const roomNo = Number(room.querySelector('#room-no').innerHTML);
+
+                    if (currentRoomNo === roomNo) {
+                        // 이미 선택된 방이면 중복 요청 방지
+                        return;
+                    }
+
+                    // 현재 방 번호 갱신
+                    currentRoomNo = roomNo;
+                    console.log("roomNo: " + roomNo);
+                    
+                    // 방 눌린 효과
+                    rooms.forEach(r => r.classList.remove('active'));
+                    room.classList.add('active');
+
+                    const memName = room.querySelector('.chat-title').innerHTML;
+                    chatWindow.innerHTML = "";
+
+                    // 이전 구독 해제
+                    if (currentSubscription) {
+                        currentSubscription.unsubscribe(); // 기존 구독 해제
+                        currentSubscription = null; // 초기화
+                    }
+
+                    // 새로운 방 구독
+                    currentSubscription = client.subscribe('/subscribe/chat/' + roomNo, function (chat) {
+                        const content = JSON.parse(chat.body);
+                        const v_tag = renderList(content);
+                        $("#chat-messages").append(v_tag);
+                    });
+
+                    // AJAX로 채팅 기록 가져오기
+                    $.ajax({
+                        url: '${pageContext.request.contextPath}/getChatHistory',
+                        method: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            roomNo: roomNo,
+                        }),
+                        success: function (response) {
+                            console.log(response);
+
+                            let v_beta = "";
+
+                            for (let i = 0; i < response.length; i++) {
+                                const history_content = renderList(response[i]);
+                                v_beta += history_content;
+                            }
+
+                            v_alpha = '<div class="chat-header" id="chat-header">' + memName + '님 상담창</div><div class="chat-messages" id="chat-messages">';
+                            v_alpha += v_beta + '</div><div class="chat-input"><div><input type="text" id="chat-input" placeholder="메시지를 입력하세요.">';
+                            v_alpha += '<button id="sendMsg" type="submit">보내기</button></div></div>';
+
+                            chatWindow.innerHTML = v_alpha;
+                        },
+                        error: function (xhr, status, error) {
+                            console.error('Error connecting to agent:', error);
+                        }
+                    });
+                });
+            });
         });
-        
 
-        function renderList(vo) {
-            // 날짜 포맷 (옵션: 필요한 경우 날짜 포맷팅 추가)
-            const date = vo.sendDate; // 예: "2024-11-29 15:45"
-            const isUserMessage = vo.memId === "${sessionScope.login.memId }"; // 내가 보낸 메시지인지 확인
+        // sendMsg 버튼 클릭 이벤트 전역에서 한 번만 설정
+        $(document).on('click', '#sendMsg', function () {
+            const messageInput = $('#chat-input');
+            const messageContent = messageInput.val();
 
-            // 메시지 컨테이너 생성
-            const messageContainer = document.createElement('div');
-            messageContainer.className = `message ${isUserMessage ? 'sender' : 'receiver'}`;
-            
-            // 메시지 내용 추가
-            const messageBubble = document.createElement('div');
-            messageBubble.style.display = "inline-block";
-            messageBubble.style.padding = "10px";
-            messageBubble.style.borderRadius = "10px";
-            messageBubble.style.maxWidth = "70%";
-            messageBubble.style.wordWrap = "break-word";
-            messageBubble.style.marginBottom = "5px";
-
-            if (isUserMessage) {
-                messageBubble.style.backgroundColor = "#007bff";
-                messageBubble.style.color = "#fff";
-                messageContainer.style.textAlign = "right"; // 본인 메시지는 오른쪽 정렬
-            } else {
-                messageBubble.style.backgroundColor = "#f0f0f0";
-                messageBubble.style.color = "#000";
-                messageContainer.style.textAlign = "left"; // 상대방 메시지는 왼쪽 정렬
+            if (!currentRoomNo || !messageContent.trim()) {
+                alert("메시지를 입력하거나 방을 선택하세요.");
+                return;
             }
 
-            messageBubble.textContent = vo.chatMsg;
-            messageContainer.appendChild(messageBubble);
+            client.send('/app/hello/' + currentRoomNo, {}, JSON.stringify({
+                chatMsg: messageContent,
+                memId: "${sessionScope.login.memId}",
+                memName: "${sessionScope.login.memName}",
+                roomNo: currentRoomNo
+            }));
 
-            // 메시지 날짜 추가
-            const messageTime = document.createElement('span');
-            messageTime.style.fontSize = "0.8rem";
-            messageTime.style.color = "#999";
-            messageTime.textContent = date;
-            messageContainer.appendChild(messageTime);
+            messageInput.val(''); // 입력창 초기화
+        });
+    });
 
-            // 렌더링된 HTML 반환
-            return messageContainer.outerHTML;
+    function renderList(vo) {
+        // 날짜 포맷 (옵션: 필요한 경우 날짜 포맷팅 추가)
+        const date = vo.sendDate; // 예: "2024-11-29 15:45"
+        const isUserMessage = vo.memId === "${sessionScope.login.memId}"; // 내가 보낸 메시지인지 확인
+
+        // 메시지 컨테이너 생성
+        const messageContainer = document.createElement('div');
+        messageContainer.className = `message ${isUserMessage ? 'sender' : 'receiver'}`;
+
+        // 메시지 내용 추가
+        const messageBubble = document.createElement('div');
+        messageBubble.style.display = "inline-block";
+        messageBubble.style.padding = "10px";
+        messageBubble.style.borderRadius = "10px";
+        messageBubble.style.maxWidth = "70%";
+        messageBubble.style.wordWrap = "break-word";
+        messageBubble.style.marginBottom = "5px";
+
+        if (isUserMessage) {
+            messageBubble.style.backgroundColor = "#007bff";
+            messageBubble.style.color = "#fff";
+            messageContainer.style.textAlign = "right"; // 본인 메시지는 오른쪽 정렬
+        } else {
+            messageBubble.style.backgroundColor = "#f0f0f0";
+            messageBubble.style.color = "#000";
+            messageContainer.style.textAlign = "left"; // 상대방 메시지는 왼쪽 정렬
         }
+
+        messageBubble.textContent = vo.chatMsg;
+        messageContainer.appendChild(messageBubble);
+
+        // 메시지 날짜 추가
+        const messageTime = document.createElement('span');
+        messageTime.style.fontSize = "0.8rem";
+        messageTime.style.color = "#999";
+        messageTime.textContent = date;
+        messageContainer.appendChild(messageTime);
+
+        // 렌더링된 HTML 반환
+        return messageContainer.outerHTML;
+    }
+
+
 
 
        

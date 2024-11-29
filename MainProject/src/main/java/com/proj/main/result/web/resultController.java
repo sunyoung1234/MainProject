@@ -223,7 +223,7 @@ public class resultController {
 	public String sendData(UserBuildingDTO userBuildingDTO) {
 	    RestTemplate restTemplate = new RestTemplate();
 	    restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
-	    String url = "http://localhost:5000/receive";  // Python 서버 주소
+	    String url = "http://192.168.0.51:5000/receive";  // Python 서버 주소
 
 	    // HTTP 헤더 설정
 	    HttpHeaders headers = new HttpHeaders();
