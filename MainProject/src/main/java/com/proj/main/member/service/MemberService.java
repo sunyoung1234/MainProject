@@ -30,7 +30,6 @@ public class MemberService {
 		return dao.updateMember(member);
 	}
 	
-	// 占쎌돳占쎌뜚筌뤴뫖以� �겫�뜄�쑎占쎌궎疫뀐옙
 	public List<MemberDTO> getMemberList(){
 		List<MemberDTO> result = dao.getMemberList();
 		return result;
