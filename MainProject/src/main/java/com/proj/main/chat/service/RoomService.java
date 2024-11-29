@@ -34,4 +34,8 @@ public class RoomService {
 		int result = dao.deleteRoom(roomNo);
 		return result;
 	};
+	
+	public RoomDTO getRoomByName(String roomName) {
+		return dao.getRoomByName(roomName);
+	}
 }

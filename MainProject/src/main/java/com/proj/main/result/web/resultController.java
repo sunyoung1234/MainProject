@@ -241,7 +241,7 @@ public class resultController {
 	}
 	
 	@RequestMapping("/applyResult") 
-	public String applyResult(ApplyResultDTO ar) {
+	public String applyResult(ApplyResultDTO ar, ZeroDTO zero) {
 	
 		rs.applyResult(ar);
 		MyBuildingDTO mb = new MyBuildingDTO();
@@ -252,9 +252,34 @@ public class resultController {
 		
 		ms.updateZebTestYn(mb);
 		
-		MyBuildingDTO myBuilding = ms.getMyBuildingsByBuildingId(ar.getBuildingId());
 		
-		ZeroDTO zero = new ZeroDTO();
+		if(ar.getApproveYn().equals("승인")) {
+			MyBuildingDTO myBuilding = ms.getMyBuildingsByBuildingId(ar.getBuildingId());
+			
+			zero.setMemId(myBuilding.getMemId());
+			zero.setBuildingAddress(myBuilding.getRoadAddress());
+			
+			if(myBuilding.getResidentialType().equals("주거")) {
+				zero.setBuildingDivision("주거용");
+				zero.setBuildingUse("주거용");
+			}else {
+				zero.setBuildingDivision("주거용 이외");
+				zero.setBuildingUse("사무용");
+			}
+			zero.setBuildingName(myBuilding.getBuildingName());
+			
+			zero.setRegion(myBuilding.getRoadAddress().substring(0, 2));
+			zero.setApplicantOrganization("그린솔루션");
+			zero.setTotalArea(myBuilding.getSquareMeterArea());
+			zero.setZeroLevel("ZEB "+myBuilding.getZebLevel());
+			zero.setMeasureMethod("전자식 원격검침계량기");
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			zero.setCertificateDate(sdf.format(new Date()));
+			
+			System.out.println(zero);
+			mapService.addZeroBuilding(zero);
+		}
 		
 		return "redirect:/applyStatusView";
 	}

@@ -250,8 +250,8 @@
 	                <input id="rejectReason" name="rejectReason" type="text" placeholder="거절 사유를 입력해주세요">
 	            </div>
 	            
-	            <input id="latitude" name="latitude">
-	            <input id="longitude" name="longitude">
+	            <input style="display:none;" id="latitude" name="latitude">
+	            <input style="display:none;" id="longitude" name="longitude">
 	            
 	            
 	

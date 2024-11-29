@@ -227,7 +227,7 @@ body {
 			    timeoutTimer = setTimeout(function() {
 			        alert("세션이 만료되었습니다. 로그아웃됩니다.");
 			        logoutSession();
-			    },  6*30 * 1000); // 30분 후 세션 만료 (30분 = 30 * 60 * 1000ms)
+			    },  60*30 * 1000); // 30분 후 세션 만료 (30분 = 30 * 60 * 1000ms)
 		
 			    // 세션 연장 요청을 서버로 보냄 (세션 타임아웃 갱신)
 			    keepSessionAlive();
