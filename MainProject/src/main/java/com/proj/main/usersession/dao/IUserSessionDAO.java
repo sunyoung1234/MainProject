@@ -33,11 +33,17 @@ public interface IUserSessionDAO {
 	int yesterdayUserAvg();
 	
 	// 오늘 평균 접속 시간
-	int todayUserAvg();
+	Integer todayUserAvg();
 	
 	// 유저의 시간별 로그인 횟수 체크
 	List<UserCountDTO> userLoginCount(String loginDate);
 	
 	// 날짜 꺼내기
 	List<String> selectDate();
+	
+	// 유저 시간별 로그인 횟수 (전체날짜)
+	List<UserCountDTO> selectAllLoginCount();
+	
+	// 유저 로그인 횟수 전체
+	Integer selectAllUserVisit();
 }

@@ -49,7 +49,7 @@
     .memInfo{
     	display:flex;
     	justify-content:center;
-    	margin-right:150px;
+    	margin-right:180px;
     	margin-top:30px;
     	
     }
@@ -61,7 +61,14 @@
     }
     
     .info-item2{
+    	position:relative;
+    	top:40px;
     	margin-left:20px;
+    	width:400px;
+    	display:flex;
+    	justify-content:center;
+    	font-size:20px;
+    	padding: 5px;
     }
     
     .info-car{
@@ -107,19 +114,27 @@
 		display: flex;
 		justify-content: end;
 		margin-right: 100px;
-		
+		padding: 10px;
 	}
     
     .get-btn{
-    	background-color: #28A745;
-    	border: 1px solid #28A745;
+    	background-color: #91B4D4;
+    	border: 1px solid #91B4D4;
     	border-radius: 5px;
     	color : white;
     }
     
     #chart-container{
-    	margin-top :50px;
-    	width:85%;
+    	width:80%;
+    	box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+	    border-radius: 8px; /* 테이블 둥근 모서리 */
+	    margin-left:60px;
+	    margin-right:30px;
+	    margin-bottom:30px;
+	    padding-right:30px;
+	    padding-bottom:30px;
+	    padding-top: 30px;
+	    border: 1px solid #CED41F;
     }  
     
     #myChart{
@@ -130,8 +145,40 @@
     
     .elecUse-explain{
     	font-size:15px;
-    	margin-left: 80px;
+    	margin-left: 50px; 
+    	 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+	    border-radius: 8px; /* 테이블 둥근 모서리 */
+	    padding: 20px;
+	    border: 1px solid #ED4941;
     } 
+    
+    .elecUse-title{
+    	display: flex;
+    	justify-content: center;
+    	font-weight: bold;
+    	font-size:20px;
+    	color: #ED4941;
+    	padding-right: 20px;
+    }
+    
+    .elec-chart-title {
+	    position: relative;
+	    top: 20px;
+	    left:35%;
+	    font-size: 18px;
+	    font-weight: bold; 
+	    margin-left:20px;
+	    background-color: #B8D498;
+	    width:250px;
+	    height:50px;  
+	    display: flex;
+		align-items: center;
+		padding-left: 10px;
+		padding-right:10px;   
+		justify-content: center;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+    	border-radius: 8px; /* 테이블 둥근 모서리 */
+	}
     
 </style>
 
@@ -139,6 +186,7 @@
 <body class="d-flex flex-column">
 
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
+	<%@ include file="/WEB-INF/inc/subnavbarMy.jsp"%>
 	
 	<div id="loading" style="display: none;">
 	  <div class="spinner"></div>
@@ -150,22 +198,8 @@
 		<div class="elecImgBox">
 			<div class="info-container">
 				<div class="memInfo">
-					<div>
-						<h4>회원정보</h4>
-					</div>
-					<div class="info-item-box">
-						<div class="info-item">
-							<i class="info-car bi-person-circle"></i>
-							<span>닉네임 : ${member1.getMemName() }</span>
-						</div>
-						<div class="info-item2">
-							<i class="info-car bi-house-door"></i>
-							<span>주소 : ${member1.getJibunAddress() }</span>
-						</div>
-					</div>
-				</div>
-				<div class="memInfo">
 					<div class="elecUse-explain">
+						<div class="elecUse-title">주의사항</div>
 						<br>※ 건물 주소에 따른 전기 사용량을 그래프로 나타낸 페이지입니다.
 						<br>※ 전기 사용량 예측값 불러오기를 통해 3개월치의 전기 사용량 예측값을 확인할 수 있습니다.
 						<br>※ 그래프가 정확하지 않을 시 예측값 불러오기를 한번 더 눌러주시기 바랍니다.
@@ -176,8 +210,12 @@
 				
 			</div>
 			
-			
+			<div class="elec-chart-title">전기 사용량 및 예측량</div>
 			<div id="chart-container">
+				<div class="info-item2">
+					<i class="info-car bi-house-door"></i>
+					<span>주소 : ${member1.getJibunAddress() }</span>
+				</div>
 				<form action="${pageContext.request.contextPath}/updateModel" method="post" onsubmit="showLoading()">
 					<div class="get-btn-box">
 						<button class="get-btn" id="updateBtn" type="submit">전기 사용량 예측값 불러오기</button>
@@ -247,17 +285,6 @@
 		v_predUse1 = v_predUse1.split(',')
 		v_predData = v_predData.split(',')
 		
-		
-		console.log(v_elecUse)
-		console.log(v_useDate)
-		console.log(v_predUse)
-		console.log(v_predDate)
-		console.log(v_nextThreeMonths)
-		console.log(typeof(v_elecUse))
-		console.log(typeof(v_useDate))
-		console.log(typeof(v_predUse))
-		console.log(typeof(v_predDate))
-		
 		let combinedUse = [...v_elecUse];
 		
 		let savePredUse = []
@@ -271,16 +298,6 @@
 		for (let i = 0; i < v_elecUse.length - 1; i++) {
 		    v_predUse.unshift(null); // unshift는 배열의 앞에 요소를 추가
 		}
-		
-		
-		console.log(combinedUse)
-		
-		
-		
-		// 결과 출력
-		console.log(v_useDate);
-		console.log(v_elecUse.length)
-		console.log(v_predUse[v_elecUse.length])
 		
 		if(v_predUse[v_elecUse.length] == undefined){
 			v_predUse[v_elecUse.length-1] = v_elecUse[v_elecUse.length-1]

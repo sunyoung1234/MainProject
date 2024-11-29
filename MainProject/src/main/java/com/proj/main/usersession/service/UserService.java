@@ -50,8 +50,8 @@ public class UserService {
 		return result;
 	}
 	
-	public int todayUserAvg() {
-		int result = dao.todayUserAvg();
+	public Integer todayUserAvg() {
+		Integer result = dao.todayUserAvg();
 		return result;
 	}
 	
@@ -62,6 +62,16 @@ public class UserService {
 	
 	public List<String> selectDate() {
 		List<String> result = dao.selectDate();
+		return result;
+	}
+	
+	public List<UserCountDTO> selectAllLoginCount(){
+		List<UserCountDTO> result = dao.selectAllLoginCount();
+		return result;
+	}
+	
+	public Integer selectAllUserVisit() {
+		Integer result = dao.selectAllUserVisit();
 		return result;
 	}
 	

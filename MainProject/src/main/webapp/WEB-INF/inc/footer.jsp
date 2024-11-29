@@ -14,8 +14,9 @@
             position: relative;
             bottom: 0;
             width: 100%;
-            text-align: center;
-        }
+            height:150px; 
+            text-align: center; 
+        } 
         body {
             margin: 0;
             display: flex;
@@ -25,6 +26,27 @@
         main {
             flex: 1; /* Footer를 하단으로 밀기 위한 공간 */
         }
+        
+        .footer-top{
+        	 color: #fff; /* text-white */
+        	 margin-bottom: 30px;  
+        }
+        
+        .footer-top > div{
+        	display: flex;
+        	justify-content: start;
+        	margin-left:200px;
+        	font-size:15px;
+        }
+        
+        .footer-top-left{
+        	margin-right: 87px; 
+        }
+        
+        .footer-top-left2{
+        	margin-right: 30px; 
+        }
+         
     </style>
 </head>
 <body>
@@ -34,8 +56,17 @@
     </main>
     <!-- Footer -->
     <footer class="footer">
-        <div class="container">
-            <p class="m-0 text-center">Copyright &copy; GreenSolution 2024</p>
+    	<div class="footer-top">
+    		<div>
+    			<div class="footer-top-left">상호명 : GreenSolution</div> 
+    			<div class="footer-top-left">대표 이름 : 박선영</div> 
+    			<div class="footer-top-left">주소 : 대전 서구 문정로 48번길</div> 
+    			<div class="footer-top-left">대표번호 : 010-1111-1111</div> 
+    		</div>
+    	</div> 
+    	
+        <div class="footer-bottom">
+            <p class="m-0 text-center">Copyright &copy; GreenSolution All rights reserved.</p>
         </div>
     </footer>
     <!-- Bootstrap core JS -->

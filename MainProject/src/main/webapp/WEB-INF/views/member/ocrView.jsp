@@ -224,7 +224,7 @@
 <body class="d-flex flex-column">
 
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
-	
+	<%@ include file="/WEB-INF/inc/subnavbarMy.jsp"%>
 	<div class="main-height">
 		<div class="ocr-box">
 			<div class="ocr-title">계량기 사진 첨부 <br><span class="title-explain">※ 예측값이 안 나올 시 우측 하단 버튼 클릭하여 예측값을 불러와주시기 바랍니다.</span></div>
