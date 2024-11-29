@@ -62,7 +62,7 @@
 											<strong>작성자:</strong> ${proposal.memName}
 										</p>
 										<p>
-											<strong>작성일:</strong> ${proposal.propDate}
+											<strong>작성일:</strong> ${proposal.formattedPropDate}
 										</p>
 										<p>
 											<strong>내용:</strong> ${proposal.propContent}

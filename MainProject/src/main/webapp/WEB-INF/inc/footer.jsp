@@ -63,6 +63,7 @@
     			<div class="footer-top-left">대표 이름 : 박선영</div> 
     			<div class="footer-top-left">주소 : 대전 서구 문정로 48번길</div> 
     			<div class="footer-top-left">대표번호 : 010-1111-1111</div> 
+    			<div class="footer-top-left">대표 이메일 : greensolution@greensolution.com</div>
     		</div>
     	</div> 
     	
