@@ -15,13 +15,12 @@
             background-color: #f9f9f9;
         }
         .container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 0 auto;
-            margin-top: 50px;
-            padding: 30px 20px;
-            background-color: white;
-            border: 1px solid #ddd;
+            padding: 20px;
+            background-color: #fff;
             border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 
         }
         .title-bar {
@@ -44,6 +43,7 @@
             color: #666;
             margin-bottom: 20px;
             border-bottom: 1px solid grey;
+            padding-bottom: 10px;
         }
         .info-bar .info-item {
             display: flex;
@@ -55,11 +55,11 @@
             color: #333;
             line-height: 1.6;
             white-space: pre-wrap;
+            margin-bottom: 30px;
         }
         .button-bar {
             display: flex;
             justify-content: flex-end;
-            margin-top: 30px;
             gap: 10px;
         }
         .button-bar a {
@@ -71,6 +71,7 @@
 
 <body>
     <%@ include file="/WEB-INF/inc/top.jsp"%>
+    <%@ include file="/WEB-INF/inc/subnavbarBoard.jsp"%>
     <main class="py-5">
         <div class="container">
             <div class="title-bar">
@@ -92,12 +93,14 @@
                 ${notice.noticeContent}
             </div>
             <div class="button-bar">
-                <a href="${pageContext.request.contextPath}/noticeBoardView" class="btn btn-secondary">목록</a>
-                <c:if test="${sessionScope.login != null && sessionScope.login.memId eq 'admin'}">
-                    <a href="${pageContext.request.contextPath}/noticeEditView?noticeNo=${notice.noticeNo}" class="btn btn-primary">수정</a>
-                    <a href="${pageContext.request.contextPath}/noticeDelete?noticeNo=${notice.noticeNo}" class="btn btn-danger" onclick="return confirm('삭제하시겠습니까?');">삭제</a>
-                </c:if>
-            </div>
+			    <a href="${pageContext.request.contextPath}/noticeBoardView" class="btn btn-secondary">목록</a>
+			    <c:if test="${sessionScope.login != null && sessionScope.login.memId eq 'admin'}">
+			        <!-- 수정 버튼 -->
+			        <a href="${pageContext.request.contextPath}/noticeEditView?noticeNo=${notice.noticeNo}" class="btn btn-primary">수정</a>
+			        <!-- 삭제 버튼 -->
+			        <a href="${pageContext.request.contextPath}/noticeDelete?noticeNo=${notice.noticeNo}" class="btn btn-danger" onclick="return confirm('삭제하시겠습니까?');">삭제</a>
+			    </c:if>
+</div>
         </div>
     </main>
     <%@ include file="/WEB-INF/inc/footer.jsp"%>
