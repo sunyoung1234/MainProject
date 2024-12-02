@@ -186,9 +186,29 @@ body {
 .navi-navbar:hover ~ .overlay {
 	display: block;
 }
+
+/* 챗봇 아이콘 스타일 */
+.top-icon {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	width: 60px;
+	height: 60px;
+	background-size: cover;
+	cursor: pointer;
+	z-index: 1000;
+	transition: transform 0.3s ease;
+}
+
+.top-icon:hover {
+	transform: scale(1.1);
+}
 </style>
 </head>
 <body>
+	<div class="top-icon" style="position:fixed; bottom:12%; right:24px;" onclick="scrollToTop()">
+    <img src="${pageContext.request.contextPath}/resources/image/topicon64blue.png" title="위로 가기">
+	</div>
 	<nav class="navi-navbar">
 		<a class="navi-navbar-brand" href="${pageContext.request.contextPath}/">
 			<i class="fas fa-leaf"></i> Green Solution
@@ -196,7 +216,7 @@ body {
 		<div class="nav-wrapper">
 			<ul class="navi-navbar-nav">
 				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/mypage" class="navi-nav-link">마이</a></li>
-				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-nav-link">게시판</a></li>
+				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-nav-link">전기에너지</a></li>
 				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/infoBoardView" class="navi-nav-link">제로에너지 건축물</a></li>
 				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/faq/view" class="navi-nav-link">고객지원</a></li>
 			</ul>
@@ -217,7 +237,22 @@ body {
         </c:otherwise>
     </c:choose>
 </div>
-
+<script>
+    // 페이지 최상단으로 이동하는 함수
+    function scrollToTop() {
+    const slider = document.querySelector('.vertical-slider');
+    if (slider && $(slider).hasClass('slick-initialized')) {
+        console.log("Navigating to the first slide using Slick.");
+        $(slider).slick('slickGoTo', 0);
+    } else {
+        console.log("Scrolling to the top of the page.");
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+}
+</script>
 
 
 		<!-- 드롭다운 -->
@@ -227,12 +262,10 @@ body {
 					<li class="navi-dropdown-content">
 						<a href="${pageContext.request.contextPath}/mypage" class="navi-dropdown-item">마이페이지</a>
 						<a href="${pageContext.request.contextPath}/memEditView" class="navi-dropdown-item">회원정보수정</a>
-						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">전기사용량</a>
-						<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">전기 사용량 기입</a>
 					</li>
 					<li class="navi-dropdown-content">
-						<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a>
-						<a href="${pageContext.request.contextPath}/reviewView" class="navi-dropdown-item">리뷰게시판</a>
+						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">전기사용량</a>
+						<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">전기 사용량 기입</a>
 						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품 게시판</a>
 					</li>
 					<li class="navi-dropdown-content">
@@ -241,10 +274,10 @@ body {
 						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">ZEB 등록현황</a>
 						<a href="${pageContext.request.contextPath}/mapView" class="navi-dropdown-item">지도 상세보기</a>
 					</li>
-					<li class="navi-dropdown-content"> 
+					<li class="navi-dropdown-content">
+						<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a>
 						<a href="${pageContext.request.contextPath}/faq/view" class="navi-dropdown-item">자주 묻는 질문</a>
 						<a href="${pageContext.request.contextPath}/chatListView" class="navi-dropdown-item">챗봇상담</a>
-						<a href="#" class="navi-dropdown-item">이용 가이드</a>
 						<a href="${pageContext.request.contextPath}/proposal/view" class="navi-dropdown-item">건의사항</a>
 					</li>
 					<li class="navi-dropdown-content">
@@ -260,12 +293,10 @@ body {
 					<li class="navi-dropdown-content">
 						<a href="${pageContext.request.contextPath}/mypage" class="navi-dropdown-item">마이페이지</a>
 						<a href="${pageContext.request.contextPath}/memEditView" class="navi-dropdown-item">회원정보수정</a>
-						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">전기사용량</a>
-						<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">전기 사용량 기입</a>
 					</li>
 					<li class="navi-dropdown-content">
-						<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a>
-						<a href="${pageContext.request.contextPath}/reviewView" class="navi-dropdown-item">리뷰게시판</a>
+						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">전기사용량</a>
+						<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">전기 사용량 기입</a>
 						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품 게시판</a>
 					</li>
 					<li class="navi-dropdown-content">
@@ -274,10 +305,10 @@ body {
 						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">ZEB 등록현황</a>
 						<a href="${pageContext.request.contextPath}/mapView" class="navi-dropdown-item">지도 상세보기</a>
 					</li>
-					<li class="navi-dropdown-content"> 
+					<li class="navi-dropdown-content">
+						<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a>
 						<a href="${pageContext.request.contextPath}/faq/view" class="navi-dropdown-item">자주 묻는 질문</a>
 						<a href="${pageContext.request.contextPath}/chatListView" class="navi-dropdown-item">챗봇상담</a>
-						<a href="#" class="navi-dropdown-item">이용 가이드</a>
 						<a href="${pageContext.request.contextPath}/proposal/view" class="navi-dropdown-item">건의사항</a>
 					</li>
 				</ul>
@@ -285,6 +316,8 @@ body {
 		</c:if>
 	</nav>
 	<div class="overlay"></div>
+
+		
 	<script type="text/javascript">
 		let v_memId = '${sessionScope.login.getMemId()}'
 		console.log(v_memId)
@@ -345,8 +378,8 @@ body {
 			resetSessionTimeout();
 		}
 		
-	
 	</script>
+	
 	
 </body>
 </html>

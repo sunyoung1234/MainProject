@@ -268,7 +268,13 @@ body {
     border-radius: 50%;
     animation: rotate 6s linear infinite;
     background: radial-gradient(circle, rgba(40, 167, 69, 0.2), rgba(40, 167, 69, 0));
-    transition: transform 0.5s ease; /* 크기 변화를 부드럽게 하기 위한 트랜지션 */
+    transition: transform 0.5s ease-in-out; /* 부드럽게 변화 */
+    z-index: 2; /* 다른 요소 위로 올리기 */
+}
+
+#banner #animated-shape:hover {
+    transform: scale(1.5); /* 1.5배 확대 */
+    z-index: 3; /* hover 시 z-index를 높여 다른 요소 위로 */
 }
 
 #animated-shape::before,
@@ -279,7 +285,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 50%;
-    transition: transform 0.5s ease; /* 내부 도형 크기 변화를 부드럽게 하기 위한 트랜지션 */
+    transition: transform 0.5s ease-in-out; /* 부드럽게 변화 */
 }
 
 #animated-shape::before {
@@ -294,11 +300,6 @@ body {
     height: 100px;
     background-color: rgba(40, 167, 69, 0.1);
     animation: scaleUp 2.5s ease-in-out infinite;
-}
-
-/* Hover 상태에서 도형이 커지도록 설정 */
-#animated-shape:hover {
-    transform: scale(1.5); /* 도형 전체 크기 1.5배 확대 */
 }
 
 #animated-shape:hover::before {
@@ -361,6 +362,69 @@ body {
 }
 </style>
 
+<style>
+/* 비디오 배경 설정 */
+.background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    pointer-events: none; /* 비디오 클릭 불가 */
+}
+
+/* 오버레이 스타일 */
+.background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* 어둡게 */
+    z-index: 1;
+}
+
+/* 컨텐츠(텍스트와 이미지) */
+.section.banner .container {
+    position: relative;
+    z-index: 2; /* 비디오와 오버레이 위에 표시 */
+    color: white;
+}
+</style>
+
+<style>
+/* 비디오 배경 설정 */
+#banner .background-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 1;
+    pointer-events: none; /* 비디오 클릭 불가 */
+}
+
+/* 오버레이 스타일 */
+#banner .background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* 반투명 검정 */
+    z-index: 1;
+}
+
+/* 컨텐츠 레이어 */
+#banner .container {
+    position: relative;
+    z-index: 2; /* 비디오와 오버레이 위에 표시 */
+    color: white;
+}
+</style>
 
 </head>
 <body>
@@ -425,15 +489,21 @@ body {
 		</section>
 
 
-<section class="section" id="banner" style="background-color: #f8f9fa; padding: 70px 0; position: relative;">
-    <div class="container">
+<section class="section" id="banner" style="position: relative; padding: 70px 0;">
+    <!-- 비디오 배경 -->
+    <video autoplay loop muted playsinline class="background-video">
+        <source src="${pageContext.request.contextPath}/resources/image/greenbubvideo.mp4" type="video/mp4">
+    </video>
+    <!-- 오버레이 -->
+    <div class="background-overlay"></div>
+    <div class="container" style="position: relative; z-index: 2;">
         <div class="row align-items-center">
             <!-- 텍스트 섹션 -->
             <div class="col-lg-6 text-center text-lg-start">
-                <h1 class="display-4 mb-4" style="font-weight: 700; color: #2c3e50;">
+                <h1 class="display-4 mb-4" style="font-weight: 700; color: #ffffff;">
                     지속 가능한 에너지를 위한<br><strong style="color: #28a745;">미래의 솔루션</strong>
                 </h1>
-                <p class="mb-4" style="font-size: 20px; line-height: 1.8; color: #34495e;">
+                <p class="mb-4" style="font-size: 20px; line-height: 1.8; color: #ffffff;">
                     우리의 목표는 탄소 중립과 에너지 효율화를 통해<br>
                     친환경적인 미래를 만드는 것입니다. 혁신적인 기술과<br>
                     솔루션으로 지속 가능한 세상을 함께 만들어갑니다.
@@ -453,8 +523,14 @@ body {
 
 
 
-<section class="section banner" id="introduce" style="background: linear-gradient(to right, #83a4d4, #b6fbff); padding: 70px 0;">
-    <div class="container">
+<section class="section banner" id="introduce" style="position: relative; padding: 70px 0;">
+    <!-- 비디오 배경 -->
+    <video autoplay loop muted playsinline class="background-video">
+        <source src="${pageContext.request.contextPath}/resources/image/cyber1.mp4" type="video/mp4">
+    </video>
+    <!-- 오버레이 -->
+    <div class="background-overlay"></div>
+    <div class="container" style="position: relative; z-index: 2;">
         <div class="row align-items-center">
             <!-- 텍스트 섹션 -->
             <div class="col-lg-6 text-white text-center text-lg-start">
@@ -479,6 +555,7 @@ body {
         </div>
     </div>
 </section>
+
 
 
 

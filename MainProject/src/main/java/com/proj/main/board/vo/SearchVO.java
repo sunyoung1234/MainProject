@@ -19,8 +19,9 @@ public class SearchVO {
     private int lastPage;     // 페이지 네비게이션의 마지막 페이지 번호
     private int finalPage;    // 전체 마지막 페이지 번호
 
-    // 페이징 계산 메소드
+ // 페이징 계산 메소드
     public void pageSetting() {
+        // 시작 번호와 끝 번호 계산
         this.start = (pageNo - 1) * rowSizePerPage + 1;
         this.end = pageNo * rowSizePerPage;
 
@@ -34,6 +35,18 @@ public class SearchVO {
         // 마지막 페이지 번호가 실제 마지막 페이지보다 크면 수정
         if (lastPage > finalPage) {
             lastPage = finalPage;
+        }
+
+        // 추가 검증 로직: 게시글이 없는 경우
+        if (boardCount == 0) {
+            finalPage = 1;
+            firstPage = 1;
+            lastPage = 1;
+        }
+
+        // 현재 페이지 번호가 최종 페이지를 초과하지 않도록 보정
+        if (pageNo > finalPage) {
+            pageNo = finalPage;
         }
     }
 

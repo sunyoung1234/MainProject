@@ -52,10 +52,19 @@ public class NoticeController {
         return "redirect:/noticeBoardView";
     }
 
+ // 수정 화면 이동
+    @RequestMapping("/noticeEditView")
+    public String noticeEditView(@RequestParam int noticeNo, Model model) {
+        NoticeDTO notice = noticeService.getNoticeDetail(noticeNo);
+        model.addAttribute("notice", notice);
+        return "board/noticeEditView"; // 수정 화면 JSP 파일
+    }
+
+    // 수정 요청 처리
     @PostMapping("/noticeEdit")
     public String noticeEdit(@ModelAttribute NoticeDTO notice) {
         noticeService.updateNotice(notice);
-        return "redirect:/noticeBoardView";
+        return "redirect:/noticeDetailView?noticeNo=" + notice.getNoticeNo(); // 수정 후 상세보기로 이동
     }
 
     @GetMapping("/noticeDelete")

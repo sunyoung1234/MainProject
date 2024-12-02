@@ -26,6 +26,7 @@
     margin-bottom: 15px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
+    max-height: 110px;
 }
 
 .faq-item:hover {

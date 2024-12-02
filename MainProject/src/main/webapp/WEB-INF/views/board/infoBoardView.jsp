@@ -653,7 +653,7 @@ body {
 		</div>
 
 
-		<ul class="info-list">
+<%-- 		<ul class="info-list">
 			<!-- 예제 정보 항목 -->
 			<li class="info-item"><img
 				src="${pageContext.request.contextPath}/resources/image/2050탄소중립 추진전략.png"
@@ -669,7 +669,7 @@ body {
 					<h3>제로에너지 인증 절차</h3>
 					<p>인증 절차와 제출 서류 안내</p>
 				</div></li>
-		</ul>
+		</ul> --%>
 	</div>
 
 
