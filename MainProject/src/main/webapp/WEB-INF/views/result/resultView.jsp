@@ -297,7 +297,6 @@
     <div id="capture-div" class="container1">  
         <h1>에너지 결과 페이지</h1>
         <h5>건물명 : ${userB.buildingName }</h5>
-        <h5>건물명 : ${userB.buildingName }</h5>
         <div class="content">
             <div class="left-section">
                 <!-- 왼쪽 구역 내용 -->

@@ -114,6 +114,7 @@
     background-color: #ffffff;
     border-radius: 10px;
     padding: 10px;
+    height: 100%;
 }
 
 /* 채팅 내용 영역 */
@@ -126,7 +127,8 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
+    max-height: 100%; 
+} 
 
 /* 메시지 스타일 */
 .message {
@@ -338,6 +340,24 @@
     }
 }
 
+.unread-count {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+    visibility: hidden; /* 기본적으로 숨김 */
+}
+
+
 
 
 
@@ -346,7 +366,9 @@
 <body>
 
 	<!-- 챗봇 아이콘 -->
-    <div class="chatbot-icon"></div>
+    <div class="chatbot-icon">
+    	<div class="unread-count" id="unreadCount"></div>
+    </div>
     
     <!-- 챗봇 인터페이스 -->
     <div class="chatbot-interface">
@@ -379,7 +401,8 @@
 		        <input type="text" id="userMessage" placeholder="메시지를 입력하세요..." />
 		        <button id="sendMessage">전송</button>
 		    </div>
-		    
+		    <!-- 채팅 종료 버튼 -->
+		    <button id="endChat">채팅 종료</button>
 		</div>
 		
 
@@ -390,16 +413,104 @@
 
 	
 	<script type="text/javascript">
-		
+	
+		function sendMessage(destination, message) {
+		    return new Promise((resolve, reject) => {
+		        client.send(destination, {}, JSON.stringify(message));
+		        // WebSocket에서는 메시지 전송 후 성공/실패 확인을 직접 처리해야 함
+		        setTimeout(() => resolve(), 100); // 약간의 딜레이를 추가
+		    });
+		}
+		let currentRoomNo = null;
 		var client;
+		let unreadCount = 0;
+	    const chatbotInterface = document.querySelector('.chatbot-interface');
+	    
+	    
+	    document.addEventListener('DOMContentLoaded', function () {
+	        const memId = "${sessionScope.login.memId}";
+
+	        // Room 정보 가져오기 및 WebSocket 연결
+	        $.ajax({
+	            url: '${pageContext.request.contextPath}/getRoomByMemId',
+	            method: 'POST',
+	            contentType: 'application/json',
+	            data: JSON.stringify({ memId }),
+	            success: function (response) {
+	                if (response) {
+	                    const roomNo = response.roomNo;
+	                    currentRoomNo = roomNo;
+
+	                    // WebSocket 연결
+	                    const sock = new SockJS("${pageContext.request.contextPath}/endpoint");
+	                    client = Stomp.over(sock);
+
+	                    client.connect({}, function () {
+	                    	
+	                    	$.ajax({
+	                            url: '${pageContext.request.contextPath}/getUserUnreadCount',
+	                            method: 'POST',
+	                            contentType: 'application/json',
+	                            data: JSON.stringify({ roomNo : currentRoomNo }),
+	                            success: function (messages) {
+			            	    	updateUnreadCount(messages);
+	                            } 
+	                        });
+	                    	
+	                        // 채팅 메시지 구독
+	                    	client.subscribe('/subscribe/chat/' + roomNo, function (chat) {
+			            		
+			            	    let content = JSON.parse(chat.body);
+			            	    currentRoomNo = roomNo;
+			            	    // 메시지 렌더링
+			            	    const chatArea = document.getElementById('chatArea');
+			            	    let v_tag = renderList(content);
+			            	    $("#chatArea").append(v_tag);
+			            	    chatArea.scrollTop = chatArea.scrollHeight;
+			            	    
+			            	    if (!chatbotInterface.classList.contains('show')){
+			            	    	$.ajax({
+			                            url: '${pageContext.request.contextPath}/getUserUnreadCount',
+			                            method: 'POST',
+			                            contentType: 'application/json',
+			                            data: JSON.stringify({ roomNo : currentRoomNo }),
+			                            success: function (messages) {
+					            	    	updateUnreadCount(messages);
+			                            }
+			                        });
+			            	    }
+			            	});
+	                    });
+	                }
+	            },
+	            error: function (xhr, status, error) {
+	                console.error('Error fetching room:', error);
+	            }
+	        });
+	    });
+
+	        
 	
 		// 아이콘 클릭 시 챗봇 인터페이스 열기/닫기
 		document.querySelector('.chatbot-icon').addEventListener('click', function () {
-		    const chatbotInterface = document.querySelector('.chatbot-interface');
 		    if (chatbotInterface.classList.contains('show')) {
 		        chatbotInterface.classList.remove('show'); // 인터페이스 닫기
 		    } else {
 		        chatbotInterface.classList.add('show'); // 인터페이스 열기
+		        if(currentRoomNo){
+		        	$.ajax({
+	                    url: '${pageContext.request.contextPath}/uucZero',
+	                    method: 'POST',
+	                    contentType: 'application/json',
+	                    data: JSON.stringify({ roomNo : currentRoomNo }),
+	                    success: function (messages) {
+	                    	
+	            	    	updateUnreadCount(messages);
+	                    }
+	                });
+			        
+		        }
+		        
 		    }
 		});
 	 
@@ -414,16 +525,16 @@
 		document.querySelector('#connectAgent').addEventListener('click', function () {
 		    const chatRoom = document.getElementById('chatRoom');
 		    const chatbotContent = document.querySelector('.chatbot-content');
-
+		
 		    // 기본 챗봇 화면 숨기기
 		    chatbotContent.style.display = 'none';
-
+		
 		    // 채팅방 표시
 		    chatRoom.style.display = 'flex';
-			
+		
 		    // AJAX 요청으로 컨트롤러와 연결
 		    $.ajax({
-		        url: '${pageContext.request.contextPath}/connect-agent', // 컨트롤러의 매핑 주소
+		        url: '${pageContext.request.contextPath}/connect-agent', 
 		        method: 'POST',
 		        contentType: 'application/json',
 		        data: JSON.stringify({
@@ -431,92 +542,137 @@
 		            memName: "${sessionScope.login.memName}"
 		        }),
 		        success: function (response) {
-		            console.log(response);
-				    // 기본 상담사 메시지
-				    const chatArea = document.getElementById('chatArea');
-				    if (chatArea.innerHTML.trim() === '') {
-				        // 상담사 초기 메시지를 추가
-				        const agentMessage = document.createElement('div');
-				        agentMessage.className = 'message agent-message';
-				        agentMessage.textContent = '안녕하세요! 상담사입니다. 무엇을 도와드릴까요?';
-				        chatArea.appendChild(agentMessage);
-				    }
-				    
-				    var roomNo = response.roomNo;
-				    var messageInput = $('#userMessage');
-					// 소켓 통신 객체 생성 (sockjs 객체에 WebSocketConfig에서 설정한 /endpoint 주소 입력)
-					var sock = new SockJS("${pageContext.request.contextPath}/endpoint");
-					// sockjs 객체로부터 stomp 객체 생성
-					client = Stomp.over(sock);
+		            console.log("response====", response);
+		
+		            const isNewRoom = response.isNewRoom; // 기존 방  여부 확인
+		            const roomNo = response.roomNo;
+		            // 기본 상담사 메시지
+		            const chatArea = document.getElementById('chatArea'); 
+		            if (chatArea.innerHTML.trim() === '') {
+		                // 상담사 초기 메시지를 추가
+		                const agentMessage = document.createElement('div');
+		                agentMessage.className = 'message agent-message';
+		                agentMessage.textContent = '안녕하세요! 상담사입니다. 무엇을 도와드릴까요?';
+		                chatArea.appendChild(agentMessage);
+		            }
+		
+		            var messageInput = $('#userMessage');
+		
+		            // 소켓 통신 객체 생성 (sockjs 객체에 WebSocketConfig에서 설정한 /endpoint 주소 입력)
+		            var sock = new SockJS("${pageContext.request.contextPath}/endpoint");
+		            client = Stomp.over(sock);
+		
+		            // 메시지 전송 이벤트
+		            document.querySelector('#sendMessage').addEventListener('click', async () => {
+					    const messageContent = document.querySelector('#userMessage').value;
 					
-					document.querySelector('#sendMessage').addEventListener('click',()=>{
-						
-						var messageContent = document.querySelector('#userMessage').value;
-						
-						client.send('/app/hello/' + roomNo, {}, 
-						JSON.stringify({
-							chatMsg : messageContent,
-							memId : "${sessionScope.login.memId }",
-							memName : "${sessionScope.login.memName }",
-							roomNo : response.roomNo  
-						}));
-						messageInput.val('');
-					})  
+					    // 메시지 전송
+					    await sendMessage('/app/hello/' + roomNo, {
+					        chatMsg: messageContent,
+					        memId: "${sessionScope.login.memId}",
+					        memName: "${sessionScope.login.memName}",
+					        roomNo: roomNo
+					    });
 					
-					// 연결이 맺어지면 실행
-					client.connect({},function() {
-						
-						client.subscribe('/subscribe/chat/'+ response.roomNo, function(chat) {
-							// 받은 데이터
-							console.log("subscribe success");
-							
-							let content = JSON.parse(chat.body);
-							// 받은 데이터를 그려줄 html 코드
-							let v_tag = renderList(content);
-							$("#chatArea").append(v_tag); 
-							
-						},function(error) {
-						    console.error("Subscription error:", error); // 구독 실패 시 오류 출력
-						}); 
-			
+					    // 방 정보 업데이트
+					    await sendMessage('/app/room/' + roomNo, {
+					        lastMessage: messageContent,
+					        roomNo: roomNo
+					    });
+					
+					    // 입력 필드 초기화 및 스크롤 아래로 이동
+					    document.querySelector('#userMessage').value = '';
+					    chatArea.scrollTop = chatArea.scrollHeight;
 					});
-				    
+		
+		            // WebSocket 연결
+		            client.connect({}, function () {
+		            	
+		                
+		                client.subscribe('/subscribe/uuc/'+ roomNo, function(room){
+		                	console.log("uuc uuc uuc")
+		                	console.log(room);
+		                })
+		
+		                if (isNewRoom) {
+		                    // 새로운 방일 경우만 메시지 전송
+		                    client.send('/app/room', {}, JSON.stringify({
+		                        roomNo: response.roomNo,
+		                        roomName: response.roomName,
+		                        memId: "${sessionScope.login.memId}",
+		                        memName: "${sessionScope.login.memName}",
+		                        regDate: response.regDate
+		                    }));
+		                }else{
+		                	 $.ajax({
+		                         url: '${pageContext.request.contextPath}/getChatHistory',
+		                         method: 'POST',
+		                         contentType: 'application/json',
+		                         data: JSON.stringify({ roomNo }),
+		                         success: function (messages) {
+		                        	 chatArea.innerHTML = messages.map(renderList).join('');
+		                        	 chatArea.scrollTop = chatArea.scrollHeight; 
+		                         }
+		                     });
+		                }
+		            });
 		        },
 		        error: function (xhr, status, error) {
 		            console.error('Error connecting to agent:', error);
 		        }
+		        
 		    });
-		    
-		    
+		});
+		document.getElementById('endChat').addEventListener('click', function () {
+		    if (client) {
+		    	
+		        $.ajax({
+                    url: '${pageContext.request.contextPath}/deleteRoom',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ memId: '${sessionScope.login.memId}' }),
+                    success: function (response) {
+                    	console.log(response + "aslkdldkjl아아ㅣ이이ㅑㅓ피");
+                    	
+                    	chatArea.innerHTML = '';
+                    	client.send("/app/delete", {}, JSON.stringify({ roomNo: response.roomNo }));
+	                   	client.disconnect(); // WebSocket 연결 종료
+                    }
+                });
+		        
+		    }
+		    const chatRoom = document.getElementById('chatRoom');
+		    chatRoom.style.display = 'none';
+		    document.querySelector('.chatbot-content').style.display = 'flex';
 		});
 		
-		function renderList(vo){
-			// 날짜 포맷
-			var date = vo.sendDate;
-			var html = "";
-			var content ="";
-			 
-			//내가 보낸 채팅일 경우
-			if(vo.memId=="${sessionScope.login.memId }"){
-				const userMessage = document.createElement('div');
-		        userMessage.className = 'message user-message';
-		        userMessage.textContent = vo.chatMsg;
-		        chatArea.appendChild(userMessage);
-		        
-		        html = userMessage
-			}else{
-				// 다른 사람의 채팅
-				const agentMessage = document.createElement('div');
-		        agentMessage.className = 'message agent-message';
-		        agentMessage.textContent = vo.chatMsg;
-		        chatArea.appendChild(agentMessage);
-		        
-		          html = agentMessage
-			}
-			console.log(html);
-			return html;
+		function renderList(vo) {
+		    
+			const msg = vo.chatMsg;
+
+		    // 내가 보낸 채팅일 경우
+		    if (vo.memId === "${sessionScope.login.memId}") {
+		        html = '<div class="message user-message">' + msg + '</div>';
+		    } else {
+		        // 다른 사람의 채팅
+		        html = '<div class="message agent-message">' + msg + '</div>';
+		    }
+		    return html;
 		}
 
+
+		// 함수: userUnreadCount를 업데이트하고 표시 제어
+		function updateUnreadCount(count) {
+		    const unreadCountElement = document.getElementById('unreadCount');
+		    if (count > 0) {
+		        unreadCountElement.textContent = count;
+		        unreadCountElement.style.visibility = 'visible';
+		    } else {
+		        unreadCountElement.style.visibility = 'hidden';
+		    }
+		}
+		
+		
 
 		
 	</script>

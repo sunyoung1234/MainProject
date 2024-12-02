@@ -38,4 +38,24 @@ public class RoomService {
 	public RoomDTO getRoomByName(String roomName) {
 		return dao.getRoomByName(roomName);
 	}
+	
+	public  RoomDTO getRoomByMemId(String memId) {
+		return dao.getRoomByMemId(memId);
+	}
+	
+	public int updateLastMsg(RoomDTO room) {
+		return dao.updateLastMsg(room);
+	}
+	
+	public int updateUnreadCount(RoomDTO room) {
+		return dao.updateUnreadCount(room);
+	}
+	
+	public int updateUserUnread(RoomDTO room) {
+		return dao.updateUserUnread(room);
+	}
+	
+	public int delRoom(int roomNo) {
+		return dao.delRoom(roomNo);
+	}
 }

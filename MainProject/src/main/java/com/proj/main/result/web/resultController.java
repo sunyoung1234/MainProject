@@ -12,6 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -81,6 +82,7 @@ public class resultController {
 	public String submitBuildingInfo(UserBuildingDTO ubd , HttpSession session , Model model) {
 		
 		String data = sendData(ubd);
+		System.out.println(data);
 		
         ObjectMapper objectMapper = new ObjectMapper();
         MemberDTO mem = (MemberDTO) session.getAttribute("login");
@@ -224,7 +226,6 @@ public class resultController {
 	    RestTemplate restTemplate = new RestTemplate();
 	    restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(StandardCharsets.UTF_8));
 	    String url = "http://192.168.0.51:5000/receive";  // Python 서버 주소
-
 	    // HTTP 헤더 설정
 	    HttpHeaders headers = new HttpHeaders();
 	    headers.setContentType(MediaType.APPLICATION_JSON);
