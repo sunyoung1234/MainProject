@@ -88,6 +88,18 @@ body {
 	margin-left: 15px;
 }
 
+.admin-dropdown-inner{
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+	width: 1400px; /* 상단 메뉴와 드롭다운 메뉴 동일한 너비 */
+	gap: 100px; /* 동일한 간격 */
+	margin-left: 385px;
+}
+
 .navi-nav-item,
 .navi-dropdown-content {
 	text-align: center;
@@ -128,9 +140,26 @@ body {
 	left: 0;
 }
 
-.navi-navbar:hover .navi-dropdown-field {
+.admin-dropdown-field{
+	display: none;
+	width: 100%; /* 전체 화면 너비 */
+	background-color: white;
+	padding: 10px 0;
+	border-top: 1px solid grey;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	z-index: 500;
+	position: absolute;
+	top: 100%;
+	left: 0;
+}
+
+.navi-navbar:hover .navi-dropdown-field{
 	display: flex;
 	justify-content: center; /* 중앙 정렬 */
+}
+
+.navi-navbar:hover .admin-dropdown-field{
+	display: flex;
 }
 
 /* 로그인/회원가입 메뉴 */
@@ -172,47 +201,88 @@ body {
 				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/faq/view" class="navi-nav-link">고객지원</a></li>
 			</ul>
 		</div>
-		<div class="navi-navbar-right">
-			<c:choose>
-				<c:when test="${not empty sessionScope.login}">
-					<a href="${pageContext.request.contextPath}/memEditView" class="navi-nav-link">${sessionScope.login.getMemName()} 님</a>
-					<a href="${pageContext.request.contextPath}/logout" class="navi-nav-link">로그아웃</a>
-				</c:when>
-				<c:otherwise>
-					<a href="${pageContext.request.contextPath}/loginView" class="navi-nav-link">로그인</a>
-					<a href="${pageContext.request.contextPath}/agreementView" class="navi-nav-link">회원가입</a>
-				</c:otherwise>
-			</c:choose>
-		</div>
+<div class="navi-navbar-right">
+    <c:choose>
+        <c:when test="${not empty sessionScope.login}">
+            <!-- 로그인된 사용자 이름 표시 -->
+            <a href="${pageContext.request.contextPath}/memEditView" class="navi-nav-link">${sessionScope.login.getMemName()} 님</a>
+
+            <!-- 로그아웃 버튼 -->
+            <a href="${pageContext.request.contextPath}/logout" class="navi-nav-link">로그아웃</a>
+        </c:when>
+        <c:otherwise>
+            <!-- 비로그인 상태일 경우 -->
+            <a href="${pageContext.request.contextPath}/loginView" class="navi-nav-link">로그인</a>
+            <a href="${pageContext.request.contextPath}/agreementView" class="navi-nav-link">회원가입</a>
+        </c:otherwise>
+    </c:choose>
+</div>
+
+
+
 		<!-- 드롭다운 -->
-		<div class="navi-dropdown-field">
-			<ul class="navi-dropdown-inner">
-				<li class="navi-dropdown-content">
-					<a href="${pageContext.request.contextPath}/mypage" class="navi-dropdown-item">마이페이지</a>
-					<a href="${pageContext.request.contextPath}/memEditView" class="navi-dropdown-item">회원정보수정</a>
-					<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">전기사용량</a>
-					<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">전기 사용량 기입</a>
-				</li>
-				<li class="navi-dropdown-content">
-					<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a>
-					<a href="${pageContext.request.contextPath}/reviewView" class="navi-dropdown-item">리뷰게시판</a>
-					<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품 게시판</a>
-				</li>
-				<li class="navi-dropdown-content">
-					<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">에너지 관련 정보</a>
-					<a href="${pageContext.request.contextPath }/registMyBuildingView" class="navi-dropdown-item">내 건물 등록</a>
-					<a href="${pageContext.request.contextPath}/myBuildingView" class="navi-dropdown-item">내 건물 목록</a>
-					<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">ZEB 등록현황</a>
-					<a href="${pageContext.request.contextPath}/mapView" class="navi-dropdown-item">지도 상세보기</a>
-				</li>
-				<li class="navi-dropdown-content"> 
-					<a href="${pageContext.request.contextPath}/faq/view" class="navi-dropdown-item">자주 묻는 질문</a>
-					<a href="${pageContext.request.contextPath}/chatListView" class="navi-dropdown-item">챗봇상담</a>
-					<a href="#" class="navi-dropdown-item">이용 가이드</a>
-					<a href="${pageContext.request.contextPath}/proposal/view" class="navi-dropdown-item">건의사항</a>
-				</li>
-			</ul>
-		</div>
+		<c:if test="${sessionScope.login.getMemId() == 'admin' }">
+			<div class="admin-dropdown-field">
+				<ul class="admin-dropdown-inner">
+					<li class="navi-dropdown-content">
+						<a href="${pageContext.request.contextPath}/mypage" class="navi-dropdown-item">마이페이지</a>
+						<a href="${pageContext.request.contextPath}/memEditView" class="navi-dropdown-item">회원정보수정</a>
+						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">전기사용량</a>
+						<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">전기 사용량 기입</a>
+					</li>
+					<li class="navi-dropdown-content">
+						<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a>
+						<a href="${pageContext.request.contextPath}/reviewView" class="navi-dropdown-item">리뷰게시판</a>
+						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품 게시판</a>
+					</li>
+					<li class="navi-dropdown-content">
+						<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">에너지 관련 정보</a>
+						<a href="${pageContext.request.contextPath}/myBuildingView" class="navi-dropdown-item">내 건물 목록</a>
+						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">ZEB 등록현황</a>
+						<a href="${pageContext.request.contextPath}/mapView" class="navi-dropdown-item">지도 상세보기</a>
+					</li>
+					<li class="navi-dropdown-content"> 
+						<a href="${pageContext.request.contextPath}/faq/view" class="navi-dropdown-item">자주 묻는 질문</a>
+						<a href="${pageContext.request.contextPath}/chatListView" class="navi-dropdown-item">챗봇상담</a>
+						<a href="#" class="navi-dropdown-item">이용 가이드</a>
+						<a href="${pageContext.request.contextPath}/proposal/view" class="navi-dropdown-item">건의사항</a>
+					</li>
+					<li class="navi-dropdown-content">
+						<a href="${pageContext.request.contextPath}/adminView" class="navi-dropdown-item">관리자페이지 </a>
+						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">ZEB 신청현황</a>
+					</li>
+				</ul>
+			</div>
+		</c:if>
+		<c:if test="${sessionScope.login.getMemId() != 'admin' }">
+			<div class="navi-dropdown-field">
+				<ul class="navi-dropdown-inner">
+					<li class="navi-dropdown-content">
+						<a href="${pageContext.request.contextPath}/mypage" class="navi-dropdown-item">마이페이지</a>
+						<a href="${pageContext.request.contextPath}/memEditView" class="navi-dropdown-item">회원정보수정</a>
+						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">전기사용량</a>
+						<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">전기 사용량 기입</a>
+					</li>
+					<li class="navi-dropdown-content">
+						<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a>
+						<a href="${pageContext.request.contextPath}/reviewView" class="navi-dropdown-item">리뷰게시판</a>
+						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품 게시판</a>
+					</li>
+					<li class="navi-dropdown-content">
+						<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">에너지 관련 정보</a>
+						<a href="${pageContext.request.contextPath}/myBuildingView" class="navi-dropdown-item">내 건물 목록</a>
+						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">ZEB 등록현황</a>
+						<a href="${pageContext.request.contextPath}/mapView" class="navi-dropdown-item">지도 상세보기</a>
+					</li>
+					<li class="navi-dropdown-content"> 
+						<a href="${pageContext.request.contextPath}/faq/view" class="navi-dropdown-item">자주 묻는 질문</a>
+						<a href="${pageContext.request.contextPath}/chatListView" class="navi-dropdown-item">챗봇상담</a>
+						<a href="#" class="navi-dropdown-item">이용 가이드</a>
+						<a href="${pageContext.request.contextPath}/proposal/view" class="navi-dropdown-item">건의사항</a>
+					</li>
+				</ul>
+			</div>
+		</c:if>
 	</nav>
 	<div class="overlay"></div>
 	<script type="text/javascript">

@@ -32,40 +32,37 @@
 		SELECT * FROM proposal WHERE prop_no = #{propNo}
 	</select>
 
-	<!-- 전체 건의사항 조회 -->
-	<select id="getAllProposals"
-		resultType="com.proj.main.proposal.dto.ProposalDTO">
-		SELECT
-		p.prop_no AS propNo,
-		p.prop_id AS propId,
-		p.prop_date AS propDate,
-		p.prop_title AS propTitle,
-		p.prop_content AS propContent,
-		p.prop_del_yn AS propDelYn,
-		p.prop_status AS propStatus,
-		p.mem_id AS memId,
-		p.answercontent AS answerContent, <!-- 답변 내용 추가 -->
-		m.mem_name AS memName
-		FROM
-		proposal p
-		JOIN
-		members m ON p.mem_id = m.mem_id
-		ORDER BY
-		p.prop_date DESC
-	</select>
+	<select id="getAllProposals" resultType="com.proj.main.proposal.dto.ProposalDTO" useCache="false">
+    SELECT
+    p.prop_no AS propNo,
+    p.prop_id AS propId,
+    p.prop_date AS propDate,
+    p.prop_title AS propTitle,
+    p.prop_content AS propContent,
+    p.prop_del_yn AS propDelYn,
+    p.prop_status AS propStatus,
+    p.mem_id AS memId,
+    p.answercontent AS answerContent,
+    m.mem_name AS memName
+    FROM
+    proposal p
+    JOIN
+    members m ON p.mem_id = m.mem_id
+    ORDER BY
+    p.prop_date DESC
+</select>
 
 
-	<!-- 답변 추가 -->
-	<update id="addAnswer" parameterType="map">
-		UPDATE proposal
-		SET
-		ANSWERCONTENT = #{answerContent},
-		ANSWERDATE = SYSDATE,
-		ANSWEREDBY = #{answeredBy},
-		PROPSTATUS = '답변완료'
-		WHERE
-		prop_no = #{propNo}
-	</update>
+<update id="addAnswer" parameterType="map">
+    UPDATE proposal
+    SET
+        ANSWERCONTENT = #{answerContent},
+        ANSWERDATE = SYSDATE,
+        ANSWEREDBY = #{answeredBy},
+        PROP_STATUS = '답변완료'
+    WHERE
+        prop_no = #{propNo}
+</update>
 
 	<!-- 특정 건의사항의 답변 조회 -->
 	<select id="getProposalAnswer" parameterType="int"

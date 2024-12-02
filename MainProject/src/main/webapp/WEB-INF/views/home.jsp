@@ -352,11 +352,11 @@ body {
 .footer {
     margin: 0; /* 여백 완전히 제거 */
     padding: 20px 0; /* 내부 여백 설정 */
-    width: 100%; /* 가로로 꽉 채우기 */
-    background-color: #343a40; /* footer 배경 */
+    width: 150%; /* 가로로 꽉 채우기 */
     color: white; /* 텍스트 색상 */
     text-align: center; /* 가운데 정렬 */
     position: fixed; /* 화면 하단에 고정 */
+
     bottom: 0; /* 화면 하단에 딱 붙이기 */
 }
 </style>
@@ -579,7 +579,15 @@ body {
             </div>
         </div>
     </div>
+
     <%@ include file="/WEB-INF/inc/footer.jsp" %> 
+
+
+    	<!-- Footer-->
+    	<div class="footer">
+    		<%@ include file="/WEB-INF/inc/footer.jsp"%>
+    	</div>
+
 </section>
 
 	</div>
@@ -602,6 +610,10 @@ $(document).ready(function () {
         arrows: false,
         swipeToSlide: true,
         autoplay: false, // 자동 재생 끄기
+        onInit: function() {
+            // Slick 슬라이더 초기화 후, 해시 기반으로 섹션 이동
+            goToSectionFromHash();
+        }
     });
 
     // URL 해시 기반으로 섹션 이동
@@ -616,7 +628,9 @@ $(document).ready(function () {
     }
 
     // 페이지 로드 시 URL 해시 처리
-    goToSectionFromHash();
+    $(window).on('load', function() {
+        goToSectionFromHash();
+    });
 
     // 해시 변경 감지 및 섹션 이동
     $(window).on('hashchange', function () {
@@ -672,6 +686,21 @@ $(document).ready(function () {
     // 초기 메뉴 활성화 상태 설정
     const initialSlide = $('.vertical-slider').slick('slickCurrentSlide'); // 초기 슬라이드 인덱스 가져오기
     updateSidebar(initialSlide); // 초기 메뉴 활성화
+});
+
+let isWheelScrolling = false;
+
+$(window).on('wheel', function (event) {
+    if (isWheelScrolling) return;
+    isWheelScrolling = true;
+    if (event.originalEvent.deltaY < 0) {
+        $('.vertical-slider').slick('slickPrev'); // 위로 스크롤 시 이전 슬라이드
+    } else {
+        $('.vertical-slider').slick('slickNext'); // 아래로 스크롤 시 다음 슬라이드
+    }
+    setTimeout(function() {
+        isWheelScrolling = false; // 일정 시간 후에 다시 이벤트를 받을 수 있도록 설정
+    }, 1000);
 });
 </script>
 
