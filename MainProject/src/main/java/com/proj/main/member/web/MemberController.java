@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -36,6 +37,7 @@ import com.proj.main.member.dto.MyBuildingDTO;
 import com.proj.main.member.service.MemberService;
 import com.proj.main.pageLog.dto.PageLogDTO;
 import com.proj.main.pageLog.service.PageLogService;
+import com.proj.main.result.dto.ApplyResultDTO;
 import com.proj.main.result.dto.ApplyZEBDTO;
 import com.proj.main.result.dto.TestResultDTO;
 import com.proj.main.result.service.ResultService;
@@ -404,12 +406,18 @@ public class MemberController {
     	String id = login.getMemId();
     	
     	List<MyBuildingDTO> buildings = memberService.getMyBuildings(id);
+    	System.out.println(buildings);
+    	System.out.println(buildings.size());
     	List<MyBuildingDTO> names = memberService.getZebTestN(id);
     	List<String> buildingNameList = new ArrayList<>();
     	
     	List<Integer> zebList = new ArrayList<>();
     	List<String> eList = new ArrayList<>();
     	List<String> iList = new ArrayList<>();
+    	
+    	String m_id = login.getMemId();
+    	List<ApplyZEBDTO> applys = rs.applyStatusById(m_id);
+    	model.addAttribute("applys", applys);
     	
     	
     	
@@ -462,6 +470,18 @@ public class MemberController {
     	return "member/myBuildingView";
     }
     
+    @ResponseBody
+    @RequestMapping("/buildingName")
+    public String buildingName(String buildingId) {
+    	
+    	MyBuildingDTO myBuilding = new MyBuildingDTO();
+    	myBuilding.setBuildingId(buildingId);
+    	String buildingName = memberService.selectBuildingName(myBuilding);
+    	
+    	
+    	return "{\"buildingName\": \"" + buildingName + "\"}";
+    }
+    
     @RequestMapping("/applyZEB")
     public String applyZEB(Model model, String bname,ApplyZEBDTO zeb, HttpSession session, MultipartFile attachment) {
     	
@@ -475,6 +495,9 @@ public class MemberController {
     	String bId = rs.getBuildingId(mb);
     	zeb.setBuildingId(bId);
     	zeb.setBuildingName(bname);
+    	System.out.println("applyZEB : " + bId);
+    	mb.setBuildingId(bId);
+    	memberService.updateZebTestYn(mb);
     	
     	String originalFileName = attachment.getOriginalFilename();
     	String ext = "";
@@ -560,6 +583,14 @@ public class MemberController {
     	
     	mo.addAttribute("apply", apply);
     	
+    	ApplyResultDTO applyResult = new ApplyResultDTO();
+    	applyResult.setBuildingId(bId);
+    	String rejectContent = rs.selectApplyResult(applyResult);
+    	
+    	mo.addAttribute("rejectContent",rejectContent);
+    	
+    	
+    	
     	TestResultDTO tr = memberService.getTestResult(bId);
     	tr.getZebGrade();
     	mo.addAttribute("grade", tr.getZebGrade()); 
@@ -569,6 +600,19 @@ public class MemberController {
     	mo.addAttribute("road", roadAddress); 
     	
         return "member/applyZEBDetailView";
+    }
+    
+    @ResponseBody
+    @RequestMapping(value = "/rejectReason", produces = "application/json; charset=UTF-8")
+    public String rejectReason(String buildingId) {
+    	
+    	ApplyResultDTO applyResult = new ApplyResultDTO();
+    	applyResult.setBuildingId(buildingId);
+    	System.out.println(buildingId);
+    	String rejectContent = rs.selectApplyResult(applyResult);
+    	System.out.println(rejectContent);
+    	
+    	return "{\"rejectContent\": \"" + rejectContent + "\"}";
     }
    
     // 技记 楷厘 夸没 贸府

@@ -26,6 +26,7 @@ import com.proj.main.member.dto.MemberDTO;
 import com.proj.main.member.dto.MyBuildingDTO;
 import com.proj.main.member.service.MemberService;
 import com.proj.main.result.dto.ApplyResultDTO;
+import com.proj.main.result.dto.ApplyZEBDTO;
 import com.proj.main.result.dto.EnergyResultDTO;
 import com.proj.main.result.dto.EnergyUsedDTO;
 import com.proj.main.result.dto.TestResultDTO;
@@ -241,17 +242,27 @@ public class resultController {
 	}
 	
 	@RequestMapping("/applyResult") 
-	public String applyResult(ApplyResultDTO ar, ZeroDTO zero) {
-	
+	public String applyResult(ApplyResultDTO ar, ZeroDTO zero, HttpSession session) {
+		
+		MyBuildingDTO myBuilidng = ms.getMyBuildingsByBuildingId(ar.getBuildingId());
+		
+		int myBuildingLevel = myBuilidng.getZebLevel();
+		String getBuildingId =  ar.getBuildingId();
+		
+		ar.setZebLevel(myBuildingLevel);
+		ar.setBuildingId(getBuildingId);
+		
 		rs.applyResult(ar);
 		MyBuildingDTO mb = new MyBuildingDTO();
+		rs.updateApplyStatus(ar);
 		
-		mb.setBuildingId(ar.getBuildingId());
+		mb.setBuildingId(getBuildingId);
 		
-		rs.updateApplyStatus(ar.getBuildingId());
+		ms.updateProcessYn(mb);
 		
-		ms.updateZebTestYn(mb);
-		
+		ApplyZEBDTO rejectYn = new ApplyZEBDTO();
+		rejectYn.setBuildingId(getBuildingId);
+		rejectYn.setZebLevel(myBuildingLevel);
 		
 		if(ar.getApproveYn().equals("½ÂÀÎ")) {
 			MyBuildingDTO myBuilding = ms.getMyBuildingsByBuildingId(ar.getBuildingId());
@@ -279,6 +290,8 @@ public class resultController {
 			
 			System.out.println(zero);
 			mapService.addZeroBuilding(zero);
+		}else {
+			rs.updateApplyZebReject(rejectYn);
 		}
 		
 		return "redirect:/applyStatusView";

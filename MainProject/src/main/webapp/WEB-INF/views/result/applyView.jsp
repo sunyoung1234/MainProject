@@ -87,9 +87,9 @@
 			<input id="inputPdf" name="pdf" type="file" required>
 			
 			<label for="inputOrg">발급기관명</label>
-			<input id="inputOrg" name="org" required>
-			
-			<button type="submit"> 제출 </button>
+			<input id="inputOrg" name="org" required value="그린솔루션" disabled>
+			 
+			<button type="submit"> 제출 </button> 
 		</form>
 	</div>
 	

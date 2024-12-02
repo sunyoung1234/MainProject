@@ -8,13 +8,13 @@
 	        jibun_address, extra_address, climate, residential_type,
 	        structure_type, square_meter_area,  floors,   doors,
 	        insulation_level,   window_level,   ventilation_system,  solar_panel_kw,
-	        building_img,   test_yn, zeb_test_yn , zeb_level
+	        building_img,   test_yn, zeb_test_yn , zeb_level, process_yn
 	    ) VALUES (
 	        #{memId}, #{buildingName}, #{buildingId}, #{roadAddress},
 	        #{jibunAddress}, #{extraAddress}, #{climate}, #{residentialType},
 	        #{structureType}, #{squareMeterArea}, #{floors}, #{doors},
 	        #{insulationLevel}, #{windowLevel}, #{ventilationSystem}, #{solarPanelKW},
-	        #{buildingImg} , 'N' , 'N', 6
+	        #{buildingImg} , 'N' , 'N', 6, 'N'
 	    )
 	</insert>
 	 
@@ -56,4 +56,17 @@
 		SET zeb_test_yn = 'Y'
 		WHERE building_id = #{buildingId}
 	</update>
+	
+	<update id="updateProcessYn" parameterType="com.proj.main.member.dto.MyBuildingDTO">
+		UPDATE MY_BUILDING
+		SET process_yn = 'Y'
+		WHERE building_id = #{buildingId}
+	</update>
+	
+	<select id="selectBuildingName" parameterType="com.proj.main.member.dto.MyBuildingDTO" resultType="String">
+		SELECT building_name
+		FROM my_building
+		where building_id = #{buildingId}
+	</select>
+	
 </mapper>

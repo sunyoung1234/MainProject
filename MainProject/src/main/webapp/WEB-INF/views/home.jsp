@@ -407,9 +407,9 @@ body {
 
 
 					<div class="about-services fade-in">
-					    <a href="${pageContext.request.contextPath}/productView" class="service" target="_blank">
+					    <a href="${pageContext.request.contextPath}/electricityUseView" class="service" target="_blank">
 					        <i class="fas fa-solar-panel"></i>
-					        <p>에너지 효율 설계</p>
+					        <p>전기 사용 현황</p>
 					    </a>
 					    <a href="${pageContext.request.contextPath}/mapView" class="service" target="_blank">
 					        <i class="fas fa-map"></i>
@@ -580,10 +580,14 @@ body {
         </div>
     </div>
 
+    <%@ include file="/WEB-INF/inc/footer.jsp" %> 
+
+
     	<!-- Footer-->
     	<div class="footer">
     		<%@ include file="/WEB-INF/inc/footer.jsp"%>
     	</div>
+
 </section>
 
 	</div>

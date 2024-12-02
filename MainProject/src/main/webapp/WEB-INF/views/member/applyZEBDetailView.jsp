@@ -214,6 +214,10 @@
                     <th>거절 여부</th>
                     <td>${apply.rejectYn == 'Y' ? '거절' : ''}</td>
                 </tr>
+                <tr>
+                    <th>거절 사유</th>
+                    <td>${rejectContent }</td>
+                </tr>
             </tbody>
         </table>
         <div style="display:none;" id="roadAddress">${road }</div>
@@ -231,18 +235,11 @@
 				    </div>
 				</div>
 				<input style="display: none;" name="buildingId" value="${apply.buildingId }">
-	
-	            <!-- 승인: ZEB Level -->
+				
+				  <!-- 승인: ZEB Level -->
 	            <div class="input-container" id="levBox">
-	                <label for="zebLevel">ZEB Level</label>
-	                <select id="zebLevel" name="zebLevel">
-	                    <option value="1">LEVEL 1</option>
-	                    <option value="2">LEVEL 2</option>
-	                    <option value="3">LEVEL 3</option>
-	                    <option value="4">LEVEL 4</option>
-	                    <option value="5">LEVEL 5</option>
-	                </select>
-	            </div>
+		            </div>
+	
 	
 	            <!-- 거절: 이유 -->
 	            <div class="input-container" id="reasonBox">

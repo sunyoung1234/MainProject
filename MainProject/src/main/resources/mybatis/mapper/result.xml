@@ -139,23 +139,43 @@
 	</insert>
 	
 	<insert id="applyResult" parameterType="com.proj.main.result.dto.ApplyResultDTO">
-		 INSERT INTO APPLY_RESULT (
+	    INSERT INTO APPLY_RESULT (
 	        building_id,
-			approve_yn,
-			reject_reason,
-			zeb_level
+	        approve_yn,
+	        reject_reason,
+	        zeb_level
 	    ) VALUES (
 	        #{buildingId},
-			#{approveYn},
-			#{rejectReason},
-			#{zebLevel} 
+	        #{approveYn},
+	        <if test="approveYn == '거절'">
+	            #{rejectReason}
+	        </if>
+	        <if test="approveYn != '거절'">
+	            null
+	        </if>,
+	        #{zebLevel} 
 	    )
 	</insert>
+
 	
-	<update id="updateApplyStatus" parameterType="String">
+	<update id="updateApplyStatus" parameterType="com.proj.main.result.dto.ApplyResultDTO">
 		UPDATE APPLY_ZEB
 		SET APPROVE_YN ='Y'
+		, ZEB_LEVEL = #{zebLevel}
 		WHERE BUILDING_ID = #{buildingId}
 	</update>
+	
+	<update id="updateApplyZebReject" parameterType="com.proj.main.result.dto.ApplyZEBDTO">
+		UPDATE APPLY_ZEB
+		SET REJECT_YN ='Y'
+		, ZEB_LEVEL = #{zebLevel}
+		WHERE BUILDING_ID = #{buildingId}
+	</update>
+	
+	<select id="selectApplyResult" parameterType="com.proj.main.result.dto.ApplyResultDTO" resultType="String">
+		select reject_reason 
+		from apply_result
+		where building_id = #{buildingId}
+	</select>
 	
 </mapper>

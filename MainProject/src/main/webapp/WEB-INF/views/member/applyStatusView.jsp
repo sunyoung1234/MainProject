@@ -124,6 +124,8 @@
 <body>
 	<%@ include file="/WEB-INF/inc/top.jsp" %>
 	
+	<%@ include file="/WEB-INF/inc/subnavbarMap.jsp"%>
+	
     <h1>신청현황</h1>
 	<c:if test="${sessionScope.login.getMemId() != 'admin' }"> 
 	
@@ -135,7 +137,7 @@
 	                	<option value="전체">전체</option>
 	                    <option value="신청중">신청중</option>
 	                    <option value="완료">완료</option>
-	                    <option value="취소">취소</option>
+	                    <option value="거절">거절</option>
 	                </select>
 	            </div>
 	        </div>
@@ -152,16 +154,29 @@
 	                </tr>
 	            </thead>
 	            <tbody>
-	                <c:forEach var="apply" items="${applys}" varStatus="status"> 
-	                    <tr>
-	                        <td>${status.count }</td>
-	                        <td>${apply.buildingName }</td>  
-	                        <td class="download-link">💾 ${apply.fileName }</td>   
-	                        <td>${apply.applyDate }</td>
-	                        <td class="applyStatus">${statusList[status.index] }</td>
-	                    </tr>
-	                </c:forEach>
-	            </tbody>
+	                <c:forEach var="apply" items="${applys}" varStatus="status">
+			            <tr class="applyRow" onclick="toggleRejectDetails(this)">
+			                <td>${status.count}</td>
+			                <td>${apply.buildingName}</td>
+			                <td class="download-link">💾 ${apply.fileName}</td>
+			                <td>${apply.applyDate}</td>
+							<td data-building-id="${apply.buildingId}" style="display: none;"></td>
+			                <c:choose>
+			                    <c:when test="${apply.rejectYn == 'Y'}">
+			                        <td class="applyStatus">거절</td>
+			                    </c:when>
+			                    <c:otherwise>
+			                        <td class="applyStatus">${statusList[status.index]}</td>
+			                    </c:otherwise>
+			                </c:choose>
+			            </tr>
+			
+			            <!-- 거절 사유는 별도의 행으로 삽입되며, 초기에는 숨김 -->
+			           <tr class="rejectDetails" style="display: none;">
+						    <td colspan="5" class="reasonContext"></td>  <!-- 여기에 거절 사유가 표시됩니다 -->
+						</tr>
+			        </c:forEach>
+				 </tbody>
 	        </table>
 	    </div>
 	</c:if>
@@ -175,7 +190,7 @@
 	                	<option value="전체">전체</option>
 	                    <option value="신청중">신청중</option>
 	                    <option value="완료">완료</option>
-	                    <option value="취소">취소</option>
+	                    <option value="거절">거절</option>
 	                </select>
 	            </div>
 	        </div>
@@ -198,7 +213,12 @@
 	                        <td>${apply.memId }</td>
 	                        <td>${apply.buildingName }</td>  
 	                        <td>${apply.applyDate }</td>
-	                        <td class="applyStatus">${statusAdmin[status.index] }</td>
+	                        <c:if test="${apply.rejectYn == 'Y' }">
+	                        	<td class="applyStatus">거절</td>
+	                        </c:if>
+	                        <c:if test="${apply.rejectYn == 'N' }">
+		                        <td class="applyStatus">${statusAdmin[status.index] }</td>
+	                        </c:if>
 	                    </tr>
 	                    <form class="submitForm" style="display: none;" action="${pageContext.request.contextPath }/applyZEBDetailView" method="post">
 		                    <input name="bId" class="buildingId" style="display:none;" value="${apply.buildingId }">
@@ -222,6 +242,8 @@
 	    let v_trs = document.querySelectorAll('.trs');
 	    let v_bId = document.querySelectorAll('.buildingId');
 	    let forms = document.querySelectorAll('.submitForm');
+	    
+	    let v_applyReject = document.getElementById("applyReject")
 	
 	    v_status.addEventListener('change', () => {
 	        const selectedStatus = v_status.value; 
@@ -257,6 +279,63 @@
 		})
 		
 		
+		function toggleRejectDetails(row) {
+		    // 클릭된 tr의 거절 상태인지를 확인
+		    if (row.querySelector('.applyStatus').innerText === "거절") {
+		        // 클릭된 tr의 다음 형제 요소인 .rejectDetails 찾기
+		        var rejectDetailsRow = row.nextElementSibling;  // 다음 tr 요소인 거절 사유 행 찾기
+		        
+		        // 서버에서 건물 ID 가져오기
+		        let v_buildingId = row.querySelector('td[data-building-id]').getAttribute('data-building-id');
+		        console.log("Building ID:", v_buildingId);
+		        
+		        // XMLHttpRequest 생성
+		        let v_ajax = new XMLHttpRequest();
+		        v_ajax.open("POST", "${pageContext.request.contextPath}/rejectReason");
+		        v_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		        
+		        let v_data = "buildingId=" + v_buildingId;
+		        console.log(v_data);
+		        
+		        // 서버 응답 처리
+		        v_ajax.onload = function () {
+		            if (v_ajax.status === 200) {
+		                // 서버에서 받은 응답을 파싱
+		                let v_region = JSON.parse(v_ajax.responseText);
+		                let v_rejectReason = v_region["rejectContent"];
+		                console.log(v_rejectReason);
+		
+		                // rejectDetailsRow가 존재하면, 내용 설정
+		                if (rejectDetailsRow) {
+		                    // 거절 사유가 들어갈 셀을 선택
+		                    let reasonContextCell = rejectDetailsRow.querySelector('.reasonContext');
+		                    if (reasonContextCell) {
+		                        reasonContextCell.innerHTML = v_rejectReason;  // 거절 사유 내용을 넣음
+		                    }
+		
+		                    // display 토글: 현재 보이면 숨기고, 숨겨져 있으면 보이도록 처리
+		                    if (rejectDetailsRow.style.display === "none" || rejectDetailsRow.style.display === "") {
+		                        rejectDetailsRow.style.display = "table-row";  // 보이게 설정
+		                    } else {
+		                        rejectDetailsRow.style.display = "none";  // 숨기기 설정
+		                    }
+		                }
+		            } else {
+		                console.error("요청 실패:", v_ajax.status, v_ajax.statusText);
+		                alert("거절 사유를 가져오는 데 실패했습니다.");
+		            }
+		        };
+		
+		        // 요청 전송
+		        v_ajax.send(v_data);
+		    }
+		}
+
+
+
+
+
+
 		
 		
 	</script>

@@ -102,4 +102,14 @@ public class MemberService {
 	public int updateZebTestYn(MyBuildingDTO mb) {
 		return dao.updateZebTestYn(mb);
 	}
+	
+	public int updateProcessYn(MyBuildingDTO mb) {
+		int result = dao.updateProcessYn(mb);
+		return result;
+	}
+	
+	public String selectBuildingName(MyBuildingDTO mb) {
+		String result = dao.selectBuildingName(mb);
+		return result;
+	}
 }
