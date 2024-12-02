@@ -413,6 +413,7 @@
 
 	
 	<script type="text/javascript">
+	let subscription = null
 	
 		function sendMessage(destination, message) {
 		    return new Promise((resolve, reject) => {
@@ -447,39 +448,53 @@
 
 	                    client.connect({}, function () {
 	                    	
-	                    	$.ajax({
-	                            url: '${pageContext.request.contextPath}/getUserUnreadCount',
-	                            method: 'POST',
-	                            contentType: 'application/json',
-	                            data: JSON.stringify({ roomNo : currentRoomNo }),
-	                            success: function (messages) {
-			            	    	updateUnreadCount(messages);
-	                            } 
-	                        });
+	                    	if (!chatbotInterface.classList.contains('show')){
+		                    	$.ajax({
+		                            url: '${pageContext.request.contextPath}/getUserUnreadCount',
+		                            method: 'POST',
+		                            contentType: 'application/json',
+		                            data: JSON.stringify({ roomNo : currentRoomNo }),
+		                            success: function (messages) {
+				            	    	updateUnreadCount(messages);
+		                            } 
+		                        });
+	                    	}
+	                    	
 	                    	
 	                        // 채팅 메시지 구독
-	                    	client.subscribe('/subscribe/chat/' + roomNo, function (chat) {
-			            		
-			            	    let content = JSON.parse(chat.body);
-			            	    currentRoomNo = roomNo;
-			            	    // 메시지 렌더링
-			            	    const chatArea = document.getElementById('chatArea');
-			            	    let v_tag = renderList(content);
-			            	    $("#chatArea").append(v_tag);
-			            	    chatArea.scrollTop = chatArea.scrollHeight;
-			            	    
-			            	    if (!chatbotInterface.classList.contains('show')){
-			            	    	$.ajax({
-			                            url: '${pageContext.request.contextPath}/getUserUnreadCount',
-			                            method: 'POST',
-			                            contentType: 'application/json',
-			                            data: JSON.stringify({ roomNo : currentRoomNo }),
-			                            success: function (messages) {
-					            	    	updateUnreadCount(messages);
-			                            }
-			                        });
-			            	    }
-			            	});
+	                        if(!subscription){
+	                        	subscription = client.subscribe('/subscribe/chat/' + roomNo, function (chat) {
+				            	    let content = JSON.parse(chat.body);
+				            	    currentRoomNo = roomNo;
+				            	    // 메시지 렌더링
+				            	    const chatArea = document.getElementById('chatArea');
+				            	    let v_tag = renderList(content);
+				            	    $("#chatArea").append(v_tag);
+				            	    chatArea.scrollTop = chatArea.scrollHeight;
+				            	    
+				            	    if (!chatbotInterface.classList.contains('show')){
+				            	    	$.ajax({
+				                            url: '${pageContext.request.contextPath}/getUserUnreadCount',
+				                            method: 'POST',
+				                            contentType: 'application/json',
+				                            data: JSON.stringify({ roomNo : currentRoomNo }),
+				                            success: function (messages) {
+						            	    	updateUnreadCount(messages);
+				                            }
+				                        });
+				            	    }else{
+				            	    	$.ajax({
+				                            url: '${pageContext.request.contextPath}/uucZero',
+				                            method: 'POST',
+				                            contentType: 'application/json',
+				                            data: JSON.stringify({ roomNo : currentRoomNo }),
+				                            success: function (messages) {
+						            	    	updateUnreadCount(messages);
+				                            }
+				                        });
+				            	    }
+				            	});
+	                        }
 	                    });
 	                }
 	            },
@@ -541,7 +556,7 @@
 		            memId: "${sessionScope.login.memId}",
 		            memName: "${sessionScope.login.memName}"
 		        }),
-		        success: function (response) {
+		        success: function (response) { 
 		            console.log("response====", response);
 		
 		            const isNewRoom = response.isNewRoom; // 기존 방  여부 확인
@@ -587,13 +602,33 @@
 		
 		            // WebSocket 연결
 		            client.connect({}, function () {
-		            	
+		            	 
+		            	if(!subscription){
+		            		subscription = client.subscribe('/subscribe/chat/' + roomNo, function (chat) {
+			            		
+			            	    let content = JSON.parse(chat.body); 
+			            	    currentRoomNo = roomNo;
+			            	    // 메시지 렌더링
+			            	    const chatArea = document.getElementById('chatArea');
+			            	    let v_tag = renderList(content);
+			            	    $("#chatArea").append(v_tag);
+			            	    chatArea.scrollTop = chatArea.scrollHeight;
+			            	    
+			            	    if (!chatbotInterface.classList.contains('show')){
+			            	    	$.ajax({
+			                            url: '${pageContext.request.contextPath}/getUserUnreadCount',
+			                            method: 'POST',
+			                            contentType: 'application/json',
+			                            data: JSON.stringify({ roomNo : currentRoomNo }),
+			                            success: function (messages) {
+					            	    	updateUnreadCount(messages);
+			                            }
+			                        });
+			            	    }
+			            	});
+		            		
+		            	}
 		                
-		                client.subscribe('/subscribe/uuc/'+ roomNo, function(room){
-		                	console.log("uuc uuc uuc")
-		                	console.log(room);
-		                })
-		
 		                if (isNewRoom) {
 		                    // 새로운 방일 경우만 메시지 전송
 		                    client.send('/app/room', {}, JSON.stringify({
@@ -637,6 +672,7 @@
                     	chatArea.innerHTML = '';
                     	client.send("/app/delete", {}, JSON.stringify({ roomNo: response.roomNo }));
 	                   	client.disconnect(); // WebSocket 연결 종료
+	                   	subscription = null;
                     }
                 });
 		        
