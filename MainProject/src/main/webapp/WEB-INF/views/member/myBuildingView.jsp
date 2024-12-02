@@ -401,7 +401,7 @@
 </head>
 <body>
 	<%@ include file="/WEB-INF/inc/top.jsp" %>
-	
+	<%@ include file="/WEB-INF/inc/subnavbarMap.jsp"%> 
 	<div id="loading" style="display: none;">
 	    <div class="loading-bar-container">
 	        <div class="loading-bar"></div>
@@ -424,6 +424,7 @@
                     <p class="building-address">${building.roadAddress}</p>
                     <p class="building-test">테스트 여부: ${building.testYn}</p>
                     <p class="building-test">ZEB 등록 여부: ${building.zebTestYn }</p>
+                    <p class="building-test">ZEB 승인 여부: ${building.processYn }</p>
                     <c:choose>
 					    <c:when test="${building.testYn == 'N'}">
 					        <p style="display:none;" class="building-test">ZEB 등급: ${building.zebLevel == 6 ? '미충족' : building.zebLevel} 등급</p>     
@@ -439,7 +440,7 @@
 					</c:choose>
                 </div>
                 <div class="btn-box">
-                    <c:choose>
+                  <c:choose>
 					    <c:when test="${building.testYn == 'N'}">
 					        <button id="testModal" class="test-modal btn-green">ZEB 테스트</button>
 					        <button style="display: none;" id="registBuilding" class="regist-building btn-green">ZEB 건축물<br>등록하기</button> 
@@ -448,16 +449,24 @@
 					    
 					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'N'}">
 					    	<button style="display: none;" id="testModal" class="test-modal btn-green">ZEB 테스트</button>
-					        <button id="registBuilding" class="regist-building btn-blue">ZEB 건축물<br>등록하기</button>
+					        <button id="registBuilding2" class="regist-building btn-blue">ZEB 건축물<br>등록하기</button>
 					        <button style="display: none;"  class=" btn-yellow goToMap" >지도<br>보러가기</button>
 					    </c:when>
 					    
-					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'Y'}">
+					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'Y' && building.processYn == 'N'}">
 					    	<button style="display: none;" id="testModal" class="test-modal btn-green">ZEB 테스트</button>
-					    	<button style="display: none;" id="registBuilding" class="regist-building btn-green">ZEB 건축물<br>등록하기</button>
-					    	<button  class=" btn-yellow goToMap">지도<br>보러가기</button> 
-					    </c:when>
+					        <button style="" disabled id="registBuilding" class="regist-building btn-blue">검토중...</button>
+					        <button style="display: none;"  class=" btn-yellow goToMap" >지도<br>보러가기</button>
+					    </c:when>  
+					      
+					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'Y' && building.processYn == 'Y'}">
+					    	<button style="display: none;" id="testModal" class="test-modal btn-green">ZEB 테스트</button>
+					        <button style="display: none;" id="registBuilding" class="regist-building btn-blue">ZEB 건축물<br>등록하기</button>
+					        <button style=""  class=" btn-yellow goToMap" >지도<br>보러가기</button>
+					    </c:when> 
+					    
 					</c:choose>
+					<input id="inputBuildingId" value="${building.buildingId }" hidden>
 					<div style="display:none;" class="zeblv">${building.zebLevel }</div> 
                 </div>
             </div>
@@ -708,6 +717,43 @@
     			location.href = "${pageContext.request.contextPath}/mapView";
     		})
     	})
+    	
+    	
+    	let v_registBuilding = document.getElementById("registBuilding2")
+    	
+    	v_registBuilding.addEventListener("click", ()=>{
+    		
+    		console.log(event.target)
+    		let v_ajax = new XMLHttpReqeuest();
+    		v_ajax.open("POST", "${pageContext.request.contextPath}/buildingName")
+    		
+    		 v_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	        
+    		let v_buildingId = document.getElementById("inputBuildingId").value
+    		
+	        let v_data = "buildingId=" + v_buildingId;
+	        console.log(v_data);
+	        
+		        // 서버 응답 처리
+		        v_ajax.onload = function () {
+		            if (v_ajax.status === 200) {
+		                // 서버에서 받은 응답을 파싱
+		                let v_region = JSON.parse(v_ajax.responseText);
+		                let v_rejectReason = v_region["buildingName"];
+		                console.log(v_rejectReason);
+		
+		            } else {
+		                console.error("요청 실패:", v_ajax.status, v_ajax.statusText);
+		                alert("거절 사유를 가져오는 데 실패했습니다.");
+		            }
+		        };
+		
+		        // 요청 전송
+		        v_ajax.send(v_data);
+		    })
+    		
+    		
+    	
     	
     	
     </script>

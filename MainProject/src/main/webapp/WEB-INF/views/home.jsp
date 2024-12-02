@@ -407,9 +407,9 @@ body {
 
 
 					<div class="about-services fade-in">
-					    <a href="${pageContext.request.contextPath}/productView" class="service" target="_blank">
+					    <a href="${pageContext.request.contextPath}/electricityUseView" class="service" target="_blank">
 					        <i class="fas fa-solar-panel"></i>
-					        <p>에너지 효율 설계</p>
+					        <p>전기 사용 현황</p>
 					    </a>
 					    <a href="${pageContext.request.contextPath}/mapView" class="service" target="_blank">
 					        <i class="fas fa-map"></i>
@@ -579,12 +579,7 @@ body {
             </div>
         </div>
     </div>
-    	<!-- Footer-->
-	<footer class="footer py-5 bg-dark">
-		<div class="container">
-			<p class="m-0 text-center text-white">Copyright &copy; GreenSolution 2024</p>
-		</div>
-	</footer>
+    <%@ include file="/WEB-INF/inc/footer.jsp" %> 
 </section>
 
 	</div>

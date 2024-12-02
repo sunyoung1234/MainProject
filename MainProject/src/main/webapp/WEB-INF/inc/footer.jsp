@@ -32,19 +32,25 @@
         	 margin-bottom: 30px;  
         }
         
-        .footer-top > div{
+        .footer-top {
         	display: flex;
-        	justify-content: start;
+        	width:800px;
         	margin-left:200px;
         	font-size:15px;
+        	margin-bottom: 10px; 
         }
         
-        .footer-top-left{
-        	margin-right: 87px; 
+        .foot-top-box{
+        	margin-right: 40px; 
+        	margin-bottom: 10px;
         }
         
-        .footer-top-left2{
-        	margin-right: 30px; 
+        .foot-top-box1{
+        	margin-bottom: 10px;
+        }
+        
+        .foot-top-box2{
+        	margin-bottom: 10px;
         }
          
     </style>
@@ -53,25 +59,24 @@
     <!-- 페이지의 주요 내용 -->
     <main>
         <!-- 메인 컨텐츠가 렌더링됩니다 -->
-    </main>
+    </main> 
     <!-- Footer -->
     <footer class="footer">
 
     	<div class="footer-top">
-    		<div>
-    			<div class="footer-top-left">상호명 : GreenSolution</div> 
-    			<div class="footer-top-left">대표 이름 : 박선영</div> 
-    			<div class="footer-top-left">주소 : 대전 서구 문정로 48번길</div> 
-    			<div class="footer-top-left">대표번호 : 010-1111-1111</div> 
+    		<div class="foot-top-box">
+    			<div class="foot-top-box1">상호명 : GreenSolution</div> 
+    			<div>주소 : 대전 서구 문정로 48번길</div>
     		</div>
+    		<div class="foot-top-box1">
+    			<div class="foot-top-box2">대표 이름 : 박선영</div>  
+    			<div>대표 번호 : 010-1111-1111</div> 
+    		</div> 
+    		
     	</div> 
     	
         <div class="footer-bottom">
             <p class="m-0 text-center">Copyright &copy; GreenSolution All rights reserved.</p>
-
-        <div class="footer-container">
-            <p class="m-0 text-center">Copyright &copy; GreenSolution 2024</p>
-
         </div>
     </footer>
     <!-- Bootstrap core JS -->

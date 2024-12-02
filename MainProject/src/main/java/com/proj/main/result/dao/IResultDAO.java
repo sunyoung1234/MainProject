@@ -41,5 +41,9 @@ public interface IResultDAO {
 	
 	int applyResult(ApplyResultDTO ar);
 	
-	int updateApplyStatus(String buildingId);
+	int updateApplyStatus(ApplyResultDTO buildingId);
+	
+	int updateApplyZebReject(ApplyZEBDTO buildingId);
+	
+	String selectApplyResult(ApplyResultDTO buildingId);
 }

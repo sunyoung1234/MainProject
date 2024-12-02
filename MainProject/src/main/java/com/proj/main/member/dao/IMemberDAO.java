@@ -49,4 +49,8 @@ public interface IMemberDAO {
 	int updateGradeByName(TestResultDTO tr);
 
 	int updateZebTestYn(MyBuildingDTO mb);
+	
+	int updateProcessYn(MyBuildingDTO mb);
+	
+	String selectBuildingName(MyBuildingDTO mb);
 }

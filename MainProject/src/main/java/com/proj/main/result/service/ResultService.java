@@ -77,10 +77,22 @@ public class ResultService {
 	}
 	
 	public int applyResult(ApplyResultDTO ar) {
-		return dao.applyResult(ar);
+		int result = dao.applyResult(ar);
+		return result;
 	}
 	
-	public int updateApplyStatus(String buildingId) {
-		return dao.updateApplyStatus(buildingId);
+	public int updateApplyStatus(ApplyResultDTO buildingId) {
+		int result = dao.updateApplyStatus(buildingId);
+		return result;
+	}
+	
+	public int updateApplyZebReject(ApplyZEBDTO buildingId) {
+		int result = dao.updateApplyZebReject(buildingId);
+		return result;
+	}
+	
+	public String selectApplyResult(ApplyResultDTO buildingId) {
+		String result = dao.selectApplyResult(buildingId);
+		return result;
 	}
 }
