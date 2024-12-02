@@ -11,10 +11,14 @@
         , mem_name
         , TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI') AS reg_date
         , del_yn
+        , unread_count
+        , last_message
+        , last_message_time
+        , user_unread_count
     FROM
         rooms
-    WHERE del_yn = 'N' -- 삭제된 방 제외
-    ORDER BY reg_date DESC
+    WHERE del_yn = 'N' 
+    ORDER BY last_message_time DESC
 </select>
 
     <!-- 특정 채팅방 정보 가져오기 -->
@@ -26,10 +30,14 @@
             , mem_name
             , TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI') AS reg_date
             , del_yn
+            , unread_count
+            , last_message
+      		, last_message_time
+      		, user_unread_count
         FROM
             rooms
         WHERE room_no = #{roomNo}
-          AND del_yn = 'N'
+        AND del_yn = 'N'
     </select>
 
     <!-- 채팅방 생성 -->
@@ -40,14 +48,23 @@
 	        mem_id,
 	        mem_name,
 	        reg_date,
-	        del_yn
+	        del_yn,
+	        unread_count,
+	        last_message, 
+	        last_message_time,
+	        user_unread_count
+	        
 	    ) VALUES (
 	        room_seq.NEXTVAL,  
 	        #{roomName},
 	        #{memId},  <!-- memId 값을 제대로 매핑 -->
 	        #{memName},
 	        SYSDATE,
-	        'N'
+	        'N',
+	        0,
+	        #{lastMessage},
+	        #{lastMessageTime},
+	        0
 	    )
 	</insert>
 
@@ -59,17 +76,17 @@
     </update>
 
 
-	<!-- room.xml -->
-<select id="checkMemIdExists" parameterType="String" resultType="boolean">
-    SELECT COUNT(*) 
-    FROM members 
-    WHERE mem_id = #{memId}
-</select>
+			<!-- room.xml -->
+		<select id="checkMemIdExists" parameterType="String" resultType="boolean">
+		    SELECT COUNT(*) 
+		    FROM members 
+		    WHERE mem_id = #{memId}
+		</select>
 
-<!-- memId로 채팅방을 찾는 쿼리 -->
-<select id="getRoomByMemId" parameterType="String" resultType="com.proj.main.chat.dto.RoomDTO">
-    SELECT * FROM rooms WHERE mem_id = #{memId} AND del_yn = 'N'
-</select>
+		<!-- memId로 채팅방을 찾는 쿼리 -->
+		<select id="getRoomByMemId" parameterType="String" resultType="com.proj.main.chat.dto.RoomDTO">
+		    SELECT * FROM rooms WHERE mem_id = #{memId} AND del_yn = 'N'
+		</select>
 
 		<select id="getRoomByName" parameterType="String" resultType="com.proj.main.chat.dto.RoomDTO">
 	        SELECT
@@ -79,11 +96,38 @@
 	            , mem_name
 	            , TO_CHAR(reg_date, 'YYYY/MM/DD HH24:MI') AS reg_date
 	            , del_yn
+	            , unread_count
+	        	, last_message
+	        	, last_message_time
+	        	, user_unread_count
 	        FROM
 	            rooms
 	        WHERE room_name = #{roomName}
 	          AND del_yn = 'N'
 	    </select>
-
+	    
+		<update id="updateLastMsg" parameterType="com.proj.main.chat.dto.RoomDTO">
+			UPDATE ROOMS
+			SET LAST_MESSAGE = #{lastMessage}, last_message_time = #{lastMessageTime}
+			WHERE room_no = #{roomNo}
+		</update>
+		
+		<update id="updateUnreadCount" parameterType="com.proj.main.chat.dto.RoomDTO">
+			UPDATE ROOMS
+			SET UNREAD_COUNT = #{unreadCount}
+			WHERE ROOM_NO = #{roomNo}
+		</update> 
+		
+		<update id="updateUserUnread" parameterType="com.proj.main.chat.dto.RoomDTO">
+			UPDATE ROOMS
+			SET USER_UNREAD_COUNT = #{userUnreadCount}
+			WHERE ROOM_NO = #{roomNo}
+		</update>
+		
+		<update id="delRoom" parameterType="int">
+			UPDATE ROOMS
+			SET del_yn = 'Y'
+			WHERE ROOM_NO = #{roomNo}
+		</update>
 
 </mapper>

@@ -6,16 +6,17 @@
 	<select id="getChatList"
 		resultType="com.proj.main.chat.dto.ChatLogDTO">
 		SELECT
-		a.chat_no
-		, a.mem_id
-		, a.mem_name
-		, a.room_no
-		, a.chat_msg
-		, TO_CHAR(a.send_date, 'YYYY/MM/DD HH24:MI') AS send_date
+		chat_no
+		, mem_id
+		, mem_name
+		, room_no
+		, chat_msg
+		, TO_CHAR(send_date, 'YYYY/MM/DD HH24:MI') AS send_date
+		, read_yn
 		FROM
-		chatlog a
-		WHERE a.room_no = #{roomNo}
-		ORDER BY a.chat_no ASC
+		chatlog
+		WHERE room_no = #{roomNo}
+		ORDER BY send_date
 	</select>
 
 	<!-- 채팅 메시지 삽입 -->

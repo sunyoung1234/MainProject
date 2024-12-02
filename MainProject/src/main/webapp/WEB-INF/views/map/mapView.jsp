@@ -23,7 +23,7 @@
 		width: 25%;
 		height: 80%;   
         position: absolute;
-        top: 50px; /* Adjust the distance from the top */
+        top: 100px; /* Adjust the distance from the top */
         left: 10px; /* Adjust the distance from the left */
         background: rgba(255, 255, 255); /* Optional: makes the box slightly translucent */
         padding: 10px;
@@ -241,7 +241,22 @@
 </head>
 <body>
 	<div id="bodyBox">
-		<div id="map" style="width:100%;height:1000px;"></div> 
+		<div style="position: absolute; top: 20px; left: 20px; z-index: 20;">
+		    <button onclick="goBack()" style="
+		        display: flex; 
+		        align-items: center; 
+		        padding: 15px 22px; /* 버튼의 패딩을 1.5배 확대 */
+		        font-size: 21px; /* 기존보다 글씨 크기를 확대 */
+		        font-weight: bold; 
+		        border-radius: 7.5px; /* 모서리도 약간 키움 */
+		        border: none; 
+		        cursor: pointer; 
+		        background-color: #FF4C4C; 
+		        color: white;">
+		        <span style="margin-right: 8px; font-size: 24px;">←</span> 뒤로가기
+		    </button>
+		</div>
+		<div id="map" style="width:100%;height:1000px;"></div>   
 		<div id="infoBox">
 			<div id="buildingName"><span id="infoSpan">건물명</span> : </div>
 			<div id="buildingRegion"><span id="infoSpan">지역</span> : </div>
@@ -602,6 +617,10 @@
 		};
 
 		geocoder.addressSearch('해남군 송지면', callback);
+		
+		function goBack() {
+		    window.history.back();
+		}
 		
 	</script>
 </body>

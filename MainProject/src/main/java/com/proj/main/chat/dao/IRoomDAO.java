@@ -29,4 +29,12 @@ public interface IRoomDAO {
     RoomDTO getRoomByMemId(String memId);
     
     RoomDTO getRoomByName(String roomName);
+    
+    int updateLastMsg(RoomDTO room);
+    
+    int updateUnreadCount(RoomDTO room);
+
+    int updateUserUnread(RoomDTO room);
+    
+    int delRoom(int roomNo);
 }

@@ -6,12 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,6 +44,7 @@ public class ChatLogController {
         }
         
         List<ChatLogDTO> chatList = chatService.getChatList(roomNo);
+        
         model.addAttribute("room", room);
         model.addAttribute("chatList", chatList);
 
@@ -53,6 +57,7 @@ public class ChatLogController {
     public List<ChatLogDTO> selectChatList(int roomNo) {
         return chatService.getChatList(roomNo);
     }
+    
 
     // 채팅방 데이터 가져오기 (채팅방 정보 + 채팅 로그)
     @RequestMapping("/getChatRoomData")
@@ -92,9 +97,21 @@ public class ChatLogController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
         chat.setSendDate(sdf.format(new Date()));
         
-        System.out.println(chat);
+        int roomNo = chat.getRoomNo();
+        List<ChatLogDTO> chatList = chatService.getChatList(roomNo);
+        int idx = chatList.size();
+        ChatLogDTO lastChat = chatList.get(idx-1);
+        
+        RoomDTO room1 = roomService.getRoom(roomNo);
+        room1.setLastMessage(lastChat.getChatMsg());
+        room1.setLastMessageTime(lastChat.getSendDate());
+        
+        roomService.updateLastMsg(room1);
+        
+        
         return chat;
     }
+    
     
     @PostMapping("/sendChatMessage")
     @ResponseBody
