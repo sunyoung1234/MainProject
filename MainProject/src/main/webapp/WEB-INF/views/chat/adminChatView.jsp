@@ -300,7 +300,7 @@ body {
                 client.subscribe('/subscribe/delete', function (message) {
                     const roomData = JSON.parse(message.body);
                     deleteChatRoom(roomData.roomNo);
-                    
+                    chatMessages.innerHTML = "";
                 });
                 
 
