@@ -94,8 +94,6 @@ body {
         <div class="support-menu">
 			<a href="${pageContext.request.contextPath}/mypage" class="sub-nav-dropdown-item">마이페이지</a> 
 			<a href="${pageContext.request.contextPath}/memEditView" class="sub-nav-dropdown-item">회원정보수정</a> 
-			<a href="${pageContext.request.contextPath}/electricityUseView" class="sub-nav-dropdown-item">전기사용량</a> 
-			<a href="${pageContext.request.contextPath}/ocrView" class="sub-nav-dropdown-item">전기 사용량 기입</a>
         </div>
     </div>
 </body>

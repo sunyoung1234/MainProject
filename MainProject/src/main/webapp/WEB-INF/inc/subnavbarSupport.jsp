@@ -91,9 +91,9 @@ body {
             <li class="sub-nav-item"><a href="#" class="active">고객지원</a></li>
         </ul>
         <div class="support-menu">
+        	<a href="${pageContext.request.contextPath}/noticeBoardView" class="sub-nav-dropdown-item">공지사항</a> 
             <a href="${pageContext.request.contextPath}/faq/view" class="active">자주 묻는 질문</a>
             <a href="${pageContext.request.contextPath}/chatListView">챗봇 상담</a>
-            <a href="${pageContext.request.contextPath}/guideView">이용 가이드</a>
             <a href="${pageContext.request.contextPath}/proposal/view">건의사항</a>
         </div>
     </div>
