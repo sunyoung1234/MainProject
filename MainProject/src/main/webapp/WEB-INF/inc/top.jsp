@@ -282,7 +282,7 @@ body {
 					<li class="navi-dropdown-content">
 						<a href="${pageContext.request.contextPath}/adminView" class="navi-dropdown-item">관리자 페이지</a>
 						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">ZEB 신청현황</a>
-						<a href="${pageContext.request.contextPath}/adminChatView" class="navi-dropdown-item">챗봇상담</a>
+						<a href="${pageContext.request.contextPath}/adminChatView" class="navi-dropdown-item">챗봇 상담</a>
 					</li>
 				</ul>
 			</div>
