@@ -225,7 +225,7 @@ body {
 .about-services {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 50px;
     margin-top: 40px;
 }
 
@@ -467,17 +467,17 @@ body {
 
 
 					<div class="about-services fade-in">
-					    <a href="${pageContext.request.contextPath}/electricityUseView" class="service" target="_blank">
+					    <a href="${pageContext.request.contextPath}/electricityUseView" class="service">
 					        <i class="fas fa-solar-panel"></i>
 					        <p>전기 사용 현황</p>
 					    </a>
-					    <a href="${pageContext.request.contextPath}/mapView" class="service" target="_blank">
+					    <a href="${pageContext.request.contextPath}/mapView" class="service">
 					        <i class="fas fa-map"></i>
-					        <p>제로에너지건축물 현황</p>
+					        <p>제로 에너지 건축물 현황</p>
 					    </a>
-					    <a href="${pageContext.request.contextPath}/inputView" class="service" target="_blank">
+					    <a href="${pageContext.request.contextPath}/inputView" class="service">
 					        <i class="fas fa-globe"></i>
-					        <p>제로에너지건축물 등급측정</p>
+					        <p>제로 에너지 건축물 등급 측정</p>
 					    </a>
 					</div>
 				</div>
@@ -496,9 +496,9 @@ body {
         <div class="row align-items-center">
             <!-- 텍스트 섹션 -->
             <div class="col-lg-6 text-center text-lg-start">
-                <h1 class="display-4 mb-4" style="font-weight: 700; color: #ffffff;">
+                <h2 class="display-5 mb-4" style="font-weight: 700; color: #ffffff;">
                     지속 가능한 에너지를 위한<br><strong style="color: #28a745;">미래의 솔루션</strong>
-                </h1>
+                </h2>  
                 <p class="mb-4" style="font-size: 20px; line-height: 1.8; color: #ffffff;">
                     우리의 목표는 탄소 중립과 에너지 효율화를 통해<br>
                     친환경적인 미래를 만드는 것입니다. 혁신적인 기술과<br>
@@ -556,7 +556,7 @@ body {
 
 
 
-		<section class="section" id="vision" style="background-color: white; padding: 50px 0;">
+	<section class="section" id="vision" style="background-color: white; padding: 50px 0;">
     <div class="container">
         <h2 class="text-center mb-4" style="font-weight: bold; color: #343a40;">목표</h2>
         <p class="text-center mb-5" style="color: #6c757d; font-size: 18px;">
