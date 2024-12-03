@@ -456,16 +456,11 @@
     		        fill: false
         		},{
         			label:'전기 사용량 예측값',
-            		data:[null,v_predictDate],
+            		data:[v_monthLast,v_predictDate],
             		borderColor: 'red',  // 첫 번째 선의 색상
 			        backgroundColor: 'rgba(75, 192, 192, 0)',  // 선만 표시 (채우지 않음)
 			        borderWidth: 1,
 			        fill: false,
-			        pointStyle: 'circle',  // 점 모양 설정 (기본값은 'circle')
-			        pointRadius: 5,  // 점 크기 조정
-			        pointBackgroundColor: 'blue',  // 점 색상 설정
-			        borderColor: 'transparent',  // 선을 숨기기 위한 설정 (선 색상 투명)
-			        fill: false  // 선을 채우지 않음
         		}]
         	},
 		    options: {
@@ -484,7 +479,7 @@
 		                original.forEach(function(label) {
 		                  if (label.datasetIndex === 1) {
 		                    label.pointStyle = 'circle';  // 점 모양 설정
-		                    label.strokeStyle = 'blue';  // 점 테두리 색상 설정
+		                    label.strokeStyle = 'red';  // 점 테두리 색상 설정
 		                  }
 		                });
 		                return original;
@@ -549,7 +544,7 @@
              console.log( myChart['data']['datasets'][0].data)
              console.log(v_elecUse)
              myChart['data']['datasets'][0]['data'] = [v_monthLast, v_elecDate]
-             myChart['data']['datasets'][1]['data'] = [null, v_predUseOneMonth]
+             myChart['data']['datasets'][1]['data'] = [v_monthLast, v_predUseOneMonth]
              console.log(v_predUseOneMonth)
           	 myChart.update()
            	console.log( myChart['data']['datasets'][0].data)
