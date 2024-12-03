@@ -652,14 +652,12 @@ body {
             </div>
         </div>
     </div>
+</section>
+</div>
 	<c:if test="${sessionScope.login.memId != 'admin' }">
 	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
 	</c:if>
 
-
-</section>
-
-	</div>
 
 	<!-- slick 슬라이드와 jQuery -->
 	<script
