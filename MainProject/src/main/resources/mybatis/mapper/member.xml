@@ -88,13 +88,14 @@
 		    mem_id
 		)
 		    SELECT
-		        a.BUILDING_ADDRESS,
-		        a.electricity_use,
-		        a.use_date,
-		        b.mem_id
-		    FROM BEU a, MEMBERS b
-		    WHERE b.jibun_address = a.building_address
-		    AND b.mem_id = #{memId}
+			    a.BUILDING_ADDRESS,
+			    a.electricity_use,
+			    a.use_date,
+			    b.mem_id
+			FROM BEU a
+			JOIN MEMBERS b
+			    ON (b.mem_address = a.building_address OR (b.jibun_address IS NOT NULL AND b.jibun_address = a.building_address))
+			WHERE b.mem_id = #{memId}
     </insert>
     
     <!-- 회원이 등록한 건물 전기 데이터 가져오기 -->
