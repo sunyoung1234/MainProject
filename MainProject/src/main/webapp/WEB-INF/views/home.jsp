@@ -433,10 +433,6 @@ body {
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
 	<!-- Navigation END -->
 
-	<!-- ChatBot START -->
-	<%@ include file="/WEB-INF/inc/chatbot.jsp"%>
-	<!-- ChatBot END -->
-
 	<!-- 사이드 네비게이션 -->
 	<div class="side-nav">
 		<a href="#home" class="nav-item">HOME</a> <a href="#banner"
@@ -656,14 +652,12 @@ body {
             </div>
         </div>
     </div>
-
-    <%@ include file="/WEB-INF/inc/footer.jsp" %> 
-
-
-
 </section>
+</div>
+	<c:if test="${sessionScope.login.memId != 'admin' }">
+	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+	</c:if>
 
-	</div>
 
 	<!-- slick 슬라이드와 jQuery -->
 	<script

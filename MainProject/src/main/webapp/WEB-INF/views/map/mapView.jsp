@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>ZEB 본인증 지도</title>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style type="text/css">
 	#bodyBox{
 		width: 100%;
@@ -34,42 +34,38 @@
     }
 
 	#infoBox div {
-        margin-bottom: 10px; /* 각 항목들 간의 간격 */
-        font-size: 14px; /* 기본 폰트 크기 */
+        margin-bottom: 10px; 
+        font-size: 14px; 
     }
 
     #infoBox div span {
-        font-weight: bold; /* 항목 이름은 굵게 */
-        color: #333; /* 항목 이름의 색상 */
+        font-weight: bold; 
+        color: #333; 
     }
 
-    /* 각 항목의 스타일 */
-    #buildingName,
-    #buildingRegion,
-    #buildingAdr,
-    #buildingUse,
-    #applyOrg,
-    #totalArea,
-    #zeroLevel,
-    #measureMethod {
-        background-color: #f7f7f7; /* 항목 배경 색상 */
-        border-radius: 5px; /* 둥근 모서리 */
+    #buildingName, #buildingRegion, #buildingAdr, #buildingUse {
+    	background-color: #f7f7f7; 
+        border-radius: 5px; 
         padding: 10px;
-        color: #555; /* 항목 내용 색상 */
+        color: #555; 
+    }
+    #applyOrg, #totalArea, #zeroLevel, #measureMethod {
+        background-color: #f7f7f7; 
+        border-radius: 5px; 
+        padding: 10px;
+        color: #555;
     }
 
     /* 항목 내용이 더 긴 경우, 줄바꿈이 되도록 설정 */
     #infoBox div {
-        word-wrap: break-word; /* 긴 단어나 주소를 자동으로 줄바꿈 */
+        word-wrap: break-word; 
     }
 
-    /* 제목 부분 스타일 */
     #infoBox div span {
         font-size: 16px;
-        color: #2C3E50; /* 진한 색상으로 제목 강조 */
+        color: #2C3E50; 
     }
 
-    /* 각 항목마다 조금 더 구분되는 디자인을 추가 */
     #buildingName { background-color: #EAF1F1; }
     #buildingRegion { background-color: #F9E0A1; }
     #buildingAdr { background-color: #F0D0D6; }
@@ -78,7 +74,7 @@
     #totalArea { background-color: #F1E1B4; }
     #zeroLevel { background-color: #E6F9D1; }
     #measureMethod { background-color: #D9E6F9; }
-    /* Position the zoombox at the bottom-right corner */
+    
     #zoomBox {
         position: absolute;
         bottom: 3px; /* Distance from the bottom of the screen */
@@ -89,7 +85,6 @@
         z-index: 10;
     }
 
-    /* Styling for zoom buttons */
     #zoomBox button { 
     	width: 25px;
         margin: 5px;
@@ -106,7 +101,6 @@
         background-color: #f0f0f0;
     }
 
-    /* Styling for map zoom level */
     #maplevel {
         display: block;
         margin-top: 5px;
@@ -123,22 +117,22 @@
     }
     
 	.custom-overlay {
-	  position: absolute;  /* 위치를 지도 위에 정확히 고정 */
-	  background-color: rgba(0, 0, 0, 0.6);  /* 반투명 배경 */
-	  color: white;  /* 텍스트 색상 */
+	  position: absolute;  
+	  background-color: rgba(0, 0, 0, 0.6);  
+	  color: white;  
 	  padding: 10px;
 	  border-radius: 8px;
 	  font-family: Arial, sans-serif;
 	  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-	  text-align: center;  /* 텍스트 가운데 정렬 */
-	  z-index: 100;  /* 다른 지도 요소 위로 오도록 설정 */
+	  text-align: center;  
+	  z-index: 100; 
 	  transition: all 0.3s ease;
 	}
 	
 	.custom-overlay:hover {
-	  background-color: rgba(0, 0, 0, 0.8);  /* 배경색을 더 진하게 */
-	  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);  /* 그림자 강조 */
-	  transform: scale(1.05);  /* 살짝 확대 효과 */
+	  background-color: rgba(0, 0, 0, 0.8);  
+	  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6); 
+	  transform: scale(1.05);  
 	}
 	
 	.overlay-text {
@@ -160,7 +154,7 @@
 	}
 	
 	.custom-overlay strong {
-	  display: block;  /* 텍스트를 블록으로 만들어서 구분 */
+	  display: block;  
 	}
 	    
 	#searchBox {
@@ -171,14 +165,14 @@
 	    width: 80%;
 	    max-width: 500px;
 	    z-index: 20;
-	    display: flex; /* Flexbox 사용 */
-	    justify-content: flex-start; /* 버튼과 입력창 왼쪽 정렬 */
-	    align-items: center; /* 수직 중앙 정렬 */
-	    flex-wrap: nowrap; /* 입력창과 버튼이 한 줄에 배치되도록 */
+	    display: flex; 
+	    justify-content: flex-start; 
+	    align-items: center; 
+	    flex-wrap: nowrap; 
 	}
 	
 	#searchInput {
-	    width: 80%; /* 입력창이 화면의 80% 차지 */
+	    width: 80%; 
 	    padding: 10px;
 	    font-size: 16px;
 	    border: 1px solid #ccc;
@@ -192,17 +186,17 @@
 	}
 	
 	#searchResults {
-	    margin-top: 5px; /* 검색창 바로 아래에 위치하도록 간격을 좁힘 */
+	    margin-top: 5px; 
 	    background-color: white;
 	    border: 1px solid #ccc;
 	    border-radius: 5px;
 	    max-height: 150px;
 	    overflow-y: auto;
-	    position: absolute; /* 검색창 아래에 절대 위치 */
-	    width: 100%; /* 검색창 너비와 맞추기 */
-	    display: none; /* Initially hidden */
+	    position: absolute; 
+	    width: 100%; 
+	    display: none; 
 	    z-index: 10;
-	    top: 100%; /* 부모 요소인 #searchBox 바로 아래에 위치 */
+	    top: 100%; 
 	}
 	
 	#searchResults div {
@@ -233,7 +227,7 @@
 	.info-window{
 		white-space: nowrap; /* 텍스트가 줄바꿈 없이 한 줄로 표시되도록 설정 */
 	    overflow: hidden;    /* 텍스트가 박스를 넘지 않도록 숨김 처리 */
-	    text-overflow: ellipsis; /* 넘치는 텍스트가 있을 경우 "..."으로 처리 */
+	    text-overflow: ellipsis; 
 	}
 	
 </style>
@@ -295,6 +289,8 @@
 	
 	
 	<script type="text/javascript">
+	
+	
 	 	const data = { 울산: 28, 충북: 87, 서울: 103, 전북: 100, 경기: 297, 충남: 87, 부산: 50, 강원: 120, 경북: 119, 대전: 42, 세종: 30,제주: 34, 대구: 58, 전남: 92,인천: 80, 광주: 34,경남: 140 };
 		let mapContainer = document.getElementById('map'), // 지도를 표시할 div    
 	    mapOption = { 
@@ -324,6 +320,8 @@
 		    });
 		</c:forEach> 
 		
+		
+		
 		for (var i = 0; i < positions.length; i ++){
 			if(positions[i].level == 'ZEB 1'){
 				imageSrc = "${pageContext.request.contextPath }/resources/image/zeb1.png";  
@@ -337,7 +335,7 @@
 				imageSrc = "${pageContext.request.contextPath }/resources/image/zeb5.png";
 			}
 			
-		    var imageSize = new kakao.maps.Size(20,20); // 24,35   
+		    var imageSize = new kakao.maps.Size(30,30); // 24,35   
 		     
 		    // 마커 이미지를 생성합니다    
 		    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
@@ -367,6 +365,7 @@
 		    markers.push(marker); 
 		    hideMarkers();
 		}
+		
 		
 		let v_name = document.querySelector('#buildingName');
 		let v_region = document.querySelector('#buildingRegion');
@@ -621,6 +620,25 @@
 		function goBack() {
 		    window.history.back();
 		}
+		
+		let mapSession = '${sessionScope.requestMap}';
+		
+		if(mapSession){
+			console.log(mapSession);
+			positions.forEach((pos,idx)=>{
+				if(pos.title == mapSession){
+					kakao.maps.event.trigger(markers[idx],'click');
+				}				
+			})
+			$.ajax({
+                url: '${pageContext.request.contextPath}/deleteBuildingName',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({ buildingName : mapSession }),
+                success: function (messages) {
+                }
+            });
+		}	
 		
 	</script>
 </body>

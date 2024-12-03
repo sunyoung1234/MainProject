@@ -402,7 +402,7 @@
 		        <button id="sendMessage">전송</button>
 		    </div>
 		    <!-- 채팅 종료 버튼 -->
-		    <button id="endChat">채팅 종료</button>
+		    <button id="endChat">채팅 종료</button> 
 		</div>
 		
 
@@ -707,6 +707,14 @@
 		        unreadCountElement.style.visibility = 'hidden';
 		    }
 		}
+		let v_userMessage = document.getElementById('userMessage');
+		let v_sendMessage = document.getElementById('sendMessage');
+		v_userMessage.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') { 
+                event.preventDefault(); // 기본 Enter 동작 방지
+                v_sendMessage.click(); // 전송 버튼 클릭 이벤트 트리거
+            }
+        });
 		
 		
 

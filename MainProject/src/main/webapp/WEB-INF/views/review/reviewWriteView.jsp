@@ -192,7 +192,9 @@
             </div>
         </div>
     </main>
-
+	<c:if test="${sessionScope.login.memId != 'admin' }">
+	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+	</c:if>
     <!-- footer.jsp 포함 (전체 레이아웃에 영향 없음) -->
     <%@ include file="/WEB-INF/inc/footer.jsp" %>
 

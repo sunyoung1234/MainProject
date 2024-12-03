@@ -462,8 +462,8 @@
 				    <div class="summary-text">
 				        <p><strong style="color: orange; font-size: 2em;">전기요금 절감 ${ Math.round((e_used.annualElecCostSave / (e_used.annualElecCostSave + e_used.elecCost ) ) * 100)}%</strong></p>
 				        <p id="savePercent" style="display:none;">${ Math.round((e_used.annualElecCostSave / (e_used.annualElecCostSave + e_used.elecCost ) ) * 100)}</p>
-				        <p>연간 CO<sub>2</sub> 절감: <strong>${e_used.saveCo2 } Ton</strong></p>
-				        <p>소나무 대체효과: <strong>${e_used.saveWood } 그루</strong></p>
+				        <p>연간 CO<sub>2</sub> 절감: <strong>${Math.floor(e_used.saveCo2 * 10) / 10 }    Ton</strong></p> 
+				        <p>소나무 대체효과: <strong>${Math.floor(e_used.saveWood) } 그루</strong></p>
 				        <p>태양광 적용전: <strong> ${e_used.annualElecCostSave + e_used.elecCost }원/yr</strong></p>
 				        <p>태양광 적용후: <strong> ${e_used.elecCost }원/yr</strong></p>
 				    </div>
@@ -642,6 +642,9 @@
             </div>
         </div>
     </div>
+    <c:if test="${sessionScope.login.memId != 'admin' }">
+	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+	</c:if>
     <%@ include file="/WEB-INF/inc/footer.jsp"%>
     <script>
     

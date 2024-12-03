@@ -29,7 +29,6 @@
 <%@ include file="/WEB-INF/inc/subnavbar.jsp"%>
 
 <!-- 챗봇 아이콘 및 인터페이스 -->
-<%@ include file="/WEB-INF/inc/chatbot.jsp" %>
 
 	<!-- Contact Section-->
 	<section class="page-section" id="contact">
@@ -82,7 +81,9 @@
 			</div>
 		</div>
 	</section>
-
+	<c:if test="${sessionScope.login.memId != 'admin' }">
+	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+	</c:if>
 	<!-- footer 부분 -->
 	<%@ include file="/WEB-INF/inc/footer.jsp"%>
 

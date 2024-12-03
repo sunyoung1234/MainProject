@@ -671,13 +671,12 @@ body {
 				</div></li>
 		</ul> --%>
 	</div>
+	<c:if test="${sessionScope.login.memId != 'admin' }">
+	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+	</c:if>
 
 
-
-	<footer class="footer py-5 bg-dark">
-		<p class="m-0 text-center text-white">Copyright &copy; 2024
-			GreenSolution</p>
-	</footer>
+	<%@ include file="/WEB-INF/inc/footer.jsp" %>
 
 	<script>
 document.getElementById('modal-trigger').addEventListener('click', () => {
