@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.proj.main.map.dto.ZeroDTO;
 import com.proj.main.map.service.MapService;
+import com.proj.main.member.dto.MemberDTO;
+import com.proj.main.pageLog.dto.PageLogDTO;
 
 @Controller
 public class MapController {
@@ -20,7 +24,16 @@ public class MapController {
 	MapService ms;
 	
 	@RequestMapping("/mapView")
-	public String mapView(Model model) {
+	public String mapView(Model model, HttpSession session) {
+		
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+	       
+		
+		String memId = login.getMemId();
+		PageLogDTO log = new PageLogDTO();
+		log.setMemId(memId);
+		log.setPageName("Áöµµ");
+
 		
 		List<ZeroDTO> zeroList = ms.getZeroList();
 		model.addAttribute("zeroList", zeroList);
