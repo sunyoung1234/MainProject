@@ -166,21 +166,13 @@ body {
 				<p>이름: ${sessionScope.login.memName}</p>
 				<p>이메일: ${sessionScope.login.memEmail}</p>
 				<p>전화번호: ${sessionScope.login.memPhone}</p>
-				<button class="btn-primary">정보 수정</button>
+				<button id="editBtn" class="btn-primary">정보 수정</button>
 			</div>
 
 			<!-- 활동 데이터 카드 -->
 			<div class="card">
 				<h2>활동 데이터</h2>
-				<p>최근 로그인: 준비 중</p>
-				<p>최근 사용량: 준비 중</p>
-				<p>포인트: 준비 중</p>
-			</div>
-
-			<!-- 알림 카드 -->
-			<div class="card">
-				<h2>알림</h2>
-				<p>현재 미확인 알림: 준비 중</p>
+				<canvas id="myChart"></canvas>
 			</div>
 		</div>
 
@@ -219,57 +211,43 @@ body {
 		</div>
 	</div>
 
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
-		<script>
+	 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	
     <script type="text/javascript">
-	let v_status = document.querySelector('#status'); 
-    let v_applyStatus = document.querySelectorAll('.applyStatus'); 
-    let v_tableRows = document.querySelectorAll('tbody tr'); 
-    let v_numberCells = document.querySelectorAll('tbody tr td:first-child'); 
-    let v_downLoad = document.querySelectorAll('.download-link');
-    let v_trs = document.querySelectorAll('.trs');
-    let v_bId = document.querySelectorAll('.buildingId');
-    let forms = document.querySelectorAll('.submitForm');
-
-    v_status.addEventListener('change', () => {
-        const selectedStatus = v_status.value; 
-        let currentNum = 1;
-
-        v_tableRows.forEach((row, index) => {
-            const statusCell = v_applyStatus[index]; 
-            const statusText = statusCell.innerText; 
-
-            if (selectedStatus === "전체" || statusText.includes(selectedStatus)) {
-                row.style.display = ""; 
-                v_numberCells[index].innerText = currentNum++;
-            } else {
-                row.style.display = "none"; 
-            }
-        });
-    });
-	
-	v_downLoad.forEach(dl =>{
-		dl.addEventListener('click',()=>{
-			
-			let fn = dl.innerHTML;
-			fn = fn.substr(3);
-			
-			location.href = "${pageContext.request.contextPath}/downLoadFile?fileName=" + fn
+		
+		document.getElementById("editBtn").addEventListener("click",()=>{
+			location.href = '${pageContext.request.contextPath}/memEditView'
 		})
-	})
 	
-	v_trs.forEach((tr,idx) =>{ 
-		tr.addEventListener('click',()=>{
-			forms[idx].submit();
-		})
-	})
-	
-	
-	
-	
-</script>
-		</script>
+		let v_pageName = '${pageName}'
+		let v_pageCount = '${pageCount}'
+		
+		v_pageName = v_pageName.replace("[", "").replace("]", "").split(",");
+		v_pageCount = v_pageCount.replace('[','').replace(']','').split(",")
+		let ctx = document.getElementById("myChart")
+		
+		let myChart = new Chart(ctx, {
+	            type: 'bar',
+	            data: { 
+	                labels: v_pageName,
+	                datasets: [{
+	                    label: '페이지별 방문 횟수',
+	                    data: v_pageCount,
+	                    borderWidth: 1,
+	                    backgroundColor: '#76BECF',
+	                    borderColor: '#76BECF'
+	                }]
+	            },
+	            options: {
+	                responsive: true,
+	                scales: {
+	                }
+	            }
+	        });
+		
+		
+	</script>
 </body>
 </html>

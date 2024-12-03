@@ -134,5 +134,7 @@
 		AND mem_id != 'admin'
 		GROUP BY mem_id
 	</select>
+	
+	
 
 </mapper>

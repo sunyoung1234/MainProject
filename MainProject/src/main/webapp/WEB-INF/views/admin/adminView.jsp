@@ -316,7 +316,7 @@
 <body class="d-flex flex-column">
 
     <%@ include file="/WEB-INF/inc/top.jsp"%>
-
+	<%@ include file="/WEB-INF/inc/subnavbaradmin.jsp"%> 
     <div class="main-height">
     	
     	<div class="login-count-visit">이용자 방문 현황</div>

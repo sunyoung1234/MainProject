@@ -22,10 +22,7 @@
 body {
     font-family: 'Arial', sans-serif;
     background-color: #f4f6f8; /* 밝고 중립적인 배경색 */
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100vh;
+    height: 1200px;
     padding: 20px;
 }
 
@@ -38,6 +35,9 @@ body {
     border-radius: 12px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
     overflow: hidden;
+    margin: auto;
+    margin-top:70px;
+    margin-bottom: 100px; 
 }
 
 /* 채팅 목록 섹션 */
@@ -235,6 +235,10 @@ body {
     </style>
 </head>
 <body>
+	
+	<%@ include file="/WEB-INF/inc/top.jsp" %>
+	<%@ include file="/WEB-INF/inc/subnavbaradmin.jsp"%>
+
     <div class="chat-container">
         <!-- 채팅방 목록 -->
         <div class="chat-list">
@@ -262,7 +266,9 @@ body {
             </div>
         </div>
     </div>
-
+	
+	<%@ include file="/WEB-INF/inc/footer.jsp" %>
+	
     <script>
         let currentRoomNo = null;
         let currentSubscription = null;

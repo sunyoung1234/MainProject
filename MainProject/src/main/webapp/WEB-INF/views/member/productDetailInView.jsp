@@ -147,10 +147,15 @@
 		height:100%;
 	}
 	
-	.go-link{
-		color:blue;
-		font-size:4px;
+	.go-link {
+	    color: blue;
+	    font-size: 15px;
+	    word-wrap: break-word; /* 긴 단어가 줄바꿈되도록 */
+	    word-break: break-all; /* 필요 시 단어 중간에서 줄바꿈 가능 */
+	    white-space: normal; /* 텍스트가 넘칠 경우 자동 줄바꿈 */
+	    max-width: 300px; /* 필요 시 최대 너비 제한 */
 	}
+
 	
 	.go-link:hover{
 		cursor: pointer;
