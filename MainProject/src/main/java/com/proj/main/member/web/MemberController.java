@@ -330,6 +330,11 @@ public class MemberController {
         	model.addAttribute("pageCount",pageCount);
         }
         
+       List<ApplyZEBDTO> applyList = rs.selectApplyZEBId(memId);
+       
+       model.addAttribute("applyList",applyList);
+       
+       System.out.println(applyList);
        
         
 

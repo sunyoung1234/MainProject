@@ -138,6 +138,17 @@ body {
 .view-more a:hover {
 	background-color: #0056b3;
 }
+
+.go-link-apply{
+	margin-left: 50px;
+	color: blue;
+}
+
+.go-link-apply:hover{
+	cursor: pointer;
+	color: red;
+}
+
 </style>
 
 
@@ -175,14 +186,12 @@ body {
 			</div>
 		</div>
 
-		<!-- 추가 섹션: 그래프 및 게시판 요약 -->
-		<div class="extra-section">
-			<h3>에너지 사용량 및 데이터</h3>
-			<div class="placeholder">여기에 전기사용량, 가스 배출량 그래프 추가 예정</div>
-		</div>
 
 		<div class="extra-section">
-			<h3>ZEB 신청 현황</h3>
+			<div style="display: flex;">
+				<h3>ZEB 신청 현황</h3>
+				<div class="go-link-apply">바로가기</div>  
+			</div>
 			<div class="small-zeb-table">
 				<table>
 					<thead>
@@ -193,19 +202,34 @@ body {
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="apply" items="${applys}" varStatus="status">
+						<c:if test="${applyList.size() > 0 }">
+							<c:forEach var="apply" items="${applyList}" varStatus="status">
+								<tr>
+									<td>${status.count}</td>
+									<td>${apply.buildingName}</td>
+									<c:choose> 
+										<c:when test="${apply.approveYn == 'N' && apply.rejectYn == 'N'}">
+											<td>검토중</td>
+									    </c:when>
+									    
+									    <c:when test="${apply.approveYn == 'Y' && apply.rejectYn == 'N'}">
+											<td>승인</td>
+									    </c:when>
+									    
+									    <c:when test="${apply.approveYn == 'Y' && apply.rejectYn == 'Y'}">
+											<td>거절</td>
+									    </c:when>
+									</c:choose>
+								</tr> 
+							</c:forEach>
+						</c:if>
+						<c:if test="${applyList.size() == 0 }">
 							<tr>
-								<td>${status.count}</td>
-								<td>${apply.buildingName}</td>
-								<td>${statusList[status.index]}</td>
+								<td colspan="3">데이터가 존재하지 않습니다.</td>
 							</tr>
-						</c:forEach>
+						</c:if>
 					</tbody>
 				</table>
-				<div class="view-more">
-					<a href="${pageContext.request.contextPath}/applyStatusView"
-						class="btn-primary">더보기</a>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -230,7 +254,10 @@ body {
 		document.getElementById("editBtn").addEventListener("click",()=>{
 			location.href = '${pageContext.request.contextPath}/memEditView'
 		})
-
+		
+		document.querySelector('.go-link-apply').addEventListener("click", ()=>{
+			location.href = '${pageContext.request.contextPath}/applyStatusView'
+		})
 	
 		let v_pageName = '${pageName}'
 		let v_pageCount = '${pageCount}'
@@ -260,7 +287,6 @@ body {
 		
 		
 
-	})
 
 	</script>
 </body>

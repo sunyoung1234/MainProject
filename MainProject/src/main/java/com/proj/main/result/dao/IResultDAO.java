@@ -46,4 +46,6 @@ public interface IResultDAO {
 	int updateApplyZebReject(ApplyZEBDTO buildingId);
 	
 	String selectApplyResult(ApplyResultDTO buildingId);
+	
+	List<ApplyZEBDTO> selectApplyZEBId(String memId);
 }
