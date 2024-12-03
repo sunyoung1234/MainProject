@@ -17,13 +17,13 @@
 	rel="stylesheet" />
 </head>
 <body class="d-flex flex-column">
-<!-- 상단 네비게이션 바 -->
-<%@ include file="/WEB-INF/inc/top.jsp"%>
+	<!-- 상단 네비게이션 바 -->
+	<%@ include file="/WEB-INF/inc/top.jsp"%>
 
-<!-- 상세 메뉴 바 -->
-<%@ include file="/WEB-INF/inc/subnavbarSupport.jsp"%>
+	<!-- 상세 메뉴 바 -->
+	<%@ include file="/WEB-INF/inc/subnavbarSupport.jsp"%>
 
-<!-- 챗봇 아이콘 및 인터페이스 -->
+	<!-- 챗봇 아이콘 및 인터페이스 -->
 
 	<main class="flex-shrink-0">
 		<section class="py-5">
@@ -74,12 +74,21 @@
 												<p>
 													<strong>관리자 답변:</strong> ${proposal.answerContent}
 												</p>
+
+												<!-- 답변 수정 버튼 표시 -->
+												<c:if
+													test="${sessionScope.login != null && sessionScope.login.memId eq 'admin'}">
+													<button class="btn btn-warning edit-answer-button"
+														data-prop-no="${proposal.propNo}"
+														data-answer-content="${proposal.answerContent}">
+														답변 수정</button>
+												</c:if>
 											</div>
 										</c:if>
 
 										<!-- 관리자만 답변 추가 버튼 표시 -->
 										<c:if
-											test="${sessionScope.login != null && sessionScope.login.memId eq 'admin'}">
+											test="${sessionScope.login != null && sessionScope.login.memId eq 'admin' && empty proposal.answerContent}">
 											<button class="btn btn-primary answer-button"
 												data-prop-no="${proposal.propNo}">답변 추가</button>
 										</c:if>
@@ -94,7 +103,7 @@
 		</section>
 	</main>
 	<c:if test="${sessionScope.login.memId != 'admin' }">
-	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+		<%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
 	</c:if>
 	<%@ include file="/WEB-INF/inc/footer.jsp"%>
 
@@ -233,6 +242,21 @@
         button.addEventListener('click', event => {
             const propNo = event.target.getAttribute('data-prop-no');
             document.getElementById('propNo').value = propNo;
+            
+            const answerModal = new bootstrap.Modal(document.getElementById('answerModal'));
+            answerModal.show();
+        });
+    });
+ // 답변 수정 버튼 클릭 이벤트
+    document.querySelectorAll('.edit-answer-button').forEach(button => {
+        button.addEventListener('click', event => {
+            const propNo = event.target.getAttribute('data-prop-no');
+            const existingAnswerContent = event.target.getAttribute('data-answer-content');
+            
+            // 기존 답변 내용을 모달에 채우기
+            document.getElementById('propNo').value = propNo;
+            document.querySelector('#answerModal textarea').value = existingAnswerContent;
+            
             const answerModal = new bootstrap.Modal(document.getElementById('answerModal'));
             answerModal.show();
         });
