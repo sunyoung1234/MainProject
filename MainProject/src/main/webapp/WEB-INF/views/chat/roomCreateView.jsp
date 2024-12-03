@@ -17,7 +17,6 @@
 	<!-- Navigation END -->
 	
 	<!-- ChatBot START -->
-	<%@ include file="/WEB-INF/inc/chatbot.jsp" %>
 	<!-- ChatBot END -->
 </head>
 <body id="page-top">
@@ -60,7 +59,9 @@
 			</div>
 		</div>
 	</section>
-
+	<c:if test="${sessionScope.login.memId != 'admin' }">
+	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+	</c:if>
 	<!-- footer 부분 -->
 	<%@ include file="/WEB-INF/inc/footer.jsp"%>
 

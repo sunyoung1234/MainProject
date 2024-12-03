@@ -18,7 +18,6 @@
 <%@ include file="/WEB-INF/inc/subnavbarSupport.jsp"%>
 
 <!-- 챗봇 아이콘 및 인터페이스 -->
-<%@ include file="/WEB-INF/inc/chatbot.jsp" %>
 
     <main class="flex-shrink-0">
         <div class="container py-5">
@@ -36,7 +35,9 @@
             </div>
         </div>
     </main>
-
+	<c:if test="${sessionScope.login.memId != 'admin' }">
+	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+	</c:if>
     <%@ include file="/WEB-INF/inc/footer.jsp" %>
 
 </body>

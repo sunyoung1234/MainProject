@@ -201,7 +201,6 @@ body {
 	<!-- Navigation END -->
 	
 	<!-- ChatBot START -->
-	<%@ include file="/WEB-INF/inc/chatbot.jsp" %>
 	<!-- ChatBot END -->
 
 	<!-- 사이드 네비게이션 -->
@@ -333,13 +332,14 @@ body {
 			<p>궁금하신 사항이 있으시면 언제든지 연락해 주세요.</p>
 		</section>
 	</div>
-
+	
+	<c:if test="${sessionScope.login.memId != 'admin' }">
+	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+	</c:if>
 
 
 	<!-- 푸터 -->
-	<footer>
-		<p>© 2024 Company Name. All Rights Reserved.</p>
-	</footer>
+	<%@ include file="/WEB-INF/inc/footer.jsp" %>
 
 
 	<!-- slick 슬라이드와 jQuery -->

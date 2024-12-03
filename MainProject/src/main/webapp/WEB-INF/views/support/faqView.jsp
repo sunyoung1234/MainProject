@@ -88,7 +88,6 @@ $(document).ready(function () {
 <%@ include file="/WEB-INF/inc/subnavbarSupport.jsp"%>
 
 <!-- 챗봇 아이콘 및 인터페이스 -->
-<%@ include file="/WEB-INF/inc/chatbot.jsp" %>
 
 <main class="container my-5 faq-container-box">
     <h1 class="text-center faq-header mb-5" style="margin-top: 30px; font-size: 32px;">자주 묻는 질문</h1>
@@ -106,7 +105,9 @@ $(document).ready(function () {
         </c:forEach>
     </div>
 </main>
-
+	<c:if test="${sessionScope.login.memId != 'admin' }">
+	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+	</c:if>
 <%@ include file="/WEB-INF/inc/footer.jsp"%>
 
 </body>
