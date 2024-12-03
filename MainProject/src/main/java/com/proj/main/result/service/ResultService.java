@@ -95,4 +95,9 @@ public class ResultService {
 		String result = dao.selectApplyResult(buildingId);
 		return result;
 	}
+	
+	public List<ApplyZEBDTO> selectApplyZEBId(String memId){
+		List<ApplyZEBDTO> result = dao.selectApplyZEBId(memId);
+		return result;
+	}
 }

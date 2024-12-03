@@ -178,4 +178,10 @@
 		where building_id = #{buildingId}
 	</select>
 	
+	<select id="selectApplyZEBId" parameterType="String" resultType="com.proj.main.result.dto.ApplyZEBDTO">
+		select * 
+		from apply_zeb
+		where mem_id = #{memId}
+	</select>
+	
 </mapper>

@@ -266,7 +266,7 @@ body {
 					<li class="navi-dropdown-content">
 						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">전기 사용량</a>
 						<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">전기 사용량 기입</a>
-						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품 게시판</a>
+						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품</a>
 					</li>
 					<li class="navi-dropdown-content">
 						<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">에너지 관련 정보</a>
