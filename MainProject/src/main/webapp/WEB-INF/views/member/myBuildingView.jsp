@@ -6,6 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>내 건물 목록</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="css/styles.css" rel="stylesheet" />
     <style>
         body {
@@ -449,7 +450,7 @@
 					    
 					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'N'}">
 					    	<button style="display: none;" id="testModal" class="test-modal btn-green">ZEB 테스트</button>
-					        <button id="registBuilding2" class="regist-building btn-blue">ZEB 건축물<br>등록하기</button>
+					        <button id="registBuilding" class="regist-building btn-blue">ZEB 건축물<br>등록하기</button>
 					        <button style="display: none;"  class=" btn-yellow goToMap" >지도<br>보러가기</button>
 					    </c:when>
 					    
@@ -714,46 +715,30 @@
     	}
     	
     	let v_maps = document.querySelectorAll('.goToMap');
+    	let v_bname = document.querySelectorAll('.building-name');
     	
-    	v_maps.forEach(map =>{
+    	v_maps.forEach((map,idx) =>{
+    		let bname = v_bname[idx].innerHTML;
     		map.addEventListener('click',()=>{
-    			location.href = "${pageContext.request.contextPath}/mapView";
+    			
+    			console.log(bname);  
+    			
+    			$.ajax({
+                    url: '${pageContext.request.contextPath}/saveBuildingName',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({ buildingName : bname }),
+                    success: function (messages) {
+                    	
+                    	console.log(messages);  
+                    	location.href = '${pageContext.request.contextPath}/mapView';
+                    	
+                    }
+                });
     		})
     	})
     	
     	
-    	let v_registBuilding = document.getElementById("registBuilding2")
-    	
-    	v_registBuilding.addEventListener("click", ()=>{
-    		
-    		console.log(event.target)
-    		let v_ajax = new XMLHttpReqeuest();
-    		v_ajax.open("POST", "${pageContext.request.contextPath}/buildingName")
-    		
-    		 v_ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-	        
-    		let v_buildingId = document.getElementById("inputBuildingId").value
-    		
-	        let v_data = "buildingId=" + v_buildingId;
-	        console.log(v_data);
-	        
-		        // 서버 응답 처리
-		        v_ajax.onload = function () {
-		            if (v_ajax.status === 200) {
-		                // 서버에서 받은 응답을 파싱
-		                let v_region = JSON.parse(v_ajax.responseText);
-		                let v_rejectReason = v_region["buildingName"];
-		                console.log(v_rejectReason);
-		
-		            } else {
-		                console.error("요청 실패:", v_ajax.status, v_ajax.statusText);
-		                alert("거절 사유를 가져오는 데 실패했습니다.");
-		            }
-		        };
-		
-		        // 요청 전송
-		        v_ajax.send(v_data);
-		    })
     		
     		
     	

@@ -646,6 +646,22 @@ public class MemberController {
         session.setMaxInactiveInterval(30*60); // 30Ка
         return memId;
     }
+    
+    @RequestMapping("/saveBuildingName")
+    @ResponseBody
+    public String saveBuildingName(HttpSession session, @RequestBody Map<String, Object> requestData) {
+    	String buildingName = (String) requestData.get("buildingName");
+    	System.out.println(buildingName);
+    	session.setAttribute("requestMap", buildingName);
+    	return buildingName;
+    }
+    
+    @RequestMapping("/deleteBuildingName")
+    @ResponseBody
+    public String deleteBuildingName(HttpSession session) {
+    	session.setAttribute("requestMap", null);
+    	return "aaa";
+    }
 	
 
 }
