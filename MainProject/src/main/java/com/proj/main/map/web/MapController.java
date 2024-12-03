@@ -27,13 +27,13 @@ public class MapController {
 	public String mapView(Model model, HttpSession session) {
 		
 		MemberDTO login = (MemberDTO) session.getAttribute("login");
-	       
+		if(login != null) {
+			String memId = login.getMemId();
+			PageLogDTO log = new PageLogDTO();
+			log.setMemId(memId);
+			log.setPageName("지도");
+		}
 		
-		String memId = login.getMemId();
-		PageLogDTO log = new PageLogDTO();
-		log.setMemId(memId);
-		log.setPageName("지도");
-
 		
 		List<ZeroDTO> zeroList = ms.getZeroList();
 		model.addAttribute("zeroList", zeroList);

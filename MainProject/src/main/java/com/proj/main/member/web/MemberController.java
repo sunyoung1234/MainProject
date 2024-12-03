@@ -403,6 +403,12 @@ public class MemberController {
     	}
     	
     	
+		String memId = login.getMemId();
+		PageLogDTO log = new PageLogDTO();
+		log.setMemId(memId);
+		log.setPageName("건물 목록");
+		
+    	
     	String id = login.getMemId();
     	
     	List<MyBuildingDTO> buildings = memberService.getMyBuildings(id);
