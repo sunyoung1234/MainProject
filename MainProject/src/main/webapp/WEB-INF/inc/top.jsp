@@ -277,12 +277,12 @@ body {
 					<li class="navi-dropdown-content">
 						<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a>
 						<a href="${pageContext.request.contextPath}/faq/view" class="navi-dropdown-item">자주 묻는 질문</a>
-						<a href="${pageContext.request.contextPath}/chatListView" class="navi-dropdown-item">챗봇상담</a>
 						<a href="${pageContext.request.contextPath}/proposal/view" class="navi-dropdown-item">건의사항</a>
 					</li>
 					<li class="navi-dropdown-content">
 						<a href="${pageContext.request.contextPath}/adminView" class="navi-dropdown-item">관리자페이지 </a>
 						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">ZEB 신청현황</a>
+						<a href="${pageContext.request.contextPath}/adminChatView" class="navi-dropdown-item">챗봇상담</a>
 					</li>
 				</ul>
 			</div>
@@ -308,7 +308,6 @@ body {
 					<li class="navi-dropdown-content">
 						<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a>
 						<a href="${pageContext.request.contextPath}/faq/view" class="navi-dropdown-item">자주 묻는 질문</a>
-						<a href="${pageContext.request.contextPath}/chatListView" class="navi-dropdown-item">챗봇상담</a>
 						<a href="${pageContext.request.contextPath}/proposal/view" class="navi-dropdown-item">건의사항</a>
 					</li>
 				</ul>
