@@ -231,6 +231,12 @@ body {
     background-color: #0056b3;
 }
 
+		.admit-title{
+			display: flex;
+			justify-content: center;
+			margin-top: 50px;
+		}
+
 				
     </style>
 </head>
@@ -238,7 +244,8 @@ body {
 	
 	<%@ include file="/WEB-INF/inc/top.jsp" %>
 	<%@ include file="/WEB-INF/inc/subnavbaradmin.jsp"%>
-
+	 
+	<h2 class="admit-title">채팅 관리</h2>  
     <div class="chat-container">
         <!-- 채팅방 목록 -->
         <div class="chat-list">

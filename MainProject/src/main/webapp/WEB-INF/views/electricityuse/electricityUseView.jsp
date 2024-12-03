@@ -34,7 +34,7 @@
         margin-bottom: 50px;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
 	    border-radius: 8px; /* 테이블 둥근 모서리 */
-        
+        padding-top: 30px;
     }
     
     .elecImgBox{
@@ -179,6 +179,32 @@
 		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
     	border-radius: 8px; /* 테이블 둥근 모서리 */
 	}
+	
+	.login-count-title {
+	    position: relative;
+	    top: 70px;  
+	    font-size: 18px;
+	    font-weight: bold; 
+	    margin-left:850px; 
+	    background-color: #91B4D4;
+	    width:250px;
+	    height:50px;  
+	    display: flex;
+		align-items: center;
+		padding-left: 10px;
+		padding-right:10px;   
+		justify-content: center;
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+    	border-radius: 8px; /* 테이블 둥근 모서리 */
+    	
+	}
+	
+	.elec-title{
+			display: flex;
+			justify-content: center;
+			margin-top:50px;
+			margin-left:35px;
+		}
     
 </style>
 
@@ -192,7 +218,8 @@
 	  <div class="spinner"></div>
 	  <p>데이터를 처리 중입니다. 잠시만 기다려주세요...(최대 1분 소요)</p>
 	</div>
-
+	
+	<h1 class="elec-title">전기 사용량</h1>
 	<div class="main-height">
 		
 		<div class="elecImgBox">

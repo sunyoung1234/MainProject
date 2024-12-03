@@ -218,13 +218,40 @@
     	color: red;
     }
     
+    .login-count-title {
+		    position: relative;
+		    top: 70px;  
+		    font-size: 18px;
+		    font-weight: bold; 
+		    margin-left:850px; 
+		    background-color: #D9D578;
+		    width:250px;
+		    height:50px;  
+		    display: flex;
+			align-items: center;
+			padding-left: 10px;
+			padding-right:10px;   
+			justify-content: center;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+	    	border-radius: 8px; /* 테이블 둥근 모서리 */ 
+		}
+		
+		.elec-title{
+			display: flex;
+			justify-content: center;
+			margin-top:50px;
+		}
+    
 </style>
 
 </head>
 <body class="d-flex flex-column">
 
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
-	<%@ include file="/WEB-INF/inc/subnavbarMy.jsp"%>
+	<%@ include file="/WEB-INF/inc/subnavbarBoard.jsp"%>
+	
+	<h1 class="elec-title">전기 사용량 기입</h1>
+	<!-- <div class="login-count-title">전기 사용량 기입</div>	  -->
 	<div class="main-height">
 		<div class="ocr-box">
 			<div class="ocr-title">계량기 사진 첨부 <br><span class="title-explain">※ 예측값이 안 나올 시 우측 하단 버튼 클릭하여 예측값을 불러와주시기 바랍니다.</span></div>
