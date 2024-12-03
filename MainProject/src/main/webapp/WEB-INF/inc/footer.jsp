@@ -34,14 +34,14 @@
         
         .footer-top {
         	display: flex;
-        	width:800px;
+        	width:1200px;
         	margin-left:200px;
         	font-size:15px;
         	margin-bottom: 10px; 
         }
         
         .foot-top-box{
-        	margin-right: 40px; 
+        	margin-right: 40px;  
         	margin-bottom: 10px;
         }
         
@@ -52,7 +52,19 @@
         .foot-top-box2{
         	margin-bottom: 10px;
         }
-         
+        
+        .footer-top-left{
+			width:300px;        
+        }
+        
+        .footer-top-left3{
+			width:350px;        
+        }
+        
+        .footer-top-left5{
+			width:550px;        
+        }
+           
     </style>
 </head>
 <body>
@@ -62,24 +74,16 @@
     </main> 
     <!-- Footer -->
     <footer class="footer">
-
+ 
     	<div class="footer-top">
-
-
-    			
-
-    		<div>
+    		<div class="footer-top">
     			<div class="footer-top-left">상호명 : GreenSolution</div> 
     			<div class="footer-top-left">대표 이름 : 박선영</div> 
-    			<div class="footer-top-left">주소 : 대전 서구 문정로 48번길</div> 
+    			<div class="footer-top-left3">주소 : 대전 서구 문정로 48번길</div> 
     			<div class="footer-top-left">대표번호 : 010-1111-1111</div> 
-    			<div class="footer-top-left">대표 이메일 : greensolution@greensolution.com</div>
-
+    			<div class="footer-top-left5">대표 이메일 : greensolution@greensolution.com</div>
     		</div>
-    		
-    		
     	</div> 
-    	
         <div class="footer-bottom">
             <p class="m-0 text-center">Copyright &copy; GreenSolution All rights reserved.</p>
         </div>

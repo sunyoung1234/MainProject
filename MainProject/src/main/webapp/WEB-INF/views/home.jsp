@@ -656,10 +656,6 @@ body {
 	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
 	</c:if>
 
-    	<!-- Footer-->
-    	<div class="footer">
-    		<%@ include file="/WEB-INF/inc/footer.jsp"%>
-    	</div>
 
 </section>
 
