@@ -69,6 +69,17 @@
 		group by mem_id
 		order by visit_count desc
 	</select>
+	
+	<select id="selectOneIdPageCount" parameterType="String" resultType="com.proj.main.pageLog.dto.PageLogDTO">
+		SELECT 
+		    MEM_ID,
+		    PAGE_NAME,
+		    VISIT_COUNT,
+		    TO_CHAR(LAST_VISIT_DATE, 'YYYY-MM-DD HH24:MI:SS') AS LAST_VISIT_DATE
+		FROM page_log
+		where mem_id = #{memId}
+		order by visit_count desc
+	</select>
 
 
 

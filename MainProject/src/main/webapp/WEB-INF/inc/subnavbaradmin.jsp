@@ -89,15 +89,13 @@ body {
             <li class="sub-nav-item"><a href="${pageContext.request.contextPath}/" class="home-link">
                 <i class="fas fa-home"></i></a>
             </li>
-            <li class="sub-nav-item"><a href="#" class="active">전기에너지</a></li>
+            <li class="sub-nav-item"><a href="#" class="active">관리자</a></li>
         </ul>
         <div class="support-menu">
-        	<a href="${pageContext.request.contextPath}/electricityUseView" class="sub-nav-dropdown-item">전기사용량</a> 
-			<a href="${pageContext.request.contextPath}/ocrView" class="sub-nav-dropdown-item">전기 사용량 기입</a>
-			<a href="${pageContext.request.contextPath}/productView" class="sub-nav-dropdown-item">에너지 효율 제품</a>
-			
+			<a href="${pageContext.request.contextPath}/adminView" class="sub-nav-dropdown-item">관리자 페이지</a>
+			<a href="${pageContext.request.contextPath}/applyStatusView" class="sub-nav-dropdown-item">ZEB 신청 현황</a>
+			<a href="${pageContext.request.contextPath}/adminChatView" class="sub-nav-dropdown-item">챗봇 상담</a> 
         </div>
-    </div>	  
-
+    </div>
 </body>
 </html>

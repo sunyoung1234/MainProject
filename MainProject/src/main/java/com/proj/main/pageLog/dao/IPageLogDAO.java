@@ -29,5 +29,7 @@ public interface IPageLogDAO {
 	// 아이디별 페이지 접속 횟수 가져오기
 	List<PageLogDTO> selectIdPageCount();
 	
+	// 아이디 하나의 페이지 접속 횟수 가져오기
+	List<PageLogDTO> selectOneIdPageCount(String memId);
 	
 }
