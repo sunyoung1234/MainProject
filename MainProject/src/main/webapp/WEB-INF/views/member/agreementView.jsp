@@ -94,9 +94,6 @@
             </div>
         </div>
     </section>
-   	<c:if test="${sessionScope.login.memId != 'admin' }">
-	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
-	</c:if>
 	<%@ include file="/WEB-INF/inc/footer.jsp" %>
     <script>
         // 체크박스가 체크되었을 때 버튼 활성화
