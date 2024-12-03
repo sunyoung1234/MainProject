@@ -150,7 +150,6 @@ body {
 	<%@ include file="/WEB-INF/inc/subnavbarMy.jsp"%>
 
 	<!-- 챗봇 아이콘 및 인터페이스 -->
-	<%@ include file="/WEB-INF/inc/chatbot.jsp"%>
 	<div class="dashboard-container">
 		<!-- 대시보드 헤더 -->
 		<div class="dashboard-header">
@@ -218,11 +217,15 @@ body {
 			</div>
 		</div>
 	</div>
+	<c:if test="${sessionScope.login.memId != 'admin' }">
+	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+	</c:if>
 
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
-		<script>
+
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
     <script type="text/javascript">
 	let v_status = document.querySelector('#status'); 
     let v_applyStatus = document.querySelectorAll('.applyStatus'); 
@@ -265,11 +268,6 @@ body {
 			forms[idx].submit();
 		})
 	})
-	
-	
-	
-	
-</script>
-		</script>
+	</script>
 </body>
 </html>

@@ -194,7 +194,9 @@
 			</c:forEach>
 		</div>
 	</div>
-	
+	<c:if test="${sessionScope.login.memId != 'admin' }">
+	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+	</c:if>
 
 	<%@ include file="/WEB-INF/inc/footer.jsp" %>
 

@@ -266,6 +266,9 @@
 		</c:if>
 		
     </div>
+    <c:if test="${sessionScope.login.memId != 'admin' }">
+	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+	</c:if>
 
     <script>
         let radioButtons = document.querySelectorAll('input[name="approveYn"]');

@@ -609,6 +609,9 @@
 		<input type="text" id="buildingId" name="buildingId" required><br><br>
 		<button id="submitBtn" type="submit">제출</button> 
 	</form>
+	<c:if test="${sessionScope.login.memId != 'admin' }">
+	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+	</c:if>
     <%@ include file="/WEB-INF/inc/footer.jsp" %>
     
     <script type="text/javascript">

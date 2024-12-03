@@ -63,7 +63,6 @@
 <%@ include file="/WEB-INF/inc/subnavbar.jsp"%>
 
 <!-- 챗봇 아이콘 및 인터페이스 -->
-<%@ include file="/WEB-INF/inc/chatbot.jsp" %>
     <section class="page-section" id="contact">
         <div class="container pt-5">
             <div class="main-title">${room.roomName} 채팅방</div>
@@ -97,6 +96,9 @@
             </div>
         </div>
     </section>
+    <c:if test="${sessionScope.login.memId != 'admin' }">
+	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+	</c:if>
     <%@ include file="/WEB-INF/inc/footer.jsp"%>
 	
 	<!-- 소켓통신 라이브러리 불러오기 cdnjs 사이트에서 sockjs 와 stomp 검색 -->
