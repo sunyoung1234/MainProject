@@ -221,16 +221,29 @@
 		        copyText(productName);
 		    }
 		}
-	
+
 		function copyText(text) {
-		    // Clipboard API를 사용해 텍스트를 클립보드에 복사
-		    navigator.clipboard.writeText(text).then(function() {
-		        // 복사 성공 시 실행되는 콜백
-		        alert("복사된 모델명: " + text);
-		    }).catch(function(err) {
-		        // 복사 실패 시 실행되는 콜백
+		    // 임시 텍스트 영역을 생성
+		    let textArea = document.createElement("textarea");
+		    textArea.value = text;
+		    document.body.appendChild(textArea);
+		    
+		    // 텍스트 영역을 선택하고 복사
+		    textArea.select();
+		    try {
+		        // execCommand로 복사
+		        let successful = document.execCommand("copy");
+		        if (successful) {
+		            alert("복사된 모델명: " + text);
+		        } else {
+		            alert("복사 실패");
+		        }
+		    } catch (err) {
 		        alert("복사 실패: " + err);
-		    });
+		    }
+		    
+		    // 텍스트 영역 제거
+		    document.body.removeChild(textArea);
 		}
 		
 	

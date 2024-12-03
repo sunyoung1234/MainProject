@@ -332,6 +332,7 @@
 			v_predUse[v_elecUse.length-1] = v_elecUse[v_elecUse.length-1]
 		}
 		
+		console.log(v_predUse)
 		
 		let ctx = document.getElementById('myChart')
 		

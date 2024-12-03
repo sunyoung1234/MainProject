@@ -263,26 +263,38 @@
 			window.open(link)
 		}
 		
-		function confirmAndCopy(productLink) {
+		function confirmAndCopy(productName) {
 		    // 확인 창을 띄워서 사용자가 모델명 복사를 확인하도록 함
-		    let confirmation = confirm("구매 링크를 복사하시겠습니까?");
+		    let confirmation = confirm("구매링크를 복사하시겠습니까?");
 		    
 		    // 사용자가 확인 버튼을 누른 경우
 		    if (confirmation) {
-		        copyText(productLink);
+		        copyText(productName);
 		    }
 		}
-	
+
 		function copyText(text) {
-		    // Clipboard API를 사용해 텍스트를 클립보드에 복사
-		    navigator.clipboard.writeText(text).then(function() {
-		        // 복사 성공 시 실행되는 콜백
-		        alert("복사된 링크: " + text);
-		    }).catch(function(err) {
-		        // 복사 실패 시 실행되는 콜백
+		    // 임시 텍스트 영역을 생성
+		    let textArea = document.createElement("textarea");
+		    textArea.value = text;
+		    document.body.appendChild(textArea);
+		    
+		    // 텍스트 영역을 선택하고 복사
+		    textArea.select();
+		    try {
+		        // execCommand로 복사
+		        let successful = document.execCommand("copy");
+		        if (successful) {
+		            alert("복사된 구매 링크: " + text);
+		        } else {
+		            alert("복사 실패");
+		        }
+		    } catch (err) {
 		        alert("복사 실패: " + err);
-		    });
-	
+		    }
+		    
+		    // 텍스트 영역 제거
+		    document.body.removeChild(textArea);
 		}
 		
 		document.querySelector(".product-division1").addEventListener("click", ()=>{
