@@ -159,7 +159,7 @@
 <body>
 
 	<%@ include file="/WEB-INF/inc/top.jsp" %>
-
+	<%@ include file="/WEB-INF/inc/subnavbarMap.jsp"%> 
 	<div id="loading" style="display: none;">
 	  <div class="spinner"></div>
 	  <p>데이터를 처리 중입니다. 잠시만 기다려주세요...(최대 1~2 분 소요)</p>
