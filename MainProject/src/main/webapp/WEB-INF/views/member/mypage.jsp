@@ -260,7 +260,6 @@ body {
 		
 		
 
-	})
 
 	</script>
 </body>
