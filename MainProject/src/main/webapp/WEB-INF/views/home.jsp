@@ -660,10 +660,6 @@ body {
     <%@ include file="/WEB-INF/inc/footer.jsp" %> 
 
 
-    	<!-- Footer-->
-    	<div class="footer">
-    		<%@ include file="/WEB-INF/inc/footer.jsp"%>
-    	</div>
 
 </section>
 
