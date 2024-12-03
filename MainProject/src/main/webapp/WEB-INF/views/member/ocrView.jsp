@@ -85,6 +85,11 @@
         width:100%;
         height:100%;
     }
+    
+    #showImg:hover{
+    	cursor: pointer;
+         transform: scale(1.2); /* 확대 효과 */
+    }
 
     #croppedImg {
         max-width: 100%;
@@ -260,7 +265,7 @@
 					<input id="inputImg" type="file" accept="image/*">
 				</div>
 				<div class="img-container">
-					<img id="showImg" alt="숫자 부분만 잘라 저장해주세요" src="https://cdn-icons-png.flaticon.com/512/4481/4481168.png">
+					<img id="showImg" alt="숫자 부분만 잘라 저장해주세요" src="${pageContext.request.contextPath }/resources/image/파일_첨부.png">
 				</div>
 				<div class="explain">
 					<span>※ 사진 내 박스를 조정하여 숫자만 잘라주시기 바랍니다.</span>
@@ -418,6 +423,11 @@
             
         });
         
+        document.querySelector('#showImg').addEventListener('click',()=>{
+        	let v_inputImg = document.querySelector('#inputImg');
+        	v_inputImg.click();
+        })
+        
         
         
         
@@ -456,7 +466,7 @@
     		        fill: false
         		},{
         			label:'전기 사용량 예측값',
-            		data:[v_monthLast,v_predictDate],
+            		data:[null,v_predictDate],
             		borderColor: 'red',  // 첫 번째 선의 색상
 			        backgroundColor: 'rgba(75, 192, 192, 0)',  // 선만 표시 (채우지 않음)
 			        borderWidth: 1,
@@ -523,6 +533,7 @@
                  }
              	
              	myChart['data']['datasets'][0]['data'] = [v_monthLast, v_elecUse]
+             	myChart['data']['datasets'][1]['data'] = [v_monthLast, v_predictDate]
              	myChart.update()
              })
 	     }else{

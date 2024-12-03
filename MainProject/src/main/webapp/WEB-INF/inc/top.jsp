@@ -216,9 +216,9 @@ body {
 		<div class="nav-wrapper">
 			<ul class="navi-navbar-nav">
 				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/mypage" class="navi-nav-link">마이</a></li>
-				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-nav-link">전기 에너지</a></li>
+				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/electricityUseView" class="navi-nav-link">전기 에너지</a></li>
 				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/infoBoardView" class="navi-nav-link">제로 에너지 건축물</a></li>
-				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/faq/view" class="navi-nav-link">고객지원</a></li>
+				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-nav-link">고객지원</a></li>
 			</ul>
 		</div>
 <div class="navi-navbar-right">

@@ -264,13 +264,9 @@
 		}
 		
 		function confirmAndCopy(productName) {
-		    // 확인 창을 띄워서 사용자가 모델명 복사를 확인하도록 함
-		    let confirmation = confirm("구매링크를 복사하시겠습니까?");
 		    
-		    // 사용자가 확인 버튼을 누른 경우
-		    if (confirmation) {
-		        copyText(productName);
-		    }
+	        copyText(productName);
+		    
 		}
 
 		function copyText(text) {
