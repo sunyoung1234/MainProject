@@ -530,6 +530,11 @@ public class MemberController {
     @RequestMapping("/applyStatusView")
     public String applyStatus(HttpSession session, Model model) {
     	MemberDTO login = (MemberDTO) session.getAttribute("login");
+    	
+    	if(login == null) {
+    		return "member/loginView";
+    	}
+    	
     	String m_id = login.getMemId();
     	
     	List<ApplyZEBDTO> applys = rs.applyStatusById(m_id);
