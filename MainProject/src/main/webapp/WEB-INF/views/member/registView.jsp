@@ -40,8 +40,6 @@ body {
 	padding: 40px;
 	max-width: 500px;
 	margin: -50px auto; /* 기존 70px에서 20px 줄임 */
-
-	
 }
 
 .form-floating {
@@ -64,10 +62,8 @@ body {
 	width: 100%;
 }
 
-
-
 .btn-custom.reg-btn {
-	background-color: #53C0D5; 
+	background-color: #53C0D5;
 	color: #ffffff; /* 흰색 텍스트 */
 	border: none;
 	transition: background-color 0.3s ease;
@@ -77,9 +73,8 @@ body {
 	background-color: #46A1B3; /* hover 시 더 진한 색상 */
 }
 
-
 .btn-custom.back-btn {
-	background-color: #BECCCF; 
+	background-color: #BECCCF;
 	color: #ffffff; /* 흰색 텍스트 */
 	border: none;
 	transition: background-color 0.3s ease;
@@ -89,10 +84,8 @@ body {
 	background-color: #A4B0B3; /* hover 시 더 진한 색상 */
 }
 
-
-
 .btn-custom.post-btn {
-	background-color: #4B535C; 
+	background-color: #4B535C;
 	color: #ffffff; /* 흰색 텍스트 */
 	border: none;
 	transition: background-color 0.3s ease;
@@ -101,9 +94,6 @@ body {
 .btn-custom.post-btn:hover {
 	background-color: #A4B0B3; /* hover 시 더 진한 색상 */
 }
-
-
-
 
 .form-title {
 	font-size: 28px;
@@ -129,24 +119,20 @@ body {
 	margin-left: 10px;
 	border: none;
 }
-
-
-
-
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body id="page-top">
 	<!-- Navigation -->
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
-	
+
 
 	<!-- Main content section -->
 	<section class="container">
 		<div class="register-card">
 			<h2 class="form-title">회원가입</h2>
 			<form id="registForm"
-				action="${pageContext.request.contextPath}/registDo" method="POST" >
+				action="${pageContext.request.contextPath}/registDo" method="POST">
 				<!-- 아이디 input -->
 				<div class="form-floating mb-3">
 					<div class="d-flex">
@@ -202,30 +188,35 @@ body {
 				<div class="form-floating mb-3">
 
 					<div class="d-flex">
-					    <input type="text" id="sample4_postcode" name="postcode" class="form-control" placeholder="우편번호" readonly />
-					    <input type="button" class="btn btn-custom post-btn ms-2" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
+						<input type="text" id="sample4_postcode" name="postcode"
+							class="form-control" placeholder="우편번호" readonly /> <input
+							type="button" class="btn btn-custom post-btn ms-2"
+							onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
 					</div>
 				</div>
 
 				<div class="form-floating mb-3">
-				    <input type="text" id="sample4_roadAddress" name="memAddress" class="form-control" placeholder="도로명 주소" readonly />
-				    <label for="sample4_roadAddress" class="label-small">도로명 주소</label>
+					<input type="text" id="sample4_roadAddress" name="memAddress"
+						class="form-control" placeholder="도로명 주소" readonly /> <label
+						for="sample4_roadAddress" class="label-small">도로명 주소</label>
 				</div>
-				
+
 				<div class="form-floating mb-3">
-				    <input type="text" id="sample4_jibunAddress" name="jibunAddress" class="form-control" placeholder="상세 주소" />
-				    <label for="sample4_jibunAddress" class="label-small">지번 주소</label>
+					<input type="text" id="sample4_jibunAddress" name="jibunAddress"
+						class="form-control" placeholder="상세 주소" /> <label
+						for="sample4_jibunAddress" class="label-small">지번 주소</label>
 				</div>
-				
+
 				<div class="form-floating mb-3">
-				    <input type="text" id="sample4_extraAddress" name="extraAddress" class="form-control" placeholder="참고 항목" />
-				    <label for="sample4_extraAddress" class="label-small">상세 주소</label>
+					<input type="text" id="sample4_extraAddress" name="extraAddress"
+						class="form-control" placeholder="참고 항목" /> <label
+						for="sample4_extraAddress" class="label-small">상세 주소</label>
 				</div>
 
 				<!-- 회원가입 버튼 -->
 				<div class="d-grid">
-					<button class="btn btn-custom reg-btn btn-lg mb-2" id="submitButton"
-						type="submit">회원가입</button>
+					<button class="btn btn-custom reg-btn btn-lg mb-2"
+						id="submitButton" type="submit">회원가입</button>
 				</div>
 			</form>
 			<div class="d-grid">
@@ -234,7 +225,7 @@ body {
 		</div>
 	</section>
 	<c:if test="${sessionScope.login.memId != 'admin' }">
-	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+		<%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
 	</c:if>
 	<%@ include file="/WEB-INF/inc/footer.jsp"%>
 
