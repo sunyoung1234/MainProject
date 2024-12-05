@@ -409,6 +409,10 @@ function sample4_execDaumPostcode() {
             $('#sample4_roadAddress').val(roadAddr);  // 도로명 주소
             $('#sample4_jibunAddress').val(jibunAddr);  // 지번 주소
             $('#sample4_extraAddress').val(extraRoadAddr);  // 추가 주소
+            // 도로명 주소를 선택했을 때에도 지번 주소를 자동으로 채워줌
+            if (!jibunAddr) {
+                $('#sample4_jibunAddress').val(roadAddr);  // 도로명 주소와 지번 주소가 같으면 그대로 채워줌
+            }
         }
     }).open();
 }
