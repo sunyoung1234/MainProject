@@ -492,6 +492,21 @@ body {
 .
 </style>
 
+<style>
+.btn.btn-map{
+	background-color: #0755AB;
+	color:white;
+	cursor: point;
+}
+
+.btn.btn-map:hover{
+	background-color: #06478F;
+	color: white;
+	cursor: point;
+}
+
+</style>
+
 </head>
 <body>
 
@@ -577,7 +592,7 @@ body {
 					    <strong>제로에너지건축물</strong>로 시작하세요.
 					</p>
                 <div>
-                    <a href="#vision" class="btn btn-success btn-lg px-5 py-2 shadow me-3">더 알아보기</a>
+                    <a href="${pageContext.request.contextPath}/infoBoardView" class="btn btn-success btn-lg px-5 py-2 shadow me-3">더 알아보기</a>
                 </div>
             </div>
             <!-- 애니메이션 도형 섹션 -->
@@ -612,7 +627,7 @@ body {
 			    
 				</p>
                 <div>
-                    <a href="#vision" class="btn btn-light btn-lg px-5 py-2 shadow me-3">비전 보기</a>
+                    <a href="${pageContext.request.contextPath}/mapView" class="btn btn-map btn-lg px-5 py-2 shadow me-3">제로 에너지 건축물 찾아보기</a>
                 </div>
             </div>
             <!-- 이미지 섹션 -->
@@ -757,28 +772,28 @@ $(document).ready(function () {
         verticalSwiping: true,
         arrows: false,
         swipeToSlide: true,
-        autoplay: false, // 자동 재생 끄기
-        onInit: function() {
-            // Slick 슬라이더 초기화 후, 해시 기반으로 섹션 이동
+        autoplay: false,
+        init: function () {
             goToSectionFromHash();
         }
     });
 
     // URL 해시 기반으로 섹션 이동
     function goToSectionFromHash() {
-        const hash = window.location.hash; // 현재 URL의 해시 값 가져오기
+        const hash = window.location.hash;
         if (hash) {
-            const sectionIndex = $(`${hash}`).index('.vertical-slider .section'); // 해당 섹션의 인덱스 가져오기
+            const sectionIndex = $(`.vertical-slider .section${hash}`).index('.vertical-slider .section');
             if (sectionIndex !== -1) {
-                $('.vertical-slider').slick('slickGoTo', sectionIndex); // Slick.js로 해당 섹션으로 이동
+                $('.vertical-slider').slick('slickGoTo', sectionIndex);
             }
         }
     }
 
     // 페이지 로드 시 URL 해시 처리
-    $(window).on('load', function() {
+    $(window).on('load hashchange', function () {
         goToSectionFromHash();
     });
+
 
     // 해시 변경 감지 및 섹션 이동
     $(window).on('hashchange', function () {
@@ -786,42 +801,44 @@ $(document).ready(function () {
     });
 
     // 사이드 네비게이션 클릭 시 섹션 이동 및 해시 변경
-    $('.side-nav .nav-item').on('click', function (e) {
+   $('.side-nav .nav-item').on('click', function (e) {
         e.preventDefault();
-        const sectionID = $(this).attr('href'); // 클릭한 메뉴의 href 값 (#섹션ID)
-        const sectionIndex = $(sectionID).index('.vertical-slider .section'); // 해당 섹션의 인덱스 가져오기
+        const sectionID = $(this).attr('href');
+        const sectionIndex = $(`.vertical-slider .section${sectionID}`).index('.vertical-slider .section');
         if (sectionIndex !== -1) {
-            $('.vertical-slider').slick('slickGoTo', sectionIndex); // Slick.js로 이동
-            updateSidebar(sectionIndex); // 사이드바 상태 업데이트
-            window.location.hash = sectionID; // URL 해시 업데이트
+            $('.vertical-slider').slick('slickGoTo', sectionIndex);
+            window.location.hash = sectionID;
         }
     });
 
     // 슬라이더 이동 시 URL 해시와 사이드바 동기화
-    $('.vertical-slider').on('afterChange', function (event, slick, currentSlide) {
-        const currentSectionID = $('.vertical-slider .section').eq(currentSlide).attr('id'); // 현재 슬라이드 ID 가져오기
-        updateSidebar(currentSlide); // 사이드바 상태 업데이트
-        window.location.hash = `#${currentSectionID}`; // URL 해시 동기화
+     $('.vertical-slider').on('afterChange', function (event, slick, currentSlide) {
+        const currentSectionID = $('.vertical-slider .section').eq(currentSlide).attr('id');
+        $('.side-nav .nav-item').removeClass('active').eq(currentSlide).addClass('active');
+        window.location.hash = `#${currentSectionID}`;
     });
 
     // 버튼 클릭 시 섹션 이동 및 URL 해시 업데이트
     $('a.btn').on('click', function (e) {
-        e.preventDefault();
-        const sectionID = $(this).attr('href'); // 버튼의 href 값 (#섹션ID)
-        const sectionIndex = $(sectionID).index('.vertical-slider .section'); // 해당 섹션의 인덱스 가져오기
+    const sectionID = $(this).attr('href');
+    if (sectionID.startsWith('#')) {
+        e.preventDefault(); // 내부 이동(#)일 때만 기본 동작 차단
+        const sectionIndex = $(sectionID).index('.vertical-slider .section');
         if (sectionIndex !== -1) {
-            $('.vertical-slider').slick('slickGoTo', sectionIndex); // Slick.js로 이동
-            updateSidebar(sectionIndex); // 사이드바 상태 업데이트
-            window.location.hash = sectionID; // URL 해시 업데이트
+            $('.vertical-slider').slick('slickGoTo', sectionIndex);
+            updateSidebar(sectionIndex);
+            window.location.hash = sectionID;
         }
-    });
+    }
+});
 
     // 마우스 휠로 슬라이더 이동
-    $(window).on('wheel', function (event) {
+     $('.vertical-slider').on('wheel', function (event) {
+        event.preventDefault();
         if (event.originalEvent.deltaY < 0) {
-            $('.vertical-slider').slick('slickPrev'); // 위로 스크롤 시 이전 슬라이드
+            $(this).slick('slickPrev');
         } else {
-            $('.vertical-slider').slick('slickNext'); // 아래로 스크롤 시 다음 슬라이드
+            $(this).slick('slickNext');
         }
     });
 
