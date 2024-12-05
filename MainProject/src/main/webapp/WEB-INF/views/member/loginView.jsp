@@ -20,79 +20,89 @@
 <link href="css/styles.css" rel="stylesheet" />
 
 <style type="text/css">
-    /* 공통 폰트 및 배경색 */
-    body {
-        font-family: 'Plus Jakarta Sans', sans-serif;
-        background-color: #f8f9fa;
-        margin-top: 70px;
-    }
-
-    .login-card {
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 50px 20px;
-        max-width: 500px;
-        margin: auto;
-        margin-top: 100px;
-        margin-bottom: 200px;
-    }
-    .form-floating {
-        margin-bottom: 20px;
-    }
-    .form-control {
-        border-radius: 10px;
-        padding: 15px;
-        font-size: 16px;
-    }
-    .form-control:focus {
-        border-color: #495057;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-    .btn-custom {
-        background-color: #343a40;
-        color: #ffffff;
-        border-radius: 10px;
-        padding: 15px;
-        font-size: 18px;
-        font-weight: 600;
-        width: 100%;
-        transition: background-color 0.3s ease;
-    }
-    .btn-custom:hover {
-        background-color: #212529;
-    }
-    .form-title {
-        font-size: 28px;
-        font-weight: 700;
-        color: #343a40;
-        text-align: center;
-        margin-bottom: 30px;
-    }
-    .err-msg {
-        color: red;
-        font-size: 14px;
-        text-align: center;
-        margin-bottom: 10px;
-    }
-    .btn-custom.reg-btn {
-    background-color: #BECCCF; /* 부트스트랩 기본 btn-info 색상 */
-    color: #ffffff; /* 흰색 텍스트 */
-    border: none;
-    transition: background-color 0.3s ease;
+/* 공통 폰트 및 배경색 */
+body {
+	font-family: 'Plus Jakarta Sans', sans-serif;
+	background-color: #f8f9fa;
+	margin-top: 70px;
 }
+
+.login-card {
+	background-color: #ffffff;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	padding: 50px 20px;
+	max-width: 500px;
+	margin: auto;
+	margin-top: 100px;
+	margin-bottom: 200px;
+}
+
+.form-floating {
+	margin-bottom: 20px;
+}
+
+.form-control {
+	border-radius: 10px;
+	padding: 15px;
+	font-size: 16px;
+}
+
+.form-control:focus {
+	border-color: #495057;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-custom {
+	background-color: #343a40;
+	color: #ffffff;
+	border-radius: 10px;
+	padding: 15px;
+	font-size: 18px;
+	font-weight: 600;
+	width: 100%;
+	transition: background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+	background-color: #212529;
+}
+
+.form-title {
+	font-size: 28px;
+	font-weight: 700;
+	color: #343a40;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.err-msg {
+	color: red;
+	font-size: 14px;
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+.btn-custom.reg-btn {
+	background-color: #BECCCF; /* 부트스트랩 기본 btn-info 색상 */
+	color: #ffffff; /* 흰색 텍스트 */
+	border: none;
+	transition: background-color 0.3s ease;
+}
+
 .btn-custom.reg-btn:hover {
-    background-color: #A4B0B3; /* hover 시 더 진한 색상 */
+	background-color: #A4B0B3; /* hover 시 더 진한 색상 */
 }
 
 .btn-custom.login-btn {
-    background-color: #53C0D5; /* 부트스트랩 기본 btn-success 색상 */
-    color: #ffffff; /* 흰색 텍스트 */
-    border: none;
-    transition: background-color 0.3s ease;
+	background-color: #53C0D5; /* 부트스트랩 기본 btn-success 색상 */
+	color: #ffffff; /* 흰색 텍스트 */
+	border: none;
+	transition: background-color 0.3s ease;
 }
+
 .btn-custom.login-btn:hover {
-    background-color: #46A1B3; /* hover 시 더 진한 색상 */
+	background-color: #46A1B3; /* hover 시 더 진한 색상 */
 }
 </style>
 </head>

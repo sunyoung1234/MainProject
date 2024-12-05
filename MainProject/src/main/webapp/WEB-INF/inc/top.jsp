@@ -86,7 +86,7 @@ body {
 	padding: 0;
 	width: 1000px; /* 상단 메뉴와 드롭다운 메뉴 동일한 너비 */
 	gap: 100px; /* 동일한 간격 */
-	margin-left: 220px;
+	margin-left: 310px;
 	margin-right:270px;
 }
 
@@ -100,7 +100,7 @@ body {
 	width: 1400px; /* 관리자 메뉴 만큼 간격 추가 */
 	gap: 100px; /* 동일한 간격 */
 	margin-right: 25px;
-	margin-left: 350px;
+	margin-left: 400px;
 }
 
 .navi-nav-item,
@@ -122,10 +122,28 @@ body {
 	width: 250px; /* 내 건물 글자 추가 전 170px; */
 }
 
+.navi-log-link{
+color: black;
+	text-decoration: none;
+	padding: 8px 12px;
+	font-size: 18px;
+	font-family: "Noto Sans KR", sans-serif;
+	transition: color 0.3s, background-color 0.3s;
+	display: block;
+	text-align: center;
+	width: 170px;
+}
+
 .navi-nav-link:hover, 
 .navi-dropdown-item:hover, 
 .navi-active {
 	color: red;
+	box-shadow: inset 0 -1px 0 red;
+	background-color: rgba(0, 0, 0, 0.05);
+}
+
+.navi-log-link:hover{
+color: red;
 	box-shadow: inset 0 -1px 0 red;
 	background-color: rgba(0, 0, 0, 0.05);
 }
@@ -171,7 +189,7 @@ body {
 	display: flex;
 	align-items: center;
 
-	margin-left: 50px;
+	margin-left: 20px;
 	text-algin: center;
 }
 
@@ -229,15 +247,15 @@ body {
     <c:choose>
         <c:when test="${not empty sessionScope.login}">
             <!-- 로그인된 사용자 이름 표시 -->
-            <a href="${pageContext.request.contextPath}/mypage" class="navi-nav-link">${sessionScope.login.getMemName()} 님</a>
+            <a href="${pageContext.request.contextPath}/mypage" class="navi-log-link">${sessionScope.login.getMemName()} 님</a>
 
             <!-- 로그아웃 버튼 -->
-            <a href="${pageContext.request.contextPath}/logout" class="navi-nav-link">로그아웃</a>
+            <a href="${pageContext.request.contextPath}/logout" class="navi-log-link">로그아웃</a>
         </c:when>
         <c:otherwise>
             <!-- 비로그인 상태일 경우 -->
-            <a href="${pageContext.request.contextPath}/loginView" class="navi-nav-link">로그인</a>
-            <a href="${pageContext.request.contextPath}/agreementView" class="navi-nav-link">회원가입</a>
+            <a href="${pageContext.request.contextPath}/loginView" class="navi-log-link">로그인</a>
+            <a href="${pageContext.request.contextPath}/agreementView" class="navi-log-link">회원가입</a>
         </c:otherwise>
     </c:choose>
 </div>

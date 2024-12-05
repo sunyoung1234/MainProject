@@ -40,8 +40,6 @@ body {
 	padding: 40px;
 	max-width: 500px;
 	margin: -50px auto; /* 기존 70px에서 20px 줄임 */
-
-	
 }
 
 .form-floating {
@@ -62,6 +60,39 @@ body {
 	font-size: 18px;
 	font-weight: 600;
 	width: 100%;
+}
+
+.btn-custom.reg-btn {
+	background-color: #53C0D5;
+	color: #ffffff; /* 흰색 텍스트 */
+	border: none;
+	transition: background-color 0.3s ease;
+}
+
+.btn-custom.reg-btn:hover {
+	background-color: #46A1B3; /* hover 시 더 진한 색상 */
+}
+
+.btn-custom.back-btn {
+	background-color: #BECCCF;
+	color: #ffffff; /* 흰색 텍스트 */
+	border: none;
+	transition: background-color 0.3s ease;
+}
+
+.btn-custom.back-btn:hover {
+	background-color: #A4B0B3; /* hover 시 더 진한 색상 */
+}
+
+.btn-custom.post-btn {
+	background-color: #4B535C;
+	color: #ffffff; /* 흰색 텍스트 */
+	border: none;
+	transition: background-color 0.3s ease;
+}
+
+.btn-custom.post-btn:hover {
+	background-color: #A4B0B3; /* hover 시 더 진한 색상 */
 }
 
 .form-title {
@@ -88,24 +119,20 @@ body {
 	margin-left: 10px;
 	border: none;
 }
-
-
-
-
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 <body id="page-top">
 	<!-- Navigation -->
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
-	
+
 
 	<!-- Main content section -->
 	<section class="container">
 		<div class="register-card">
 			<h2 class="form-title">회원가입</h2>
 			<form id="registForm"
-				action="${pageContext.request.contextPath}/registDo" method="POST" >
+				action="${pageContext.request.contextPath}/registDo" method="POST">
 				<!-- 아이디 input -->
 				<div class="form-floating mb-3">
 					<div class="d-flex">
@@ -161,39 +188,44 @@ body {
 				<div class="form-floating mb-3">
 
 					<div class="d-flex">
-					    <input type="text" id="sample4_postcode" name="postcode" class="form-control" placeholder="우편번호" readonly />
-					    <input type="button" class="btn btn-custom ms-2" onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
+						<input type="text" id="sample4_postcode" name="postcode"
+							class="form-control" placeholder="우편번호" readonly /> <input
+							type="button" class="btn btn-custom post-btn ms-2"
+							onclick="sample4_execDaumPostcode()" value="우편번호 찾기">
 					</div>
 				</div>
 
 				<div class="form-floating mb-3">
-				    <input type="text" id="sample4_roadAddress" name="memAddress" class="form-control" placeholder="도로명 주소" readonly />
-				    <label for="sample4_roadAddress" class="label-small">도로명 주소</label>
+					<input type="text" id="sample4_roadAddress" name="memAddress"
+						class="form-control" placeholder="도로명 주소" readonly /> <label
+						for="sample4_roadAddress" class="label-small">도로명 주소</label>
 				</div>
-				
+
 				<div class="form-floating mb-3">
-				    <input type="text" id="sample4_jibunAddress" name="jibunAddress" class="form-control" placeholder="상세 주소" />
-				    <label for="sample4_jibunAddress" class="label-small">지번 주소</label>
+					<input type="text" id="sample4_jibunAddress" name="jibunAddress"
+						class="form-control" placeholder="상세 주소" /> <label
+						for="sample4_jibunAddress" class="label-small">지번 주소</label>
 				</div>
-				
+
 				<div class="form-floating mb-3">
-				    <input type="text" id="sample4_extraAddress" name="extraAddress" class="form-control" placeholder="참고 항목" />
-				    <label for="sample4_extraAddress" class="label-small">상세 주소</label>
+					<input type="text" id="sample4_extraAddress" name="extraAddress"
+						class="form-control" placeholder="참고 항목" /> <label
+						for="sample4_extraAddress" class="label-small">상세 주소</label>
 				</div>
 
 				<!-- 회원가입 버튼 -->
 				<div class="d-grid">
-					<button class="btn btn-custom btn-lg mb-2" id="submitButton"
-						type="submit">회원가입</button>
+					<button class="btn btn-custom reg-btn btn-lg mb-2"
+						id="submitButton" type="submit">회원가입</button>
 				</div>
 			</form>
 			<div class="d-grid">
-				<button class="btn btn-custom btn-lg" id="backBtn">뒤로가기</button>
+				<button class="btn btn-custom back-btn btn-lg" id="backBtn">뒤로가기</button>
 			</div>
 		</div>
 	</section>
 	<c:if test="${sessionScope.login.memId != 'admin' }">
-	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
+		<%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
 	</c:if>
 	<%@ include file="/WEB-INF/inc/footer.jsp"%>
 
@@ -355,12 +387,12 @@ body {
 			alert('회원가입을 축하드립니다.')
 		})
     
-    function sample4_execDaumPostcode() {
+function sample4_execDaumPostcode() {
     new daum.Postcode({
         oncomplete: function(data) {
             // 각 주소 정보를 변수로 저장
             var roadAddr = data.roadAddress;  // 도로명 주소
-            var jibunAddr = data.autoJibunAddress ? data.autoJibunAddress : data.jibunAddress;  // 지번 주소
+            var jibunAddr = data.jibunAddress;  // 지번 주소
             var extraRoadAddr = '';  // 추가 도로명 주소
             var postcode = data.zonecode;  // 우편번호
 
@@ -372,17 +404,14 @@ body {
                 extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
             }
 
-            // 하나의 필드에 우편번호, 도로명 주소, 지번 주소, 추가 주소를 합쳐서 넣기
-            var fullAddress = postcode + ' ' + roadAddr + ' ' + jibunAddr + ' ' + extraRoadAddr;
-
-            // 지번 주소 필드에 모든 주소 정보 입력
-            $('#sample4_jibunAddress').val(fullAddress);  // 지번 주소 필드에 모든 데이터 넣기
+            // 각각의 필드에 해당하는 값 넣기
+            $('#sample4_postcode').val(postcode);  // 우편번호
+            $('#sample4_roadAddress').val(roadAddr);  // 도로명 주소
+            $('#sample4_jibunAddress').val(jibunAddr);  // 지번 주소
+            $('#sample4_extraAddress').val(extraRoadAddr);  // 추가 주소
         }
     }).open();
 }
-	
-	
-	
 </script>
 
 </body>
