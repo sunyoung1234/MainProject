@@ -539,7 +539,7 @@ body {
 				<!-- 소개 섹션 텍스트와 아이콘 -->
 				<div class="about-overlay-text">
 					<h2 class="about-heading fade-in"
-						style="font-size: 50px; color: white;">제로에너지빌딩을 위한</h2>
+						style="font-size: 50px; color: white;">제로 에너지 건축물을 위한</h2>
 					<h2 class="about-heading fade-in"
 						style="font-size: 50px; color: white;">Green Solution</h2>
 					<p class="about-description fade-in"
