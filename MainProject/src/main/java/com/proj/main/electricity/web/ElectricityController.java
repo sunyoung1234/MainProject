@@ -370,8 +370,14 @@ public class ElectricityController {
 	public String saveElec(@RequestParam("electricityUse[]") List<String> electricityUse[], @RequestParam("months[]") List<String> months[], HttpSession session) {
 		
 		MemberDTO member = (MemberDTO)session.getAttribute("login");
-		String memAddress = member.getJibunAddress();
+		
 		String memId = member.getMemId();
+		
+		System.out.println(memId);
+		
+		MemberDTO memberInfo = memberService.getMemAddress(memId);
+		String memAddress = memberInfo.getMemAddress();
+				
 		
 		BuildingDTO building = new BuildingDTO();
 		
@@ -387,7 +393,7 @@ public class ElectricityController {
         memberService.insertBuilding(memId);
         
 		
-		return "electricityuse/electricityUseInput";
+		return "redirect:/electricityUseView";
 	}
 	
 	

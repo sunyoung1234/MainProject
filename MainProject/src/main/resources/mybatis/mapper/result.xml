@@ -178,10 +178,35 @@
 		where building_id = #{buildingId}
 	</select>
 	
+
+	
+	<!-- pdf 이미지 src 저장 -->
+	<insert id="savePdfImg" parameterType="com.proj.main.result.dto.PdfImgDTO">
+		INSERT INTO PDF_IMG(
+			building_id,
+			image
+		)VALUES(
+			#{buildingId},
+			#{image}
+		)
+	</insert>
+	
+	<!-- pdf src 가져오기 -->
+	<select id="getPdfImg" parameterType="String" resultType="String">
+		SELECT
+			image 
+		FROM PDF_IMG
+		WHERE 1=1
+		  AND building_id = #{buildingId}
+	</select>
+	
+	
+
 	<select id="selectApplyZEBId" parameterType="String" resultType="com.proj.main.result.dto.ApplyZEBDTO">
 		select * 
 		from apply_zeb
 		where mem_id = #{memId}
 	</select>
 	
+
 </mapper>

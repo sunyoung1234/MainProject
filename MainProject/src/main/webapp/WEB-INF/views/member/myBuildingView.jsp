@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <title>내 건물 목록</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
     <link href="css/styles.css" rel="stylesheet" />
     <style>
         body {
@@ -14,7 +15,7 @@
             margin: 20px;
             background-color: #f9f9f9;
             display: flex;
-            justify-content: center;
+            justify-content: center; 
         }
         h1 {
             text-align: center;
@@ -412,7 +413,8 @@
 	
     <h1>내 건물 목록</h1>
     <div class="building-list">
-        <c:forEach var="building" varStatus="status" items="${myBuildingList}">
+        <c:forEach var="building" varStatus="status" items="${myBuildingList}"> 
+        	<div class="s_id" style="display: none;">${building.buildingId }</div>
             <div class="building-card">
                 <c:if test="${building.buildingImg == 'none' }">
                     <img src="${pageContext.request.contextPath}/resources/image/bb.png" alt="건물 이미지">
@@ -445,25 +447,29 @@
 					    <c:when test="${building.testYn == 'N'}">
 					        <button id="testModal" class="test-modal btn-green">ZEB 테스트</button>
 					        <button style="display: none;" id="registBuilding" class="regist-building btn-green">ZEB 건축물<br>등록하기</button> 
-					        <button style="display: none;" class=" btn-yellow goToMap">지도<br>보러가기</button> 
+					        <button style="display: none;" class=" btn-yellow goToMap">지도<br>보러가기</button>
+					       	<button style="display: none;" class="btn-green pdf-download">결과(pdf)<br>다운로드</button> 
 					    </c:when>
 					    
 					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'N'}">
 					    	<button style="display: none;" id="testModal" class="test-modal btn-green">ZEB 테스트</button>
 					        <button id="registBuilding" class="regist-building btn-blue">ZEB 건축물<br>등록하기</button>
 					        <button style="display: none;"  class=" btn-yellow goToMap" >지도<br>보러가기</button>
+					        <button class="btn-green pdf-download">결과(pdf)<br>다운로드</button>
 					    </c:when>
 					    
 					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'Y' && building.processYn == 'N'}">
 					    	<button style="display: none;" id="testModal" class="test-modal btn-green">ZEB 테스트</button>
 					        <button style="" disabled id="registBuilding" class="regist-building btn-blue">검토중...</button>
 					        <button style="display: none;"  class=" btn-yellow goToMap" >지도<br>보러가기</button>
+					        <button class="btn-green pdf-download">결과(pdf)<br>다운로드</button>
 					    </c:when>  
 					      
 					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'Y' && building.processYn == 'Y'}">
 					    	<button style="display: none;" id="testModal" class="test-modal btn-green">ZEB 테스트</button>
 					        <button style="display: none;" id="registBuilding" class="regist-building btn-blue">ZEB 건축물<br>등록하기</button>
-					        <button style=""  class=" btn-yellow goToMap" >지도<br>보러가기</button>
+					        <button class=" btn-yellow goToMap" >지도<br>보러가기</button>
+					        <button class="btn-green pdf-download">결과(pdf)<br>다운로드</button>
 					    </c:when> 
 					    
 					</c:choose>
@@ -550,18 +556,13 @@
 					<form action="${pageContext.request.contextPath }/applyZEB" method="post" enctype="multipart/form-data" >
 					
 						<label for="selectBuilding"> 건물 선택</label>
-						<select id="selectBuilding" name="bname" required>
-							<option>===== 선택 =====</option>
-							<c:forEach var="b_name" items="${buildingName }" varStatus="status">
-								<option class="options" value="${b_name}">${b_name }</option>
-							</c:forEach>
-						</select>
+						<input id="selectBuilding" name="bname" readonly required>
 						
 						<label for="inputPdf"> 인증 파일 첨부 </label>
 						<input id="inputPdf" name="attachment" type="file" accept=".pdf, .xls, .xlsx, .xlsm" required>
 						
 						<label for="inputOrg">발급기관명</label>
-						<input id="inputOrg" name="applianceOrg" required>
+						<input id="inputOrg" name="applianceOrg" value="그린솔루션" readonly required>
 						
 						<div style="display: flex; justify-content: space-between; gap: 10px;">
 						    <button type="button" class="back-btn2">뒤로가기</button>
@@ -628,6 +629,10 @@
 	    let v_backBtn2 = document.querySelectorAll('.back-btn2')[0];
 	    let v_overlay2 = document.querySelector('#overlay2');
 	    
+	    let v_pdf = document.querySelectorAll(".pdf-download");
+	    let v_s_id = document.querySelectorAll(".s_id");
+	    
+	    
 	    v_testModal.forEach((v_tm,idx) =>{
 	    	v_tm.addEventListener('click',()=>{
 	    		v_overlay[idx].style.display = "flex";
@@ -648,6 +653,9 @@
 	    		if(document.querySelectorAll('.zeblv')[idx].innerHTML == 6){
 		    		alert('조건을 충족하지 않습니다.')
 	    		}else{
+	    			let b_card = v_rb.parentElement.parentElement;
+	    			let b_name = b_card.children[1].children[0];
+	    			document.getElementById('selectBuilding').value =  b_name.innerHTML;
 			    	v_overlay2.style.display = "flex";
 	    		}
 	    	})
@@ -738,9 +746,76 @@
     		})
     	})
     	
+    	v_pdf.forEach((pdf, idx) => {
+    pdf.addEventListener('click', () => {
+        let sId = v_s_id[idx].innerHTML;
+
+        $.ajax({
+            url: '${pageContext.request.contextPath}/getPdfImg',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                id: sId
+            }),
+            success: function (response) {
+                console.log(response);
+
+                const A4_WIDTH = 595.28;
+                const A4_HEIGHT = 841.89;
+                const imgSrc = '${pageContext.request.contextPath}/displayImage?imgName=' + response; // 이미지의 src 속성 값 가져오기
+
+                $.ajax({
+                    url: imgSrc,
+                    method: 'GET',
+                    xhrFields: {
+                        responseType: 'blob' // Blob 데이터를 직접 가져옴
+                    },
+                    success: function (blob) {
+                        var reader = new FileReader();
+                        reader.onloadend = function () {
+                            var base64Image = reader.result; // Base64 데이터
+                            
+                            var img = new Image();
+                            img.src = base64Image;
+
+                            img.onload = function () {
+                                var imgWidth = img.width; // 이미지 원본 가로 크기
+                                var imgHeight = img.height; // 이미지 원본 세로 크기
+
+                                // PDF 생성
+                                var pdf = new jspdf.jsPDF({
+								    unit: "pt",       // 단위 설정
+								    format: "a4",     // A4 크기
+								    orientation: "portrait",
+								    compress: false   // 이미지 압축 방지
+								});
+
+                                // 비율 계산
+                                var aspectRatio = imgHeight / imgWidth;
+                                var pdfWidth = 595.28; // A4 너비
+                                var pdfHeight = pdfWidth * aspectRatio;
+
+                                // PDF에 이미지 추가
+                                pdf.addImage(base64Image, "PNG", 0, 0, pdfWidth, pdfHeight);
+
+                                // PDF 다운로드
+                                pdf.save("output.pdf");
+                            }; 
+                        };
+                        reader.readAsDataURL(blob); // Blob 데이터를 Base64로 변환
+                    },
+                    error: function (error) {
+                        console.error("이미지 데이터를 가져오는 중 오류 발생: ", error);
+                    }
+                });
+            },
+            error: function (error) {
+                console.error("Ajax 요청 실패: ", error);
+            }
+        });
+    });
+});
     	
-    		
-    		
     	
     	
     	

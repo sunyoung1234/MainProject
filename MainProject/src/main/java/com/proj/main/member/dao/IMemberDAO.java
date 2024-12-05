@@ -53,4 +53,6 @@ public interface IMemberDAO {
 	int updateProcessYn(MyBuildingDTO mb);
 	
 	String selectBuildingName(MyBuildingDTO mb);
+	
+	List<MyBuildingDTO> getMyBuildingsTestY(String memId);
 }
