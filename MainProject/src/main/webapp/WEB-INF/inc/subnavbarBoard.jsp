@@ -92,9 +92,9 @@ body {
             <li class="sub-nav-item"><a href="#" class="active">전기에너지</a></li>
         </ul>
         <div class="support-menu">
-        	<a href="${pageContext.request.contextPath}/electricityUseView" class="sub-nav-dropdown-item">전기 사용량</a> 
-			<a href="${pageContext.request.contextPath}/ocrView" class="sub-nav-dropdown-item">전기 사용량 기입</a>
-			<a href="${pageContext.request.contextPath}/productView" class="sub-nav-dropdown-item">에너지 효율 제품</a>
+        	<a href="${pageContext.request.contextPath}/electricityUseView" class="sub-nav-dropdown-item">내 건물 전기 사용량</a> 
+			<a href="${pageContext.request.contextPath}/ocrView" class="sub-nav-dropdown-item">내 건물 전기 사용량 기입</a>
+			<a href="${pageContext.request.contextPath}/productView" class="sub-nav-dropdown-item">에너지 효율 제품 추천</a>
 			
         </div>
     </div>	  

@@ -307,12 +307,12 @@
 				</thead>
 				<tbody>
 					<tr>
-						<th>전기 사용량</th>
+						<th>전기 사용량(kWh)</th>
 						<td>${electricityUse.getElectricityUse() }</td>
 						<td id="elecUse"></td>
 					</tr>
 					<tr>
-						<th>탄소 배출량</th>
+						<th>탄소 배출량(g)</th>
 						<td id="gasResult1"></td>
 						<td id="gasResult2"></td>
 					</tr>
