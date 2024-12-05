@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.proj.main.faq.dto.FaqDTO;
 
 @Controller
-@RequestMapping("/faq")
 public class FaqController {
 
-    @GetMapping("/view")
+    @GetMapping("/faqView")
     public String viewFaq(Model model) {
         // 窍靛内爹等 FAQ 格废 积己
         List<FaqDTO> faqList = new ArrayList<>();

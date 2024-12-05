@@ -11,6 +11,7 @@ import com.proj.main.result.dto.ApplyResultDTO;
 import com.proj.main.result.dto.ApplyZEBDTO;
 import com.proj.main.result.dto.EnergyResultDTO;
 import com.proj.main.result.dto.EnergyUsedDTO;
+import com.proj.main.result.dto.PdfImgDTO;
 import com.proj.main.result.dto.TestResultDTO;
 import com.proj.main.result.dto.UserBuildingDTO;
 
@@ -94,5 +95,14 @@ public class ResultService {
 	public String selectApplyResult(ApplyResultDTO buildingId) {
 		String result = dao.selectApplyResult(buildingId);
 		return result;
+	}
+	
+	// pdf 이미지 저장
+	public int savePdfImg(PdfImgDTO pdf) {
+		return dao.savePdfImg(pdf);
+	}
+	// pdf 이미지 가져오기
+	public String getPdfImg(String bId) {
+		return dao.getPdfImg(bId);
 	}
 }

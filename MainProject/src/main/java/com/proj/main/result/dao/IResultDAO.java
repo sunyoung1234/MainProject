@@ -9,6 +9,7 @@ import com.proj.main.result.dto.ApplyResultDTO;
 import com.proj.main.result.dto.ApplyZEBDTO;
 import com.proj.main.result.dto.EnergyResultDTO;
 import com.proj.main.result.dto.EnergyUsedDTO;
+import com.proj.main.result.dto.PdfImgDTO;
 import com.proj.main.result.dto.TestResultDTO;
 import com.proj.main.result.dto.UserBuildingDTO;
 
@@ -46,4 +47,10 @@ public interface IResultDAO {
 	int updateApplyZebReject(ApplyZEBDTO buildingId);
 	
 	String selectApplyResult(ApplyResultDTO buildingId);
+	
+	//pdf 이미지 저장
+	int savePdfImg(PdfImgDTO pdf);
+	
+	// pdf 이미지 가져오기
+	String getPdfImg(String bId);
 }

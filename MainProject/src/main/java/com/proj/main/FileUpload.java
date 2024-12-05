@@ -32,12 +32,16 @@ public class FileUpload {
 	}
 	
 	public AttachDTO getAttachByMultipart(MultipartFile boFile ,String ext) throws IOException{
+		
 		String originalFileName = boFile.getOriginalFilename();
 		
 		String fileName = originalFileName.substring(0, originalFileName.lastIndexOf('.'))+ "_" + System.currentTimeMillis() + "." + ext;
 		
+		
 		File uploadFolder = new File(uploadPath);
-		uploadFolder.mkdir();
+		
+		
+		uploadFolder.mkdir(); 
 		
 		String filePath = uploadPath + File.separatorChar + fileName;
 		
