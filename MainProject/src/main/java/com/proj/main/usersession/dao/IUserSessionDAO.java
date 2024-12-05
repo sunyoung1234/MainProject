@@ -24,13 +24,13 @@ public interface IUserSessionDAO {
 	List<UserSessionDTO> selectAvgDuration();
 	
 	// 어제 접속자 수(중복x)
-	int yesterdayUserCount();
+	Integer yesterdayUserCount();
 	
 	// 오늘 접속사 수(중복x)
-	int todayUserCount();
+	Integer todayUserCount();
 	
 	// 어제 평균 접속 시간
-	int yesterdayUserAvg();
+	Integer yesterdayUserAvg();
 	
 	// 오늘 평균 접속 시간
 	Integer todayUserAvg();
