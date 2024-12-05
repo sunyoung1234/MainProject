@@ -388,34 +388,32 @@ body {
 		})
     
 function sample4_execDaumPostcode() {
-    new daum.Postcode({
-        oncomplete: function(data) {
-            // 각 주소 정보를 변수로 저장
-            var roadAddr = data.roadAddress;  // 도로명 주소
-            var jibunAddr = data.jibunAddress;  // 지번 주소
-            var extraRoadAddr = '';  // 추가 도로명 주소
-            var postcode = data.zonecode;  // 우편번호
+        new daum.Postcode({
+            oncomplete: function(data) {
+               
+                var roadAddr = data.roadAddress;
+                var extraRoadAddr = '';
+                var jibunAddr = '';
+               
+                if(data.autoJibunAddress != ''){
+                    jibunAddr = data.autoJibunAddress;
+                }else{
+                    jibunAddr = data.jibunAddress;
+                }
 
-            // 추가 도로명 주소 처리
-            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-                extraRoadAddr += data.bname;
+                if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                    extraRoadAddr += data.bname;
+                }
+                if (data.buildingName !== '' && data.apartment === 'Y') {
+                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                $('#sample4_postcode').val(data.zonecode);
+                $('#sample4_roadAddress').val(roadAddr);
+                $('#sample4_jibunAddress').val(jibunAddr);
+                $('#sample4_extraAddress').val(extraRoadAddr);
             }
-            if (data.buildingName !== '' && data.apartment === 'Y') {
-                extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-            }
-
-            // 각각의 필드에 해당하는 값 넣기
-            $('#sample4_postcode').val(postcode);  // 우편번호
-            $('#sample4_roadAddress').val(roadAddr);  // 도로명 주소
-            $('#sample4_jibunAddress').val(jibunAddr);  // 지번 주소
-            $('#sample4_extraAddress').val(extraRoadAddr);  // 추가 주소
-            // 도로명 주소를 선택했을 때에도 지번 주소를 자동으로 채워줌
-            if (!jibunAddr) {
-                $('#sample4_jibunAddress').val(roadAddr);  // 도로명 주소와 지번 주소가 같으면 그대로 채워줌
-            }
-        }
-    }).open();
-}
+        }).open();
+    }
 </script>
 
 </body>
