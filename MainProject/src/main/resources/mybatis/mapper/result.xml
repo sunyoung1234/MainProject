@@ -178,6 +178,7 @@
 		where building_id = #{buildingId}
 	</select>
 	
+
 	
 	<!-- pdf 이미지 src 저장 -->
 	<insert id="savePdfImg" parameterType="com.proj.main.result.dto.PdfImgDTO">
@@ -200,4 +201,12 @@
 	</select>
 	
 	
+
+	<select id="selectApplyZEBId" parameterType="String" resultType="com.proj.main.result.dto.ApplyZEBDTO">
+		select * 
+		from apply_zeb
+		where mem_id = #{memId}
+	</select>
+	
+
 </mapper>

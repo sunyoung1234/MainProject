@@ -50,5 +50,10 @@ public class PageLogService {
 		return result;
 	}
 	
+	public List<PageLogDTO> selectOneIdPageCount(String memId){
+		List<PageLogDTO> result = dao.selectOneIdPageCount(memId);
+		return result;
+	}
+	
 	
 }

@@ -216,9 +216,9 @@ body {
 		<div class="nav-wrapper">
 			<ul class="navi-navbar-nav">
 				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/mypage" class="navi-nav-link">마이</a></li>
-				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-nav-link">전기에너지</a></li>
-				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/infoBoardView" class="navi-nav-link">제로에너지 건축물</a></li>
-				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/faq/view" class="navi-nav-link">고객지원</a></li>
+				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/electricityUseView" class="navi-nav-link">전기 에너지</a></li>
+				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/infoBoardView" class="navi-nav-link">제로 에너지 건축물</a></li>
+				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-nav-link">고객지원</a></li>
 			</ul>
 		</div>
 <div class="navi-navbar-right">
@@ -260,13 +260,13 @@ body {
 			<div class="admin-dropdown-field">
 				<ul class="admin-dropdown-inner">
 					<li class="navi-dropdown-content">
-						<a href="${pageContext.request.contextPath}/mypage" class="navi-dropdown-item">마이페이지</a>
+						<a href="${pageContext.request.contextPath}/mypage" class="navi-dropdown-item">마이 페이지</a>
 						<a href="${pageContext.request.contextPath}/memEditView" class="navi-dropdown-item">회원정보수정</a>
 					</li>
 					<li class="navi-dropdown-content">
-						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">전기사용량</a>
+						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">전기 사용량</a>
 						<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">전기 사용량 기입</a>
-						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품 게시판</a>
+						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품</a>
 					</li>
 					<li class="navi-dropdown-content">
 						<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">에너지 관련 정보</a>
@@ -280,9 +280,9 @@ body {
 						<a href="${pageContext.request.contextPath}/proposal/view" class="navi-dropdown-item">건의사항</a>
 					</li>
 					<li class="navi-dropdown-content">
-						<a href="${pageContext.request.contextPath}/adminView" class="navi-dropdown-item">관리자페이지 </a>
+						<a href="${pageContext.request.contextPath}/adminView" class="navi-dropdown-item">관리자 페이지</a>
 						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">ZEB 신청현황</a>
-						<a href="${pageContext.request.contextPath}/adminChatView" class="navi-dropdown-item">챗봇상담</a>
+						<a href="${pageContext.request.contextPath}/adminChatView" class="navi-dropdown-item">챗봇 상담</a>
 					</li>
 				</ul>
 			</div>
@@ -295,9 +295,9 @@ body {
 						<a href="${pageContext.request.contextPath}/memEditView" class="navi-dropdown-item">회원정보수정</a>
 					</li>
 					<li class="navi-dropdown-content">
-						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">전기사용량</a>
+						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">전기 사용량</a>
 						<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">전기 사용량 기입</a>
-						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품 게시판</a>
+						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품</a>
 					</li>
 					<li class="navi-dropdown-content">
 						<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">에너지 관련 정보</a>

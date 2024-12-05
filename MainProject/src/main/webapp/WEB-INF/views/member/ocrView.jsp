@@ -85,6 +85,11 @@
         width:100%;
         height:100%;
     }
+    
+    #showImg:hover{
+    	cursor: pointer;
+         transform: scale(1.2); /* 확대 효과 */
+    }
 
     #croppedImg {
         max-width: 100%;
@@ -218,13 +223,40 @@
     	color: red;
     }
     
+    .login-count-title {
+		    position: relative;
+		    top: 70px;  
+		    font-size: 18px;
+		    font-weight: bold; 
+		    margin-left:850px; 
+		    background-color: #D9D578;
+		    width:250px;
+		    height:50px;  
+		    display: flex;
+			align-items: center;
+			padding-left: 10px;
+			padding-right:10px;   
+			justify-content: center;
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
+	    	border-radius: 8px; /* 테이블 둥근 모서리 */ 
+		}
+		
+		.elec-title{
+			display: flex;
+			justify-content: center;
+			margin-top:50px;
+		}
+    
 </style>
 
 </head>
 <body class="d-flex flex-column">
 
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
-	<%@ include file="/WEB-INF/inc/subnavbarMy.jsp"%>
+	<%@ include file="/WEB-INF/inc/subnavbarBoard.jsp"%>
+	
+	<h1 class="elec-title">전기 사용량 기입</h1>
+	<!-- <div class="login-count-title">전기 사용량 기입</div>	  -->
 	<div class="main-height">
 		<div class="ocr-box">
 			<div class="ocr-title">계량기 사진 첨부 <br><span class="title-explain">※ 예측값이 안 나올 시 우측 하단 버튼 클릭하여 예측값을 불러와주시기 바랍니다.</span></div>
@@ -233,7 +265,7 @@
 					<input id="inputImg" type="file" accept="image/*">
 				</div>
 				<div class="img-container">
-					<img id="showImg" alt="숫자 부분만 잘라 저장해주세요" src="https://cdn-icons-png.flaticon.com/512/4481/4481168.png">
+					<img id="showImg" alt="숫자 부분만 잘라 저장해주세요" src="${pageContext.request.contextPath }/resources/image/파일_첨부.png">
 				</div>
 				<div class="explain">
 					<span>※ 사진 내 박스를 조정하여 숫자만 잘라주시기 바랍니다.</span>
@@ -391,6 +423,11 @@
             
         });
         
+        document.querySelector('#showImg').addEventListener('click',()=>{
+        	let v_inputImg = document.querySelector('#inputImg');
+        	v_inputImg.click();
+        })
+        
         
         
         
@@ -434,11 +471,6 @@
 			        backgroundColor: 'rgba(75, 192, 192, 0)',  // 선만 표시 (채우지 않음)
 			        borderWidth: 1,
 			        fill: false,
-			        pointStyle: 'circle',  // 점 모양 설정 (기본값은 'circle')
-			        pointRadius: 5,  // 점 크기 조정
-			        pointBackgroundColor: 'blue',  // 점 색상 설정
-			        borderColor: 'transparent',  // 선을 숨기기 위한 설정 (선 색상 투명)
-			        fill: false  // 선을 채우지 않음
         		}]
         	},
 		    options: {
@@ -457,7 +489,7 @@
 		                original.forEach(function(label) {
 		                  if (label.datasetIndex === 1) {
 		                    label.pointStyle = 'circle';  // 점 모양 설정
-		                    label.strokeStyle = 'blue';  // 점 테두리 색상 설정
+		                    label.strokeStyle = 'red';  // 점 테두리 색상 설정
 		                  }
 		                });
 		                return original;
@@ -501,6 +533,7 @@
                  }
              	
              	myChart['data']['datasets'][0]['data'] = [v_monthLast, v_elecUse]
+             	myChart['data']['datasets'][1]['data'] = [v_monthLast, v_predictDate]
              	myChart.update()
              })
 	     }else{
@@ -522,7 +555,7 @@
              console.log( myChart['data']['datasets'][0].data)
              console.log(v_elecUse)
              myChart['data']['datasets'][0]['data'] = [v_monthLast, v_elecDate]
-             myChart['data']['datasets'][1]['data'] = [null, v_predUseOneMonth]
+             myChart['data']['datasets'][1]['data'] = [v_monthLast, v_predUseOneMonth]
              console.log(v_predUseOneMonth)
           	 myChart.update()
            	console.log( myChart['data']['datasets'][0].data)

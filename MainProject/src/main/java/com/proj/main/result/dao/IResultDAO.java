@@ -48,9 +48,13 @@ public interface IResultDAO {
 	
 	String selectApplyResult(ApplyResultDTO buildingId);
 	
-	//pdf 이미지 저장
+
+	//pdf
 	int savePdfImg(PdfImgDTO pdf);
 	
-	// pdf 이미지 가져오기
+	// pdf
 	String getPdfImg(String bId);
+
+	List<ApplyZEBDTO> selectApplyZEBId(String memId);
+
 }

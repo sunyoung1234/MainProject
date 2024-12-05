@@ -100,7 +100,8 @@
 <body class="d-flex flex-column">
 
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
-	<%@ include file="/WEB-INF/inc/subnavbarMy.jsp"%>
+	<%@ include file="/WEB-INF/inc/subnavbarBoard.jsp"%> 
+	
 	<div class="container-box"> 
 	    <h2>전기 사용량 입력</h2>
 	    <form id="electricity-form" action="${pageContext.request.contextPath }/saveElec" method="POST">

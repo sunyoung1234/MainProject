@@ -35,6 +35,8 @@ body {
 	background-color: white;
 	border-radius: 8px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	margin-top: 40px;
+	margin-bottom: 30px;  
 }
 
 .info-list {
@@ -169,8 +171,11 @@ body {
 .intro-title {
 	font-size: 28px;
 	font-weight: bold;
-	margin-bottom: 30px;
+	margin-bottom: 10px;
 	color: #333;
+	display: flex;
+	justify-content: center;
+	margin-top:50px;
 }
 
 .intro-description {
@@ -462,12 +467,12 @@ body {
 	<%@ include file="/WEB-INF/inc/subnavbarMap.jsp"%>
 
 
-
+	<h2 class="intro-title">제로에너지건축물이란?</h2>
 	<!-- Main Content -->
 	<div class="container">
 		<!-- 소개 섹션 -->
 		<div class="intro-section">
-			<h2 class="intro-title">제로에너지건축물이란?</h2>
+			
 			<p class="intro-description">
 				건축물에 필요한 에너지부하를 최소화하고, 신에너지 및 재생에너지를 활용하여 에너지 소요량을 최소화하는 녹색건축물 <br>
 				*「녹색건축물 조성 지원법」 제2조(정의) 제4호

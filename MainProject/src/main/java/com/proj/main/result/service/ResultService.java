@@ -97,12 +97,18 @@ public class ResultService {
 		return result;
 	}
 	
-	// pdf 이미지 저장
+
+	// pdf 
 	public int savePdfImg(PdfImgDTO pdf) {
 		return dao.savePdfImg(pdf);
 	}
-	// pdf 이미지 가져오기
+	// pdf 
 	public String getPdfImg(String bId) {
 		return dao.getPdfImg(bId);
+
+	public List<ApplyZEBDTO> selectApplyZEBId(String memId){
+		List<ApplyZEBDTO> result = dao.selectApplyZEBId(memId);
+		return result;
+
 	}
 }

@@ -308,6 +308,12 @@
 			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 테이블에 그림자 추가 */
 	    	border-radius: 8px; /* 테이블 둥근 모서리 */
 		}
+		
+		.admit-title{
+			display: flex;
+			justify-content: center;
+			margin-top: 50px;
+		}
 
 
     </style>
@@ -316,7 +322,9 @@
 <body class="d-flex flex-column">
 
     <%@ include file="/WEB-INF/inc/top.jsp"%>
-
+	<%@ include file="/WEB-INF/inc/subnavbaradmin.jsp"%> 
+	
+	<h2 class="admit-title">관리자 페이지</h2>
     <div class="main-height">
     	
     	<div class="login-count-visit">이용자 방문 현황</div>

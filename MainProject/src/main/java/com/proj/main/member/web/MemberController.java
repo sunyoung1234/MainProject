@@ -314,6 +314,29 @@ public class MemberController {
         if (login == null) {
             return "redirect:/loginView";  // 로그인 페이지로 리디렉션
         }
+        
+        String memId = login.getMemId();
+        List<PageLogDTO> pageLog = pageLogService.selectOneIdPageCount(memId);
+        List<String> pageName = new ArrayList<>();
+        List<Integer> pageCount = new ArrayList<>();
+        
+        if(pageLog.size() > 0) {
+        	for(PageLogDTO item : pageLog) {
+        		pageName.add(item.getPageName());
+        		pageCount.add(item.getVisitCount());
+        	}
+        	
+        	model.addAttribute("pageName",pageName);
+        	model.addAttribute("pageCount",pageCount);
+        }
+        
+       List<ApplyZEBDTO> applyList = rs.selectApplyZEBId(memId);
+       
+       model.addAttribute("applyList",applyList);
+       
+       System.out.println(applyList);
+       
+        
 
         return "member/mypage";  // 페이지 리턴
     }
@@ -407,6 +430,7 @@ public class MemberController {
 		PageLogDTO log = new PageLogDTO();
 		log.setMemId(memId);
 		log.setPageName("건물 목록");
+		pageLogService.insertPageLog(log);
 		
     	
     	String id = login.getMemId();

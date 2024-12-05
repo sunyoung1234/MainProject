@@ -16,12 +16,16 @@ import com.proj.main.map.dto.ZeroDTO;
 import com.proj.main.map.service.MapService;
 import com.proj.main.member.dto.MemberDTO;
 import com.proj.main.pageLog.dto.PageLogDTO;
+import com.proj.main.pageLog.service.PageLogService;
 
 @Controller
 public class MapController {
 
 	@Autowired
 	MapService ms;
+	
+	@Autowired
+	PageLogService pageLogService;
 	
 	@RequestMapping("/mapView")
 	public String mapView(Model model, HttpSession session) {
@@ -32,6 +36,7 @@ public class MapController {
 			PageLogDTO log = new PageLogDTO();
 			log.setMemId(memId);
 			log.setPageName("Áöµµ");
+			pageLogService.insertPageLog(log);
 		}
 		
 		

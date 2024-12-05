@@ -84,7 +84,7 @@ body {
 
 <body class="d-flex flex-column">
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
-	<%@ include file="/WEB-INF/inc/subnavbarBoard.jsp"%>
+	<%@ include file="/WEB-INF/inc/subnavbarSupport.jsp"%>
 
 	<main class="flex-shrink-0">
 		<section class="py-5">

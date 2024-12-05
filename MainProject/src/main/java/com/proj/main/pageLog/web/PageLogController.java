@@ -57,13 +57,16 @@ public class PageLogController {
 		List<String> selectIdPageId = new ArrayList<>();
 		List<Integer> selectIdPageCounting = new ArrayList<>();
 		
-		for(PageLogDTO items : selectIdPageCount) {
-			selectIdPageId.add(items.getMemId());
-			selectIdPageCounting.add(items.getVisitCount());
+		if(selectIdPageCount.size() > 0) {
+			for(PageLogDTO items : selectIdPageCount) {
+				selectIdPageId.add(items.getMemId());
+				selectIdPageCounting.add(items.getVisitCount());
+			}
+			
+			model.addAttribute("selectIdPageId",selectIdPageId);
+			model.addAttribute("selectIdPageCounting",selectIdPageCounting);
 		}
 		
-		model.addAttribute("selectIdPageId",selectIdPageId);
-		model.addAttribute("selectIdPageCounting",selectIdPageCounting);
  		
 		List<String> pageNameAll = new ArrayList<>();
 		List<String> visitMemId = new ArrayList<>();
@@ -72,20 +75,36 @@ public class PageLogController {
 		List<String> logMemId = new ArrayList<>();
 		List<String> logPageName = new ArrayList<>();
 		
-		for(PageLogDTO item : logAll) {
+		if(logAll.size() > 0) {
+			for(PageLogDTO item : logAll) {
+				pageNameAll.add(item.getPageName());
+				visitCountAll.add(item.getVisitCount());
+			}
 			
-			pageNameAll.add(item.getPageName());
-			visitCountAll.add(item.getVisitCount());
+			model.addAttribute("pageNameAll", pageNameAll);
+			model.addAttribute("visitCountAll", visitCountAll);
 		}
 		
-		for(PageLogDTO item2 : memIdAll) {
-			visitMemId.add(item2.getMemId());
-			logMemId.add(item2.getMemId());
+		if(memIdAll.size() > 0) {
+			for(PageLogDTO item2 : memIdAll) {
+				visitMemId.add(item2.getMemId());
+				logMemId.add(item2.getMemId());
+			}
+			
+			model.addAttribute("visitMemId", visitMemId);
+			model.addAttribute("logMemId", logMemId);
 		}
 		
-		for(PageLogDTO item3 : distincePageName) {
-			logPageName.add(item3.getPageName());
+		if(distincePageName.size() > 0) {
+			for(PageLogDTO item3 : distincePageName) {
+				logPageName.add(item3.getPageName());
+			}
+			
+			model.addAttribute("logPageName", logPageName);
 		}
+		
+		
+		
 		
 		System.out.println(pageNameAll);
 		System.out.println(visitCountAll);
@@ -93,11 +112,8 @@ public class PageLogController {
 		System.out.println(logPageName);
 		System.out.println(visitMemId);
 		
-		model.addAttribute("visitMemId", visitMemId);
-		model.addAttribute("pageNameAll", pageNameAll);
-		model.addAttribute("visitCountAll", visitCountAll);
-		model.addAttribute("logMemId", logMemId);
-		model.addAttribute("logPageName", logPageName);
+		
+		
 		
 		System.out.println(logAll);
 		
@@ -110,9 +126,11 @@ public class PageLogController {
 		List<String> userAvgDurationName = new ArrayList<>();
 		List<Long> userAvgDurationNumber = new ArrayList<>();
 		
-		for(UserSessionDTO item5 : userAvgDuration) {
-			userAvgDurationName.add(item5.getMemId());
-			userAvgDurationNumber.add(item5.getSessionDuration());
+		if(userAvgDuration.size() > 0) {
+			for(UserSessionDTO item5 : userAvgDuration) {
+				userAvgDurationName.add(item5.getMemId());
+				userAvgDurationNumber.add(item5.getSessionDuration());
+			}
 		}
 		
 		Integer userAllCount = userAvgDurationName.size();

@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>마이페이지 대시보드</title>
+<title>마이페이지</title>
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" />
 <style>
@@ -138,6 +138,17 @@ body {
 .view-more a:hover {
 	background-color: #0056b3;
 }
+
+.go-link-apply{
+	margin-left: 50px;
+	color: blue;
+}
+
+.go-link-apply:hover{
+	cursor: pointer;
+	color: red;
+}
+
 </style>
 
 
@@ -165,32 +176,22 @@ body {
 				<p>이름: ${sessionScope.login.memName}</p>
 				<p>이메일: ${sessionScope.login.memEmail}</p>
 				<p>전화번호: ${sessionScope.login.memPhone}</p>
-				<button class="btn-primary">정보 수정</button>
+				<button id="editBtn" class="btn-primary">정보 수정</button>
 			</div>
 
 			<!-- 활동 데이터 카드 -->
 			<div class="card">
 				<h2>활동 데이터</h2>
-				<p>최근 로그인: 준비 중</p>
-				<p>최근 사용량: 준비 중</p>
-				<p>포인트: 준비 중</p>
-			</div>
-
-			<!-- 알림 카드 -->
-			<div class="card">
-				<h2>알림</h2>
-				<p>현재 미확인 알림: 준비 중</p>
+				<canvas id="myChart"></canvas>
 			</div>
 		</div>
 
-		<!-- 추가 섹션: 그래프 및 게시판 요약 -->
-		<div class="extra-section">
-			<h3>에너지 사용량 및 데이터</h3>
-			<div class="placeholder">여기에 전기사용량, 가스 배출량 그래프 추가 예정</div>
-		</div>
 
 		<div class="extra-section">
-			<h3>ZEB 신청 현황</h3>
+			<div style="display: flex;">
+				<h3>ZEB 신청 현황</h3>
+				<div class="go-link-apply">바로가기</div>  
+			</div>
 			<div class="small-zeb-table">
 				<table>
 					<thead>
@@ -201,19 +202,34 @@ body {
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="apply" items="${applys}" varStatus="status">
+						<c:if test="${applyList.size() > 0 }">
+							<c:forEach var="apply" items="${applyList}" varStatus="status">
+								<tr>
+									<td>${status.count}</td>
+									<td>${apply.buildingName}</td>
+									<c:choose> 
+										<c:when test="${apply.approveYn == 'N' && apply.rejectYn == 'N'}">
+											<td>검토중</td>
+									    </c:when>
+									    
+									    <c:when test="${apply.approveYn == 'Y' && apply.rejectYn == 'N'}">
+											<td>승인</td>
+									    </c:when>
+									    
+									    <c:when test="${apply.approveYn == 'Y' && apply.rejectYn == 'Y'}">
+											<td>거절</td>
+									    </c:when>
+									</c:choose>
+								</tr> 
+							</c:forEach>
+						</c:if>
+						<c:if test="${applyList.size() == 0 }">
 							<tr>
-								<td>${status.count}</td>
-								<td>${apply.buildingName}</td>
-								<td>${statusList[status.index]}</td>
+								<td colspan="3">데이터가 존재하지 않습니다.</td>
 							</tr>
-						</c:forEach>
+						</c:if>
 					</tbody>
 				</table>
-				<div class="view-more">
-					<a href="${pageContext.request.contextPath}/applyStatusView"
-						class="btn-primary">더보기</a>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -222,52 +238,56 @@ body {
 	</c:if>
 
 
+	 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/scripts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 
+
+
+
+  
+	
     <script type="text/javascript">
-	let v_status = document.querySelector('#status'); 
-    let v_applyStatus = document.querySelectorAll('.applyStatus'); 
-    let v_tableRows = document.querySelectorAll('tbody tr'); 
-    let v_numberCells = document.querySelectorAll('tbody tr td:first-child'); 
-    let v_downLoad = document.querySelectorAll('.download-link');
-    let v_trs = document.querySelectorAll('.trs');
-    let v_bId = document.querySelectorAll('.buildingId');
-    let forms = document.querySelectorAll('.submitForm');
-
-    v_status.addEventListener('change', () => {
-        const selectedStatus = v_status.value; 
-        let currentNum = 1;
-
-        v_tableRows.forEach((row, index) => {
-            const statusCell = v_applyStatus[index]; 
-            const statusText = statusCell.innerText; 
-
-            if (selectedStatus === "전체" || statusText.includes(selectedStatus)) {
-                row.style.display = ""; 
-                v_numberCells[index].innerText = currentNum++;
-            } else {
-                row.style.display = "none"; 
-            }
-        });
-    });
-	
-	v_downLoad.forEach(dl =>{
-		dl.addEventListener('click',()=>{
-			
-			let fn = dl.innerHTML;
-			fn = fn.substr(3);
-			
-			location.href = "${pageContext.request.contextPath}/downLoadFile?fileName=" + fn
+		
+		document.getElementById("editBtn").addEventListener("click",()=>{
+			location.href = '${pageContext.request.contextPath}/memEditView'
 		})
-	})
-	
-	v_trs.forEach((tr,idx) =>{ 
-		tr.addEventListener('click',()=>{
-			forms[idx].submit();
+		
+		document.querySelector('.go-link-apply').addEventListener("click", ()=>{
+			location.href = '${pageContext.request.contextPath}/applyStatusView'
 		})
-	})
+	
+		let v_pageName = '${pageName}'
+		let v_pageCount = '${pageCount}'
+		
+		v_pageName = v_pageName.replace("[", "").replace("]", "").split(",");
+		v_pageCount = v_pageCount.replace('[','').replace(']','').split(",")
+		let ctx = document.getElementById("myChart")
+		
+		let myChart = new Chart(ctx, {
+	            type: 'bar',
+	            data: { 
+	                labels: v_pageName,
+	                datasets: [{
+	                    label: '페이지별 방문 횟수',
+	                    data: v_pageCount,
+	                    borderWidth: 1,
+	                    backgroundColor: '#76BECF',
+	                    borderColor: '#76BECF'
+	                }]
+	            },
+	            options: {
+	                responsive: true,
+	                scales: {
+	                }
+	            }
+	        });
+		
+		
+
+
 	</script>
 </body>
 </html>

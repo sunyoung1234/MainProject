@@ -27,9 +27,9 @@
 	
 	.main-height{
 		width:1300px;
-		margin: auto;
-		margin-top:50px;
-		margin-bottom: 200px;
+		margin: auto; 
+		margin-top:20px;
+		margin-bottom: 200px; 
 	}
 	
 	.product-division{ 
@@ -118,7 +118,7 @@
 	
 	/* 기본 스타일 */
 	.energy-efficiency-comparison {
-	    max-width: 1100px;
+	    max-width: 1120px; 
 	    margin: 0 auto;
 	    padding: 20px;
 	    border-radius: 12px;
@@ -200,6 +200,11 @@
 		color:red;
 	}  
 	
+	.elec-title{
+		display: flex;
+		justify-content: center;
+		margin-top:50px;
+	}
 	
 
 </style>
@@ -210,11 +215,12 @@
 	<%@ include file="/WEB-INF/inc/top.jsp"%>
 	
 	<%@ include file="/WEB-INF/inc/subnavbarBoard.jsp"%>  
-
+	
+	<h1 class="elec-title">에너지 효율 등급</h1>
 	<div class="main-height">
 		
 		<div class="energy-efficiency-comparison">
-	    <h2>에너지 효율 등급 비교 : 전기냉장고(830L)</h2>
+	    <h2>비교 : 전기냉장고(830L)</h2>
 		    <div class="comparison-container">
 		        <div class="comparison-item vs-item">
 		            <div class="comparison-header">1등급</div>
@@ -241,9 +247,9 @@
 		        </div>
 		    </div>
 		    <div class="text-box">
-		    	<span>전기 냉장고 사용 기한 10년 기준으로 1등급 사용 시 <span class="red">350,000(원)</span> 에너지 비용이 절감된다.</span> 
-		    	<span><br>이것은 냉장고 하나의 기준이므로 다른 가전제품 또한 <span class="red">에너지 효율 등급이 높은 제품(1등급)</span>을 사용할 시 더 많은 <span class="red">에너지 비용 절감</span>을 할 수 있을 것으므로 기대된다.</span> 
-		    	<span>또한 누진세로 인해 보다 많은 전기세를 납부하고 있다면 에너지 효율 등급이 높은 제품을 선택하는 것도 방법이 될 것이다.</span>
+		    	<span>전기 냉장고 사용 기한 10년 기준으로 1등급 사용 시 <span class="red">350,000(원)</span> 에너지 비용이 절감됩니다.</span> 
+		    	<span><br>이것은 냉장고 하나의 기준이므로 다른 가전제품 또한 <span class="red">에너지 효율 등급이 높은 제품(1등급)</span>을 사용할 시 더 많은 <span class="red">에너지 비용 절감</span>을 할 수 있을 것으므로 기대됩니다.</span> 
+		    	<span>또한 누진세로 인해 보다 많은 전기세를 납부하고 있다면 에너지 효율 등급이 높은 제품을 선택하는 것도 방법이 될 것입니다.</span>
 		    </div>
 		</div> 
 

@@ -124,7 +124,13 @@
 <body>
 	<%@ include file="/WEB-INF/inc/top.jsp" %>
 	
-	<%@ include file="/WEB-INF/inc/subnavbarMap.jsp"%>
+	<c:if test="${sessionScope.login.getMemId() != 'admin' }"> 
+		<%@ include file="/WEB-INF/inc/subnavbarMap.jsp"%>
+	</c:if>
+	
+	<c:if test="${sessionScope.login.getMemId() == 'admin' }"> 
+		<%@ include file="/WEB-INF/inc/subnavbaradmin.jsp"%>
+	</c:if>
 	
     <h1>신청현황</h1>
 	<c:if test="${sessionScope.login.getMemId() != 'admin' }"> 
