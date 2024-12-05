@@ -207,7 +207,7 @@
 
     <div class="extra-section">
       <div style="display: flex;">
-        <h3>ZEB 신청 현황</h3>
+        <h3>제로 에너지 건축물 신청 현황</h3>
         <div class="go-link-apply">바로가기</div>
       </div>
       <div class="small-zeb-table">
