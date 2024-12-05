@@ -42,7 +42,7 @@
 	</select>
 	
 	
-	<select id="yesterdayUserCount" resultType="int">
+	<select id="yesterdayUserCount" resultType="Integer">
 		SELECT SUM(login_count) AS yesterdayUserCount
 	    FROM (
 	        SELECT MEM_ID, COUNT(MEM_ID) AS login_count
@@ -65,7 +65,7 @@
 		) login_counts
 	</select>
 	
-	<select id="yesterdayUserAvg" resultType="int">
+	<select id="yesterdayUserAvg" resultType="Integer">
 		SELECT ROUND(AVG(SESSION_DURATION) / 60) AS avg_session_duration_minutes
 		FROM user_sessions
 		WHERE TRUNC(LOGIN_TIME) = TRUNC(SYSDATE) - 1  
@@ -73,7 +73,7 @@
 		AND MEM_ID != 'admin'
 	</select>
 	
-	<select id="todayUserAvg" resultType="int">
+	<select id="todayUserAvg" resultType="Integer">
 		SELECT ROUND(AVG(SESSION_DURATION) / 60) AS avg_session_duration_minutes
 		FROM user_sessions
 		WHERE TRUNC(LOGIN_TIME) = TRUNC(SYSDATE)

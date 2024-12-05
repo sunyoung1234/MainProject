@@ -35,18 +35,18 @@ public class UserService {
 		return result;
 	}
 	
-	public int yesterdayUserCount() {
-		int result = dao.yesterdayUserCount();
+	public Integer yesterdayUserCount() {
+		Integer result = dao.yesterdayUserCount();
 		return result;
 	}
 	
-	public int todayUserCount() {
-		int result = dao.todayUserCount();
+	public Integer todayUserCount() {
+		Integer result = dao.todayUserCount();
 		return result;
 	}
 	
-	public int yesterdayUserAvg() {
-		int result = dao.yesterdayUserAvg();
+	public Integer yesterdayUserAvg() {
+		Integer result = dao.yesterdayUserAvg();
 		return result;
 	}
 	
