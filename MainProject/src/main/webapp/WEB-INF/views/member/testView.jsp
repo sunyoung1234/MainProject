@@ -234,7 +234,7 @@ body {
 						건축 자재의 탄소 배출량을 분석하여 환경에 부담을 덜어주는 솔루션을 제공합니다.</p>
 					<p class="fade-in"
 						style="font-size: 20px; margin-bottom: 10px; text-shadow: -0.2px 0 #D3D3D3, 0 0.2px #D3D3D3, 0.2px 0 #D3D3D3, 0 -0.2px #D3D3D3;">기술과
-						지속 가능성이 결합된 우리의 노력으로, 더 나은 내일을 만듭니다.</p>
+						지속 가능성이 결합된 우리의 우리의 노력으로, 더 나은 내일을 만듭니다.</p>
 				</div>
 			</header>
 		</section>
