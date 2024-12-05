@@ -112,4 +112,8 @@ public class MemberService {
 		String result = dao.selectBuildingName(mb);
 		return result;
 	}
+	
+	public List<MyBuildingDTO> getMyBuildingsTestY(String memId){
+		return dao.getMyBuildingsTestY(memId);
+	}
 }

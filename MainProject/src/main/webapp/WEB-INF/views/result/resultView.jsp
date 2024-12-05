@@ -6,8 +6,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>기후 정보 및 설정</title>
+    <title>결과페이지</title>
     <link href="css/styles.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -642,6 +643,9 @@
             </div>
         </div>
     </div>
+    
+    <div id="secretId" style="display: none;">${e_result.buildingId}</div>
+    
     <c:if test="${sessionScope.login.memId != 'admin' }">
 	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
 	</c:if>
@@ -750,12 +754,10 @@
 
 	</script>
 	<script type="text/javascript">
-
+		const A4_WIDTH = 595.28;
+	    const A4_HEIGHT = 841.89;
 	
 		document.getElementById("download-pdf").addEventListener("click", function () {
-	        // A4 크기 (pt 단위)
-	        const A4_WIDTH = 595.28;
-	        const A4_HEIGHT = 841.89;
 	
 	        html2canvas(document.querySelector("#capture-div"), { scale: 2 }).then((canvas) => {
 	            const imgData = canvas.toDataURL("image/png");
@@ -779,6 +781,31 @@
 	            pdf.save("ZEB_${userB.buildingName}.pdf"); 
 	        });
 	    });
+		
+		window.addEventListener("load", function () {
+			
+			setTimeout(function(){
+				html2canvas(document.querySelector("#capture-div"), { scale: 2 }).then((canvas) => {
+			        const imgData = canvas.toDataURL("image/png");
+			        
+					let b_id = document.querySelector('#secretId').innerHTML;
+					
+			        $.ajax({
+	                    url: '${pageContext.request.contextPath}/savePdfImg',
+	                    method: 'POST',
+	                    contentType: 'application/json',
+	                    data: JSON.stringify({ 
+	                    	image: imgData,
+	                    	buildingId: b_id
+	                    	}),
+	                    success: function (messages) {
+							console.log(messages);                    	
+	                    }
+	                });
+			    });
+			},1500);
+		    
+		});
 	</script> 
 </body>
 </html>

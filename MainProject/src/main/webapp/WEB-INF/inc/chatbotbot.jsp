@@ -380,20 +380,19 @@
 		<div class="chatbot-content" id="chatbotContent">
 		    <div class="bot-message">안녕하세요! 무엇을 도와드릴까요?</div>
 		    <div class="bot-message">
-		        <button class="menu-btn" data-menu="quick-move">페이지 빠른 이동</button>
-		        <button class="menu-btn" data-menu="faq">FAQ</button>
+		        <button class="menu-btn" data-menu="quick-move" onclick="displayQuickMoveMenu()">페이지 빠른 이동</button>
+		        <button class="menu-btn" data-menu="faq" onclick="moveToFaq()">FAQ</button>
 		        
 		        
 		        <!-- 사용자 -->
 		        <c:if test="${sessionScope.login != null && sessionScope.login.memId ne 'admin'}">
-		            <button class="menu-btn" id="connectAgent">상담사 연결</button>
+		            <button class="menu-btn" id="connectAgent" onclick="connectAgent()">상담사 연결</button> 
 		        </c:if>
 		        
 		        
 		        
 		    </div>
 		</div>
-		
 		<!-- 채팅방 영역 -->
 		<div class="chat-room" id="chatRoom">
 		    <div class="chat-area" id="chatArea"></div>
@@ -537,7 +536,7 @@
 		
 		
 		// 상담사 연결 버튼 클릭 이벤트
-		document.querySelector('#connectAgent').addEventListener('click', function () {
+		function connectAgent() {
 		    const chatRoom = document.getElementById('chatRoom');
 		    const chatbotContent = document.querySelector('.chatbot-content');
 		
@@ -657,7 +656,7 @@
 		        }
 		        
 		    });
-		});
+		}; 
 		document.getElementById('endChat').addEventListener('click', function () {
 		    if (client) {
 		    	
@@ -716,7 +715,70 @@
             }
         });
 		
+		function moveToFaq(){
+			location.href = "${pageContext.request.contextPath}/faqView";  
+		}
 		
+		function displayMainMenu() {
+			
+            var menuHtml = '<div class="bot-message">안녕하세요! 무엇을 도와드릴까요?</div>';
+            menuHtml += '<div class="bot-message">';
+            menuHtml += '<button class="menu-btn" data-menu="quick-move" onclick="displayQuickMoveMenu()">페이지 빠른 이동</button>';
+            menuHtml += '<button class="menu-btn" data-menu="faq" onclick="moveToFaq()">FAQ</button>';
+            menuHtml += '<c:if test="${sessionScope.login != null && sessionScope.login.memId ne \'admin\'}">';
+            menuHtml += '<button class="menu-btn" id="connectAgent" onclick="connectAgent()">상담사 연결</button>';  
+            menuHtml += '</c:if>';
+            menuHtml += '</div>';
+            $("#chatbotContent").html(menuHtml);
+        }
+		
+		
+		function displayQuickMoveMenu() {
+            var quickMoveMenuHtml = '<div class="bot-message">빠른 이동 메뉴입니다.</div>';
+            quickMoveMenuHtml += '<div class="bot-message">';
+            quickMoveMenuHtml += '<button class="menu-btn" data-menu="my" onclick="displayMyMenu()">마이</button>';
+            quickMoveMenuHtml += '<button class="menu-btn" data-menu="board" onclick="displayBoardMenu()">게시판</button>';
+            quickMoveMenuHtml += '<button class="menu-btn" data-menu="map" onclick="displayMapMenu()">지도</button>'; 
+            quickMoveMenuHtml += '<button class="menu-btn" data-menu="support" onclick="displaySupportMenu()">고객지원</button>';
+            quickMoveMenuHtml += '<button class="menu-btn back-btn" onclick="displayMainMenu()">뒤로가기</button>';
+            quickMoveMenuHtml += '</div>';
+            $("#chatbotContent").html(quickMoveMenuHtml);
+        }
+		
+		function displayMyMenu() {
+            var myMenuHtml = '<div class="bot-message">마이 메뉴입니다.</div>';  
+            myMenuHtml += '<button class="menu-btn" onclick="location.href=\'${pageContext.request.contextPath}/mypage\'">마이페이지</button>';  
+            myMenuHtml += '<button class="menu-btn" onclick="location.href=\'${pageContext.request.contextPath}/memEditView\'">회원정보수정</button>';
+            myMenuHtml += '<button class="menu-btn" onclick="location.href=\'${pageContext.request.contextPath}/electricityUseView\'">전기사용량</button>';
+            myMenuHtml += '<button class="menu-btn" onclick="location.href=\'${pageContext.request.contextPath}/ocrView\'">전기사용량 기입</button>';
+            myMenuHtml += '<button class="menu-btn back-btn"  onclick="displayQuickMoveMenu()">뒤로가기</button>';
+            $("#chatbotContent").html(myMenuHtml);
+        }
+
+        function displayBoardMenu() {
+            var boardMenuHtml = '<div class="bot-message">게시판 메뉴입니다.</div>';
+            boardMenuHtml += '<button class="menu-btn" onclick="location.href=\'${pageContext.request.contextPath}/noticeBoardView\'">공지사항</button>';
+            boardMenuHtml += '<button class="menu-btn" onclick="location.href=\'${pageContext.request.contextPath}/productView\'">에너지 효율 제품 게시판</button>';
+            boardMenuHtml += '<button class="menu-btn back-btn" onclick="displayQuickMoveMenu()">뒤로가기</button>'; 
+            $("#chatbotContent").html(boardMenuHtml);
+        }
+
+        function displayMapMenu() {
+            var mapMenuHtml = '<div class="bot-message">지도 메뉴입니다.</div>';
+            mapMenuHtml += '<button class="menu-btn" onclick="location.href=\'${pageContext.request.contextPath}/inputView\'">제로 에너지 건축물 등급 측정</button>';
+            mapMenuHtml += '<button class="menu-btn" onclick="location.href=\'${pageContext.request.contextPath}/mapView\'">지도 상세보기</button>';
+            mapMenuHtml += '<button class="menu-btn back-btn" onclick="displayQuickMoveMenu()">뒤로가기</button>';
+            $("#chatbotContent").html(mapMenuHtml);
+        }
+
+        function displaySupportMenu() {
+            var supportMenuHtml = '<div class="bot-message">고객지원 메뉴입니다.</div>'; 
+            supportMenuHtml += '<button class="menu-btn" onclick="moveToFaq()">자주 묻는 질문</button>';
+            supportMenuHtml += '<button class="menu-btn" onclick="location.href=\'${pageContext.request.contextPath}/proposal/view\'">건의사항</button>';
+            supportMenuHtml += '<button class="menu-btn back-btn" onclick="displayQuickMoveMenu()">뒤로가기</button>'; 
+            $("#chatbotContent").html(supportMenuHtml); 
+        } 
+        
 
 		
 	</script>
