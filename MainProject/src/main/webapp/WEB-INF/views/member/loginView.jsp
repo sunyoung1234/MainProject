@@ -75,24 +75,24 @@
         text-align: center;
         margin-bottom: 10px;
     }
-    .btn-custom.btn-info {
-    background-color: #0dcaf0; /* 부트스트랩 기본 btn-info 색상 */
+    .btn-custom.reg-btn {
+    background-color: #BECCCF; /* 부트스트랩 기본 btn-info 색상 */
     color: #ffffff; /* 흰색 텍스트 */
     border: none;
     transition: background-color 0.3s ease;
 }
-.btn-custom.btn-info:hover {
-    background-color: #0aa2c2; /* hover 시 더 진한 색상 */
+.btn-custom.reg-btn:hover {
+    background-color: #A4B0B3; /* hover 시 더 진한 색상 */
 }
 
-.btn-custom.btn-success {
-    background-color: #198754; /* 부트스트랩 기본 btn-success 색상 */
+.btn-custom.login-btn {
+    background-color: #53C0D5; /* 부트스트랩 기본 btn-success 색상 */
     color: #ffffff; /* 흰색 텍스트 */
     border: none;
     transition: background-color 0.3s ease;
 }
-.btn-custom.btn-success:hover {
-    background-color: #146c43; /* hover 시 더 진한 색상 */
+.btn-custom.login-btn:hover {
+    background-color: #46A1B3; /* hover 시 더 진한 색상 */
 }
 </style>
 </head>
@@ -127,11 +127,11 @@
                         </div>
                         <!-- 로그인 버튼 -->
                         <div class="d-grid mb-3">
-                            <button class="btn btn-custom btn-info" id="submitBtn" type="submit">로그인</button>
+                            <button class="btn btn-custom login-btn" id="submitBtn" type="submit">로그인</button>
                         </div>
                         <!-- 회원가입 버튼 -->
                         <div class="d-grid">
-                            <button class="btn btn-custom btn-success" id="registBtn">회원가입</button>
+                            <button class="btn btn-custom reg-btn" id="registBtn">회원가입</button>
                         </div>
                     </form>
                 </div>
