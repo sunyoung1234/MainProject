@@ -9,6 +9,7 @@ import com.proj.main.result.dto.ApplyResultDTO;
 import com.proj.main.result.dto.ApplyZEBDTO;
 import com.proj.main.result.dto.EnergyResultDTO;
 import com.proj.main.result.dto.EnergyUsedDTO;
+import com.proj.main.result.dto.PdfImgDTO;
 import com.proj.main.result.dto.TestResultDTO;
 import com.proj.main.result.dto.UserBuildingDTO;
 
@@ -47,5 +48,13 @@ public interface IResultDAO {
 	
 	String selectApplyResult(ApplyResultDTO buildingId);
 	
+
+	//pdf
+	int savePdfImg(PdfImgDTO pdf);
+	
+	// pdf
+	String getPdfImg(String bId);
+
 	List<ApplyZEBDTO> selectApplyZEBId(String memId);
+
 }

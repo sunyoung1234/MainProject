@@ -11,6 +11,7 @@ import com.proj.main.result.dto.ApplyResultDTO;
 import com.proj.main.result.dto.ApplyZEBDTO;
 import com.proj.main.result.dto.EnergyResultDTO;
 import com.proj.main.result.dto.EnergyUsedDTO;
+import com.proj.main.result.dto.PdfImgDTO;
 import com.proj.main.result.dto.TestResultDTO;
 import com.proj.main.result.dto.UserBuildingDTO;
 
@@ -96,8 +97,19 @@ public class ResultService {
 		return result;
 	}
 	
+
+	// pdf 
+	public int savePdfImg(PdfImgDTO pdf) {
+		return dao.savePdfImg(pdf);
+	}
+	// pdf 
+	public String getPdfImg(String bId) {
+		return dao.getPdfImg(bId);
+	}
+
 	public List<ApplyZEBDTO> selectApplyZEBId(String memId){
 		List<ApplyZEBDTO> result = dao.selectApplyZEBId(memId);
 		return result;
+
 	}
 }

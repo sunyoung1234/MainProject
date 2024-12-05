@@ -225,7 +225,7 @@ body {
 .about-services {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 50px;
     margin-top: 40px;
 }
 
@@ -549,15 +549,15 @@ body {
 
 
 					<div class="about-services fade-in">
-					    <a href="${pageContext.request.contextPath}/electricityUseView" class="service" target="_blank">
+					    <a href="${pageContext.request.contextPath}/electricityUseView" class="service">
 					        <i class="fas fa-solar-panel"></i>
 					        <p>내 건물 전기 사용량</p>
 					    </a>
-					    <a href="${pageContext.request.contextPath}/mapView" class="service" target="_blank">
+					    <a href="${pageContext.request.contextPath}/mapView" class="service">
 					        <i class="fas fa-map"></i>
 					        <p>제로 에너지 건축물 신청 현황</p>
 					    </a>
-					    <a href="${pageContext.request.contextPath}/inputView" class="service" target="_blank">
+					    <a href="${pageContext.request.contextPath}/inputView" class="service">
 					        <i class="fas fa-globe"></i>
 					        <p>제로 에너지 건축물 등급 측정</p>
 					    </a>
@@ -650,7 +650,7 @@ body {
 
 
 
-		<section class="section" id="vision" style="background-color: white; padding: 50px 0;">
+	<section class="section" id="vision" style="background-color: white; padding: 50px 0;">
     <div class="container">
         <h2 class="text-center mb-4" style="font-weight: bold; color: #343a40;">목표</h2>
         <p class="text-center mb-5" style="color: #6c757d; font-size: 18px;">

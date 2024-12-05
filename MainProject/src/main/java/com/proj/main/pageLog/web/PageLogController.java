@@ -145,12 +145,30 @@ public class PageLogController {
 		model.addAttribute("userAllAvg",userAllAvg);
 		// 어제 오늘 접속자
 		Integer yesterdayCount = userSessionService.yesterdayUserCount();
+		
+		if(yesterdayCount == null) {
+			yesterdayCount = 0;
+		}
+		
 		Integer todayCount = userSessionService.todayUserCount();
+		
+		if(todayCount == null) {
+			todayCount = 0;
+		}
+		
 		model.addAttribute("yesterdayCount",yesterdayCount);
 		model.addAttribute("todayCount",todayCount);
 		
 		Integer yesterdayUserAvg = userSessionService.yesterdayUserAvg();
 		Integer todayUserAvg = userSessionService.todayUserAvg();
+		
+		if(todayUserAvg == null) {
+			todayUserAvg = 0;
+		}
+		
+		if(yesterdayUserAvg == null) {
+			yesterdayUserAvg = 0;
+		}
 		
 		model.addAttribute("yesterdayUserAvg",yesterdayUserAvg);
 		model.addAttribute("todayUserAvg",todayUserAvg);

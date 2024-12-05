@@ -238,9 +238,9 @@ color: red;
 		<div class="nav-wrapper">
 			<ul class="navi-navbar-nav">
 				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/mypage" class="navi-nav-link">마이</a></li>
-				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-nav-link">전기 에너지</a></li>
+				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/electricityUseView" class="navi-nav-link">전기 에너지</a></li>
 				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/infoBoardView" class="navi-nav-link">제로 에너지 건축물</a></li>
-				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/faq/view" class="navi-nav-link">고객지원</a></li>
+				<li class="navi-nav-item"><a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-nav-link">고객지원</a></li>
 			</ul>
 		</div>
 <div class="navi-navbar-right">
@@ -291,14 +291,14 @@ color: red;
 						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품 추천</a>
 					</li>
 					<li class="navi-dropdown-content">
-						<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">제로 에너지 건축물이란?</a>
+						<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">제로 에너지 건축물 소개</a>
 						<a href="${pageContext.request.contextPath}/myBuildingView" class="navi-dropdown-item">내 건물 목록</a>
-						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">제로 에너지 건축물<br> 신청 현황</a>
+						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">내 건물 신청 현황</a>
 						<a href="${pageContext.request.contextPath}/mapView" class="navi-dropdown-item">제로 에너지 건축물<br> 찾아보기</a>
 					</li>
 					<li class="navi-dropdown-content">
 						<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a>
-						<a href="${pageContext.request.contextPath}/faq/view" class="navi-dropdown-item">자주 묻는 질문</a>
+						<a href="${pageContext.request.contextPath}/faqView" class="navi-dropdown-item">자주 묻는 질문</a>
 						<a href="${pageContext.request.contextPath}/proposal/view" class="navi-dropdown-item">건의사항</a>
 					</li>
 					<li class="navi-dropdown-content">
@@ -322,14 +322,14 @@ color: red;
 						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품 추천</a>
 					</li>
 					<li class="navi-dropdown-content">
-						<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">제로 에너지 건축물 이란?</a>
+						<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">제로 에너지 건축물 소개</a>
 						<a href="${pageContext.request.contextPath}/myBuildingView" class="navi-dropdown-item">내 건물 목록</a>
-						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">제로 에너지 건축물<br> 신청현황</a>
+						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">내 건물 신청 현황</a>
 						<a href="${pageContext.request.contextPath}/mapView" class="navi-dropdown-item">제로 에너지 건축물<br> 찾아보기</a>
 					</li>
 					<li class="navi-dropdown-content">
 						<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a>
-						<a href="${pageContext.request.contextPath}/faq/view" class="navi-dropdown-item">자주 묻는 질문</a>
+						<a href="${pageContext.request.contextPath}/faqView" class="navi-dropdown-item">자주 묻는 질문</a>
 						<a href="${pageContext.request.contextPath}/proposal/view" class="navi-dropdown-item">건의사항</a>
 					</li>
 				</ul>

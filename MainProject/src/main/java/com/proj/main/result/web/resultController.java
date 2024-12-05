@@ -1,8 +1,10 @@
 package com.proj.main.result.web;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,15 +14,20 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.proj.main.Base64ToMultipartFile;
+import com.proj.main.FileUpload;
 import com.proj.main.ReflectionMapper;
+import com.proj.main.attach.dto.AttachDTO;
 import com.proj.main.map.dto.ZeroDTO;
 import com.proj.main.map.service.MapService;
 import com.proj.main.member.dto.MemberDTO;
@@ -30,6 +37,7 @@ import com.proj.main.result.dto.ApplyResultDTO;
 import com.proj.main.result.dto.ApplyZEBDTO;
 import com.proj.main.result.dto.EnergyResultDTO;
 import com.proj.main.result.dto.EnergyUsedDTO;
+import com.proj.main.result.dto.PdfImgDTO;
 import com.proj.main.result.dto.TestResultDTO;
 import com.proj.main.result.dto.UserBuildingDTO;
 import com.proj.main.result.service.ResultService;
@@ -39,10 +47,15 @@ public class resultController {
 	
 	@Autowired
 	ResultService rs;
+	
 	@Autowired
 	MemberService ms;
+	
 	@Autowired
 	MapService mapService;
+	
+	@Autowired
+    FileUpload fileUpload;
 	
 	
 	@RequestMapping("/inputView")
@@ -79,11 +92,13 @@ public class resultController {
         return "result/resultView";
     }
 	
+	
+	
+	
 	@RequestMapping("/submitBuildingInfo")
 	public String submitBuildingInfo(UserBuildingDTO ubd , HttpSession session , Model model) {
 		
 		String data = sendData(ubd);
-		System.out.println(data);
 		
         ObjectMapper objectMapper = new ObjectMapper();
         MemberDTO mem = (MemberDTO) session.getAttribute("login");
@@ -194,7 +209,6 @@ public class resultController {
 				tr.setZebGrade(6);
 			}
 			
-			System.out.println(tr);
 			
 			MyBuildingDTO mybuilding = new MyBuildingDTO();
 			mybuilding.setBuildingId(tr.getBuildingId());
@@ -207,7 +221,6 @@ public class resultController {
 			}else {
 				energyUsed.setAnnualElecSave("0");
 			}
-			System.out.println(energyUsed);
 			rs.insertEnergyResult(energyResult);
 			rs.insertEnergyUsed(energyUsed);
 			rs.insertTestResult(tr);
@@ -289,13 +302,63 @@ public class resultController {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			zero.setCertificateDate(sdf.format(new Date()));
 			
-			System.out.println(zero);
 			mapService.addZeroBuilding(zero);
 		}else {
 			rs.updateApplyZebReject(rejectYn);
 		}
 		
 		return "redirect:/applyStatusView";
+	}
+	
+	@RequestMapping("/savePdfImg")
+    @ResponseBody
+    public String saveImage(@RequestBody PdfImgDTO imageData, HttpSession session) {
+		
+		MemberDTO login = (MemberDTO) session.getAttribute("login");
+		String buildingId = imageData.getBuildingId();
+		
+		String check = rs.getPdfImg(buildingId);
+		
+		System.out.println(check);
+		
+		if(check == null) {
+			String base64Image = imageData.getImage();
+			String filename = "pdf_image" + ".png";
+			
+			MultipartFile multipartFile = Base64ToMultipartFile.convert(base64Image, filename);
+			
+			if (multipartFile == null) {
+				return "이미지 변환 중 오류 발생";
+			} 
+			
+			try {
+				AttachDTO savedFile = fileUpload.getAttachByMultipart(multipartFile, "png");
+				
+				PdfImgDTO pdf = new PdfImgDTO(buildingId, savedFile.getAtchFileName());
+				rs.savePdfImg(pdf); 
+				
+				return "이미지가 저장되었습니다: ";
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return "이미지 변환 중 오류 발생";
+			}
+		}else { 
+			return "이미 저장~"; 
+		}
+		
+	    
+    }
+	
+	@RequestMapping("/getPdfImg")
+	@ResponseBody
+	public String getPdfImg(@RequestBody Map<String,Object> requestData) {
+		String bId = (String) requestData.get("id");
+		
+		// 건물 아이디로 pdf 사진 가져오기
+		String pdfImg = rs.getPdfImg(bId);
+		
+		return pdfImg;
 	}
 	
 }

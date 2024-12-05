@@ -92,7 +92,7 @@ body {
         </ul>
         <div class="support-menu">
         	<a href="${pageContext.request.contextPath}/noticeBoardView" class="sub-nav-dropdown-item">공지사항</a> 
-            <a href="${pageContext.request.contextPath}/faq/view" >자주 묻는 질문</a>
+            <a href="${pageContext.request.contextPath}/faqView" >자주 묻는 질문</a>
             <a href="${pageContext.request.contextPath}/proposal/view">건의사항</a>
         </div>
     </div>

@@ -92,10 +92,10 @@ body {
             <li class="sub-nav-item"><a href="#" class="active">제로에너지 건축물</a></li>
         </ul>
         <div class="support-menu">
-			<a href="${pageContext.request.contextPath}/infoBoardView" class="sub-nav-dropdown-item">에너지 관련 정보</a>
+			<a href="${pageContext.request.contextPath}/infoBoardView" class="sub-nav-dropdown-item">제로 에너지 건축물 소개</a>
 			<a href="${pageContext.request.contextPath}/myBuildingView" class="sub-nav-dropdown-item">내 건물 목록</a>
-			<a href="${pageContext.request.contextPath}/applyStatusView" class="sub-nav-dropdown-item">ZEB 등록 현황</a> 
-			<a href="${pageContext.request.contextPath}/mapView" class="sub-nav-dropdown-item">지도 상세보기</a> 
+			<a href="${pageContext.request.contextPath}/applyStatusView" class="sub-nav-dropdown-item">내 건물 신청 현황</a> 
+			<a href="${pageContext.request.contextPath}/mapView" class="sub-nav-dropdown-item">제로 에너지 건축물 찾아보기</a> 
         </div>
     </div>
 </body>

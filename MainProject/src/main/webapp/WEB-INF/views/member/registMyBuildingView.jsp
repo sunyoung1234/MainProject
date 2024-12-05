@@ -28,6 +28,8 @@
 	        border-radius: 10px; /* 둥근 모서리 */
 	        background-color: #f9f9f9; /* 배경색 */
 	        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+	        margin-top: 30px;
+	        margin-bottom: 30px;
 	    }
 	
 	    .form-container label {

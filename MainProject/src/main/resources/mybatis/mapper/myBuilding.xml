@@ -22,6 +22,10 @@
 		SELECT * FROM my_building WHERE 1=1 AND mem_id = #{memId}
 	</select>
 	
+	<select id="getMyBuildingsTestY" parameterType="String" resultType="com.proj.main.member.dto.MyBuildingDTO">
+		SELECT * FROM MY_BUILDING WHERE 1=1 AND MEM_ID = #{memId} AND TEST_YN = 'Y'
+	</select>
+	
 	<select id="getMyBuildingsByBuildingId" parameterType="String" resultType="com.proj.main.member.dto.MyBuildingDTO">
 		SELECT * FROM my_building WHERE 1=1 AND building_id = #{buildingId}
 	</select>
