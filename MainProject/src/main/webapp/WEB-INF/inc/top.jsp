@@ -50,8 +50,9 @@ body {
 	font-size: 24px;
 	font-weight: bold;
 	text-decoration: none;
-	margin-right: 30px;
+	margin-right: 20px;
 	margin-left: 180px;
+	white-space: nowrap;
 }
 
 .navi-navbar-brand:hover {
@@ -85,7 +86,8 @@ body {
 	padding: 0;
 	width: 1000px; /* 상단 메뉴와 드롭다운 메뉴 동일한 너비 */
 	gap: 100px; /* 동일한 간격 */
-	margin-left: 15px;
+	margin-left: 220px;
+	margin-right:270px;
 }
 
 .admin-dropdown-inner{
@@ -95,9 +97,10 @@ body {
 	justify-content: center;
 	margin: 0;
 	padding: 0;
-	width: 1400px; /* 상단 메뉴와 드롭다운 메뉴 동일한 너비 */
+	width: 1400px; /* 관리자 메뉴 만큼 간격 추가 */
 	gap: 100px; /* 동일한 간격 */
-	margin-left: 385px;
+	margin-right: 25px;
+	margin-left: 350px;
 }
 
 .navi-nav-item,
@@ -115,7 +118,8 @@ body {
 	font-family: "Noto Sans KR", sans-serif;
 	transition: color 0.3s, background-color 0.3s;
 	display: block;
-	width: 170px; /* 동일한 크기 */
+	text-align: center;
+	width: 250px; /* 내 건물 글자 추가 전 170px; */
 }
 
 .navi-nav-link:hover, 
@@ -166,7 +170,7 @@ body {
 .navi-navbar-right {
 	display: flex;
 	align-items: center;
-	gap: 10px;
+
 	margin-left: 50px;
 	text-algin: center;
 }
@@ -225,7 +229,7 @@ body {
     <c:choose>
         <c:when test="${not empty sessionScope.login}">
             <!-- 로그인된 사용자 이름 표시 -->
-            <a href="${pageContext.request.contextPath}/memEditView" class="navi-nav-link">${sessionScope.login.getMemName()} 님</a>
+            <a href="${pageContext.request.contextPath}/mypage" class="navi-nav-link">${sessionScope.login.getMemName()} 님</a>
 
             <!-- 로그아웃 버튼 -->
             <a href="${pageContext.request.contextPath}/logout" class="navi-nav-link">로그아웃</a>
@@ -264,15 +268,15 @@ body {
 						<a href="${pageContext.request.contextPath}/memEditView" class="navi-dropdown-item">회원정보수정</a>
 					</li>
 					<li class="navi-dropdown-content">
-						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">전기 사용량</a>
-						<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">전기 사용량 기입</a>
-						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품</a>
+						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">내 건물 전기 사용량</a>
+						<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">내 건물 전기 사용량 기입</a>
+						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품 추천</a>
 					</li>
 					<li class="navi-dropdown-content">
-						<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">에너지 관련 정보</a>
+						<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">제로 에너지 건축물이란?</a>
 						<a href="${pageContext.request.contextPath}/myBuildingView" class="navi-dropdown-item">내 건물 목록</a>
-						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">ZEB 등록현황</a>
-						<a href="${pageContext.request.contextPath}/mapView" class="navi-dropdown-item">지도 상세보기</a>
+						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">제로 에너지 건축물<br> 신청 현황</a>
+						<a href="${pageContext.request.contextPath}/mapView" class="navi-dropdown-item">제로 에너지 건축물<br> 찾아보기</a>
 					</li>
 					<li class="navi-dropdown-content">
 						<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a>
@@ -295,15 +299,15 @@ body {
 						<a href="${pageContext.request.contextPath}/memEditView" class="navi-dropdown-item">회원정보수정</a>
 					</li>
 					<li class="navi-dropdown-content">
-						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">전기 사용량</a>
-						<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">전기 사용량 기입</a>
-						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품</a>
+						<a href="${pageContext.request.contextPath}/electricityUseView" class="navi-dropdown-item">내 건물 전기 사용량</a>
+						<a href="${pageContext.request.contextPath}/ocrView" class="navi-dropdown-item">내 건물 전기 사용량 기입</a>
+						<a href="${pageContext.request.contextPath}/productView" class="navi-dropdown-item">에너지 효율 제품 추천</a>
 					</li>
 					<li class="navi-dropdown-content">
-						<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">에너지 관련 정보</a>
+						<a href="${pageContext.request.contextPath}/infoBoardView" class="navi-dropdown-item">제로 에너지 건축물 이란?</a>
 						<a href="${pageContext.request.contextPath}/myBuildingView" class="navi-dropdown-item">내 건물 목록</a>
-						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">ZEB 등록현황</a>
-						<a href="${pageContext.request.contextPath}/mapView" class="navi-dropdown-item">지도 상세보기</a>
+						<a href="${pageContext.request.contextPath}/applyStatusView" class="navi-dropdown-item">제로 에너지 건축물<br> 신청현황</a>
+						<a href="${pageContext.request.contextPath}/mapView" class="navi-dropdown-item">제로 에너지 건축물<br> 찾아보기</a>
 					</li>
 					<li class="navi-dropdown-content">
 						<a href="${pageContext.request.contextPath}/noticeBoardView" class="navi-dropdown-item">공지사항</a>

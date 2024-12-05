@@ -217,7 +217,7 @@ body {
 .about-description {
 	margin: 20px auto;
 	line-height: 1.6;
-	max-width: 800px;
+	max-width: 850px;
 	font-weight: 300;
 }
 
@@ -266,15 +266,20 @@ body {
     position: relative;
     border: 5px solid #28a745;
     border-radius: 50%;
-    animation: rotate 6s linear infinite;
     background: radial-gradient(circle, rgba(40, 167, 69, 0.2), rgba(40, 167, 69, 0));
-    transition: transform 0.5s ease-in-out; /* 부드럽게 변화 */
-    z-index: 2; /* 다른 요소 위로 올리기 */
+    transform: scale(1); /* 초기 상태 명확히 설정 */
+    will-change: transform; /* 렌더링 최적화 */
+    transition: transform 0.8s ease-in-out, box-shadow 0.8s ease-in-out; /* 부드러운 전환 */
+    z-index: 2;
 }
 
-#banner #animated-shape:hover {
-    transform: scale(1.5); /* 1.5배 확대 */
-    z-index: 3; /* hover 시 z-index를 높여 다른 요소 위로 */
+#animated-shape:hover {
+    transform: scale(1.5); /* hover 시 크기 변경 */
+    box-shadow: 0px 0px 30px rgba(40, 167, 69, 0.8); /* hover 시 쉐도우 추가 */
+}
+#animated-shape.clicked {
+    transform: scale(0.8); /* 클릭 시 일시적으로 크기 줄이기 */
+    transition: transform 0.2s ease-out; /* 클릭 후 빠르게 줄어들도록 */
 }
 
 #animated-shape::before,
@@ -337,7 +342,9 @@ body {
     }
 }
 
+
 </style>
+
 <style>
 /* about 섹션 내부에서 footer가 하단에 고정되도록 설정 */
 #about {
@@ -424,6 +431,65 @@ body {
     z-index: 2; /* 비디오와 오버레이 위에 표시 */
     color: white;
 }
+
+.scroll-hint {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    animation: bounce 2s infinite; /* 애니메이션 효과 */
+    z-index: 9999;
+    
+}
+
+.scroll-hint i {
+    font-size: 24px;
+    margin-top: 5px;
+    
+}
+
+.black-scroll-hint {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    animation: bounce 2s infinite; /* 애니메이션 효과 */
+    z-index: 9999;
+    -webkit-text-stroke: 2px black;
+    
+}
+
+.black-scroll-hint i {
+    font-size: 24px;
+    margin-top: 5px;
+    -webkit-text-stroke: 2px black;
+    
+}
+
+
+
+/* 애니메이션 */
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-5px);
+    }
+}
+
+.
 </style>
 
 </head>
@@ -435,10 +501,11 @@ body {
 
 	<!-- 사이드 네비게이션 -->
 	<div class="side-nav">
-		<a href="#home" class="nav-item">HOME</a> <a href="#banner"
-			class="nav-item">BANNER</a> <a href="#introduce" class="nav-item">INTRODUCE</a>
-		<a href="#vision" class="nav-item">VISION</a> <a href="#about"
-			class="nav-item">ABOUT</a>
+		<a href="#home" class="nav-item">HOME</a> 
+		<a href="#banner" class="nav-item">BANNER</a> 
+		<a href="#introduce" class="nav-item">INTRODUCE</a>
+		<a href="#vision" class="nav-item">VISION</a> 
+		<a href="#about" class="nav-item">ABOUT</a>
 	</div>
 
 	<!-- 세로 슬라이더 -->
@@ -461,19 +528,19 @@ body {
 					<h2 class="about-heading fade-in"
 						style="font-size: 50px; color: white;">Green Solution</h2>
 					<p class="about-description fade-in"
-						style="font-size: 24px; color: #d1d1d1; max-width: 800px;">
-						Green Solution은 건축물의 에너지 사용량을 최소화하고 탄소 배출을 줄이기 위한 혁신적인 기술과 솔루션을
-						제공합니다. 우리는 제로에너지빌딩 실현과 에너지 효율화를 통해 지속 가능한 미래를 만듭니다.</p>
+						style="font-size: 24px; color: #d1d1d1; max-width: 850px;">
+						Green Solution은 건축물의 에너지 사용량을 최소화하고 <br>탄소 배출을 줄이기 위한 혁신적인 기술과 솔루션을
+						제공합니다. <br>제로에너지빌딩 실현과 에너지 효율화를 통해<br>지속 가능한 미래를 만듭니다.</p>
 
 
 					<div class="about-services fade-in">
 					    <a href="${pageContext.request.contextPath}/electricityUseView" class="service">
 					        <i class="fas fa-solar-panel"></i>
-					        <p>전기 사용 현황</p>
+					        <p>내 건물 전기 사용량</p>
 					    </a>
 					    <a href="${pageContext.request.contextPath}/mapView" class="service">
 					        <i class="fas fa-map"></i>
-					        <p>제로 에너지 건축물 현황</p>
+					        <p>제로 에너지 건축물 신청 현황</p>
 					    </a>
 					    <a href="${pageContext.request.contextPath}/inputView" class="service">
 					        <i class="fas fa-globe"></i>
@@ -481,6 +548,10 @@ body {
 					    </a>
 					</div>
 				</div>
+								<div class="scroll-hint" onclick="scrollToNextSection()" style="margin-bottom: 50px;">
+		        <span>SCROLL</span>
+		        <i class="fas fa-chevron-down"></i> 
+    			</div>
 			</header>
 		</section>
 
@@ -496,17 +567,17 @@ body {
         <div class="row align-items-center">
             <!-- 텍스트 섹션 -->
             <div class="col-lg-6 text-center text-lg-start">
-                <h2 class="display-5 mb-4" style="font-weight: 700; color: #ffffff;">
-                    지속 가능한 에너지를 위한<br><strong style="color: #28a745;">미래의 솔루션</strong>
-                </h2>  
-                <p class="mb-4" style="font-size: 20px; line-height: 1.8; color: #ffffff;">
-                    우리의 목표는 탄소 중립과 에너지 효율화를 통해<br>
-                    친환경적인 미래를 만드는 것입니다. 혁신적인 기술과<br>
-                    솔루션으로 지속 가능한 세상을 함께 만들어갑니다.
-                </p>
+					<h1 class="display-4 mb-4" style="font-weight: 700; color: #28a745;">
+					    제로 에너지 건축물<br><strong style="color: #ffffff;">왜 해야하는가?</strong>
+					</h1>
+					<p class="mb-4 mt-3" style="font-size: 20px; line-height: 1.8; color: #ffffff;">
+					    에너지 소비를 최소화하고,<br>
+					    탄소 배출을 줄여 환경을 보호하며,<br>
+					    지속 가능한 미래를 위한 첫걸음을 내딛습니다.<br>
+					    <strong>제로에너지건축물</strong>로 시작하세요.
+					</p>
                 <div>
                     <a href="#vision" class="btn btn-success btn-lg px-5 py-2 shadow me-3">더 알아보기</a>
-                    <a href="#about" class="btn btn-outline-success btn-lg px-5 py-2 shadow">문의하기</a>
                 </div>
             </div>
             <!-- 애니메이션 도형 섹션 -->
@@ -515,6 +586,10 @@ body {
             </div>
         </div>
     </div>
+    			<div class="scroll-hint " onclick="scrollToNextSection()" style="margin-bottom: 50px;">
+		        <span>SCROLL</span>
+		        <i class="fas fa-chevron-down"></i> 
+    		</div>
 </section>
 
 
@@ -532,16 +607,16 @@ body {
             <div class="col-lg-6 text-white text-center text-lg-start">
                 <h1 class="display-4 mb-4" style="font-weight: 700;">환영합니다</h1>
                 <p class="mb-4" style="font-size: 20px; line-height: 1.8;">
-                    지속 가능한 미래를 위한 <strong>제로 에너지 솔루션</strong>에 대해 알아보세요.<br>
-                    친환경 건축과 혁신적인 기술을 통해 지속 가능한 세상을 만듭니다.
-                </p>
+			    환경을 생각하는 선택, <strong>제로에너지건축물</strong>이 그 해답입니다.<br>
+			    에너지 절약과 탄소 배출 감소를 통해<br> 더 나은 미래를 함께 만들어갑니다.
+			    
+				</p>
                 <div>
                     <a href="#vision" class="btn btn-light btn-lg px-5 py-2 shadow me-3">비전 보기</a>
-                    <a href="#about" class="btn btn-outline-light btn-lg px-5 py-2 shadow">문의하기</a>
                 </div>
             </div>
             <!-- 이미지 섹션 -->
-            <div class="col-lg-6 text-center mt-5 mt-lg-0">
+            <div class="col-lg-5 text-center mt-5 mt-lg-0">
                 <img 
                     src="${pageContext.request.contextPath}/resources/image/many zeroEnergyBuilding img.jpg" 
                     alt="슬라이드 이미지 1" 
@@ -550,6 +625,10 @@ body {
             </div>
         </div>
     </div>
+    			<div class="scroll-hint" onclick="scrollToNextSection()" style="margin-bottom: 50px;">
+		        <span>SCROLL</span>
+		        <i class="fas fa-chevron-down"></i> 
+    		</div>
 </section>
 
 
@@ -652,12 +731,14 @@ body {
             </div>
         </div>
     </div>
+    <div class="empty-box"></div>
+<%@ include file="/WEB-INF/inc/footer.jsp"%>
 </section>
 </div>
 	<c:if test="${sessionScope.login.memId != 'admin' }">
 	    <%@ include file="/WEB-INF/inc/chatbotbot.jsp"%>
 	</c:if>
-
+    
 
 	<!-- slick 슬라이드와 jQuery -->
 	<script
@@ -769,6 +850,28 @@ $(window).on('wheel', function (event) {
         isWheelScrolling = false; // 일정 시간 후에 다시 이벤트를 받을 수 있도록 설정
     }, 1000);
 });
+
+function scrollToNextSection() {
+    $('.vertical-slider').slick('slickNext');
+}
+
+document.querySelector("#animated-shape").addEventListener("click", (event) => {
+    const shape = document.querySelector('#animated-shape');
+
+    // 클릭 시 'clicked' 클래스 추가 (도형을 잠시 줄이기)
+    shape.classList.add('clicked');
+    
+    // 0.2초 후 원래 크기로 돌아가게 하기
+    setTimeout(() => {
+        shape.classList.remove('clicked');
+    }, 200); // 0.2초 후 원래 상태로 복원
+});
+
+
+
+
+
+
 </script>
 
 

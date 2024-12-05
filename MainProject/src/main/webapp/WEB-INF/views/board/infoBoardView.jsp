@@ -35,7 +35,7 @@ body {
 	background-color: white;
 	border-radius: 8px;
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-	margin-top: 40px;
+
 	margin-bottom: 30px;  
 }
 
@@ -467,7 +467,7 @@ body {
 	<%@ include file="/WEB-INF/inc/subnavbarMap.jsp"%>
 
 
-	<h2 class="intro-title">제로에너지건축물이란?</h2>
+	<h2 class="intro-title">제로 에너지 건축물이란?</h2>
 	<!-- Main Content -->
 	<div class="container">
 		<!-- 소개 섹션 -->

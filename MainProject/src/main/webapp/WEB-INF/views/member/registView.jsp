@@ -356,32 +356,30 @@ body {
 		})
     
     function sample4_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-            	
-                var roadAddr = data.roadAddress;
-                var extraRoadAddr = '';
-                var jibunAddr = '';
-                
-                if(data.autoJibunAddress != ''){
-                	jibunAddr = data.autoJibunAddress;
-                }else{
-                	jibunAddr = data.jibunAddress;
-                }
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 각 주소 정보를 변수로 저장
+            var roadAddr = data.roadAddress;  // 도로명 주소
+            var jibunAddr = data.autoJibunAddress ? data.autoJibunAddress : data.jibunAddress;  // 지번 주소
+            var extraRoadAddr = '';  // 추가 도로명 주소
+            var postcode = data.zonecode;  // 우편번호
 
-                if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-                    extraRoadAddr += data.bname;
-                }
-                if (data.buildingName !== '' && data.apartment === 'Y') {
-                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                }
-                $('#sample4_postcode').val(data.zonecode);
-                $('#sample4_roadAddress').val(roadAddr);
-                $('#sample4_jibunAddress').val(jibunAddr);
-                $('#sample4_extraAddress').val(extraRoadAddr);
+            // 추가 도로명 주소 처리
+            if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                extraRoadAddr += data.bname;
             }
-        }).open();
-    }
+            if (data.buildingName !== '' && data.apartment === 'Y') {
+                extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            }
+
+            // 하나의 필드에 우편번호, 도로명 주소, 지번 주소, 추가 주소를 합쳐서 넣기
+            var fullAddress = postcode + ' ' + roadAddr + ' ' + jibunAddr + ' ' + extraRoadAddr;
+
+            // 지번 주소 필드에 모든 주소 정보 입력
+            $('#sample4_jibunAddress').val(fullAddress);  // 지번 주소 필드에 모든 데이터 넣기
+        }
+    }).open();
+}
 	
 	
 	
