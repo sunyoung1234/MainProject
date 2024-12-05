@@ -105,6 +105,7 @@ public class ResultService {
 	// pdf 
 	public String getPdfImg(String bId) {
 		return dao.getPdfImg(bId);
+	}
 
 	public List<ApplyZEBDTO> selectApplyZEBId(String memId){
 		List<ApplyZEBDTO> result = dao.selectApplyZEBId(memId);
