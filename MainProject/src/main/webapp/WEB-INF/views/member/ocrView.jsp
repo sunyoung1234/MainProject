@@ -29,7 +29,7 @@
 
 <style type="text/css">
     .main-height{
-        height: 900px;
+        height: 1000px;
         width: 1300px;
         margin: auto;
         margin-top: 50px;

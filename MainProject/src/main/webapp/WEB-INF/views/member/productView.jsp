@@ -78,17 +78,85 @@
 	
 	}
 	
-	.product-box{
+	.product-box1{
+		width:350px;
+		height:300px;
+		border: 1px solid #ddd;
+        border-radius: 10px;
+        
+	}
+	
+	.product-box2{
 		width:350px;
 		height:300px;
 		border: 1px solid #ddd;
         border-radius: 10px;
 	}
 	
-	.product-box:hover {
+	.product-box3{
+		width:350px;
+		height:300px;
+		border: 1px solid #ddd;
+        border-radius: 10px;
+	}
+	
+	.product-box4{
+		width:350px;
+		height:300px;
+		border: 1px solid #ddd;
+        border-radius: 10px;
+	}
+	
+	.product-box5{
+		width:350px;
+		height:300px;
+		border: 1px solid #ddd;
+        border-radius: 10px;
+	}
+	
+	.product-box6{
+		width:350px;
+		height:300px;
+		border: 1px solid #ddd;
+        border-radius: 10px;
+	}
+	
+	.product-box1:hover {
        transform: translateY(-10px);
        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+       cursor: pointer;
      }
+     
+     .product-box2:hover {
+       transform: translateY(-10px);
+       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+       cursor: pointer;
+     }
+     
+     .product-box3:hover {
+       transform: translateY(-10px);
+       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+       cursor: pointer;
+     }
+     
+     .product-box4:hover {
+       transform: translateY(-10px);
+       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+       cursor: pointer;
+     }
+     
+     .product-box5:hover {
+       transform: translateY(-10px);
+       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+       cursor: pointer;
+     }
+     
+     .product-box6:hover {
+       transform: translateY(-10px);
+       box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+       cursor: pointer;
+     }
+     
 	
 	
 	.product-img{
@@ -259,7 +327,7 @@
 		
 		 	
 		<div class="product-list">
-			<div class="product-box">
+			<div class="product-box1">
 				<div class="product-img">
 					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=전기냉장고">
 						<img src="https://eep.energy.or.kr/images/item/i_1.png">
@@ -271,7 +339,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="product-box">
+			<div class="product-box2">
 				<div class="product-img">
 					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=김치냉장고">
 						<img src="https://eep.energy.or.kr/images/item/i_2.png">
@@ -283,7 +351,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="product-box">
+			<div class="product-box3">
 				<div class="product-img">
 					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=전기세탁기(일반)">
 						<img src="https://eep.energy.or.kr/images/item/i_4.png">
@@ -297,7 +365,7 @@
 			</div>
 		</div>
 		<div class="product-list">
-			<div class="product-box">
+			<div class="product-box4">
 				<div class="product-img">
 					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=전기세탁기(드럼)">
 						<img src="https://eep.energy.or.kr/images/item/i_5.png">
@@ -309,7 +377,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="product-box">
+			<div class="product-box5">
 				<div class="product-img">
 					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=제습기">
 						<img src="https://eep.energy.or.kr/images/item/i_28.png">
@@ -321,7 +389,7 @@
 					</a>
 				</div>
 			</div>
-			<div class="product-box">
+			<div class="product-box6">
 				<div class="product-img">
 					<a href="${pageContext.request.contextPath }/productDetailView?productCategory=의류건조기">
 						<img src="https://eep.energy.or.kr/images/item/h_51.png">
@@ -345,6 +413,35 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/scripts.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	
+	<script type="text/javascript">
+		
+		document.querySelector(".product-box1").addEventListener("click", ()=>{
+			location.href = "${pageContext.request.contextPath }/productDetailView?productCategory=전기냉장고"
+		})
+		
+		document.querySelector(".product-box2").addEventListener("click", ()=>{
+			location.href = "${pageContext.request.contextPath }/productDetailView?productCategory=김치냉장고"
+		})
+		
+		document.querySelector(".product-box3").addEventListener("click", ()=>{
+			location.href = "${pageContext.request.contextPath }/productDetailView?productCategory=전기세탁기(일반)"
+		})
+		
+		document.querySelector(".product-box4").addEventListener("click", ()=>{
+			location.href = "${pageContext.request.contextPath }/productDetailView?productCategory=전기세탁기(드럼)"
+		})
+		
+		document.querySelector(".product-box5").addEventListener("click", ()=>{
+			location.href = "${pageContext.request.contextPath }/productDetailView?productCategory=제습기"
+		})
+		
+		document.querySelector(".product-box6").addEventListener("click", ()=>{
+			location.href = "${pageContext.request.contextPath }/productDetailView?productCategory=의류건조기"
+		})
+		
+	
+	</script>
     
 </body>
 </html>
