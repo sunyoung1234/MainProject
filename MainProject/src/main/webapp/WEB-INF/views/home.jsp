@@ -555,9 +555,9 @@ body {
 					    </a>
 					    <a href="${pageContext.request.contextPath}/mapView" class="service">
 					        <i class="fas fa-map"></i>
-					        <p>제로 에너지 건축물 신청 현황</p>
+					        <p>제로 에너지 건축물 찾아보기</p>
 					    </a>
-					    <a href="${pageContext.request.contextPath}/inputView" class="service">
+					    <a href="${pageContext.request.contextPath}/myBuildingView" class="service">
 					        <i class="fas fa-globe"></i>
 					        <p>제로 에너지 건축물 등급 측정</p>
 					    </a>
