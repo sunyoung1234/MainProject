@@ -104,6 +104,8 @@ body {
 	border-radius: 5px;
 	text-align: center;
 	transition: all 0.3s;
+	cursor: default; /* 기본 커서 모양으로 설정 */
+    pointer-events: none; /* 클릭 불가능 */
 }
 
 .side-nav .nav-item:hover, .side-nav .nav-item.active {
@@ -364,7 +366,6 @@ body {
     color: white; /* 텍스트 색상 */
     text-align: center; /* 가운데 정렬 */
     position: fixed; /* 화면 하단에 고정 */
-
     bottom: 0; /* 화면 하단에 딱 붙이기 */
 }
 </style>
@@ -801,14 +802,8 @@ $(document).ready(function () {
     });
 
     // 사이드 네비게이션 클릭 시 섹션 이동 및 해시 변경
-   $('.side-nav .nav-item').on('click', function (e) {
-        e.preventDefault();
-        const sectionID = $(this).attr('href');
-        const sectionIndex = $(`.vertical-slider .section${sectionID}`).index('.vertical-slider .section');
-        if (sectionIndex !== -1) {
-            $('.vertical-slider').slick('slickGoTo', sectionIndex);
-            window.location.hash = sectionID;
-        }
+    $('.side-nav .nav-item').on('click', function (e) {
+        e.preventDefault(); // 클릭 시 아무런 기능도 수행하지 않음
     });
 
     // 슬라이더 이동 시 URL 해시와 사이드바 동기화
