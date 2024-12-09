@@ -430,9 +430,15 @@
                 <div class="building-info">
                     <p class="building-name">${building.buildingName}</p>
                     <p class="building-address">${building.roadAddress}</p>
-                    <p class="building-test">테스트 여부: ${building.testYn}</p>
-                    <p class="building-test">ZEB 등록 여부: ${building.zebTestYn }</p>
-                    <p class="building-test">ZEB 승인 여부: ${building.processYn }</p>
+                    <div style="display: flex; justify-content: center;">
+	                    <p class="building-test">테스트 여부:&nbsp</p><img style=" width: 27px; height: 27px;" id="ynImg" src="${pageContext.request.contextPath}/${building.testYn == 'Y' ? 'resources/image/YesYes.png' : 'resources/image/NoNo.png'}">
+                    </div> 
+                    <div style="display: flex; justify-content: center;">
+                   		<p class="building-test">ZEB 등록 여부:&nbsp</p><img style=" width: 27px; height: 27px;" id="ynImg" src="${pageContext.request.contextPath}/${building.zebTestYn == 'Y' ? 'resources/image/YesYes.png' : 'resources/image/NoNo.png'}">
+                    </div>
+                    <div style="display: flex; justify-content: center;">
+                    	<p class="building-test">ZEB 승인 여부:&nbsp </p><img style=" width: 27px; height: 27px;" id="ynImg" src="${pageContext.request.contextPath}/${building.processYn == 'Y' ? 'resources/image/YesYes.png' : 'resources/image/NoNo.png'}">
+                    </div>
                     <c:choose>
 					    <c:when test="${building.testYn == 'N'}">
 					        <p style="display:none;" class="building-test">ZEB 등급: ${building.zebLevel == 6 ? '미충족' : building.zebLevel} 등급</p>     
@@ -453,7 +459,7 @@
 					        <button id="testModal" class="test-modal btn-green">ZEB 테스트</button>
 					        <button style="display: none;" id="registBuilding" class="regist-building btn-green">ZEB 건축물<br>등록하기</button> 
 					        <button style="display: none;" class=" btn-yellow goToMap">지도<br>보러가기</button>
-					       	<button style="display: none;" class="btn-green pdf-download">결과(pdf)<br>다운로드</button> 
+					       	<button style="display: none;" class="btn-green pdf-download">결과(PDF)<br>다운로드</button> 
 					    </c:when>
 					    
 					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'N'}">
@@ -636,6 +642,8 @@
 	    
 	    let v_pdf = document.querySelectorAll(".pdf-download");
 	    let v_s_id = document.querySelectorAll(".s_id");
+	    
+	    let v_test = document.querySelectorAll('.building-test');
 	    
 	    
 	    v_testModal.forEach((v_tm,idx) =>{
@@ -832,6 +840,7 @@
             			 if(yn.body == v_s_id[i].innerHTML){
             				 v_registBtn[i].style.display = 'none';
             				 v_maps[i].style.display = "block";
+            				 v_test[i].innerHTML = "Y";
             			 }
             		 }
                      
