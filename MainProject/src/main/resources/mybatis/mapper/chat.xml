@@ -16,7 +16,7 @@
 		FROM
 		chatlog
 		WHERE room_no = #{roomNo}
-		ORDER BY send_date
+		ORDER BY chat_no
 	</select>
 
 	<!-- 채팅 메시지 삽입 -->

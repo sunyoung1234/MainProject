@@ -6,8 +6,13 @@
 <head>
     <meta charset="UTF-8">
     <title>내 건물 목록</title>
+    <meta http-equiv="Cache-Control" content="no-store" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link href="css/styles.css" rel="stylesheet" />
     <style>
         body {
@@ -462,7 +467,7 @@
 					    	<button style="display: none;" id="testModal" class="test-modal btn-green">ZEB 테스트</button>
 					        <button style="" disabled id="registBuilding" class="regist-building btn-blue">검토중...</button>
 					        <button style="display: none;"  class=" btn-yellow goToMap" >지도<br>보러가기</button>
-					        <button class="btn-green pdf-download">결과(pdf)<br>다운로드</button>
+					        <button class="btn-green pdf-download">결과(pdf)<br>다운로드</button> 
 					    </c:when>  
 					      
 					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'Y' && building.processYn == 'Y'}">
@@ -815,8 +820,26 @@
         });
     });
 });
+    	document.addEventListener('DOMContentLoaded', function(){
+    		
+    		
+    		 const sock = new SockJS("${pageContext.request.contextPath}/endpoint");
+             const client = Stomp.over(sock);
+             
+             client.connect({}, function () {
+            	 client.subscribe('/subscribe/yn', function (yn) {
+            		 for(let i=0; i < v_s_id.length; i++){
+            			 if(yn.body == v_s_id[i].innerHTML){
+            				 v_registBtn[i].style.display = 'none';
+            				 v_maps[i].style.display = "block";
+            			 }
+            		 }
+                     
+                 }); 
+             });
+    	})
     	
-    	
+    	    	
     	
     	
     </script>

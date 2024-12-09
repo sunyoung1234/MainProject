@@ -19,7 +19,7 @@
 	</insert>
 	 
 	<select id="getMyBuildings" parameterType="String" resultType="com.proj.main.member.dto.MyBuildingDTO">
-		SELECT * FROM my_building WHERE 1=1 AND mem_id = #{memId}
+		SELECT * FROM my_building WHERE 1=1 AND mem_id = #{memId}  ORDER BY BUILDING_ID DESC
 	</select>
 	
 	<select id="getMyBuildingsTestY" parameterType="String" resultType="com.proj.main.member.dto.MyBuildingDTO">
