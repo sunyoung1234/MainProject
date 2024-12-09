@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZEB 신청내용</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.6.1/sockjs.min.js" integrity="sha512-1QvjE7BtotQjkq8PxLeF6P46gEpBRXuskzIVgjFpekzFVF4yjRgrQvTG1MTOJ3yQgvTteKAcO7DSZI92+u/yZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -254,7 +257,7 @@
 	
 	            <!-- 버튼 -->
 	            <div class="button-container">
-	                <button type="submit" class="button">제출</button>
+	                <button id="submitBtn" type="submit" class="button">제출</button>
 	                <button type="button" class="button back" onclick="window.history.back()">뒤로가기</button>
 	            </div>
 	        </form>
@@ -271,45 +274,64 @@
 	</c:if>
 
     <script>
-        let radioButtons = document.querySelectorAll('input[name="approveYn"]');
-        let levBox = document.getElementById('levBox');
-        let reasonBox = document.getElementById('reasonBox');
-        let v_download = document.querySelector('#download-link')
-
-        radioButtons.forEach(radio => {
-            radio.addEventListener('change', () => {
-                const selectedValue = document.querySelector('input[name="approveYn"]:checked').value;
-
-                if (selectedValue === "승인") {
-                    levBox.style.display = "block";
-                    reasonBox.style.display = "none";
-                } else {
-                    levBox.style.display = "none";
-                    reasonBox.style.display = "block";
-                }
-            });
-        });
-        
-        v_download.addEventListener('click',()=>{
-        	let fileName = v_download.innerText;
-        	fileName = fileName.substr(3);
-        	location.href = "${pageContext.request.contextPath}/downLoadFile?fileName=" + fileName;
-        	
-        })
-        
-        
-        var geocoder = new kakao.maps.services.Geocoder();
-
-		var callback = function(result, status) {
-		    if (status === kakao.maps.services.Status.OK) {
-		        console.log(result[0].x);
-		        console.log(result[0].y);
-		        document.querySelector('#latitude').value = result[0].y;
-		        document.querySelector('#longitude').value = result[0].x;
-		    }
-		};
-
-		geocoder.addressSearch(document.querySelector('#roadAddress').innerHTML, callback);
+    
+	    document.addEventListener('DOMContentLoaded', function(){
+			const sock = new SockJS("${pageContext.request.contextPath}/endpoint");
+	        const client = Stomp.over(sock);
+	
+	        client.connect({}, function () {
+	       	client.subscribe('/subscribe/yn', function (yn) {
+	            	
+	            	
+	                console.log(yn)
+	                
+	            }); 
+	        });
+	        let radioButtons = document.querySelectorAll('input[name="approveYn"]');
+	        let levBox = document.getElementById('levBox');
+	        let reasonBox = document.getElementById('reasonBox');
+	        let v_download = document.querySelector('#download-link')
+	
+	        radioButtons.forEach(radio => {
+	            radio.addEventListener('change', () => {
+	                const selectedValue = document.querySelector('input[name="approveYn"]:checked').value;
+	
+	                if (selectedValue === "승인") {
+	                    levBox.style.display = "block";
+	                    reasonBox.style.display = "none";
+	                } else {
+	                    levBox.style.display = "none";
+	                    reasonBox.style.display = "block";
+	                }
+	            });
+	        });
+	        
+	        v_download.addEventListener('click',()=>{
+	        	let fileName = v_download.innerText;
+	        	fileName = fileName.substr(3);
+	        	location.href = "${pageContext.request.contextPath}/downLoadFile?fileName=" + fileName;
+	        	
+	        })
+	        
+	        document.querySelector('#submitBtn').addEventListener('click',()=>{
+	        	client.send('/app/yn', {}, JSON.stringify({
+                    building_id : '${apply.buildingId }'
+                })); 
+	        })
+	        
+	        var geocoder = new kakao.maps.services.Geocoder();
+	
+			var callback = function(result, status) {
+			    if (status === kakao.maps.services.Status.OK) {
+			        console.log(result[0].x);
+			        console.log(result[0].y);
+			        document.querySelector('#latitude').value = result[0].y;
+			        document.querySelector('#longitude').value = result[0].x;
+			    }
+			};
+	
+			geocoder.addressSearch(document.querySelector('#roadAddress').innerHTML, callback);
+		})
     </script>
     
 </body>

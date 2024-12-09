@@ -14,8 +14,6 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,6 +23,7 @@ import com.proj.main.chat.dto.RoomDTO;
 import com.proj.main.chat.service.ChatLogService;
 import com.proj.main.chat.service.RoomService;
 import com.proj.main.member.dto.MemberDTO;
+import com.proj.main.member.dto.MyBuildingDTO;
 
 @Controller
 public class RoomController {
@@ -154,6 +153,17 @@ public class RoomController {
 	public RoomDTO broadcasting(RoomDTO room) {
 		
 		return room;
+	}
+	
+	@MessageMapping("/yn")
+	@SendTo("/subscribe/yn")
+	public String broadcasting(String buildingId) {
+		
+		int a = buildingId.length();
+		buildingId = buildingId.substring(16, a-2);
+		
+		
+		return buildingId;
 	}
 	
 	@MessageMapping("/room/{roomNo}")

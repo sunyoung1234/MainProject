@@ -618,7 +618,7 @@
 		geocoder.addressSearch('해남군 송지면', callback);
 		
 		function goBack() {
-		    window.history.back();
+			window.location.href = document.referrer;  
 		}
 		
 		let mapSession = '${sessionScope.requestMap}';
