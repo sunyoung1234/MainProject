@@ -138,12 +138,12 @@
             width: 24%; /* 버튼 크기 조정 */
         }
 
-        .button[type="submit"] {
+        #submitBtn{
             background-color: #4CAF50;
             color: white;
         }
 
-        .button[type="submit"]:hover {
+        #submitBtn:hover {
             background-color: #45a049;
         }
 
