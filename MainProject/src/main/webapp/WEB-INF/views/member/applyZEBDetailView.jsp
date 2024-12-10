@@ -257,7 +257,7 @@
 	
 	            <!-- 버튼 -->
 	            <div class="button-container">
-	                <button id="submitBtn" type="submit" class="button">제출</button>
+	                <button id="submitBtn" type="button" class="button">제출</button>
 	                <button type="button" class="button back" onclick="window.history.back()">뒤로가기</button>
 	            </div>
 	        </form>
@@ -317,6 +317,8 @@
 	        	client.send('/app/yn', {}, JSON.stringify({
                     building_id : '${apply.buildingId }'
                 })); 
+	        	
+	        	document.getElementById('submitForm').submit();
 	        })
 	        
 	        var geocoder = new kakao.maps.services.Geocoder();
