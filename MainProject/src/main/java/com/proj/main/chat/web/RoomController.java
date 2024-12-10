@@ -159,6 +159,8 @@ public class RoomController {
 	@SendTo("/subscribe/yn")
 	public String broadcasting(String buildingId) {
 		
+		System.out.println(buildingId);
+		
 		int a = buildingId.length();
 		buildingId = buildingId.substring(16, a-2);
 		
