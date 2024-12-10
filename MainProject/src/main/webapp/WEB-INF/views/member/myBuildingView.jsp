@@ -466,21 +466,21 @@
 					    	<button style="display: none;" id="testModal" class="test-modal btn-green">ZEB 테스트</button>
 					        <button id="registBuilding" class="regist-building btn-blue">ZEB 건축물<br>등록하기</button>
 					        <button style="display: none;"  class=" btn-yellow goToMap" >지도<br>보러가기</button>
-					        <button class="btn-green pdf-download">결과(pdf)<br>다운로드</button>
+					        <button class="btn-green pdf-download">결과(PDF)<br>다운로드</button>
 					    </c:when>
 					    
 					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'Y' && building.processYn == 'N'}">
 					    	<button style="display: none;" id="testModal" class="test-modal btn-green">ZEB 테스트</button>
 					        <button style="" disabled id="registBuilding" class="regist-building btn-blue">검토중...</button>
 					        <button style="display: none;"  class=" btn-yellow goToMap" >지도<br>보러가기</button>
-					        <button class="btn-green pdf-download">결과(pdf)<br>다운로드</button> 
+					        <button class="btn-green pdf-download">결과(PDF)<br>다운로드</button> 
 					    </c:when>  
 					      
 					    <c:when test="${building.testYn == 'Y' && building.zebTestYn == 'Y' && building.processYn == 'Y'}">
 					    	<button style="display: none;" id="testModal" class="test-modal btn-green">ZEB 테스트</button>
 					        <button style="display: none;" id="registBuilding" class="regist-building btn-blue">ZEB 건축물<br>등록하기</button>
 					        <button class=" btn-yellow goToMap" >지도<br>보러가기</button>
-					        <button class="btn-green pdf-download">결과(pdf)<br>다운로드</button>
+					        <button class="btn-green pdf-download">결과(PDF)<br>다운로드</button>
 					    </c:when> 
 					    
 					</c:choose>

@@ -200,7 +200,7 @@
 			</div>
 	
 	        <!-- 기후 선택 -->
-	        <label for="climate">기후 선택:</label>
+	        <label for="climate">지역 선택:</label>
 	        <select id="climate" name="climate" required>
 	            <option value="서울">서울</option>
 	            <option value="춘천">춘천</option>
@@ -267,7 +267,7 @@
 	        <!-- 환기 장치 선택 --> 
 	        <label class="radio-inline" >환기 장치:</label><br>
 	        <input type="radio" id="passiveVentilation" name="ventilationSystem" value="열회수형(고효율)" required>
-	        <label class="radio-inline"  for="passiveVentilation">열회수형(고효율)</label><br>
+	        <label class="radio-inline"  for="passiveVentilation">열회수형(고효율 환기장치)</label><br>
 	        <input type="radio" id="normalVentilation" name="ventilationSystem" value="열회수형(일반)">
 	        <label class="radio-inline"  for="normalVentilation">일반</label><br><br> 
 	
