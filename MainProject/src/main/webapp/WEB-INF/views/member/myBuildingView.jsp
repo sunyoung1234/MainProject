@@ -832,11 +832,13 @@
     	let v_buildingCards = document.querySelectorAll('.building-card');
     	document.addEventListener('DOMContentLoaded', function(){
     		
-    		setTimeout(function(){
-    			client.subscribe('/subscribe/yn', function (yn) {
+    		const sock = new SockJS("${pageContext.request.contextPath}/endpoint");
+    		const client = Stomp.over(sock);
+    		
+    		client.connect({}, function(){
+	   			client.subscribe('/subscribe/yn', function (yn) {
 	        		 
 	        		 for(let i=0; i < v_s_id.length; i++){
-	        			 console.log(v_s_id[i].innerHTML);
 	        			 if(yn.body == v_s_id[i].innerHTML){
 	        				 v_buildingCards[i].children[1].children[4].children[1].src = '${pageContext.request.contextPath}/resources/image/YesYes.png'
 	        				 v_registBtn[i].style.display = 'none';
@@ -845,7 +847,10 @@
 	        		 }
 	                 
 	             });
-    		}, 1000);
+    			
+    		})
+    		
+    		
     		
  
     	})
